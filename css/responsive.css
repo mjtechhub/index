@@ -62,6 +62,11 @@
         display: flex;
     }
     
+    .container {
+        width: min(100% - 32px, 1440px);
+        padding: 0;
+    }
+    
     .mobile-menu-btn {
         display: block;
     }
@@ -93,7 +98,7 @@
     }
     
     .site-logo {
-        height: 40px;
+        height: 38px;
     }
     
     .hero-section h1 {
