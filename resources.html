@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources | MJ Tech Hub</title>
+    <meta name="description" content="Useful IT reference material, cheat sheets, and learning paths.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <script src="js/theme.js"></script>
+    <script src="js/main.js" defer></script>
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:title" content="MJ Tech Hub | Learn IT. Solve Problems. Grow Your Skills.">
+    <meta property="og:description" content="Practical IT tutorials, command guides and real-world troubleshooting knowledge.">
+    <meta property="og:image" content="./assets/logo/mj-tech-hub-logo.png">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <!-- Logo -->
+            <a href="./index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
+                <img src="./assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
+            </a>
+            
+            <!-- Navigation -->
+            <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="./index.html" class="nav-link" data-page="index.html">Home</a></li>
+                    <li><a href="./topics.html" class="nav-link" data-page="topics.html">Topics</a></li>
+                    <li><a href="./commands.html" class="nav-link" data-page="commands.html">Commands</a></li>
+                    <li><a href="./quiz.html" class="nav-link" data-page="quiz.html">Quiz</a></li>
+                    <li><a href="./resources.html" class="nav-link" data-page="resources.html">Resources</a></li>
+                    <li><a href="./about.html" class="nav-link" data-page="about.html">About</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Search & Actions -->
+            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
+                </div>
+                
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="py-4">
+            <div class="container">
+                <h1 class="text-center mb-1">IT Resources</h1>
+                <p class="text-center mb-2">Cheat sheets, guides, and reference material for IT professionals.</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <div class="card">
+                        <i class="fas fa-file-alt card-icon"></i>
+                        <h3 class="card-title">Networking Cheat Sheet</h3>
+                        <p class="card-text">Quick reference for subnets, ports, and common protocols.</p>
+                        <a href="#" class="btn btn-secondary">Download PDF</a>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-terminal card-icon"></i>
+                        <h3 class="card-title">Linux CLI Guide</h3>
+                        <p class="card-text">The most common Bash commands and shortcuts.</p>
+                        <a href="#" class="btn btn-secondary">Download PDF</a>
+                    </div>
+                    <div class="card">
+                        <i class="fab fa-windows card-icon"></i>
+                        <h3 class="card-title">Windows Troubleshooting</h3>
+                        <p class="card-text">Step-by-step guide to fixing common Windows errors.</p>
+                        <a href="#" class="btn btn-secondary">Download PDF</a>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-shield-alt card-icon"></i>
+                        <h3 class="card-title">Security Checklists</h3>
+                        <p class="card-text">Best practices for securing servers and endpoints.</p>
+                        <a href="#" class="btn btn-secondary">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div>
+                &copy; 2026 MJ Tech Hub. All rights reserved.
+            </div>
+            
+            <ul class="footer-links">
+                <li><a href="./legal/privacy.html">Privacy Policy</a></li>
+                <li><a href="./legal/terms.html">Terms of Use</a></li>
+                <li><a href="./legal/disclaimer.html">Disclaimer</a></li>
+                <li><a href="./about.html">Contact</a></li>
+            </ul>
+            
+            <div>
+                Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

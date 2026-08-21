@@ -1,0 +1,40 @@
+[
+    {
+        "id": "networking-basics",
+        "title": "Networking Basics",
+        "description": "Test your fundamental networking knowledge.",
+        "questions": [
+            {
+                "question": "Which of the following IP addresses is a private IP address?",
+                "options": ["8.8.8.8", "192.168.1.100", "1.1.1.1", "17.253.144.10"],
+                "correctIndex": 1,
+                "explanation": "192.168.0.0 to 192.168.255.255 is a reserved private IP address block."
+            },
+            {
+                "question": "What port does HTTPS use by default?",
+                "options": ["80", "21", "443", "22"],
+                "correctIndex": 2,
+                "explanation": "HTTPS traffic uses port 443 by default for secure communication."
+            },
+            {
+                "question": "Which protocol is responsible for resolving domain names to IP addresses?",
+                "options": ["DHCP", "FTP", "HTTP", "DNS"],
+                "correctIndex": 3,
+                "explanation": "DNS (Domain Name System) translates human-readable domain names to IP addresses."
+            }
+        ]
+    },
+    {
+        "id": "windows-commands",
+        "title": "Windows Commands",
+        "description": "Check your Windows command line skills.",
+        "questions": [
+            {
+                "question": "Which command displays the IP configuration on Windows?",
+                "options": ["ifconfig", "ipconfig", "netstat", "ping"],
+                "correctIndex": 1,
+                "explanation": "ipconfig is the Windows command for IP configuration (ifconfig is for Linux/Unix)."
+            }
+        ]
+    }
+]

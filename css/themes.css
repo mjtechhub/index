@@ -1,0 +1,58 @@
+/* 
+   MJ Tech Hub - Theme CSS
+   Light mode default, dark mode toggle.
+*/
+
+:root {
+    /* Light Mode (Default) */
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F8FAFC;
+    --bg-tertiary: #F1F5F9;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --brand-primary: #2563EB;
+    --brand-secondary: #06B6D4;
+    --brand-accent: #F59E0B; /* Orange Highlights */
+    --brand-subtle: #8b5cf6; /* Purple where appropriate */
+    --border-color: #E2E8F0;
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    
+    /* Code block colors */
+    --code-bg: #1e293b;
+    --code-text: #f8fafc;
+    
+    /* Functional */
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+}
+
+[data-theme="dark"] {
+    /* Dark Theme */
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --brand-primary: #3b82f6; /* Lighter blue for dark mode */
+    --brand-secondary: #38bdf8;
+    --brand-accent: #fb923c;
+    --brand-subtle: #a78bfa;
+    --border-color: #334155;
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    
+    /* Code block colors */
+    --code-bg: #000000;
+    --code-text: #f8fafc;
+}
+
+/* Base Body Styles */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}

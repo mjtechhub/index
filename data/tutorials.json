@@ -1,0 +1,29 @@
+[
+    {
+        "id": "cmd-commands",
+        "title": "5 CMD Commands Every IT Engineer Should Know",
+        "description": "Essential Windows CMD commands for daily troubleshooting.",
+        "category": "Windows",
+        "level": "Beginner",
+        "readTime": "8 minutes",
+        "keywords": "windows, cmd, ping, ipconfig, network"
+    },
+    {
+        "id": "linux-permissions",
+        "title": "Linux File Permissions Explained Simply",
+        "description": "Understand read, write and execute permissions with practical examples.",
+        "category": "Linux",
+        "level": "Beginner",
+        "readTime": "10 minutes",
+        "keywords": "linux, chmod, chown, file, access, read, write, execute"
+    },
+    {
+        "id": "vlan-explained",
+        "title": "What Is VLAN? How Does It Work?",
+        "description": "Learn VLAN concepts, types, benefits and practical use cases.",
+        "category": "Networking",
+        "level": "Beginner",
+        "readTime": "9 minutes",
+        "keywords": "vlan, switch, network, broadcast domain, tag"
+    }
+]

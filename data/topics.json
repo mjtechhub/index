@@ -1,0 +1,38 @@
+[
+    {
+        "id": "networking",
+        "title": "Networking",
+        "description": "IP addressing, DNS, DHCP, VLAN, Wi-Fi, VPN, routing, switching, and troubleshooting.",
+        "keywords": "network, ip, subnet, router, switch, wifi, cisco"
+    },
+    {
+        "id": "windows",
+        "title": "Windows",
+        "description": "CMD, PowerShell, Windows administration, system utilities, and Group Policy.",
+        "keywords": "microsoft, win, cmd, powershell, active directory, registry"
+    },
+    {
+        "id": "linux",
+        "title": "Linux",
+        "description": "Essential commands, filesystem, permissions, services, processes, and scripting.",
+        "keywords": "unix, ubuntu, bash, script, terminal, chmod, sudo"
+    },
+    {
+        "id": "servers",
+        "title": "Servers",
+        "description": "Windows Server, Linux Server, Active Directory, virtualization, Proxmox, and VMware.",
+        "keywords": "host, vm, hypervisor, proxmox, virtual, ad"
+    },
+    {
+        "id": "cybersecurity",
+        "title": "Cybersecurity",
+        "description": "Firewalls, MFA, phishing, malware, endpoint security, and best practices.",
+        "keywords": "security, hack, defend, firewall, virus, mfa, 2fa, auth"
+    },
+    {
+        "id": "cloud-ai",
+        "title": "Cloud & AI",
+        "description": "AWS, Azure, cloud services, AI tools, automation, and modern IT concepts.",
+        "keywords": "amazon, aws, azure, google cloud, gcp, artificial intelligence, automation"
+    }
+]

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search | MJ Tech Hub</title>
+    <meta name="description" content="Search MJ Tech Hub for tutorials, topics, commands, and more.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <script src="js/theme.js"></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/search.js" defer></script>
+    
+    <style>
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .search-input-wrapper {
+            position: relative;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3rem;
+            font-size: 1.1rem;
+            border-radius: 2rem;
+            border: 2px solid var(--border-color);
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        
+        .search-input:focus {
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+        
+        .search-btn {
+            border-radius: 2rem;
+            padding: 0 2rem;
+        }
+        
+        .results-info {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+        
+        .result-card {
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .result-card:hover {
+            border-color: var(--brand-primary);
+            box-shadow: var(--card-shadow);
+        }
+        
+        .result-type {
+            font-size: 0.75rem;
+            background: var(--bg-tertiary);
+            color: var(--brand-primary);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+        
+        .result-title {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .result-desc {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-muted);
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--border-color);
+        }
+    </style>
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:title" content="MJ Tech Hub | Learn IT. Solve Problems. Grow Your Skills.">
+    <meta property="og:description" content="Practical IT tutorials, command guides and real-world troubleshooting knowledge.">
+    <meta property="og:image" content="./assets/logo/mj-tech-hub-logo.png">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <!-- Logo -->
+            <a href="./index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
+                <img src="./assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
+            </a>
+            
+            <!-- Navigation -->
+            <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="./index.html" class="nav-link" data-page="index.html">Home</a></li>
+                    <li><a href="./topics.html" class="nav-link" data-page="topics.html">Topics</a></li>
+                    <li><a href="./commands.html" class="nav-link" data-page="commands.html">Commands</a></li>
+                    <li><a href="./quiz.html" class="nav-link" data-page="quiz.html">Quiz</a></li>
+                    <li><a href="./resources.html" class="nav-link" data-page="resources.html">Resources</a></li>
+                    <li><a href="./about.html" class="nav-link" data-page="about.html">About</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Search & Actions -->
+            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
+                </div>
+                
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="py-4">
+            <div class="container search-container">
+                <h1 class="text-center mb-2">Search</h1>
+                
+                <form id="search-form" class="search-input-wrapper" onsubmit="event.preventDefault();">
+                    <div style="position: relative; flex-grow: 1;">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="search-input" class="search-input" placeholder="Search tutorials, topics, commands..." autocomplete="off">
+                    </div>
+                    <button type="submit" class="btn btn-primary search-btn">Search</button>
+                </form>
+                
+                <div id="results-info" class="results-info" style="display: none;"></div>
+                
+                <div id="search-results">
+                    <!-- Results injected here -->
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div>
+                &copy; 2026 MJ Tech Hub. All rights reserved.
+            </div>
+            
+            <ul class="footer-links">
+                <li><a href="./legal/privacy.html">Privacy Policy</a></li>
+                <li><a href="./legal/terms.html">Terms of Use</a></li>
+                <li><a href="./legal/disclaimer.html">Disclaimer</a></li>
+                <li><a href="./about.html">Contact</a></li>
+            </ul>
+            
+            <div>
+                Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

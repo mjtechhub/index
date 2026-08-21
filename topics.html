@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Topics | MJ Tech Hub</title>
+    <meta name="description" content="Master the fundamentals and advanced concepts across core IT domains.">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:title" content="Explore Topics | MJ Tech Hub">
+    <meta property="og:description" content="Master the fundamentals and advanced concepts across core IT domains.">
+    <meta property="og:image" content="./assets/logo/mj-tech-hub-logo.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <script src="js/theme.js"></script>
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <!-- Logo -->
+            <a href="./index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
+                <img src="./assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
+            </a>
+            
+            <!-- Navigation -->
+            <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="./index.html" class="nav-link" data-page="index.html">Home</a></li>
+                    <li><a href="./topics.html" class="nav-link" data-page="topics.html">Topics</a></li>
+                    <li><a href="./commands.html" class="nav-link" data-page="commands.html">Commands</a></li>
+                    <li><a href="./quiz.html" class="nav-link" data-page="quiz.html">Quiz</a></li>
+                    <li><a href="./resources.html" class="nav-link" data-page="resources.html">Resources</a></li>
+                    <li><a href="./about.html" class="nav-link" data-page="about.html">About</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Search & Actions -->
+            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
+                </div>
+                
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="container py-4 text-center">
+        <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-primary);">Explore Topics</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 3rem;">Master the fundamentals and advanced concepts across core IT domains.</p>
+
+        <div class="topic-grid topic-grid-3x2" style="margin-bottom: 2rem;">
+            <!-- Networking -->
+            <div class="card topic-card" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 2rem 1.5rem;">
+                <img src="./assets/icons/networking.png" alt="Networking" style="width: 64px; height: 64px; margin-bottom: 1rem;">
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Networking</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;">
+                    IP addressing, DNS, DHCP, VLAN, Wi-Fi, VPN, routing, switching, and troubleshooting.
+                </p>
+                <a href="networking.html" class="btn btn-primary" style="width: 100%; text-align: center;">Explore Networking</a>
+            </div>
+
+            <!-- Windows -->
+            <div class="card topic-card" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 2rem 1.5rem;">
+                <img src="./assets/icons/windows.png" alt="Windows" style="width: 64px; height: 64px; margin-bottom: 1rem;">
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Windows</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;">
+                    CMD, PowerShell, Windows administration, system utilities, and Group Policy.
+                </p>
+                <a href="windows.html" class="btn btn-primary" style="width: 100%; text-align: center;">Explore Windows</a>
+            </div>
+
+            <!-- Linux -->
+            <div class="card topic-card" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 2rem 1.5rem;">
+                <img src="./assets/icons/linux.png" alt="Linux" style="width: 64px; height: 64px; margin-bottom: 1rem;">
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Linux</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;">
+                    Essential commands, filesystem, permissions, services, processes, and scripting.
+                </p>
+                <a href="linux.html" class="btn btn-primary" style="width: 100%; text-align: center;">Explore Linux</a>
+            </div>
+
+            <!-- Servers -->
+            <div class="card topic-card" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 2rem 1.5rem;">
+                <img src="./assets/icons/servers.png" alt="Servers" style="width: 64px; height: 64px; margin-bottom: 1rem;">
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Servers</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;">
+                    Windows Server, Linux Server, Active Directory, virtualization, Proxmox, and VMware.
+                </p>
+                <a href="servers.html" class="btn btn-primary" style="width: 100%; text-align: center;">Explore Servers</a>
+            </div>
+
+            <!-- Cybersecurity -->
+            <div class="card topic-card" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 2rem 1.5rem;">
+                <img src="./assets/icons/cybersecurity.png" alt="Cybersecurity" style="width: 64px; height: 64px; margin-bottom: 1rem;">
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Cybersecurity</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;">
+                    Firewalls, MFA, phishing, malware, endpoint security, and best practices.
+                </p>
+                <a href="cybersecurity.html" class="btn btn-primary" style="width: 100%; text-align: center;">Explore Cybersecurity</a>
+            </div>
+
+            <!-- Cloud & AI -->
+            <div class="card topic-card" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 2rem 1.5rem;">
+                <img src="./assets/icons/cloud-ai.png" alt="Cloud & AI" style="width: 64px; height: 64px; margin-bottom: 1rem;">
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Cloud & AI</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;">
+                    AWS, Azure, cloud services, AI tools, automation, and modern IT concepts.
+                </p>
+                <a href="cloud.html" class="btn btn-primary" style="width: 100%; text-align: center;">Explore Cloud & AI</a>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div>
+                &copy; 2026 MJ Tech Hub. All rights reserved.
+            </div>
+            
+            <ul class="footer-links">
+                <li><a href="./legal/privacy.html">Privacy Policy</a></li>
+                <li><a href="./legal/terms.html">Terms of Use</a></li>
+                <li><a href="./legal/disclaimer.html">Disclaimer</a></li>
+                <li><a href="./about.html">Contact</a></li>
+            </ul>
+            
+            <div>
+                Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

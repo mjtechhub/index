@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Library | MJ Tech Hub</title>
+    <meta name="description" content="A comprehensive library of essential IT commands for Windows, Linux, and Networking.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <script src="js/theme.js"></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/commands.js" defer></script>
+    
+    <style>
+        .command-card {
+            margin-bottom: 2rem;
+        }
+        .command-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        .command-platform {
+            font-size: 0.8rem;
+            background: var(--bg-tertiary);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: var(--brand-primary);
+            font-weight: 600;
+        }
+        .command-code-block {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            position: relative;
+            margin: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            overflow-x: auto;
+        }
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--code-text);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .copy-btn.copied {
+            background: var(--success);
+            border-color: var(--success);
+        }
+        .command-details p {
+            margin-bottom: 0.5rem;
+        }
+        .command-label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .warning-box {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid var(--danger);
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+    </style>
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:title" content="MJ Tech Hub | Learn IT. Solve Problems. Grow Your Skills.">
+    <meta property="og:description" content="Practical IT tutorials, command guides and real-world troubleshooting knowledge.">
+    <meta property="og:image" content="./assets/logo/mj-tech-hub-logo.png">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <!-- Logo -->
+            <a href="./index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
+                <img src="./assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
+            </a>
+            
+            <!-- Navigation -->
+            <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="./index.html" class="nav-link" data-page="index.html">Home</a></li>
+                    <li><a href="./topics.html" class="nav-link" data-page="topics.html">Topics</a></li>
+                    <li><a href="./commands.html" class="nav-link" data-page="commands.html">Commands</a></li>
+                    <li><a href="./quiz.html" class="nav-link" data-page="quiz.html">Quiz</a></li>
+                    <li><a href="./resources.html" class="nav-link" data-page="resources.html">Resources</a></li>
+                    <li><a href="./about.html" class="nav-link" data-page="about.html">About</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Search & Actions -->
+            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
+                </div>
+                
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="py-4">
+            <div class="container" style="max-width: 800px;">
+                <h1 class="text-center mb-1">Command Library</h1>
+                <p class="text-center mb-2">Essential commands for daily IT operations and troubleshooting.</p>
+                
+                <div id="commands-container">
+                    <div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading commands...</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div>
+                &copy; 2026 MJ Tech Hub. All rights reserved.
+            </div>
+            
+            <ul class="footer-links">
+                <li><a href="./legal/privacy.html">Privacy Policy</a></li>
+                <li><a href="./legal/terms.html">Terms of Use</a></li>
+                <li><a href="./legal/disclaimer.html">Disclaimer</a></li>
+                <li><a href="./about.html">Contact</a></li>
+            </ul>
+            
+            <div>
+                Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

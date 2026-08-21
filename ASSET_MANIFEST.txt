@@ -1,0 +1,27 @@
+MJ TECH HUB ASSET PACK
+
+Copy the contents of this ZIP into the root of your MJ Tech Hub project.
+
+FILES
+assets/brand/mj-tech-hub-header.png     Header/navigation logo (transparent PNG)
+assets/brand/mj-tech-hub-icon.png       Simple MJ icon (transparent PNG)
+assets/brand/favicon-32.png              Browser favicon
+assets/brand/favicon-64.png              Browser favicon
+assets/brand/favicon-192.png             App/site icon
+assets/brand/favicon-512.png             Large app/site icon
+assets/hero/mj-tech-hero.png             Approved laptop + floating IT icon hero visual
+assets/icons/networking.png              Networking icon
+assets/icons/windows.png                 Windows icon
+assets/icons/linux.png                   Linux icon
+assets/icons/servers.png                 Servers icon
+assets/icons/cybersecurity.png           Cybersecurity icon
+assets/icons/cloud-ai.png                Cloud & AI icon
+assets/social/instagram.png              Instagram icon
+reference/approved-homepage-light.png    APPROVED visual source of truth
+reference/current-homepage-before-fix.png Current page before final correction
+GEMINI_PROMPT.md                         Prompt to paste into Gemini 3.1 Pro
+
+IMPORTANT
+- Do not rename files before Gemini finishes integration.
+- The hero PNG is intended to be used directly in the right side of the homepage hero.
+- The approved reference screenshot should be treated as the visual source of truth.

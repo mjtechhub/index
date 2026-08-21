@@ -1,0 +1,62 @@
+[
+    {
+        "command": "ipconfig /all",
+        "platform": "Windows",
+        "purpose": "Display detailed Windows network configuration.",
+        "syntax": "ipconfig /all",
+        "example": "ipconfig /all",
+        "expectedResult": "Shows IPv4 address, subnet mask, default gateway, DNS server, DHCP status, and MAC address.",
+        "useCase": "Troubleshooting network connectivity, checking if DHCP assigned an IP correctly.",
+        "warnings": null
+    },
+    {
+        "command": "ping",
+        "platform": "Windows/Linux",
+        "purpose": "Test reachability of a host on an IP network.",
+        "syntax": "ping <hostname or IP>",
+        "example": "ping 8.8.8.8",
+        "expectedResult": "Replies from the destination indicating latency and packet loss.",
+        "useCase": "Verifying internet connection or if a specific server is online.",
+        "warnings": null
+    },
+    {
+        "command": "tracert",
+        "platform": "Windows",
+        "purpose": "Trace the path that an IP packet takes to its destination.",
+        "syntax": "tracert <hostname or IP>",
+        "example": "tracert google.com",
+        "expectedResult": "List of routers (hops) the packet passed through and response times.",
+        "useCase": "Finding where a network connection drops or slows down.",
+        "warnings": null
+    },
+    {
+        "command": "nslookup",
+        "platform": "Windows/Linux",
+        "purpose": "Query Internet name servers interactively.",
+        "syntax": "nslookup <hostname>",
+        "example": "nslookup example.com",
+        "expectedResult": "IP addresses associated with the domain name.",
+        "useCase": "Troubleshooting DNS resolution issues.",
+        "warnings": null
+    },
+    {
+        "command": "netstat -ano",
+        "platform": "Windows",
+        "purpose": "Displays active TCP connections, ports on which the computer is listening, and PID.",
+        "syntax": "netstat -ano",
+        "example": "netstat -ano | findstr 8080",
+        "expectedResult": "List of active connections and their state, along with the process ID.",
+        "useCase": "Finding which application is using a specific port.",
+        "warnings": null
+    },
+    {
+        "command": "sfc /scannow",
+        "platform": "Windows",
+        "purpose": "Scans and verifies the integrity of all protected system files.",
+        "syntax": "sfc /scannow",
+        "example": "sfc /scannow",
+        "expectedResult": "Verifies files and replaces incorrect versions with correct Microsoft versions.",
+        "useCase": "Fixing corrupted Windows system files causing crashes or strange behavior.",
+        "warnings": "Must be run as Administrator."
+    }
+]
