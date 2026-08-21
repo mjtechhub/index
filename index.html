@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,24 +8,26 @@
     <meta name="description" content="Practical IT tutorials, command guides and real-world troubleshooting knowledge.">
     <meta property="og:site_name" content="MJ Tech Hub">
     <meta property="og:title" content="MJ Tech Hub | Learn IT. Solve Problems. Grow Your Skills.">
-    <meta property="og:description" content="Practical IT tutorials, command guides and real-world troubleshooting knowledge.">
+    <meta property="og:description"
+        content="Practical IT tutorials, command guides and real-world troubleshooting knowledge.">
     <meta property="og:image" content="./assets/logo/mj-tech-hub-logo.png">
-    
+
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- CSS -->
     <link rel="stylesheet" href="css/themes.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
-    
+
     <!-- JS -->
     <script src="js/theme.js"></script>
     <script src="js/main.js" defer></script>
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -33,7 +36,7 @@
             <a href="./index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
                 <img src="./assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
             </a>
-            
+
             <!-- Navigation -->
             <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
                 <ul class="nav-links" id="nav-links">
@@ -45,18 +48,20 @@
                     <li><a href="./about.html" class="nav-link" data-page="about.html">About</a></li>
                 </ul>
             </nav>
-            
+
             <!-- Search & Actions -->
             <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
                 <div class="header-search">
                     <i class="fas fa-search"></i>
                     <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
                 </div>
-                
+                <!-- Toggle Dark Mode 
                 <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
                     <i class="fas fa-sun"></i>
                 </button>
-                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    -->
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu"
+                    aria-expanded="false">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -68,10 +73,14 @@
             <div class="hero-inner">
                 <!-- Left Text Content -->
                 <div>
-                    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary);">Learn IT. Solve Problems.</h2>
-                    <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 1.5rem; line-height: 1.1;" class="hero-title-highlight">Grow Your Skills.</h1>
-                    <p style="font-size: 1.1rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 2rem; max-width: 650px;">
-                        Practical tutorials, command guides and real-world solutions for Networking, Windows, Linux, Servers, Security, Cloud & more.
+                    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary);">
+                        Learn IT. Solve Problems.</h2>
+                    <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 1.5rem; line-height: 1.1;"
+                        class="hero-title-highlight">Grow Your Skills.</h1>
+                    <p
+                        style="font-size: 1.1rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 2rem; max-width: 650px;">
+                        Practical tutorials, command guides and real-world solutions for Networking, Windows, Linux,
+                        Servers, Security, Cloud & more.
                     </p>
                     <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 2rem;">
                         <a href="topics.html" class="btn btn-primary">Start Learning</a>
@@ -81,7 +90,7 @@
                         ⭐ New content added regularly
                     </p>
                 </div>
-                
+
                 <!-- Right Hero Image -->
                 <div class="hero-visual">
                     <img src="./assets/hero/mj-tech-hero.png" alt="MJ Tech Hub Hero">
@@ -93,45 +102,57 @@
         <section class="py-4">
             <h2 class="section-title">| BROWSE BY TOPIC</h2>
             <div class="topic-grid">
-                
+
                 <!-- Networking -->
-                <div class="card topic-card topic-accent-networking" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
-                    <img src="./assets/icons/networking.png" alt="Networking" style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
+                <div class="card topic-card topic-accent-networking"
+                    style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
+                    <img src="./assets/icons/networking.png" alt="Networking"
+                        style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
                     <h3 style="font-size: 1rem; margin-bottom: 0; color: var(--text-primary);">Networking</h3>
                     <a href="topics.html" style="margin-top: 0.5rem;">Explore &rarr;</a>
                 </div>
-                
+
                 <!-- Windows -->
-                <div class="card topic-card topic-accent-windows" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
-                    <img src="./assets/icons/windows.png" alt="Windows" style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
+                <div class="card topic-card topic-accent-windows"
+                    style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
+                    <img src="./assets/icons/windows.png" alt="Windows"
+                        style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
                     <h3 style="font-size: 1rem; margin-bottom: 0; color: var(--text-primary);">Windows</h3>
                     <a href="topics.html" style="margin-top: 0.5rem;">Explore &rarr;</a>
                 </div>
-                
+
                 <!-- Linux -->
-                <div class="card topic-card topic-accent-linux" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
-                    <img src="./assets/icons/linux.png" alt="Linux" style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
+                <div class="card topic-card topic-accent-linux"
+                    style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
+                    <img src="./assets/icons/linux.png" alt="Linux"
+                        style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
                     <h3 style="font-size: 1rem; margin-bottom: 0; color: var(--text-primary);">Linux</h3>
                     <a href="topics.html" style="margin-top: 0.5rem;">Explore &rarr;</a>
                 </div>
-                
+
                 <!-- Servers -->
-                <div class="card topic-card topic-accent-servers" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
-                    <img src="./assets/icons/servers.png" alt="Servers" style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
+                <div class="card topic-card topic-accent-servers"
+                    style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
+                    <img src="./assets/icons/servers.png" alt="Servers"
+                        style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
                     <h3 style="font-size: 1rem; margin-bottom: 0; color: var(--text-primary);">Servers</h3>
                     <a href="topics.html" style="margin-top: 0.5rem;">Explore &rarr;</a>
                 </div>
-                
+
                 <!-- Cybersecurity -->
-                <div class="card topic-card topic-accent-cyber" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
-                    <img src="./assets/icons/cybersecurity.png" alt="Cybersecurity" style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
+                <div class="card topic-card topic-accent-cyber"
+                    style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
+                    <img src="./assets/icons/cybersecurity.png" alt="Cybersecurity"
+                        style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
                     <h3 style="font-size: 1rem; margin-bottom: 0; color: var(--text-primary);">Cybersecurity</h3>
                     <a href="topics.html" style="margin-top: 0.5rem;">Explore &rarr;</a>
                 </div>
-                
+
                 <!-- Cloud & AI -->
-                <div class="card topic-card topic-accent-cloud" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
-                    <img src="./assets/icons/cloud-ai.png" alt="Cloud & AI" style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
+                <div class="card topic-card topic-accent-cloud"
+                    style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
+                    <img src="./assets/icons/cloud-ai.png" alt="Cloud & AI"
+                        style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
                     <h3 style="font-size: 1rem; margin-bottom: 0; color: var(--text-primary);">Cloud & AI</h3>
                     <a href="topics.html" style="margin-top: 0.5rem;">Explore &rarr;</a>
                 </div>
@@ -141,73 +162,90 @@
 
         <!-- Bottom Dashboard Grid -->
         <section class="dashboard-grid pb-4">
-            
+
             <!-- Latest Tutorials Column -->
             <div class="card">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
                     <h2 class="section-title" style="margin: 0;">| LATEST TUTORIALS</h2>
                     <a href="topics.html" style="font-size: 0.8rem; font-weight: 600;">View all &rarr;</a>
                 </div>
-                
+
                 <div class="list-card">
-                    <div style="width: 80px; height: 60px; background: #000; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">
+                    <div
+                        style="width: 80px; height: 60px; background: #000; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">
                         <i class="fas fa-terminal"></i>
                     </div>
                     <div style="flex-grow: 1;">
                         <div style="display: flex; justify-content: space-between;">
                             <h4 style="margin: 0; font-size: 0.95rem;">5 CMD Commands Every IT Engineer Should Know</h4>
-                            <span style="font-size: 0.7rem; background: var(--bg-tertiary); color: var(--brand-primary); padding: 2px 6px; border-radius: 4px;">Windows</span>
+                            <span
+                                style="font-size: 0.7rem; background: var(--bg-tertiary); color: var(--brand-primary); padding: 2px 6px; border-radius: 4px;">Windows</span>
                         </div>
-                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0;">Essential CMD commands that help in daily troubleshooting.</p>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
-                            <span><i class="fas fa-clock"></i> 8 min read &nbsp;&nbsp; <i class="fas fa-signal"></i> Beginner</span>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0;">Essential CMD
+                            commands that help in daily troubleshooting.</p>
+                        <div
+                            style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+                            <span><i class="fas fa-clock"></i> 8 min read &nbsp;&nbsp; <i class="fas fa-signal"></i>
+                                Beginner</span>
                             <span>May 20, 2026</span>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="list-card">
-                    <div style="width: 80px; height: 60px; background: #f1f5f9; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: black; font-size: 1.5rem;">
+                    <div
+                        style="width: 80px; height: 60px; background: #f1f5f9; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: black; font-size: 1.5rem;">
                         <i class="fab fa-linux"></i>
                     </div>
                     <div style="flex-grow: 1;">
                         <div style="display: flex; justify-content: space-between;">
                             <h4 style="margin: 0; font-size: 0.95rem;">Linux File Permissions Explained Simply</h4>
-                            <span style="font-size: 0.7rem; background: rgba(16,185,129,0.1); color: var(--success); padding: 2px 6px; border-radius: 4px;">Linux</span>
+                            <span
+                                style="font-size: 0.7rem; background: rgba(16,185,129,0.1); color: var(--success); padding: 2px 6px; border-radius: 4px;">Linux</span>
                         </div>
-                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0;">Understand read, write, execute permissions with examples.</p>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
-                            <span><i class="fas fa-clock"></i> 10 min read &nbsp;&nbsp; <i class="fas fa-signal"></i> Beginner</span>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0;">Understand read,
+                            write, execute permissions with examples.</p>
+                        <div
+                            style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+                            <span><i class="fas fa-clock"></i> 10 min read &nbsp;&nbsp; <i class="fas fa-signal"></i>
+                                Beginner</span>
                             <span>May 18, 2026</span>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="list-card">
-                    <div style="width: 80px; height: 60px; background: #e0f2fe; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--brand-secondary); font-size: 1.5rem;">
+                    <div
+                        style="width: 80px; height: 60px; background: #e0f2fe; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--brand-secondary); font-size: 1.5rem;">
                         <i class="fas fa-network-wired"></i>
                     </div>
                     <div style="flex-grow: 1;">
                         <div style="display: flex; justify-content: space-between;">
                             <h4 style="margin: 0; font-size: 0.95rem;">What is VLAN? How Does It Work?</h4>
-                            <span style="font-size: 0.7rem; background: var(--bg-tertiary); color: var(--brand-primary); padding: 2px 6px; border-radius: 4px;">Networking</span>
+                            <span
+                                style="font-size: 0.7rem; background: var(--bg-tertiary); color: var(--brand-primary); padding: 2px 6px; border-radius: 4px;">Networking</span>
                         </div>
-                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0;">Learn VLANs, types, benefits and real-world uses.</p>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
-                            <span><i class="fas fa-clock"></i> 9 min read &nbsp;&nbsp; <i class="fas fa-signal"></i> Beginner</span>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0;">Learn VLANs,
+                            types, benefits and real-world uses.</p>
+                        <div
+                            style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+                            <span><i class="fas fa-clock"></i> 9 min read &nbsp;&nbsp; <i class="fas fa-signal"></i>
+                                Beginner</span>
                             <span>May 16, 2026</span>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Popular Commands Column -->
             <div class="card">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">
                     <h2 class="section-title" style="margin: 0; color: var(--brand-secondary);">| POPULAR COMMANDS</h2>
                     <a href="commands.html" style="font-size: 0.8rem; font-weight: 600;">View all &rarr;</a>
                 </div>
-                
+
                 <div class="badge-grid">
                     <a href="commands.html" class="cmd-badge">ipconfig /all</a>
                     <a href="commands.html" class="cmd-badge">ping</a>
@@ -221,52 +259,65 @@
                     <a href="commands.html" class="cmd-badge">gpupdate /force</a>
                     <a href="commands.html" class="cmd-badge">driverquery</a>
                 </div>
-                
+
                 <div style="margin-top: 1.5rem; text-align: center; font-size: 0.8rem; color: var(--text-muted);">
-                    <i class="far fa-lightbulb" style="color: var(--warning);"></i> Click any command to view full usage and examples.
+                    <i class="far fa-lightbulb" style="color: var(--warning);"></i> Click any command to view full usage
+                    and examples.
                 </div>
             </div>
-            
+
             <!-- Quiz & Improve Column -->
             <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                 <div class="card quiz-card" style="flex-grow: 1;">
-                    <h2 class="section-title" style="margin: 0 0 1.5rem 0; color: var(--brand-subtle); justify-content: center;">| TEST YOUR KNOWLEDGE</h2>
-                    
-                    <div style="background: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; font-size: 1.5rem; color: var(--brand-subtle); box-shadow: 0 4px 10px rgba(139,92,246,0.2);">
+                    <h2 class="section-title"
+                        style="margin: 0 0 1.5rem 0; color: var(--brand-subtle); justify-content: center;">| TEST YOUR
+                        KNOWLEDGE</h2>
+
+                    <div
+                        style="background: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; font-size: 1.5rem; color: var(--brand-subtle); box-shadow: 0 4px 10px rgba(139,92,246,0.2);">
                         <i class="fas fa-clipboard-check"></i>
                     </div>
-                    
+
                     <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Practice with our quizzes</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Test your IT knowledge and track your progress.</p>
-                    <a href="quiz.html" class="btn btn-primary" style="background: var(--brand-subtle); width: 100%;">Start Quiz &rarr;</a>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Test your IT
+                        knowledge and track your progress.</p>
+                    <a href="quiz.html" class="btn btn-primary"
+                        style="background: var(--brand-subtle); width: 100%;">Start Quiz &rarr;</a>
                 </div>
-                
+
                 <div class="card" style="padding: 1.25rem;">
                     <div style="display: flex; gap: 1rem; align-items: center;">
                         <div style="font-size: 2rem; color: var(--success);"><i class="fas fa-chart-line"></i></div>
                         <div>
                             <h4 style="margin: 0 0 0.25rem 0; font-size: 0.95rem;">IMPROVE EVERY DAY</h4>
-                            <p style="margin: 0; font-size: 0.75rem; color: var(--text-secondary);">Learn. Practice. Become better every day. Keep learning and stay ahead!</p>
+                            <p style="margin: 0; font-size: 0.75rem; color: var(--text-secondary);">Learn. Practice.
+                                Become better every day. Keep learning and stay ahead!</p>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
         </section>
 
         <!-- Instagram Banner -->
         <section class="py-4">
-            <div class="instagram-banner" style="background: var(--bg-secondary); overflow: hidden; position: relative;">
+            <div class="instagram-banner"
+                style="background: var(--bg-secondary); overflow: hidden; position: relative;">
                 <div style="display: flex; align-items: center; gap: 1.5rem; z-index: 2; position: relative;">
-                    <img src="./assets/social/instagram.png" alt="Instagram" style="width: 60px; height: 60px; border-radius: 16px;">
+                    <img src="./assets/social/instagram.png" alt="Instagram"
+                        style="width: 60px; height: 60px; border-radius: 16px;">
                     <div>
-                        <h2 style="margin: 0 0 0.25rem 0; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
-                            Stay Updated! 
+                        <h2
+                            style="margin: 0 0 0.25rem 0; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+                            Stay Updated!
                         </h2>
-                        <p style="margin: 0; color: var(--text-secondary); font-size: 0.95rem;">Follow @themjtechhub on Instagram for daily IT tips, tutorials & updates.</p>
+                        <p style="margin: 0; color: var(--text-secondary); font-size: 0.95rem;">Follow @themjtechhub on
+                            Instagram for daily IT tips, tutorials & updates.</p>
                     </div>
                 </div>
-                <a href="https://instagram.com/themjtechhub" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="background: #E1306C; border: none; white-space: nowrap; z-index: 2; position: relative;">
+                <a href="https://instagram.com/themjtechhub" target="_blank" rel="noopener noreferrer"
+                    class="btn btn-primary"
+                    style="background: #E1306C; border: none; white-space: nowrap; z-index: 2; position: relative;">
                     Follow on Instagram &rarr;
                 </a>
             </div>
@@ -278,18 +329,19 @@
             <div>
                 &copy; 2026 MJ Tech Hub. All rights reserved.
             </div>
-            
+
             <ul class="footer-links">
                 <li><a href="./legal/privacy.html">Privacy Policy</a></li>
                 <li><a href="./legal/terms.html">Terms of Use</a></li>
                 <li><a href="./legal/disclaimer.html">Disclaimer</a></li>
                 <li><a href="./about.html">Contact</a></li>
             </ul>
-            
+
             <div>
                 Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
             </div>
         </div>
     </footer>
 </body>
+
 </html>

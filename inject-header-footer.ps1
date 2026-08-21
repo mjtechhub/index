@@ -88,5 +88,6 @@ function Inject-Layout {
 
 Inject-Layout -Path . -RootPrefix './'
 Inject-Layout -Path ./legal -RootPrefix '../'
+Inject-Layout -Path ./tutorials/networking -RootPrefix '../../'
 
 Write-Host "Injected header and footer globally."

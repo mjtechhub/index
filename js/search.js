@@ -20,13 +20,33 @@ document.addEventListener('DOMContentLoaded', () => {
     ]).then(([topics, tutorials, commands]) => {
         
         // Normalize data for search
-        topics.forEach(t => searchData.push({
-            type: 'Topic',
-            title: t.title,
-            description: t.description,
-            keywords: t.keywords,
-            url: `topics.html`
-        }));
+        if (topics.categories) {
+            topics.categories.forEach(c => {
+                searchData.push({
+                    type: 'Topic',
+                    title: c.name,
+                    description: c.description,
+                    keywords: c.keywords || '',
+                    url: c.url
+                });
+                
+                if (c.sections) {
+                    c.sections.forEach(s => {
+                        if (s.subtopics) {
+                            s.subtopics.forEach(sub => {
+                                searchData.push({
+                                    type: 'Tutorial',
+                                    title: sub.name,
+                                    description: `Learn about ${sub.name} in the ${c.name} category.`,
+                                    keywords: c.name.toLowerCase(),
+                                    url: sub.url
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+        }
         
         tutorials.forEach(t => searchData.push({
             type: 'Tutorial',

@@ -21,6 +21,7 @@
     
     <script src="js/theme.js"></script>
     <script src="js/main.js" defer></script>
+    <script src="js/topics.js" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -63,66 +64,13 @@
         <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-primary);">Explore Topics</h1>
         <p style="color: var(--text-secondary); margin-bottom: 3rem;">Master the fundamentals and advanced concepts across core IT domains.</p>
 
-        <div class="topic-grid topic-grid-3x2" style="margin-bottom: 2rem;">
-            <!-- Networking -->
-            <div class="card topic-card" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 2rem 1.5rem;">
-                <img src="./assets/icons/networking.png" alt="Networking" style="width: 64px; height: 64px; margin-bottom: 1rem;">
-                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Networking</h3>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;">
-                    IP addressing, DNS, DHCP, VLAN, Wi-Fi, VPN, routing, switching, and troubleshooting.
-                </p>
-                <a href="networking.html" class="btn btn-primary" style="width: 100%; text-align: center;">Explore Networking</a>
-            </div>
+        <div class="topic-grid topic-grid-3x2" id="core-topics-grid" style="margin-bottom: 3rem;">
+            <!-- Rendered by js/topics.js -->
+        </div>
 
-            <!-- Windows -->
-            <div class="card topic-card" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 2rem 1.5rem;">
-                <img src="./assets/icons/windows.png" alt="Windows" style="width: 64px; height: 64px; margin-bottom: 1rem;">
-                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Windows</h3>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;">
-                    CMD, PowerShell, Windows administration, system utilities, and Group Policy.
-                </p>
-                <a href="windows.html" class="btn btn-primary" style="width: 100%; text-align: center;">Explore Windows</a>
-            </div>
-
-            <!-- Linux -->
-            <div class="card topic-card" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 2rem 1.5rem;">
-                <img src="./assets/icons/linux.png" alt="Linux" style="width: 64px; height: 64px; margin-bottom: 1rem;">
-                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Linux</h3>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;">
-                    Essential commands, filesystem, permissions, services, processes, and scripting.
-                </p>
-                <a href="linux.html" class="btn btn-primary" style="width: 100%; text-align: center;">Explore Linux</a>
-            </div>
-
-            <!-- Servers -->
-            <div class="card topic-card" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 2rem 1.5rem;">
-                <img src="./assets/icons/servers.png" alt="Servers" style="width: 64px; height: 64px; margin-bottom: 1rem;">
-                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Servers</h3>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;">
-                    Windows Server, Linux Server, Active Directory, virtualization, Proxmox, and VMware.
-                </p>
-                <a href="servers.html" class="btn btn-primary" style="width: 100%; text-align: center;">Explore Servers</a>
-            </div>
-
-            <!-- Cybersecurity -->
-            <div class="card topic-card" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 2rem 1.5rem;">
-                <img src="./assets/icons/cybersecurity.png" alt="Cybersecurity" style="width: 64px; height: 64px; margin-bottom: 1rem;">
-                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Cybersecurity</h3>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;">
-                    Firewalls, MFA, phishing, malware, endpoint security, and best practices.
-                </p>
-                <a href="cybersecurity.html" class="btn btn-primary" style="width: 100%; text-align: center;">Explore Cybersecurity</a>
-            </div>
-
-            <!-- Cloud & AI -->
-            <div class="card topic-card" style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 2rem 1.5rem;">
-                <img src="./assets/icons/cloud-ai.png" alt="Cloud & AI" style="width: 64px; height: 64px; margin-bottom: 1rem;">
-                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">Cloud & AI</h3>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;">
-                    AWS, Azure, cloud services, AI tools, automation, and modern IT concepts.
-                </p>
-                <a href="cloud.html" class="btn btn-primary" style="width: 100%; text-align: center;">Explore Cloud & AI</a>
-            </div>
+        <h2 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);">More IT Topics</h2>
+        <div class="topic-grid" id="more-topics-grid" style="margin-bottom: 2rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+            <!-- Rendered by js/topics.js -->
         </div>
     </main>
     <!-- Footer -->
