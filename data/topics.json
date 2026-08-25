@@ -109,13 +109,25 @@
                     ]
                 },
                 {
-                    "name": "VLAN",
+                    "name": "Switching & VLAN",
                     "subtopics": [
                         {
                             "id": "what-is-vlan",
                             "name": "What Is VLAN?",
                             "level": "Intermediate",
                             "url": "tutorials/networking/what-is-vlan.html"
+                        },
+                        {
+                            "id": "access-port-vs-trunk-port",
+                            "name": "Access Port vs Trunk Port",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/access-port-vs-trunk-port.html"
+                        },
+                        {
+                            "id": "spanning-tree-protocol-explained",
+                            "name": "Spanning Tree Protocol (STP) Explained",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/spanning-tree-protocol-explained.html"
                         }
                     ]
                 },
@@ -123,10 +135,28 @@
                     "name": "Routing",
                     "subtopics": [
                         {
+                            "id": "what-is-routing",
+                            "name": "What Is Routing?",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/what-is-routing.html"
+                        },
+                        {
+                            "id": "routing-table-explained",
+                            "name": "Routing Table Explained",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/routing-table-explained.html"
+                        },
+                        {
                             "id": "what-is-a-default-gateway",
                             "name": "What Is a Default Gateway?",
                             "level": "Beginner",
                             "url": "tutorials/networking/what-is-a-default-gateway.html"
+                        },
+                        {
+                            "id": "static-vs-dynamic-routing",
+                            "name": "Static vs Dynamic Routing",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/static-vs-dynamic-routing.html"
                         },
                         {
                             "id": "what-is-arp",
@@ -139,6 +169,23 @@
                             "name": "What Is NAT?",
                             "level": "Intermediate",
                             "url": "tutorials/networking/what-is-nat.html"
+                        },
+                        {
+                            "id": "icmp-explained",
+                            "name": "ICMP Explained",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/icmp-explained.html"
+                        }
+                    ]
+                },
+                {
+                    "name": "Wireless",
+                    "subtopics": [
+                        {
+                            "id": "wi-fi-2-4-ghz-vs-5-ghz-vs-6-ghz",
+                            "name": "Wi-Fi: 2.4 GHz vs 5 GHz vs 6 GHz",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/wi-fi-2-4-ghz-vs-5-ghz-vs-6-ghz.html"
                         }
                     ]
                 },
@@ -156,6 +203,24 @@
                             "name": "Traceroute Explained",
                             "level": "Intermediate",
                             "url": "tutorials/networking/traceroute-explained.html"
+                        },
+                        {
+                            "id": "dns-troubleshooting-guide",
+                            "name": "DNS Troubleshooting Guide",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/dns-troubleshooting-guide.html"
+                        },
+                        {
+                            "id": "dhcp-troubleshooting-guide",
+                            "name": "DHCP Troubleshooting Guide",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/dhcp-troubleshooting-guide.html"
+                        },
+                        {
+                            "id": "network-troubleshooting-workflow",
+                            "name": "Network Troubleshooting Workflow",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/network-troubleshooting-workflow.html"
                         }
                     ]
                 },

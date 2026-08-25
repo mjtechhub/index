@@ -1,4 +1,4 @@
-﻿[
+[
     {
         "id":  "tcp-vs-udp",
         "title":  "TCP vs UDP",
@@ -250,5 +250,125 @@
         "url":  "tutorials/networking/what-is-dhcp.html",
         "publishedAt":  "UNKNOWN",
         "updatedAt":  "UNKNOWN"
+    },
+    {
+        "id":  "what-is-routing",
+        "title":  "What Is Routing?",
+        "description":  "Learn how routers forward packets between different IP networks.",
+        "category":  "Networking",
+        "level":  "Beginner",
+        "readTime":  "5 min read",
+        "keywords":  "networking, routing, router, gateway, ip forwarding",
+        "url":  "tutorials/networking/what-is-routing.html",
+        "publishedAt":  "2026-08-25",
+        "updatedAt":  "2026-08-25"
+    },
+    {
+        "id":  "routing-table-explained",
+        "title":  "Routing Table Explained",
+        "description":  "Understand routing tables, next-hop, and longest prefix matching.",
+        "category":  "Networking",
+        "level":  "Beginner",
+        "readTime":  "6 min read",
+        "keywords":  "networking, routing table, route print, longest prefix match",
+        "url":  "tutorials/networking/routing-table-explained.html",
+        "publishedAt":  "2026-08-25",
+        "updatedAt":  "2026-08-25"
+    },
+    {
+        "id":  "static-vs-dynamic-routing",
+        "title":  "Static vs Dynamic Routing",
+        "description":  "Learn the differences between static routing and dynamic routing protocols.",
+        "category":  "Networking",
+        "level":  "Intermediate",
+        "readTime":  "6 min read",
+        "keywords":  "networking, static routing, dynamic routing, ospf, bgp",
+        "url":  "tutorials/networking/static-vs-dynamic-routing.html",
+        "publishedAt":  "2026-08-25",
+        "updatedAt":  "2026-08-25"
+    },
+    {
+        "id":  "icmp-explained",
+        "title":  "ICMP Explained",
+        "description":  "Understand the Internet Control Message Protocol used for network diagnostics.",
+        "category":  "Networking",
+        "level":  "Beginner",
+        "readTime":  "5 min read",
+        "keywords":  "networking, icmp, ping, traceroute, diagnostics",
+        "url":  "tutorials/networking/icmp-explained.html",
+        "publishedAt":  "2026-08-25",
+        "updatedAt":  "2026-08-25"
+    },
+    {
+        "id":  "access-port-vs-trunk-port",
+        "title":  "Access Port vs Trunk Port",
+        "description":  "Learn the difference between access ports and trunk ports in VLAN configurations.",
+        "category":  "Networking",
+        "level":  "Intermediate",
+        "readTime":  "5 min read",
+        "keywords":  "networking, vlan, access port, trunk port, 802.1q, switch",
+        "url":  "tutorials/networking/access-port-vs-trunk-port.html",
+        "publishedAt":  "2026-08-25",
+        "updatedAt":  "2026-08-25"
+    },
+    {
+        "id":  "spanning-tree-protocol-explained",
+        "title":  "Spanning Tree Protocol (STP) Explained",
+        "description":  "Learn how STP prevents deadly Layer 2 loops in Ethernet networks.",
+        "category":  "Networking",
+        "level":  "Intermediate",
+        "readTime":  "6 min read",
+        "keywords":  "networking, stp, spanning tree protocol, loop prevention, rstp",
+        "url":  "tutorials/networking/spanning-tree-protocol-explained.html",
+        "publishedAt":  "2026-08-25",
+        "updatedAt":  "2026-08-25"
+    },
+    {
+        "id":  "dns-troubleshooting-guide",
+        "title":  "DNS Troubleshooting Guide",
+        "description":  "A practical step-by-step guide to troubleshooting DNS name resolution issues.",
+        "category":  "Networking",
+        "level":  "Intermediate",
+        "readTime":  "8 min read",
+        "keywords":  "networking, dns, troubleshooting, nslookup, resolve-dnsname",
+        "url":  "tutorials/networking/dns-troubleshooting-guide.html",
+        "publishedAt":  "2026-08-25",
+        "updatedAt":  "2026-08-25"
+    },
+    {
+        "id":  "dhcp-troubleshooting-guide",
+        "title":  "DHCP Troubleshooting Guide",
+        "description":  "Learn how to diagnose and resolve DHCP IP assignment failures.",
+        "category":  "Networking",
+        "level":  "Intermediate",
+        "readTime":  "8 min read",
+        "keywords":  "networking, dhcp, troubleshooting, apipa, ipconfig, release, renew",
+        "url":  "tutorials/networking/dhcp-troubleshooting-guide.html",
+        "publishedAt":  "2026-08-25",
+        "updatedAt":  "2026-08-25"
+    },
+    {
+        "id":  "wi-fi-2-4-ghz-vs-5-ghz-vs-6-ghz",
+        "title":  "Wi-Fi: 2.4 GHz vs 5 GHz vs 6 GHz",
+        "description":  "Compare the physical characteristics, range, and capacity of different Wi-Fi bands.",
+        "category":  "Networking",
+        "level":  "Beginner",
+        "readTime":  "6 min read",
+        "keywords":  "networking, wifi, wireless, 2.4 ghz, 5 ghz, 6 ghz, bands",
+        "url":  "tutorials/networking/wi-fi-2-4-ghz-vs-5-ghz-vs-6-ghz.html",
+        "publishedAt":  "2026-08-25",
+        "updatedAt":  "2026-08-25"
+    },
+    {
+        "id":  "network-troubleshooting-workflow",
+        "title":  "Network Troubleshooting Workflow",
+        "description":  "A structured workflow for isolating and resolving complex network connectivity problems.",
+        "category":  "Networking",
+        "level":  "Intermediate",
+        "readTime":  "10 min read",
+        "keywords":  "networking, troubleshooting, workflow, diagnostics, ping, tracert",
+        "url":  "tutorials/networking/network-troubleshooting-workflow.html",
+        "publishedAt":  "2026-08-25",
+        "updatedAt":  "2026-08-25"
     }
 ]

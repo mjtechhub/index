@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static vs Dynamic Routing | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <!-- Logo -->
+            <a href="../../index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
+                <img src="../../assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
+            </a>
+            
+            <!-- Navigation -->
+            <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="../../index.html" class="nav-link" data-page="index.html">Home</a></li>
+                    <li><a href="../../topics.html" class="nav-link" data-page="topics.html">Topics</a></li>
+                    <li><a href="../../commands.html" class="nav-link" data-page="commands.html">Commands</a></li>
+                    <li><a href="../../quiz.html" class="nav-link" data-page="quiz.html">Quiz</a></li>
+                    <li><a href="../../resources.html" class="nav-link" data-page="resources.html">Resources</a></li>
+                    <li><a href="../../about.html" class="nav-link" data-page="about.html">About</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Search & Actions -->
+            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
+                </div>
+                
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div style="margin-bottom: 1rem; font-size: 0.85rem; color: var(--text-muted);">
+            <a href="../../index.html" style="color: var(--text-secondary);">Home</a> &gt; 
+            <a href="../../topics.html" style="color: var(--text-secondary);">Topics</a> &gt; 
+            <a href="../../networking.html" style="color: var(--text-secondary);">Networking</a> &gt; 
+            <span style="color: var(--brand-primary);">Static vs Dynamic Routing</span>
+        </div>
+        
+        <span style="font-size: 0.8rem; background: var(--bg-tertiary); color: var(--brand-primary); padding: 4px 10px; border-radius: 4px; font-weight: 600; text-transform: uppercase;">Networking</span>
+        <h1 style="font-size: 2.5rem; margin: 1rem 0; color: var(--text-primary);">Static vs Dynamic Routing</h1>
+        
+        <div style="display: flex; gap: 1rem; margin-bottom: 2rem; font-size: 0.85rem; color: var(--text-muted);">
+            <span><i class="fas fa-signal" style="color: var(--warning);"></i> Intermediate</span>
+            <span><i class="fas fa-clock"></i> 6 min read</span>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>Routers must know where networks are located to forward traffic properly. They learn these paths either through manual configuration (Static Routing) or by learning them from other routers (Dynamic Routing).</p>
+            
+            <h3>Static Routing</h3>
+            <p>Static routes are paths manually configured by a network administrator. The administrator types in the destination network and the next-hop IP address directly into the router.</p>
+            
+            <p><strong>Advantages:</strong></p>
+            <ul>
+                <li>Simple to understand and implement in small networks.</li>
+                <li>Highly predictable; traffic always takes the exact specified path.</li>
+                <li>Low protocol overhead since routers don't exchange routing updates.</li>
+            </ul>
+            
+            <p><strong>Limitations:</strong></p>
+            <ul>
+                <li>Manual maintenance. If a link goes down or a new network is added, the administrator must manually update the configuration on all affected routers.</li>
+                <li>Does not automatically adapt to topology changes or failures.</li>
+            </ul>
+            <p>A typical use case for static routing is a small branch network pointing a default route to its ISP gateway.</p>
+
+            <h3>Dynamic Routing</h3>
+            <p>Dynamic routing relies on routing protocols that allow routers to exchange routing information automatically. The routers calculate the best path based on this shared information and update their routing tables dynamically when changes occur.</p>
+            
+            <p><strong>Examples of Dynamic Routing Protocols:</strong></p>
+            <ul>
+                <li><strong>OSPF (Open Shortest Path First):</strong> An interior gateway protocol heavily used in large enterprise networks to quickly adapt to link failures and calculate shortest paths.</li>
+                <li><strong>BGP (Border Gateway Protocol):</strong> The protocol that runs the Internet, used to exchange routing information between massive autonomous systems and ISPs.</li>
+                <li><strong>RIP (Routing Information Protocol):</strong> Historically used in older, smaller networks, but generally considered obsolete for modern complex environments.</li>
+            </ul>
+
+            <h3>Comparison Table</h3>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Static Routing</th>
+                            <th>Dynamic Routing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Configuration</strong></td>
+                            <td>Manual</td>
+                            <td>Automated (via protocols)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Scalability</strong></td>
+                            <td>Poor in large networks</td>
+                            <td>Excellent for enterprise & Internet</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Adaptability</strong></td>
+                            <td>No automatic failover</td>
+                            <td>Adapts to link failures dynamically</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Overhead</strong></td>
+                            <td>Zero protocol overhead</td>
+                            <td>Requires CPU, RAM, and bandwidth</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Best For</strong></td>
+                            <td>Small networks, stub networks</td>
+                            <td>Large enterprise, ISP routing</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>Note: <em>Dynamic routing is not always "better."</em> Many enterprise networks use a hybrid approach, using OSPF for internal routes and a static default route for their main internet connection.</p>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='routing-table-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Routing Table Explained</a>
+            <a href='icmp-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>ICMP Explained &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div>
+                &copy; 2026 MJ Tech Hub. All rights reserved.
+            </div>
+            
+            <ul class="footer-links">
+                <li><a href="../../legal/privacy.html">Privacy Policy</a></li>
+                <li><a href="../../legal/terms.html">Terms of Use</a></li>
+                <li><a href="../../legal/disclaimer.html">Disclaimer</a></li>
+                <li><a href="../../about.html">Contact</a></li>
+            </ul>
+            
+            <div>
+                Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

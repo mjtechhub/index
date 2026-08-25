@@ -539,4 +539,10 @@ input:focus, textarea:focus, select:focus {
 
 .lesson-content pre {
     overflow-x: auto;
+    max-width: 100%;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    max-width: 100%;
 }

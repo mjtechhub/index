@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Troubleshooting Workflow | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <!-- Logo -->
+            <a href="../../index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
+                <img src="../../assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
+            </a>
+            
+            <!-- Navigation -->
+            <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="../../index.html" class="nav-link" data-page="index.html">Home</a></li>
+                    <li><a href="../../topics.html" class="nav-link" data-page="topics.html">Topics</a></li>
+                    <li><a href="../../commands.html" class="nav-link" data-page="commands.html">Commands</a></li>
+                    <li><a href="../../quiz.html" class="nav-link" data-page="quiz.html">Quiz</a></li>
+                    <li><a href="../../resources.html" class="nav-link" data-page="resources.html">Resources</a></li>
+                    <li><a href="../../about.html" class="nav-link" data-page="about.html">About</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Search & Actions -->
+            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
+                </div>
+                
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div style="margin-bottom: 1rem; font-size: 0.85rem; color: var(--text-muted);">
+            <a href="../../index.html" style="color: var(--text-secondary);">Home</a> &gt; 
+            <a href="../../topics.html" style="color: var(--text-secondary);">Topics</a> &gt; 
+            <a href="../../networking.html" style="color: var(--text-secondary);">Networking</a> &gt; 
+            <span style="color: var(--brand-primary);">Network Troubleshooting Workflow</span>
+        </div>
+        
+        <span style="font-size: 0.8rem; background: var(--bg-tertiary); color: var(--brand-primary); padding: 4px 10px; border-radius: 4px; font-weight: 600; text-transform: uppercase;">Networking</span>
+        <h1 style="font-size: 2.5rem; margin: 1rem 0; color: var(--text-primary); word-break: break-word;">Network Troubleshooting Workflow</h1>
+        
+        <div style="display: flex; gap: 1rem; margin-bottom: 2rem; font-size: 0.85rem; color: var(--text-muted);">
+            <span><i class="fas fa-signal" style="color: var(--warning);"></i> Intermediate</span>
+            <span><i class="fas fa-clock"></i> 10 min read</span>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>Effective network troubleshooting relies on a structured, layer-by-layer methodology (often following the <a href="osi-model-explained.html">OSI Model</a>) rather than guessing. Follow this workflow to isolate and identify connectivity issues efficiently.</p>
+            
+            <h3>The Initial Isolation Phase</h3>
+            <p>Before touching the command line, ask critical isolation questions:</p>
+            <ul>
+                <li>Is it happening to just <strong>one device</strong>, or multiple?</li>
+                <li>Is it affecting an entire <strong>VLAN</strong> or physical switch?</li>
+                <li>Is it limited to <strong>one site</strong> or the whole company?</li>
+                <li>Is the user failing to reach <strong>one specific hostname</strong>, or everything?</li>
+                <li>Is it failing on <strong>one protocol</strong> (e.g., HTTPS works, but SSH fails)?</li>
+            </ul>
+
+            <h3>Step-by-Step Diagnostic Workflow</h3>
+            
+            <p><strong>STEP 1 &mdash; Physical / Wi-Fi Layer</strong></p>
+            <p>Check the hardware and link status. Is the Ethernet cable plugged in securely? Are the link lights active on the switch port and PC? For wireless, check the SSID and signal strength.</p>
+            
+            <p><strong>STEP 2 &mdash; Local IP Configuration</strong></p>
+            <p>Verify what the OS actually thinks its networking state is. Check the IP address, subnet mask, gateway, and DNS servers.</p>
+            <pre><code>ipconfig /all</code></pre>
+            <p>If you see an APIPA address or a blank config, refer to the <a href="dhcp-troubleshooting-guide.html">DHCP troubleshooting guide</a>.</p>
+            
+            <p><strong>STEP 3 &mdash; Local Stack</strong></p>
+            <p>Ensure the local TCP/IP stack and NIC are functioning properly. (Note: Modern OSs sometimes skip this, but it's a solid fundamental step).</p>
+            <pre><code>ping 127.0.0.1</code></pre>
+            
+            <p><strong>STEP 4 &mdash; Local Network (Gateway Reachability)</strong></p>
+            <p>Can you reach your own router? Ping the Default Gateway IP found in Step 2. If this fails, the problem is on the local switch, VLAN, or the gateway is down.</p>
+            <pre><code>ping &lt;gateway-ip&gt;</code></pre>
+            <p>You can also check your local ARP cache to verify MAC address resolution:</p>
+            <pre><code>arp -a</code></pre>
+            
+            <p><strong>STEP 5 &mdash; Routing</strong></p>
+            <p>If you have multiple network interfaces or VPNs, check the routing table to ensure traffic is leaving out the correct interface.</p>
+            <pre><code>route print</code></pre>
+            
+            <p><strong>STEP 6 &mdash; Remote IP Connectivity</strong></p>
+            <p>Can you route outside the local network? Ping a known, highly reliable public IP address (assuming ICMP is allowed out of your network).</p>
+            <pre><code>ping 1.1.1.1</code></pre>
+            <p>If the gateway responds but remote IPs do not, check the firewall, ISP connection, or external routing.</p>
+            
+            <p><strong>STEP 7 &mdash; DNS Resolution</strong></p>
+            <p>If pinging an IP works but browsing to a website fails, test name resolution. See the <a href="dns-troubleshooting-guide.html">DNS troubleshooting guide</a> for details.</p>
+            <pre><code>nslookup example.com
+Resolve-DnsName example.com</code></pre>
+            
+            <p><strong>STEP 8 &mdash; Path Tracing</strong></p>
+            <p>If connectivity is dropping somewhere in the middle, or routing in a complex WAN is suspect, trace the path to see where it stops or loops.</p>
+            <pre><code>tracert example.com
+pathping example.com</code></pre>
+            
+            <p><strong>STEP 9 &mdash; Service / Port Layer</strong></p>
+            <p>Just because you can <a href="ping-explained.html">ping</a> a server does not mean the application service (like a web server or database) is running and allowed through the firewall. Test specific TCP ports.</p>
+            <pre><code>Test-NetConnection example.com -Port 443</code></pre>
+            
+            <p><strong>STEP 10 &mdash; Application Layer</strong></p>
+            <p>If all lower layers succeed, the issue resides in the application itself. Check web browsers, application proxies, host-based firewalls, SSL certificates, or the service configuration on the destination server.</p>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='wi-fi-2-4-ghz-vs-5-ghz-vs-6-ghz.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Wi-Fi: 2.4 GHz vs 5 GHz vs 6 GHz</a>
+            <a href='ping-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>Ping Explained &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div>
+                &copy; 2026 MJ Tech Hub. All rights reserved.
+            </div>
+            
+            <ul class="footer-links">
+                <li><a href="../../legal/privacy.html">Privacy Policy</a></li>
+                <li><a href="../../legal/terms.html">Terms of Use</a></li>
+                <li><a href="../../legal/disclaimer.html">Disclaimer</a></li>
+                <li><a href="../../about.html">Contact</a></li>
+            </ul>
+            
+            <div>
+                Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

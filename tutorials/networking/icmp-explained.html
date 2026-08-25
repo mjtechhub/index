@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICMP Explained: Ping, Traceroute & Network Errors | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <!-- Logo -->
+            <a href="../../index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
+                <img src="../../assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
+            </a>
+            
+            <!-- Navigation -->
+            <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="../../index.html" class="nav-link" data-page="index.html">Home</a></li>
+                    <li><a href="../../topics.html" class="nav-link" data-page="topics.html">Topics</a></li>
+                    <li><a href="../../commands.html" class="nav-link" data-page="commands.html">Commands</a></li>
+                    <li><a href="../../quiz.html" class="nav-link" data-page="quiz.html">Quiz</a></li>
+                    <li><a href="../../resources.html" class="nav-link" data-page="resources.html">Resources</a></li>
+                    <li><a href="../../about.html" class="nav-link" data-page="about.html">About</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Search & Actions -->
+            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
+                </div>
+                
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div style="margin-bottom: 1rem; font-size: 0.85rem; color: var(--text-muted);">
+            <a href="../../index.html" style="color: var(--text-secondary);">Home</a> &gt; 
+            <a href="../../topics.html" style="color: var(--text-secondary);">Topics</a> &gt; 
+            <a href="../../networking.html" style="color: var(--text-secondary);">Networking</a> &gt; 
+            <span style="color: var(--brand-primary);">ICMP Explained</span>
+        </div>
+        
+        <span style="font-size: 0.8rem; background: var(--bg-tertiary); color: var(--brand-primary); padding: 4px 10px; border-radius: 4px; font-weight: 600; text-transform: uppercase;">Networking</span>
+        <h1 style="font-size: 2.5rem; margin: 1rem 0; color: var(--text-primary);">ICMP Explained</h1>
+        
+        <div style="display: flex; gap: 1rem; margin-bottom: 2rem; font-size: 0.85rem; color: var(--text-muted);">
+            <span><i class="fas fa-signal" style="color: var(--success);"></i> Beginner</span>
+            <span><i class="fas fa-clock"></i> 5 min read</span>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>The <strong>Internet Control Message Protocol (ICMP)</strong> is a core protocol used by network devices, like routers, to send diagnostic information and error messages regarding network connectivity.</p>
+            
+            <h3>Key Characteristics of ICMP</h3>
+            <p>Unlike application data streams, ICMP is not used to exchange bulk data between systems. More importantly, <strong>ICMP does NOT use TCP or UDP port numbers.</strong> It sits directly on top of the IP layer (Protocol Number 1), meaning terms like "ICMP port 80" are technically inaccurate.</p>
+
+            <h3>Common ICMP Message Types</h3>
+            <p>ICMP communicates using specific "Types" and "Codes." The most common are:</p>
+            <ul>
+                <li><strong>Echo Request (Type 8) & Echo Reply (Type 0):</strong> These are the messages used by the <a href="ping-explained.html">Ping</a> command. A device sends an Echo Request, and the target responds with an Echo Reply if it is reachable.</li>
+                <li><strong>Destination Unreachable (Type 3):</strong> Sent by a router when it cannot forward a packet to its final destination (e.g., if there is no route or a firewall blocks it).</li>
+                <li><strong>Time Exceeded (Type 11):</strong> Used heavily by <a href="traceroute-explained.html">Traceroute</a>. It is sent by a router when a packet's Time-To-Live (TTL) hits zero, causing the packet to be dropped.</li>
+            </ul>
+
+            <h3>Diagnostic Tools Using ICMP</h3>
+            <p>Administrators rely on ICMP daily using commands such as:</p>
+            <pre><code>ping
+tracert    (Windows)
+traceroute (Linux/macOS)
+pathping   (Windows)</code></pre>
+
+            <h3>ICMP and Firewalls</h3>
+            <p>For security reasons, some administrators completely block all ICMP traffic. While it's true you don't always want your servers responding to random pings from the internet, completely blocking all ICMP can negatively affect diagnostics and break essential network functions (like Path MTU Discovery). It is generally best practice to selectively allow specific ICMP types (like Time Exceeded and Destination Unreachable) while filtering others based on network policy, rather than dropping ICMP entirely.</p>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='static-vs-dynamic-routing.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Static vs Dynamic Routing</a>
+            <a href='access-port-vs-trunk-port.html' class='btn btn-secondary' style='border:none; padding: 0;'>Access Port vs Trunk Port &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div>
+                &copy; 2026 MJ Tech Hub. All rights reserved.
+            </div>
+            
+            <ul class="footer-links">
+                <li><a href="../../legal/privacy.html">Privacy Policy</a></li>
+                <li><a href="../../legal/terms.html">Terms of Use</a></li>
+                <li><a href="../../legal/disclaimer.html">Disclaimer</a></li>
+                <li><a href="../../about.html">Contact</a></li>
+            </ul>
+            
+            <div>
+                Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
