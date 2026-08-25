@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is NAT? | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <!-- Logo -->
+            <a href="../../index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
+                <img src="../../assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
+            </a>
+            
+            <!-- Navigation -->
+            <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="../../index.html" class="nav-link" data-page="index.html">Home</a></li>
+                    <li><a href="../../topics.html" class="nav-link" data-page="topics.html">Topics</a></li>
+                    <li><a href="../../commands.html" class="nav-link" data-page="commands.html">Commands</a></li>
+                    <li><a href="../../quiz.html" class="nav-link" data-page="quiz.html">Quiz</a></li>
+                    <li><a href="../../resources.html" class="nav-link" data-page="resources.html">Resources</a></li>
+                    <li><a href="../../about.html" class="nav-link" data-page="about.html">About</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Search & Actions -->
+            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
+                </div>
+                
+                <!-- Toggle Dark Mode removed 
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-sun"></i>
+                </button>
+                -->
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div style="margin-bottom: 1rem; font-size: 0.85rem; color: var(--text-muted);">
+            <a href="../../index.html" style="color: var(--text-secondary);">Home</a> &gt; 
+            <a href="../../topics.html" style="color: var(--text-secondary);">Topics</a> &gt; 
+            <a href="../../networking.html" style="color: var(--text-secondary);">Networking</a> &gt; 
+            <span style="color: var(--brand-primary);">What Is NAT?</span>
+        </div>
+        
+        <span style="font-size: 0.8rem; background: var(--bg-tertiary); color: var(--brand-primary); padding: 4px 10px; border-radius: 4px; font-weight: 600; text-transform: uppercase;">Networking</span>
+        <h1 style="font-size: 2.5rem; margin: 1rem 0; color: var(--text-primary);">What Is NAT?</h1>
+        
+        <div style="display: flex; gap: 1rem; margin-bottom: 2rem; font-size: 0.85rem; color: var(--text-muted);">
+            <span><i class="fas fa-signal" style="color: var(--success);"></i> Intermediate</span>
+            <span><i class="fas fa-clock"></i> 8 min read</span>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+<p><strong>Network Address Translation (NAT)</strong> is a process used by routers to modify the source or destination IP addresses in packet headers while they are in transit.</p>
+<h2>Why is NAT used?</h2>
+<p>The primary reason NAT exists is IPv4 address exhaustion. There are simply not enough public IPv4 addresses for every device on Earth. NAT allows an entire private network to share a single public IP address to access the internet.</p>
+<h2>Example Scenario</h2>
+<p>Imagine your laptop on a home network:</p>
+<ul>
+<li><strong>Private Client IP:</strong> 192.168.1.10</li>
+<li><strong>Router Public IP:</strong> 203.0.113.5 (from your ISP)</li>
+</ul>
+<p>When your laptop requests a web page, the packet leaves the laptop with a source IP of 192.168.1.10. When it hits the router, the router uses NAT to change the source IP to its own public IP (203.0.113.5) before sending it to the Internet. When the web server replies to 203.0.113.5, the router remembers the connection, translates the destination IP back to 192.168.1.10, and forwards it to your laptop.</p>
+<h3>Port Address Translation (PAT)</h3>
+<p>To keep track of multiple devices sharing one public IP simultaneously, the router translates both the IP address and the source port. This specific type of NAT is called <strong>PAT (Port Address Translation)</strong> or NAT Overloading, and it is what virtually all home and office routers use today.</p>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <span></span>
+            <span></span>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div>
+                &copy; 2026 MJ Tech Hub. All rights reserved.
+            </div>
+            
+            <ul class="footer-links">
+                <li><a href="../../legal/privacy.html">Privacy Policy</a></li>
+                <li><a href="../../legal/terms.html">Terms of Use</a></li>
+                <li><a href="../../legal/disclaimer.html">Disclaimer</a></li>
+                <li><a href="../../about.html">Contact</a></li>
+            </ul>
+            
+            <div>
+                Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

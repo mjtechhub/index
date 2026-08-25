@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSI Model Explained | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <!-- Logo -->
+            <a href="../../index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
+                <img src="../../assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
+            </a>
+            
+            <!-- Navigation -->
+            <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="../../index.html" class="nav-link" data-page="index.html">Home</a></li>
+                    <li><a href="../../topics.html" class="nav-link" data-page="topics.html">Topics</a></li>
+                    <li><a href="../../commands.html" class="nav-link" data-page="commands.html">Commands</a></li>
+                    <li><a href="../../quiz.html" class="nav-link" data-page="quiz.html">Quiz</a></li>
+                    <li><a href="../../resources.html" class="nav-link" data-page="resources.html">Resources</a></li>
+                    <li><a href="../../about.html" class="nav-link" data-page="about.html">About</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Search & Actions -->
+            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
+                </div>
+                
+                <!-- Toggle Dark Mode removed 
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-sun"></i>
+                </button>
+                -->
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div style="margin-bottom: 1rem; font-size: 0.85rem; color: var(--text-muted);">
+            <a href="../../index.html" style="color: var(--text-secondary);">Home</a> &gt; 
+            <a href="../../topics.html" style="color: var(--text-secondary);">Topics</a> &gt; 
+            <a href="../../networking.html" style="color: var(--text-secondary);">Networking</a> &gt; 
+            <span style="color: var(--brand-primary);">OSI Model Explained</span>
+        </div>
+        
+        <span style="font-size: 0.8rem; background: var(--bg-tertiary); color: var(--brand-primary); padding: 4px 10px; border-radius: 4px; font-weight: 600; text-transform: uppercase;">Networking</span>
+        <h1 style="font-size: 2.5rem; margin: 1rem 0; color: var(--text-primary);">OSI Model Explained</h1>
+        
+        <div style="display: flex; gap: 1rem; margin-bottom: 2rem; font-size: 0.85rem; color: var(--text-muted);">
+            <span><i class="fas fa-signal" style="color: var(--success);"></i> Intermediate</span>
+            <span><i class="fas fa-clock"></i> 12 min read</span>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+<p>The <strong>Open Systems Interconnection (OSI) model</strong> is a conceptual framework used to understand how different network protocols and technologies interact. It divides network communication into seven distinct layers.</p>
+<h2>The 7 Layers</h2>
+<ol>
+<li><strong>Physical (Layer 1):</strong> Deals with physical hardware—cables, switches, electrical signals, light, and radio frequencies.</li>
+<li><strong>Data Link (Layer 2):</strong> Transfers data between adjacent network nodes. MAC addresses and basic switches operate here.</li>
+<li><strong>Network (Layer 3):</strong> Handles routing data across multiple networks. IP addresses and routers operate here.</li>
+<li><strong>Transport (Layer 4):</strong> Ensures reliable data delivery and handles flow control. TCP and UDP operate here.</li>
+<li><strong>Session (Layer 5):</strong> Manages establishing, maintaining, and terminating sessions between applications.</li>
+<li><strong>Presentation (Layer 6):</strong> Formats, encrypts, and compresses data so it can be understood by the application.</li>
+<li><strong>Application (Layer 7):</strong> The interface used by network applications. HTTP, FTP, and DNS operate here.</li>
+</ol>
+<h2>Using the OSI Model for Troubleshooting</h2>
+<p>IT professionals use the OSI model to isolate problems. A common strategy is to work "bottom-up":</p>
+<ul>
+<li><em>Layer 1 check:</em> Is the cable plugged in? Is there power?</li>
+<li><em>Layer 2 check:</em> Is the switch port active? Is the MAC address learned?</li>
+<li><em>Layer 3 check:</em> Can you ping the Default Gateway? (IP routing)</li>
+<li><em>Layer 4 check:</em> Is a firewall blocking TCP port 443?</li>
+<li><em>Layer 7 check:</em> Is the web server software actually running?</li>
+</ul>
+<p>By logically checking each layer, you can avoid wasting time fixing a web server (Layer 7) when the actual problem is a broken cable (Layer 1).</p>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <span></span>
+            <span></span>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div>
+                &copy; 2026 MJ Tech Hub. All rights reserved.
+            </div>
+            
+            <ul class="footer-links">
+                <li><a href="../../legal/privacy.html">Privacy Policy</a></li>
+                <li><a href="../../legal/terms.html">Terms of Use</a></li>
+                <li><a href="../../legal/disclaimer.html">Disclaimer</a></li>
+                <li><a href="../../about.html">Contact</a></li>
+            </ul>
+            
+            <div>
+                Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

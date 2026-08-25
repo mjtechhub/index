@@ -1,126 +1,327 @@
 {
-  "categories": [
-    {
-      "id": "networking",
-      "name": "Networking",
-      "type": "core",
-      "description": "IP addressing, DNS, DHCP, VLAN, Wi-Fi, VPN, routing, switching, and troubleshooting.",
-      "keywords": "network, ip, subnet, router, switch, wifi, cisco",
-      "icon": "./assets/icons/networking.png",
-      "url": "networking.html",
-      "accent": "networking",
-      "sections": [
+    "categories": [
         {
-          "name": "Networking Fundamentals",
-          "subtopics": [
-            { "id": "what-is-a-computer-network", "name": "What Is a Computer Network?", "level": "Beginner", "url": "tutorials/networking/what-is-a-computer-network.html" },
-            { "id": "lan-vs-wan", "name": "LAN vs WAN", "level": "Beginner", "url": "tutorials/networking/lan-vs-wan.html" }
-          ]
+            "id": "networking",
+            "name": "Networking",
+            "type": "core",
+            "description": "IP addressing, DNS, DHCP, VLAN, Wi-Fi, VPN, routing, switching, and troubleshooting.",
+            "keywords": "network, ip, subnet, router, switch, wifi, cisco",
+            "icon": "./assets/icons/networking.png",
+            "url": "networking.html",
+            "accent": "networking",
+            "sections": [
+                {
+                    "name": "Networking Fundamentals",
+                    "subtopics": [
+                        {
+                            "id": "what-is-a-computer-network",
+                            "name": "What Is a Computer Network?",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/what-is-a-computer-network.html"
+                        },
+                        {
+                            "id": "lan-vs-wan",
+                            "name": "LAN vs WAN",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/lan-vs-wan.html"
+                        },
+                        {
+                            "id": "osi-model-explained",
+                            "name": "OSI Model Explained",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/osi-model-explained.html"
+                        },
+                        {
+                            "id": "tcp-ip-model-explained",
+                            "name": "TCP/IP Model Explained",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/tcp-ip-model-explained.html"
+                        },
+                        {
+                            "id": "hub-vs-switch",
+                            "name": "Hub vs Switch",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/hub-vs-switch.html"
+                        },
+                        {
+                            "id": "router-vs-switch",
+                            "name": "Router vs Switch",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/router-vs-switch.html"
+                        },
+                        {
+                            "id": "what-is-a-mac-address",
+                            "name": "What Is a MAC Address?",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/what-is-a-mac-address.html"
+                        }
+                    ]
+                },
+                {
+                    "name": "IP Addressing",
+                    "subtopics": [
+                        {
+                            "id": "what-is-an-ip-address",
+                            "name": "What Is an IP Address?",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/what-is-an-ip-address.html"
+                        },
+                        {
+                            "id": "public-vs-private-ip-address",
+                            "name": "Public vs Private IP Address",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/public-vs-private-ip-address.html"
+                        },
+                        {
+                            "id": "what-is-a-subnet-mask",
+                            "name": "What Is a Subnet Mask?",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/what-is-a-subnet-mask.html"
+                        },
+                        {
+                            "id": "subnetting-basics",
+                            "name": "Subnetting Basics",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/subnetting-basics.html"
+                        }
+                    ]
+                },
+                {
+                    "name": "DNS",
+                    "subtopics": [
+                        {
+                            "id": "what-is-dns",
+                            "name": "What Is DNS?",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/what-is-dns.html"
+                        }
+                    ]
+                },
+                {
+                    "name": "DHCP",
+                    "subtopics": [
+                        {
+                            "id": "what-is-dhcp",
+                            "name": "What Is DHCP?",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/what-is-dhcp.html"
+                        }
+                    ]
+                },
+                {
+                    "name": "VLAN",
+                    "subtopics": [
+                        {
+                            "id": "what-is-vlan",
+                            "name": "What Is VLAN?",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/what-is-vlan.html"
+                        }
+                    ]
+                },
+                {
+                    "name": "Routing",
+                    "subtopics": [
+                        {
+                            "id": "what-is-a-default-gateway",
+                            "name": "What Is a Default Gateway?",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/what-is-a-default-gateway.html"
+                        },
+                        {
+                            "id": "what-is-arp",
+                            "name": "What Is ARP?",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/what-is-arp.html"
+                        },
+                        {
+                            "id": "what-is-nat",
+                            "name": "What Is NAT?",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/what-is-nat.html"
+                        }
+                    ]
+                },
+                {
+                    "name": "Troubleshooting",
+                    "subtopics": [
+                        {
+                            "id": "ping-explained",
+                            "name": "Ping Explained",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/ping-explained.html"
+                        },
+                        {
+                            "id": "traceroute-explained",
+                            "name": "Traceroute Explained",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/traceroute-explained.html"
+                        }
+                    ]
+                },
+                {
+                    "name": "Ports & Protocols",
+                    "subtopics": [
+                        {
+                            "id": "common-network-ports",
+                            "name": "Common Network Ports",
+                            "level": "Beginner",
+                            "url": "tutorials/networking/common-network-ports.html"
+                        },
+                        {
+                            "id": "tcp-vs-udp",
+                            "name": "TCP vs UDP",
+                            "level": "Intermediate",
+                            "url": "tutorials/networking/tcp-vs-udp.html"
+                        }
+                    ]
+                }
+            ]
         },
         {
-          "name": "IP Addressing",
-          "subtopics": [
-            { "id": "what-is-an-ip-address", "name": "What Is an IP Address?", "level": "Beginner", "url": "tutorials/networking/what-is-an-ip-address.html" },
-            { "id": "public-vs-private-ip-address", "name": "Public vs Private IP Address", "level": "Intermediate", "url": "tutorials/networking/public-vs-private-ip-address.html" }
-          ]
+            "id": "windows",
+            "name": "Windows",
+            "type": "core",
+            "description": "CMD, PowerShell, Windows administration, system utilities, and Group Policy.",
+            "keywords": "microsoft, win, cmd, powershell, active directory, registry",
+            "icon": "./assets/icons/windows.png",
+            "url": "windows.html",
+            "accent": "windows",
+            "sections": []
         },
         {
-          "name": "DNS",
-          "subtopics": [
-            { "id": "what-is-dns", "name": "What Is DNS?", "level": "Beginner", "url": "tutorials/networking/what-is-dns.html" }
-          ]
+            "id": "linux",
+            "name": "Linux",
+            "type": "core",
+            "description": "Essential commands, filesystem, permissions, services, processes, and scripting.",
+            "keywords": "unix, ubuntu, bash, script, terminal, chmod, sudo",
+            "icon": "./assets/icons/linux.png",
+            "url": "linux.html",
+            "accent": "linux",
+            "sections": []
         },
         {
-          "name": "DHCP",
-          "subtopics": [
-            { "id": "what-is-dhcp", "name": "What Is DHCP?", "level": "Beginner", "url": "tutorials/networking/what-is-dhcp.html" }
-          ]
+            "id": "servers",
+            "name": "Servers",
+            "type": "core",
+            "description": "Windows Server, Linux Server, Active Directory, virtualization, Proxmox, and VMware.",
+            "keywords": "host, vm, hypervisor, proxmox, virtual, ad",
+            "icon": "./assets/icons/servers.png",
+            "url": "servers.html",
+            "accent": "servers",
+            "sections": []
         },
         {
-          "name": "VLAN",
-          "subtopics": [
-            { "id": "what-is-vlan", "name": "What Is VLAN?", "level": "Intermediate", "url": "tutorials/networking/what-is-vlan.html" }
-          ]
+            "id": "cybersecurity",
+            "name": "Cybersecurity",
+            "type": "core",
+            "description": "Firewalls, MFA, phishing, malware, endpoint security, and best practices.",
+            "keywords": "security, hack, defend, firewall, virus, mfa, 2fa, auth",
+            "icon": "./assets/icons/cybersecurity.png",
+            "url": "cybersecurity.html",
+            "accent": "cyber",
+            "sections": []
         },
         {
-          "name": "Routing",
-          "subtopics": [
-            { "id": "what-is-a-default-gateway", "name": "What Is a Default Gateway?", "level": "Beginner", "url": "tutorials/networking/what-is-a-default-gateway.html" }
-          ]
+            "id": "cloud-ai",
+            "name": "Cloud & AI",
+            "type": "core",
+            "description": "AWS, Azure, cloud services, AI tools, automation, and modern IT concepts.",
+            "keywords": "amazon, aws, azure, google cloud, gcp, artificial intelligence, automation",
+            "icon": "./assets/icons/cloud-ai.png",
+            "url": "cloud.html",
+            "accent": "cloud",
+            "sections": []
         },
         {
-          "name": "Troubleshooting",
-          "subtopics": [
-            { "id": "ping-explained", "name": "Ping Explained", "level": "Beginner", "url": "tutorials/networking/ping-explained.html" },
-            { "id": "traceroute-explained", "name": "Traceroute Explained", "level": "Intermediate", "url": "tutorials/networking/traceroute-explained.html" }
-          ]
+            "id": "it-support",
+            "name": "IT Support",
+            "type": "more",
+            "description": "Service desk, end-user support and practical support workflows.",
+            "keywords": "helpdesk, ticket, support",
+            "url": "#",
+            "accent": "networking"
+        },
+        {
+            "id": "hardware",
+            "name": "Hardware",
+            "type": "more",
+            "description": "CPU, RAM, storage, laptops, desktops and peripherals.",
+            "keywords": "pc, component, build, ram, cpu",
+            "url": "#",
+            "accent": "windows"
+        },
+        {
+            "id": "virtualization",
+            "name": "Virtualization",
+            "type": "more",
+            "description": "Virtual machines, hypervisors, VMware and Proxmox.",
+            "keywords": "vm, hyper-v, virtualbox",
+            "url": "#",
+            "accent": "servers"
+        },
+        {
+            "id": "monitoring",
+            "name": "Monitoring",
+            "type": "more",
+            "description": "Infrastructure monitoring, alerting, Checkmk and observability fundamentals.",
+            "keywords": "observability, alerts, zabbix, prometheus",
+            "url": "#",
+            "accent": "cyber"
+        },
+        {
+            "id": "backup-recovery",
+            "name": "Backup & Recovery",
+            "type": "more",
+            "description": "Backup strategies, restore testing and disaster recovery fundamentals.",
+            "keywords": "backup, dr, disaster, restore, veeam",
+            "url": "#",
+            "accent": "linux"
+        },
+        {
+            "id": "storage",
+            "name": "Storage",
+            "type": "more",
+            "description": "HDD, SSD, RAID, NAS, SAN and storage concepts.",
+            "keywords": "raid, nas, san, iscsi",
+            "url": "#",
+            "accent": "servers"
+        },
+        {
+            "id": "it-tools",
+            "name": "IT Tools",
+            "type": "more",
+            "description": "Useful utilities and software for IT professionals.",
+            "keywords": "software, tools, utilities",
+            "url": "#",
+            "accent": "cloud"
+        },
+        {
+            "id": "command-line",
+            "name": "Command Line",
+            "type": "more",
+            "description": "Windows CMD, PowerShell and Linux shell fundamentals.",
+            "keywords": "terminal, prompt, shell",
+            "url": "#",
+            "accent": "linux"
+        },
+        {
+            "id": "troubleshooting",
+            "name": "Troubleshooting",
+            "type": "more",
+            "description": "Structured troubleshooting methodologies and real-world problem solving.",
+            "keywords": "fix, resolve, methodology",
+            "url": "#",
+            "accent": "windows"
+        },
+        {
+            "id": "interview-questions",
+            "name": "Interview Questions",
+            "type": "more",
+            "description": "Practical IT interview questions organized by skill level/domain.",
+            "keywords": "jobs, career, questions",
+            "url": "#",
+            "accent": "networking"
         }
-      ]
-    },
-    {
-      "id": "windows",
-      "name": "Windows",
-      "type": "core",
-      "description": "CMD, PowerShell, Windows administration, system utilities, and Group Policy.",
-      "keywords": "microsoft, win, cmd, powershell, active directory, registry",
-      "icon": "./assets/icons/windows.png",
-      "url": "windows.html",
-      "accent": "windows",
-      "sections": []
-    },
-    {
-      "id": "linux",
-      "name": "Linux",
-      "type": "core",
-      "description": "Essential commands, filesystem, permissions, services, processes, and scripting.",
-      "keywords": "unix, ubuntu, bash, script, terminal, chmod, sudo",
-      "icon": "./assets/icons/linux.png",
-      "url": "linux.html",
-      "accent": "linux",
-      "sections": []
-    },
-    {
-      "id": "servers",
-      "name": "Servers",
-      "type": "core",
-      "description": "Windows Server, Linux Server, Active Directory, virtualization, Proxmox, and VMware.",
-      "keywords": "host, vm, hypervisor, proxmox, virtual, ad",
-      "icon": "./assets/icons/servers.png",
-      "url": "servers.html",
-      "accent": "servers",
-      "sections": []
-    },
-    {
-      "id": "cybersecurity",
-      "name": "Cybersecurity",
-      "type": "core",
-      "description": "Firewalls, MFA, phishing, malware, endpoint security, and best practices.",
-      "keywords": "security, hack, defend, firewall, virus, mfa, 2fa, auth",
-      "icon": "./assets/icons/cybersecurity.png",
-      "url": "cybersecurity.html",
-      "accent": "cyber",
-      "sections": []
-    },
-    {
-      "id": "cloud-ai",
-      "name": "Cloud & AI",
-      "type": "core",
-      "description": "AWS, Azure, cloud services, AI tools, automation, and modern IT concepts.",
-      "keywords": "amazon, aws, azure, google cloud, gcp, artificial intelligence, automation",
-      "icon": "./assets/icons/cloud-ai.png",
-      "url": "cloud.html",
-      "accent": "cloud",
-      "sections": []
-    },
-    { "id": "it-support", "name": "IT Support", "type": "more", "description": "Service desk, end-user support and practical support workflows.", "keywords": "helpdesk, ticket, support", "url": "#", "accent": "networking" },
-    { "id": "hardware", "name": "Hardware", "type": "more", "description": "CPU, RAM, storage, laptops, desktops and peripherals.", "keywords": "pc, component, build, ram, cpu", "url": "#", "accent": "windows" },
-    { "id": "virtualization", "name": "Virtualization", "type": "more", "description": "Virtual machines, hypervisors, VMware and Proxmox.", "keywords": "vm, hyper-v, virtualbox", "url": "#", "accent": "servers" },
-    { "id": "monitoring", "name": "Monitoring", "type": "more", "description": "Infrastructure monitoring, alerting, Checkmk and observability fundamentals.", "keywords": "observability, alerts, zabbix, prometheus", "url": "#", "accent": "cyber" },
-    { "id": "backup-recovery", "name": "Backup & Recovery", "type": "more", "description": "Backup strategies, restore testing and disaster recovery fundamentals.", "keywords": "backup, dr, disaster, restore, veeam", "url": "#", "accent": "linux" },
-    { "id": "storage", "name": "Storage", "type": "more", "description": "HDD, SSD, RAID, NAS, SAN and storage concepts.", "keywords": "raid, nas, san, iscsi", "url": "#", "accent": "servers" },
-    { "id": "it-tools", "name": "IT Tools", "type": "more", "description": "Useful utilities and software for IT professionals.", "keywords": "software, tools, utilities", "url": "#", "accent": "cloud" },
-    { "id": "command-line", "name": "Command Line", "type": "more", "description": "Windows CMD, PowerShell and Linux shell fundamentals.", "keywords": "terminal, prompt, shell", "url": "#", "accent": "linux" },
-    { "id": "troubleshooting", "name": "Troubleshooting", "type": "more", "description": "Structured troubleshooting methodologies and real-world problem solving.", "keywords": "fix, resolve, methodology", "url": "#", "accent": "windows" },
-    { "id": "interview-questions", "name": "Interview Questions", "type": "more", "description": "Practical IT interview questions organized by skill level/domain.", "keywords": "jobs, career, questions", "url": "#", "accent": "networking" }
-  ]
+    ]
 }
