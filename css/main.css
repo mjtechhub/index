@@ -511,5 +511,32 @@ input:focus, textarea:focus, select:focus {
     border-color: var(--brand-primary);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
-. t o p i c - g r i d - 3 x 2   {   g r i d - t e m p l a t e - c o l u m n s :   r e p e a t ( 3 ,   m i n m a x ( 0 ,   1 f r ) )   ! i m p o r t a n t ;   }  
- 
+
+.topic-grid-3x2 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+
+/* Clickable List Card wrapper */
+.list-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, background-color 0.2s;
+    border-radius: 12px;
+}
+.list-card-link:hover .list-card {
+    background-color: var(--bg-tertiary);
+    transform: translateY(-2px);
+}
+
+/* Lesson Container Constraints */
+.lesson-container {
+    width: min(100% - 32px, 1100px);
+    margin-inline: auto;
+}
+
+.lesson-content {
+    max-width: 850px;
+}
+
+.lesson-content pre {
+    overflow-x: auto;
+}

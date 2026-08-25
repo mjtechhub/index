@@ -1,0 +1,193 @@
+/**
+ * MJ Tech Hub - Editor Styles
+ */
+
+ .editor-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--bg-primary);
+}
+
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.editor-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.editor-workspace {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.editor-pane {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.input-pane {
+    border-right: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+}
+
+.preview-pane {
+    background-color: var(--bg-primary);
+    overflow-y: auto;
+}
+
+.metadata-form {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: -1px;
+}
+
+.markdown-editor {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.markdown-editor h3 {
+    padding: 1rem 1.5rem;
+    margin: 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.markdown-editor textarea {
+    flex: 1;
+    padding: 1.5rem;
+    border: none;
+    resize: none;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.markdown-editor textarea:focus {
+    outline: none;
+}
+
+/* Preview Styles */
+.preview-container {
+    padding: 1.5rem !important; /* override main container py-4 if needed */
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.preview-container .breadcrumb {
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.preview-container .breadcrumb a {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.preview-container .topic-badge {
+    font-size: 0.8rem;
+    background: var(--bg-tertiary);
+    color: var(--brand-primary);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.preview-container h1 {
+    font-size: 2.5rem;
+    margin: 1rem 0;
+    color: var(--text-primary);
+}
+
+.preview-container .meta-info {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.preview-container .content {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+/* Markdown generated elements in preview */
+.preview-container .content h2,
+.preview-container .content h3 {
+    color: var(--text-primary);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.preview-container .content p {
+    margin-bottom: 1rem;
+}
+
+.preview-container .content pre {
+    background-color: #1e1e1e;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.preview-container .content code {
+    background-color: var(--bg-secondary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;
+    color: var(--brand-secondary);
+}
+
+.preview-container .content pre code {
+    background-color: transparent;
+    padding: 0;
+    color: #e2e8f0;
+}

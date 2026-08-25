@@ -42,7 +42,7 @@
 }
 
 /* Tablet / Large Mobile */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .nav-links {
         display: none; /* Hide default, handled by JS for mobile menu */
         position: absolute;

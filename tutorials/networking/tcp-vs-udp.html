@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What Is an IP Address? | Networking | MJ Tech Hub</title>
+    <title>TCP vs UDP | Networking | MJ Tech Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../css/themes.css">
     <link rel="stylesheet" href="../../css/main.css">
@@ -56,25 +56,126 @@
             <a href="../../index.html" style="color: var(--text-secondary);">Home</a> &gt; 
             <a href="../../topics.html" style="color: var(--text-secondary);">Topics</a> &gt; 
             <a href="../../networking.html" style="color: var(--text-secondary);">Networking</a> &gt; 
-            <span style="color: var(--brand-primary);">What Is an IP Address?</span>
+            <span style="color: var(--brand-primary);">TCP vs UDP</span>
         </div>
         
         <span style="font-size: 0.8rem; background: var(--bg-tertiary); color: var(--brand-primary); padding: 4px 10px; border-radius: 4px; font-weight: 600; text-transform: uppercase;">Networking</span>
-        <h1 style="font-size: 2.5rem; margin: 1rem 0; color: var(--text-primary);">What Is an IP Address?</h1>
+        <h1 style="font-size: 2.5rem; margin: 1rem 0; color: var(--text-primary);">TCP vs UDP</h1>
         
         <div style="display: flex; gap: 1rem; margin-bottom: 2rem; font-size: 0.85rem; color: var(--text-muted);">
-            <span><i class="fas fa-signal" style="color: var(--success);"></i> Beginner</span>
-            <span><i class="fas fa-clock"></i> 5 min read</span>
+            <span><i class="fas fa-signal" style="color: var(--success);"></i> Intermediate</span>
+            <span><i class="fas fa-clock"></i> 10 min Read</span>
         </div>
         
         <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p>An IP (Internet Protocol) address is a unique numerical label assigned to every device connected to a computer network that uses the Internet Protocol for communication.</p><h3>IPv4 vs IPv6</h3><p>IPv4 addresses look like <code>192.168.1.5</code>. Because we ran out of IPv4 addresses, IPv6 was introduced, which looks like <code>2001:0db8:85a3:0000:0000:8a2e:0370:7334</code>.</p><h3>Related Command</h3><p>Use <a href='../../commands.html' class='cmd-badge' style='display:inline-block'>ipconfig /all</a> on Windows or <code>ifconfig</code> on Linux to check your IP.</p>
+<p>TCP (Transmission Control Protocol) and UDP (User Datagram Protocol) are two of the most commonly used communication protocols in computer networking. Both are part of the Transport Layer and are responsible for transferring data between devices, but they work in different ways.</p>
+<h3>What is TCP?</h3>
+<p>TCP is a <strong>connection-oriented and reliable protocol</strong>. Before sending data, TCP establishes a connection between the sender and receiver. It confirms that packets are delivered successfully and in the correct order.</p>
+<p>If a packet is lost during transmission, TCP detects the missing packet and sends it again.</p>
+<p><strong>Key Features of TCP:</strong></p>
+<ul>
+<li>Reliable data delivery</li>
+<li>Connection-oriented communication</li>
+<li>Packet acknowledgement</li>
+<li>Lost packet retransmission</li>
+<li>Maintains packet order</li>
+<li>Error checking</li>
+<li>Slightly slower because of additional verification</li>
+</ul>
+<p><strong>Common TCP Uses:</strong></p>
+<ul>
+<li>HTTPS / Web browsing</li>
+<li>SSH</li>
+<li>FTP</li>
+<li>Email</li>
+<li>File transfers</li>
+<li>Remote access</li>
+</ul>
+<h3>What is UDP?</h3>
+<p>UDP is a <strong>connectionless protocol</strong> designed for fast data transmission. It sends packets without establishing a connection or waiting for confirmation from the receiving device.</p>
+<p>UDP does not guarantee that every packet will arrive or arrive in the correct order. Because it has less overhead, it is generally faster than TCP.</p>
+<p><strong>Key Features of UDP:</strong></p>
+<ul>
+<li>Connectionless communication</li>
+<li>Faster data transmission</li>
+<li>Low overhead</li>
+<li>No packet acknowledgement</li>
+<li>No automatic retransmission</li>
+<li>Packet order is not guaranteed</li>
+<li>Ideal for real-time applications</li>
+</ul>
+<p><strong>Common UDP Uses:</strong></p>
+<ul>
+<li>DNS</li>
+<li>VoIP calls</li>
+<li>Online gaming</li>
+<li>Video conferencing</li>
+<li>Live streaming</li>
+<li>Real-time applications</li>
+</ul>
+<h3>TCP vs UDP</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>TCP</th>
+<th>UDP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Connection</td>
+<td>Connection-oriented</td>
+<td>Connectionless</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td>High</td>
+<td>No delivery guarantee</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Slower</td>
+<td>Faster</td>
+</tr>
+<tr>
+<td>Acknowledgement</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Retransmission</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Packet Order</td>
+<td>Maintained</td>
+<td>Not guaranteed</td>
+</tr>
+<tr>
+<td>Best For</td>
+<td>Reliable data transfer</td>
+<td>Real-time communication</td>
+</tr>
+</tbody></table>
+<h3>Simple Example</h3>
+<p>Think of <strong>TCP like sending an important courier package with tracking and delivery confirmation</strong>. You want to make sure the package reaches the correct person.</p>
+<p>UDP is more like <strong>a live radio broadcast</strong>. Information is continuously transmitted without checking whether every listener received every part.</p>
+<h3>Easy Way to Remember</h3>
+<p><strong>TCP = Reliability and Accuracy</strong>
+<strong>UDP = Speed and Real-Time Communication</strong></p>
+<h3>Conclusion</h3>
+<p>TCP and UDP are both essential networking protocols. TCP should be used when reliable and accurate data delivery is important, while UDP is better when speed and low latency are more important than guaranteed delivery.</p>
+<p>Understanding TCP and UDP is an important foundation for learning networking, firewalls, routing, VPNs, DNS, VoIP, and network troubleshooting.</p>
+<p><strong>MJ Tech Hub — Learn IT • Solve Problems • Grow Your Skills</strong></p>
+
         </div>
         
         <!-- Navigation -->
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
-            <a href='lan-vs-wan.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; LAN vs WAN</a>
-            <a href='public-vs-private-ip-address.html' class='btn btn-secondary' style='border:none; padding: 0;'>Public vs Private IP &rarr;</a>
+            <!-- Add PREV/NEXT links manually after export -->
+            <span></span>
+            <span></span>
         </div>
     </main>
     <!-- Footer -->

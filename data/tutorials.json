@@ -1,29 +1,38 @@
 [
     {
-        "id": "cmd-commands",
-        "title": "5 CMD Commands Every IT Engineer Should Know",
-        "description": "Essential Windows CMD commands for daily troubleshooting.",
-        "category": "Windows",
-        "level": "Beginner",
-        "readTime": "8 minutes",
-        "keywords": "windows, cmd, ping, ipconfig, network"
+        "id": "tcp-vs-udp",
+        "title": "TCP vs UDP",
+        "description": "Understand the differences between TCP and UDP.",
+        "category": "Networking",
+        "level": "Intermediate",
+        "readTime": "10 min read",
+        "keywords": "networking, tcp, udp, protocol, transport",
+        "url": "tutorials/networking/tcp-vs-udp.html",
+        "publishedAt": "2026-08-24",
+        "updatedAt": "2026-08-24"
     },
     {
-        "id": "linux-permissions",
-        "title": "Linux File Permissions Explained Simply",
-        "description": "Understand read, write and execute permissions with practical examples.",
-        "category": "Linux",
+        "id": "what-is-dns",
+        "title": "What Is DNS?",
+        "description": "Learn how the Domain Name System works.",
+        "category": "Networking",
         "level": "Beginner",
-        "readTime": "10 minutes",
-        "keywords": "linux, chmod, chown, file, access, read, write, execute"
+        "readTime": "8 min read",
+        "keywords": "networking, dns, domain, name, system, ip",
+        "url": "tutorials/networking/what-is-dns.html",
+        "publishedAt": "2026-08-22",
+        "updatedAt": "2026-08-22"
     },
     {
-        "id": "vlan-explained",
+        "id": "what-is-vlan",
         "title": "What Is VLAN? How Does It Work?",
         "description": "Learn VLAN concepts, types, benefits and practical use cases.",
         "category": "Networking",
         "level": "Beginner",
-        "readTime": "9 minutes",
-        "keywords": "vlan, switch, network, broadcast domain, tag"
+        "readTime": "9 min read",
+        "keywords": "vlan, switch, network, broadcast domain, tag",
+        "url": "tutorials/networking/what-is-vlan.html",
+        "publishedAt": "2026-05-16",
+        "updatedAt": "2026-05-16"
     }
 ]

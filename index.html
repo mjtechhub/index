@@ -40,7 +40,7 @@
             <a href="./index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
                 <img src="./assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
             </a>
-
+            
             <!-- Navigation -->
             <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
                 <ul class="nav-links" id="nav-links">
@@ -52,20 +52,20 @@
                     <li><a href="./about.html" class="nav-link" data-page="about.html">About</a></li>
                 </ul>
             </nav>
-
+            
             <!-- Search & Actions -->
             <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
                 <div class="header-search">
                     <i class="fas fa-search"></i>
                     <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
                 </div>
-                <!-- Toggle Dark Mode 
+                
+                <!-- Toggle Dark Mode removed 
                 <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
                     <i class="fas fa-sun"></i>
                 </button>
-                    -->
-                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu"
-                    aria-expanded="false">
+                -->
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -175,70 +175,8 @@
                     <a href="topics.html" style="font-size: 0.8rem; font-weight: 600;">View all &rarr;</a>
                 </div>
 
-                <div class="list-card">
-                    <div
-                        style="width: 80px; height: 60px; background: #000; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">
-                        <i class="fas fa-terminal"></i>
-                    </div>
-                    <div style="flex-grow: 1;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <h4 style="margin: 0; font-size: 0.95rem;">5 CMD Commands Every IT Engineer Should Know</h4>
-                            <span
-                                style="font-size: 0.7rem; background: var(--bg-tertiary); color: var(--brand-primary); padding: 2px 6px; border-radius: 4px;">Windows</span>
-                        </div>
-                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0;">Essential CMD
-                            commands that help in daily troubleshooting.</p>
-                        <div
-                            style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
-                            <span><i class="fas fa-clock"></i> 8 min read &nbsp;&nbsp; <i class="fas fa-signal"></i>
-                                Beginner</span>
-                            <span>May 20, 2026</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="list-card">
-                    <div
-                        style="width: 80px; height: 60px; background: #f1f5f9; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: black; font-size: 1.5rem;">
-                        <i class="fab fa-linux"></i>
-                    </div>
-                    <div style="flex-grow: 1;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <h4 style="margin: 0; font-size: 0.95rem;">Linux File Permissions Explained Simply</h4>
-                            <span
-                                style="font-size: 0.7rem; background: rgba(16,185,129,0.1); color: var(--success); padding: 2px 6px; border-radius: 4px;">Linux</span>
-                        </div>
-                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0;">Understand read,
-                            write, execute permissions with examples.</p>
-                        <div
-                            style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
-                            <span><i class="fas fa-clock"></i> 10 min read &nbsp;&nbsp; <i class="fas fa-signal"></i>
-                                Beginner</span>
-                            <span>May 18, 2026</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="list-card">
-                    <div
-                        style="width: 80px; height: 60px; background: #e0f2fe; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--brand-secondary); font-size: 1.5rem;">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <div style="flex-grow: 1;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <h4 style="margin: 0; font-size: 0.95rem;">What is VLAN? How Does It Work?</h4>
-                            <span
-                                style="font-size: 0.7rem; background: var(--bg-tertiary); color: var(--brand-primary); padding: 2px 6px; border-radius: 4px;">Networking</span>
-                        </div>
-                        <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0.25rem 0;">Learn VLANs,
-                            types, benefits and real-world uses.</p>
-                        <div
-                            style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
-                            <span><i class="fas fa-clock"></i> 9 min read &nbsp;&nbsp; <i class="fas fa-signal"></i>
-                                Beginner</span>
-                            <span>May 16, 2026</span>
-                        </div>
-                    </div>
+                <div id="latest-tutorials-list">
+                    <!-- Tutorials will be injected here by JS -->
                 </div>
             </div>
 
@@ -333,14 +271,14 @@
             <div>
                 &copy; 2026 MJ Tech Hub. All rights reserved.
             </div>
-
+            
             <ul class="footer-links">
                 <li><a href="./legal/privacy.html">Privacy Policy</a></li>
                 <li><a href="./legal/terms.html">Terms of Use</a></li>
                 <li><a href="./legal/disclaimer.html">Disclaimer</a></li>
                 <li><a href="./about.html">Contact</a></li>
             </ul>
-
+            
             <div>
                 Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
             </div>

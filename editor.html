@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson Editor | MJ Tech Hub</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/editor.css">
+    
+    <!-- External Libraries for Editor -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    
+    <!-- JS -->
+    <script src="js/theme.js"></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/editor.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <!-- Logo -->
+            <a href="./index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
+                <img src="./assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
+            </a>
+            
+            <!-- Navigation -->
+            <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="./index.html" class="nav-link" data-page="index.html">Home</a></li>
+                    <li><a href="./topics.html" class="nav-link" data-page="topics.html">Topics</a></li>
+                    <li><a href="./commands.html" class="nav-link" data-page="commands.html">Commands</a></li>
+                    <li><a href="./quiz.html" class="nav-link" data-page="quiz.html">Quiz</a></li>
+                    <li><a href="./resources.html" class="nav-link" data-page="resources.html">Resources</a></li>
+                    <li><a href="./about.html" class="nav-link" data-page="about.html">About</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Search & Actions -->
+            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
+                <div class="header-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
+                </div>
+                
+                <!-- Toggle Dark Mode removed 
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-sun"></i>
+                </button>
+                -->
+                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="editor-container">
+        <header class="editor-header">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <h1 style="font-size: 1.5rem; margin: 0; color: var(--text-primary);">Lesson Editor</h1>
+                <span id="save-status" style="font-size: 0.85rem; color: var(--text-muted);">Draft saved locally</span>
+            </div>
+            <div class="editor-actions">
+                <button id="btn-export-json" class="btn btn-secondary"><i class="fas fa-file-code"></i> JSON</button>
+                <button id="btn-export-html" class="btn btn-secondary"><i class="fas fa-file-code"></i> HTML</button>
+                <button id="btn-export-zip" class="btn btn-primary"><i class="fas fa-file-archive"></i> Export ZIP</button>
+            </div>
+        </header>
+
+        <div class="editor-workspace">
+            <!-- Left Pane: Input -->
+            <div class="editor-pane input-pane">
+                <div class="metadata-form">
+                    <h3 style="margin-top:0;">Metadata</h3>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="lesson-title" placeholder="e.g. What is an IP Address?">
+                    </div>
+                    <div class="form-group">
+                        <label>Filename / ID</label>
+                        <input type="text" id="lesson-id" placeholder="e.g. what-is-an-ip-address">
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <div class="form-group" style="flex: 1;">
+                            <label>Category</label>
+                            <input type="text" id="lesson-category" placeholder="e.g. Networking">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label>Level</label>
+                            <select id="lesson-level">
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label>Read Time</label>
+                            <input type="text" id="lesson-time" placeholder="e.g. 5 min read">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="markdown-editor">
+                    <h3 style="display: flex; justify-content: space-between; align-items: center;">
+                        Content (Markdown)
+                        <button id="btn-clear" class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"><i class="fas fa-trash"></i> Clear</button>
+                    </h3>
+                    <textarea id="lesson-markdown" placeholder="Write your lesson content here using Markdown...&#10;&#10;## Example Heading&#10;This is a paragraph."></textarea>
+                </div>
+            </div>
+
+            <!-- Right Pane: Live Preview -->
+            <div class="editor-pane preview-pane">
+                <h3 style="margin-top: 0; padding: 1.5rem 1.5rem 0; border-bottom: none;">Live Preview</h3>
+                <div class="preview-container container py-4" id="live-preview">
+                    <!-- HTML generated from markdown will be injected here -->
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div>
+                &copy; 2026 MJ Tech Hub. All rights reserved.
+            </div>
+            
+            <ul class="footer-links">
+                <li><a href="./legal/privacy.html">Privacy Policy</a></li>
+                <li><a href="./legal/terms.html">Terms of Use</a></li>
+                <li><a href="./legal/disclaimer.html">Disclaimer</a></li>
+                <li><a href="./about.html">Contact</a></li>
+            </ul>
+            
+            <div>
+                Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

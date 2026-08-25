@@ -8,17 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const root = document.documentElement;
     const themeIcon = themeToggleBtn?.querySelector('i');
     
-    // Check for saved theme preference in localStorage
-    const savedTheme = localStorage.getItem('mj-theme');
-    
-    // Set initial theme
-    if (savedTheme === 'dark') {
-        root.setAttribute('data-theme', 'dark');
-        updateIcon('dark');
-    } else {
-        root.setAttribute('data-theme', 'light');
-        updateIcon('light');
-    }
+    // Dark mode has been disabled globally
+    localStorage.removeItem('mj-theme');
+    root.setAttribute('data-theme', 'light');
     
     // Toggle theme on button click
     if (themeToggleBtn) {

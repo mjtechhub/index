@@ -39,16 +39,18 @@
                     <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
                 </div>
                 
+                <!-- Toggle Dark Mode removed 
                 <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
                     <i class="fas fa-sun"></i>
                 </button>
+                -->
                 <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
     </header>
-    <main class="container py-4">
+    <main class="lesson-container py-4">
         <!-- Breadcrumb -->
         <div style="margin-bottom: 1rem; font-size: 0.85rem; color: var(--text-muted);">
             <a href="../../index.html" style="color: var(--text-secondary);">Home</a> &gt; 
@@ -65,7 +67,7 @@
             <span><i class="fas fa-clock"></i> 5 min read</span>
         </div>
         
-        <div class="content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
             <p>DHCP (Dynamic Host Configuration Protocol) automatically assigns IP addresses and network settings (like Subnet Mask and Default Gateway) to devices on a network.</p><h3>How It Works (DORA)</h3><ul><li><strong>Discover:</strong> Client broadcasts looking for a server.</li><li><strong>Offer:</strong> Server offers an IP.</li><li><strong>Request:</strong> Client requests the offered IP.</li><li><strong>Acknowledge:</strong> Server confirms the lease.</li></ul><h3>Troubleshooting Tip</h3><p>If your IP address starts with <code>169.254.x.x</code> (APIPA), your device failed to reach the DHCP server.</p>
         </div>
         
