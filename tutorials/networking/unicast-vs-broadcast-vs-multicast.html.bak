@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicast vs Broadcast vs Multicast | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p>Traffic on a network fundamentally flows in one of three ways depending on the destination intent.</p>
+            
+            <h3>1. Unicast</h3>
+            <p><strong>Unicast</strong> is one-to-one communication. A single sender transmits data to a single specific destination.</p>
+            <ul>
+                <li><em>Example:</em> Your PC loading a web page from a specific Web Server. Most internet traffic is unicast.</li>
+            </ul>
+            
+            <h3>2. Broadcast</h3>
+            <p><strong>Broadcast</strong> is one-to-all communication. A single sender transmits data to <em>every</em> device within the local broadcast domain (typically synonymous with a <a href="what-is-vlan.html">VLAN</a>).</p>
+            <ul>
+                <li><em>Example:</em> An <a href="what-is-arp.html">ARP</a> request where a PC asks the entire network, "Who has IP 192.168.1.1?"</li>
+                <li><strong>Important Distinction:</strong> <a href="ipv6-fundamentals.html">IPv6</a> does NOT use broadcast traffic. IPv6 relies entirely on targeted multicast to achieve similar goals.</li>
+            </ul>
+            
+            <h3>3. Multicast</h3>
+            <p><strong>Multicast</strong> is one-to-many communication. A single sender transmits one copy of the data, and the network hardware replicates it only to the specific group of devices that have explicitly requested to receive it.</p>
+            <ul>
+                <li><em>Example:</em> A live video stream being sent to hundreds of employees. Sending unicast would overwhelm the server; sending broadcast would overwhelm the entire network. Multicast efficiently sends one stream that is duplicated at the edge switches.</li>
+                <li><em>Management:</em> IPv4 relies conceptually on IGMP (Internet Group Management Protocol) for clients to join a multicast group. IPv6 relies on MLD (Multicast Listener Discovery).</li>
+            </ul>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='duplex-mismatch-and-speed-negotiation.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Duplex Mismatch & Speed Negotiation</a>
+            <a href='network-baseline-and-capacity-planning.html' class='btn btn-secondary' style='border:none; padding: 0;'>Network Baseline & Capacity Planning &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

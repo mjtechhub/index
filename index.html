@@ -1,289 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <!-- SEO & Metadata -->
+    <title>MJ Tech Hub | Learn Networking, Windows, Linux & IT</title>
+    <meta name="description" content="Your ultimate platform to Learn, Troubleshoot, and Build robust IT infrastructure and network environments.">
+    <link rel="canonical" href="https://mjtechhub.github.io/index/">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="MJ Tech Hub | Learn Networking, Windows, Linux & IT">
+    <meta property="og:description" content="Your ultimate platform to Learn, Troubleshoot, and Build robust IT infrastructure and network environments.">
+    <meta property="og:url" content="https://mjtechhub.github.io/index/">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MJ Tech Hub | Learn Networking, Windows, Linux & IT">
+    <meta name="twitter:description" content="Your ultimate platform to Learn, Troubleshoot, and Build robust IT infrastructure and network environments.">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MJ Tech Hub | Learn IT. Solve Problems. Grow Your Skills.</title>
-    <meta name="description" content="Practical IT tutorials, command guides and real-world troubleshooting knowledge.">
-    <meta property="og:site_name" content="MJ Tech Hub">
-    <meta property="og:title" content="MJ Tech Hub | Learn IT. Solve Problems. Grow Your Skills.">
-    <meta property="og:description"
-        content="Practical IT tutorials, command guides and real-world troubleshooting knowledge.">
-    <meta property="og:image" content="./assets/logo/mj-tech-hub-logo.png">
-
-    <!-- Fonts & Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/themes.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/responsive.css">
-
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/brand/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="./assets/brand/favicon-192.png">
-    <link rel="apple-touch-icon" href="./assets/brand/favicon-192.png">
-
-    <!-- JS -->
-    <script src="js/theme.js"></script>
-    <script src="js/main.js" defer></script>
+    <link rel="stylesheet" href="./css/themes.css">
+    <link rel="stylesheet" href="./css/main.css">
 </head>
-
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container nav-container">
-            <!-- Logo -->
-            <a href="./index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
-                <img src="./assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
-            </a>
-            
-            <!-- Navigation -->
-            <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
-                <ul class="nav-links" id="nav-links">
-                    <li><a href="./index.html" class="nav-link" data-page="index.html">Home</a></li>
-                    <li><a href="./topics.html" class="nav-link" data-page="topics.html">Topics</a></li>
-                    <li><a href="./commands.html" class="nav-link" data-page="commands.html">Commands</a></li>
-                    <li><a href="./quiz.html" class="nav-link" data-page="quiz.html">Quiz</a></li>
-                    <li><a href="./resources.html" class="nav-link" data-page="resources.html">Resources</a></li>
-                    <li><a href="./about.html" class="nav-link" data-page="about.html">About</a></li>
-                </ul>
-            </nav>
-            
-            <!-- Search & Actions -->
-            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
-                <div class="header-search">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
-                </div>
-                
-                <!-- Toggle Dark Mode removed 
-                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-                    <i class="fas fa-sun"></i>
-                </button>
-                -->
-                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </header>
-    <main class="container">
+    <div id="site-header"></div>
+    <main>
         <!-- Hero Section -->
-        <section class="hero-split">
+        <section class="hero-split container">
             <div class="hero-inner">
-                <!-- Left Text Content -->
-                <div>
-                    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary);">
-                        Learn IT. Solve Problems.</h2>
-                    <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 1.5rem; line-height: 1.1;"
-                        class="hero-title-highlight">Grow Your Skills.</h1>
-                    <p
-                        style="font-size: 1.1rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 2rem; max-width: 650px;">
-                        Practical tutorials, command guides and real-world solutions for Networking, Windows, Linux,
-                        Servers, Security, Cloud & more.
-                    </p>
-                    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 2rem;">
-                        <a href="topics.html" class="btn btn-primary">Start Learning</a>
-                        <a href="topics.html" class="btn btn-secondary">Explore Topics &rarr;</a>
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <i class="fa-solid fa-bolt text-brand-secondary"></i> Your IT Learning Partner
                     </div>
-                    <p style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary);">
-                        ⭐ New content added regularly
+                    <h1 class="hero-title">
+                        Learn IT. Solve Problems.<br>
+                        <span class="hero-title-highlight">Grow Your Skills.</span>
+                    </h1>
+                    <p class="hero-desc">
+                        Practical tutorials, command guides and real-world solutions for Networking, Windows, Linux, Servers, Security, and Cloud.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="topics.html" class="btn btn-primary">
+                            Start Learning <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <a href="topics.html" class="btn btn-secondary">
+                            Explore Topics
+                        </a>
+                    </div>
+                    <p class="hero-note">
+                        <span class="status-dot"></span> New content added regularly
                     </p>
                 </div>
-
-                <!-- Right Hero Image -->
                 <div class="hero-visual">
-                    <img src="./assets/hero/mj-tech-hero.png" alt="MJ Tech Hub Hero">
+                    <div class="laptop-composite">
+                        <div class="floating-icon" style="top: 10%; left: 10%;"><i class="fa-brands fa-windows" style="color: var(--cat-windows);"></i></div>
+                        <div class="floating-icon" style="top: 20%; right: 5%;"><i class="fa-brands fa-linux" style="color: var(--cat-linux);"></i></div>
+                        <div class="floating-icon" style="bottom: 30%; left: 0%;"><i class="fa-solid fa-network-wired" style="color: var(--cat-networking);"></i></div>
+                        <div class="floating-icon" style="bottom: 10%; right: 15%;"><i class="fa-solid fa-shield-halved" style="color: var(--cat-cybersecurity);"></i></div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Browse By Topic -->
-        <section class="py-4">
-            <h2 class="section-title">| BROWSE BY TOPIC</h2>
-            <div class="topic-grid">
-
-                <!-- Networking -->
-                <div class="card topic-card topic-accent-networking"
-                    style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
-                    <img src="./assets/icons/networking.png" alt="Networking"
-                        style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
-                    <h3 style="font-size: 1rem; margin-bottom: 0; color: var(--text-primary);">Networking</h3>
-                    <a href="topics.html" style="margin-top: 0.5rem;">Explore &rarr;</a>
+        <!-- Stats Section -->
+        <section class="container mb-2">
+            <div class="stats-card card">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fa-solid fa-book"></i></div>
+                    <div class="stat-text">
+                        <h3>60+</h3>
+                        <p>Tutorials</p>
+                    </div>
                 </div>
-
-                <!-- Windows -->
-                <div class="card topic-card topic-accent-windows"
-                    style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
-                    <img src="./assets/icons/windows.png" alt="Windows"
-                        style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
-                    <h3 style="font-size: 1rem; margin-bottom: 0; color: var(--text-primary);">Windows</h3>
-                    <a href="topics.html" style="margin-top: 0.5rem;">Explore &rarr;</a>
+                <div class="stat-item">
+                    <div class="stat-icon text-success"><i class="fa-solid fa-terminal"></i></div>
+                    <div class="stat-text">
+                        <h3>150+</h3>
+                        <p>Commands</p>
+                    </div>
                 </div>
-
-                <!-- Linux -->
-                <div class="card topic-card topic-accent-linux"
-                    style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
-                    <img src="./assets/icons/linux.png" alt="Linux"
-                        style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
-                    <h3 style="font-size: 1rem; margin-bottom: 0; color: var(--text-primary);">Linux</h3>
-                    <a href="topics.html" style="margin-top: 0.5rem;">Explore &rarr;</a>
+                <div class="stat-item">
+                    <div class="stat-icon text-accent"><i class="fa-solid fa-layer-group"></i></div>
+                    <div class="stat-text">
+                        <h3>6</h3>
+                        <p>Core Topics</p>
+                    </div>
                 </div>
-
-                <!-- Servers -->
-                <div class="card topic-card topic-accent-servers"
-                    style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
-                    <img src="./assets/icons/servers.png" alt="Servers"
-                        style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
-                    <h3 style="font-size: 1rem; margin-bottom: 0; color: var(--text-primary);">Servers</h3>
-                    <a href="topics.html" style="margin-top: 0.5rem;">Explore &rarr;</a>
+                <div class="stat-item">
+                    <div class="stat-icon text-warning"><i class="fa-solid fa-brain"></i></div>
+                    <div class="stat-text">
+                        <h3>10+</h3>
+                        <p>Quizzes</p>
+                    </div>
                 </div>
-
-                <!-- Cybersecurity -->
-                <div class="card topic-card topic-accent-cyber"
-                    style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
-                    <img src="./assets/icons/cybersecurity.png" alt="Cybersecurity"
-                        style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
-                    <h3 style="font-size: 1rem; margin-bottom: 0; color: var(--text-primary);">Cybersecurity</h3>
-                    <a href="topics.html" style="margin-top: 0.5rem;">Explore &rarr;</a>
-                </div>
-
-                <!-- Cloud & AI -->
-                <div class="card topic-card topic-accent-cloud"
-                    style="flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; padding: 1.5rem 1rem;">
-                    <img src="./assets/icons/cloud-ai.png" alt="Cloud & AI"
-                        style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
-                    <h3 style="font-size: 1rem; margin-bottom: 0; color: var(--text-primary);">Cloud & AI</h3>
-                    <a href="topics.html" style="margin-top: 0.5rem;">Explore &rarr;</a>
-                </div>
-
             </div>
         </section>
 
-        <!-- Bottom Dashboard Grid -->
-        <section class="dashboard-grid pb-4">
-
-            <!-- Latest Tutorials Column -->
-            <div class="card">
-                <div
-                    style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem;">
-                    <h2 class="section-title" style="margin: 0;">| LATEST TUTORIALS</h2>
-                    <a href="topics.html" style="font-size: 0.8rem; font-weight: 600;">View all &rarr;</a>
+        <!-- Topics Grid -->
+        <section class="container mb-2">
+            <div class="section-header">
+                <div>
+                    <div class="section-badge">|| BROWSE BY TOPIC</div>
+                    <h2>Explore IT Topics</h2>
+                    <p>Choose a topic and start learning</p>
                 </div>
-
-                <div id="latest-tutorials-list">
-                    <!-- Tutorials will be injected here by JS -->
-                </div>
+                <a href="topics.html" class="btn btn-secondary btn-sm">View All Topics &rarr;</a>
             </div>
 
-            <!-- Popular Commands Column -->
-            <div class="card">
-                <div
-                    style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">
-                    <h2 class="section-title" style="margin: 0; color: var(--brand-secondary);">| POPULAR COMMANDS</h2>
-                    <a href="commands.html" style="font-size: 0.8rem; font-weight: 600;">View all &rarr;</a>
-                </div>
-
-                <div class="badge-grid">
-                    <a href="commands.html" class="cmd-badge">ipconfig /all</a>
-                    <a href="commands.html" class="cmd-badge">ping</a>
-                    <a href="commands.html" class="cmd-badge">tracert</a>
-                    <a href="commands.html" class="cmd-badge">nslookup</a>
-                    <a href="commands.html" class="cmd-badge">netstat -ano</a>
-                    <a href="commands.html" class="cmd-badge">systeminfo</a>
-                    <a href="commands.html" class="cmd-badge">tasklist</a>
-                    <a href="commands.html" class="cmd-badge">chkdsk</a>
-                    <a href="commands.html" class="cmd-badge">sfc /scannow</a>
-                    <a href="commands.html" class="cmd-badge">gpupdate /force</a>
-                    <a href="commands.html" class="cmd-badge">driverquery</a>
-                </div>
-
-                <div style="margin-top: 1.5rem; text-align: center; font-size: 0.8rem; color: var(--text-muted);">
-                    <i class="far fa-lightbulb" style="color: var(--warning);"></i> Click any command to view full usage
-                    and examples.
-                </div>
-            </div>
-
-            <!-- Quiz & Improve Column -->
-            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                <div class="card quiz-card" style="flex-grow: 1;">
-                    <h2 class="section-title"
-                        style="margin: 0 0 1.5rem 0; color: var(--brand-subtle); justify-content: center;">| TEST YOUR
-                        KNOWLEDGE</h2>
-
-                    <div
-                        style="background: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; font-size: 1.5rem; color: var(--brand-subtle); box-shadow: 0 4px 10px rgba(139,92,246,0.2);">
-                        <i class="fas fa-clipboard-check"></i>
-                    </div>
-
-                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Practice with our quizzes</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Test your IT
-                        knowledge and track your progress.</p>
-                    <a href="quiz.html" class="btn btn-primary"
-                        style="background: var(--brand-subtle); width: 100%;">Start Quiz &rarr;</a>
-                </div>
-
-                <div class="card" style="padding: 1.25rem;">
-                    <div style="display: flex; gap: 1rem; align-items: center;">
-                        <div style="font-size: 2rem; color: var(--success);"><i class="fas fa-chart-line"></i></div>
-                        <div>
-                            <h4 style="margin: 0 0 0.25rem 0; font-size: 0.95rem;">IMPROVE EVERY DAY</h4>
-                            <p style="margin: 0; font-size: 0.75rem; color: var(--text-secondary);">Learn. Practice.
-                                Become better every day. Keep learning and stay ahead!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <div class="topic-grid" id="home-topics-grid"></div>
         </section>
-
-        <!-- Instagram Banner -->
-        <section class="py-4">
-            <div class="instagram-banner"
-                style="background: var(--bg-secondary); overflow: hidden; position: relative;">
-                <div style="display: flex; align-items: center; gap: 1.5rem; z-index: 2; position: relative;">
-                    <img src="./assets/social/instagram.png" alt="Instagram"
-                        style="width: 60px; height: 60px; border-radius: 16px;">
-                    <div>
-                        <h2
-                            style="margin: 0 0 0.25rem 0; font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
-                            Stay Updated!
-                        </h2>
-                        <p style="margin: 0; color: var(--text-secondary); font-size: 0.95rem;">Follow @themjtechhub on
-                            Instagram for daily IT tips, tutorials & updates.</p>
+        
+        <!-- Subscribe Banner -->
+        <section class="container py-2">
+            <div class="banner-card">
+                <div class="banner-content">
+                    <div class="banner-icon"><i class="fa-solid fa-rocket"></i></div>
+                    <div class="banner-text">
+                        <h3>Keep Learning. Keep Growing.</h3>
+                        <p>New tutorials and guides added every week to help you stay ahead.</p>
                     </div>
                 </div>
-                <a href="https://instagram.com/themjtechhub" target="_blank" rel="noopener noreferrer"
-                    class="btn btn-primary"
-                    style="background: #E1306C; border: none; white-space: nowrap; z-index: 2; position: relative;">
-                    Follow on Instagram &rarr;
-                </a>
+                <button class="btn btn-secondary banner-btn">Subscribe to Updates</button>
             </div>
         </section>
     </main>
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div>
-                &copy; 2026 MJ Tech Hub. All rights reserved.
-            </div>
-            
-            <ul class="footer-links">
-                <li><a href="./legal/privacy.html">Privacy Policy</a></li>
-                <li><a href="./legal/terms.html">Terms of Use</a></li>
-                <li><a href="./legal/disclaimer.html">Disclaimer</a></li>
-                <li><a href="./about.html">Contact</a></li>
-            </ul>
-            
-            <div>
-                Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
-            </div>
-        </div>
-    </footer>
+    <div id="site-footer"></div>
+    <script src="./js/components.js"></script>
+    <script src="./js/topics.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/theme.js"></script>
 </body>
-
 </html>

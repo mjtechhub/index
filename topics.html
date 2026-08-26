@@ -1,98 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- SEO & Metadata -->
+    <title>Explore IT Topics | MJ Tech Hub</title>
+    <meta name="description" content="Browse our comprehensive library of tutorials covering Networking, Windows, Linux, Servers, and Cybersecurity.">
+    <link rel="canonical" href="https://mjtechhub.github.io/index/topics.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Explore IT Topics | MJ Tech Hub">
+    <meta property="og:description" content="Browse our comprehensive library of tutorials covering Networking, Windows, Linux, Servers, and Cybersecurity.">
+    <meta property="og:url" content="https://mjtechhub.github.io/index/topics.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Explore IT Topics | MJ Tech Hub">
+    <meta name="twitter:description" content="Browse our comprehensive library of tutorials covering Networking, Windows, Linux, Servers, and Cybersecurity.">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore Topics | MJ Tech Hub</title>
-    <meta name="description" content="Master the fundamentals and advanced concepts across core IT domains.">
-    <meta property="og:site_name" content="MJ Tech Hub">
-    <meta property="og:title" content="Explore Topics | MJ Tech Hub">
-    <meta property="og:description" content="Master the fundamentals and advanced concepts across core IT domains.">
-    <meta property="og:image" content="./assets/logo/mj-tech-hub-logo.png">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="css/themes.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
-    
-    <script src="js/theme.js"></script>
-    <script src="js/main.js" defer></script>
-    <script src="js/topics.js" defer></script>
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <div class="container nav-container">
-            <!-- Logo -->
-            <a href="./index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
-                <img src="./assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
-            </a>
-            
-            <!-- Navigation -->
-            <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
-                <ul class="nav-links" id="nav-links">
-                    <li><a href="./index.html" class="nav-link" data-page="index.html">Home</a></li>
-                    <li><a href="./topics.html" class="nav-link" data-page="topics.html">Topics</a></li>
-                    <li><a href="./commands.html" class="nav-link" data-page="commands.html">Commands</a></li>
-                    <li><a href="./quiz.html" class="nav-link" data-page="quiz.html">Quiz</a></li>
-                    <li><a href="./resources.html" class="nav-link" data-page="resources.html">Resources</a></li>
-                    <li><a href="./about.html" class="nav-link" data-page="about.html">About</a></li>
-                </ul>
-            </nav>
-            
-            <!-- Search & Actions -->
-            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
-                <div class="header-search">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
-                </div>
-                
-                <!-- Toggle Dark Mode removed 
-                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-                    <i class="fas fa-sun"></i>
-                </button>
-                -->
-                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
-                    <i class="fas fa-bars"></i>
-                </button>
+    <div id="site-header"></div>
+    <main class="container py-4">
+        <div class="text-center mb-2">
+            <h1 class="hero-title">Explore Topics</h1>
+            <p class="hero-desc" style="margin-inline: auto;">Master the fundamentals and advanced concepts across core IT domains.</p>
+        </div>
+
+        <div id="core-topics-grid" class="topic-grid topic-grid-3x2 mb-2"></div>
+        
+        <div class="section-header mt-2">
+            <div>
+                <div class="section-badge">|| MORE TOPICS</div>
+                <h2>Specialized Guides</h2>
             </div>
         </div>
-    </header>
-    <main class="container py-4 text-center">
-        <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-primary);">Explore Topics</h1>
-        <p style="color: var(--text-secondary); margin-bottom: 3rem;">Master the fundamentals and advanced concepts across core IT domains.</p>
+        <div id="more-topics-grid" class="dashboard-grid"></div>
 
-        <div class="topic-grid topic-grid-3x2" id="core-topics-grid" style="margin-bottom: 3rem;">
-            <!-- Rendered by js/topics.js -->
-        </div>
-
-        <h2 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);">More IT Topics</h2>
-        <div class="topic-grid" id="more-topics-grid" style="margin-bottom: 2rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
-            <!-- Rendered by js/topics.js -->
-        </div>
     </main>
     <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div>
-                &copy; 2026 MJ Tech Hub. All rights reserved.
-            </div>
-            
-            <ul class="footer-links">
-                <li><a href="./legal/privacy.html">Privacy Policy</a></li>
-                <li><a href="./legal/terms.html">Terms of Use</a></li>
-                <li><a href="./legal/disclaimer.html">Disclaimer</a></li>
-                <li><a href="./about.html">Contact</a></li>
-            </ul>
-            
-            <div>
-                Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
-            </div>
-        </div>
-    </footer>
+    <div id="site-footer"></div>
+    <script src="./js/components.js"></script>
+    <script src="./js/topics.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/theme.js"></script>
 </body>
 </html>

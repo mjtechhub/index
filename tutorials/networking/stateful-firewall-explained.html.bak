@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stateful Firewall Explained | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p>A <strong>Stateful Firewall</strong> inspects traffic and monitors the active connection/session state, allowing it to make intelligent filtering decisions compared to older, stateless packet filters (like simple <a href="access-control-lists-explained.html">ACLs</a>).</p>
+            
+            <h3>Stateless vs Stateful Filtering</h3>
+            <ul>
+                <li><strong>Stateless Filtering:</strong> Evaluates every single packet in isolation based on static rules. To allow a client to browse the web, you would need one rule allowing traffic out to port 443, and a separate inbound rule allowing traffic back from port 443 to the client's high random port.</li>
+                <li><strong>Stateful Inspection:</strong> Evaluates packets in the context of an established session. If an internal client initiates a TCP connection to a web server, the firewall adds that session to its state table. Return traffic belonging to that exact session is automatically permitted, without needing a completely independent inbound rule.</li>
+            </ul>
+            
+            <h3>The Session Table</h3>
+            <p>The firewall maintains a dynamic state table containing information such as:</p>
+            <ul>
+                <li>Source and Destination IP</li>
+                <li>Source and Destination Service/Port</li>
+                <li>Protocol</li>
+                <li>Ingress and Egress Interface/Zone</li>
+                <li>TCP connection state (e.g., SYN-SENT, ESTABLISHED)</li>
+            </ul>
+            <p>For UDP, which is inherently stateless, the firewall typically creates a "pseudo-state" tracking the session based on IP and port pairs with a timeout mechanism, depending on the implementation.</p>
+            
+            <h3>Security Distinctions</h3>
+            <p>Do NOT claim all firewalls behave identically; behavior varies heavily by vendor and configuration. Furthermore, do NOT imply HTTPS traffic contents are automatically visible merely because a firewall is stateful. A stateful firewall tracks the TCP connection flow, but the payload inside the HTTPS traffic remains encrypted. Encrypted-traffic inspection (Deep Packet Inspection / SSL Decryption) is a separate advanced concept.</p>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='access-control-lists-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Access Control Lists (ACLs) Explained</a>
+            <a href='port-forwarding-and-dnat-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>Port Forwarding and DNAT Explained &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

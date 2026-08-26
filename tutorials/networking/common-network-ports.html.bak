@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Common Network Ports | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+<p>A <strong>Network Port</strong> is a logical endpoint for communication, allowing a single IP address to host multiple different services simultaneously. Ports range from 1 to 65,535.</p>
+<h2>Essential Ports Quick Reference</h2>
+<p>As an IT professional, you should memorize these common ports, as you will frequently configure them in firewalls and routers.</p>
+<table border="1" style="width:100%; border-collapse: collapse; margin-top: 1rem; border-color: var(--border-color);">
+    <tr style="background: var(--bg-tertiary); text-align: left;">
+        <th style="padding: 0.75rem;">Port</th>
+        <th style="padding: 0.75rem;">Protocol</th>
+        <th style="padding: 0.75rem;">Service</th>
+    </tr>
+    <tr><td style="padding: 0.75rem;">20 / 21</td><td style="padding: 0.75rem;">TCP</td><td style="padding: 0.75rem;">FTP (File Transfer Protocol)</td></tr>
+    <tr><td style="padding: 0.75rem;">22</td><td style="padding: 0.75rem;">TCP</td><td style="padding: 0.75rem;">SSH (Secure Shell)</td></tr>
+    <tr><td style="padding: 0.75rem;">23</td><td style="padding: 0.75rem;">TCP</td><td style="padding: 0.75rem;">Telnet (Unencrypted)</td></tr>
+    <tr><td style="padding: 0.75rem;">25</td><td style="padding: 0.75rem;">TCP</td><td style="padding: 0.75rem;">SMTP (Email Routing)</td></tr>
+    <tr><td style="padding: 0.75rem;">53</td><td style="padding: 0.75rem;">UDP / TCP</td><td style="padding: 0.75rem;">DNS (Domain Name System)</td></tr>
+    <tr><td style="padding: 0.75rem;">67 / 68</td><td style="padding: 0.75rem;">UDP</td><td style="padding: 0.75rem;">DHCP (Dynamic Host Configuration)</td></tr>
+    <tr><td style="padding: 0.75rem;">80</td><td style="padding: 0.75rem;">TCP</td><td style="padding: 0.75rem;">HTTP (Web Traffic)</td></tr>
+    <tr><td style="padding: 0.75rem;">110</td><td style="padding: 0.75rem;">TCP</td><td style="padding: 0.75rem;">POP3 (Email Retrieval)</td></tr>
+    <tr><td style="padding: 0.75rem;">123</td><td style="padding: 0.75rem;">UDP</td><td style="padding: 0.75rem;">NTP (Network Time Protocol)</td></tr>
+    <tr><td style="padding: 0.75rem;">143</td><td style="padding: 0.75rem;">TCP</td><td style="padding: 0.75rem;">IMAP (Email Retrieval)</td></tr>
+    <tr><td style="padding: 0.75rem;">389</td><td style="padding: 0.75rem;">TCP / UDP</td><td style="padding: 0.75rem;">LDAP (Directory Services)</td></tr>
+    <tr><td style="padding: 0.75rem;">443</td><td style="padding: 0.75rem;">TCP</td><td style="padding: 0.75rem;">HTTPS (Secure Web Traffic)</td></tr>
+    <tr><td style="padding: 0.75rem;">445</td><td style="padding: 0.75rem;">TCP</td><td style="padding: 0.75rem;">SMB (Windows File Sharing)</td></tr>
+    <tr><td style="padding: 0.75rem;">3389</td><td style="padding: 0.75rem;">TCP / UDP</td><td style="padding: 0.75rem;">RDP (Remote Desktop Protocol)</td></tr>
+</table>
+<p><em>Note:</em> While many protocols strictly use TCP or UDP, some (like DNS) primarily use UDP for queries, but can fall back to TCP for large transfers (like zone transfers).</p>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <span></span>
+            <span></span>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

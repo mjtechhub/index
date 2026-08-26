@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routing Table Explained | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>A routing table is an internal database maintained by a router (or a computer) that tells it how to forward IP packets. When a packet arrives, the router looks up the destination IP address in this table to determine the best path to send the data.</p>
+            
+            <h3>Understanding Routing Table Fields</h3>
+            <p>While the output format varies between Windows, Linux, and network switches, routing tables generally contain the following key fields:</p>
+            <ul>
+                <li><strong>Destination / Network Prefix:</strong> The target network or IP address range.</li>
+                <li><strong>Prefix Length (or Netmask):</strong> Specifies how large the network is (e.g., /24 or 255.255.255.0).</li>
+                <li><strong>Next Hop / Gateway:</strong> The IP address of the next router in the path to the destination.</li>
+                <li><strong>Interface:</strong> The physical or virtual network interface used to send the packet out (e.g., eth0 or GigabitEthernet0/1).</li>
+                <li><strong>Metric:</strong> A cost value representing the "distance" or preference for this route. Lower metrics are preferred.</li>
+            </ul>
+
+            <h3>Types of Routes</h3>
+            <ul>
+                <li><strong>Connected Route:</strong> Networks directly attached to the router's own interfaces (e.g., <code>192.168.10.0/24</code> directly connected).</li>
+                <li><strong>Specific Route:</strong> A route added manually (static) or dynamically for a specific destination network (e.g., <code>10.20.0.0/16</code>).</li>
+                <li><strong>Default Route (0.0.0.0/0):</strong> The "catch-all" route used when the router does not have a more specific match for the destination. This is essentially the default gateway.</li>
+            </ul>
+
+            <h3>The Longest Prefix Match Rule</h3>
+            <p>One of the most critical concepts in routing is that <strong>more-specific prefixes are preferred over less-specific prefixes.</strong></p>
+            <p>When a router examines its table, it looks for the longest matching prefix (the most specific match). For example, if a router receives a packet for <code>10.20.30.50</code> and its routing table contains both:</p>
+            <ul>
+                <li><code>10.20.30.0/24</code> (very specific)</li>
+                <li><code>10.20.0.0/16</code> (less specific)</li>
+                <li><code>0.0.0.0/0</code> (default route)</li>
+            </ul>
+            <p>The router will choose the <code>10.20.30.0/24</code> route because it is the most specific match. <strong>Longest prefix match occurs before route metric is relevant.</strong> The metric is only used as a tie-breaker if there are multiple identical routes with the exact same prefix length.</p>
+
+            <h3>Viewing the Routing Table</h3>
+            <p>You can inspect the routing table on end devices using these commands:</p>
+            
+            <p><strong>Windows:</strong></p>
+            <pre><code>route print
+Get-NetRoute</code></pre>
+            
+            <p><strong>Linux / macOS:</strong></p>
+            <pre><code>ip route</code></pre>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='what-is-routing.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; What Is Routing?</a>
+            <a href='static-vs-dynamic-routing.html' class='btn btn-secondary' style='border:none; padding: 0;'>Static vs Dynamic Routing &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

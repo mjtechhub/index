@@ -6,10 +6,23 @@
 document.addEventListener('DOMContentLoaded', () => {
     const coreGrid = document.getElementById('core-topics-grid');
     const moreGrid = document.getElementById('more-topics-grid');
+    const homeGrid = document.getElementById('home-topics-grid');
     
-    if (!coreGrid && !moreGrid) return;
+    if (!coreGrid && !moreGrid && !homeGrid) return;
     
-    fetch('./data/topics.json')
+    // Base path logic for data
+    const scripts = document.getElementsByTagName('script');
+    let basePath = '.';
+    for (let script of scripts) {
+        if (script.src && script.src.includes('js/topics.js')) {
+            const srcAttr = script.getAttribute('src');
+            basePath = srcAttr.substring(0, srcAttr.lastIndexOf('/js/topics.js'));
+            if (basePath === '') basePath = '.';
+            break;
+        }
+    }
+    
+    fetch(`${basePath}/data/topics.json`)
         .then(res => {
             if (!res.ok) throw new Error('Failed to load topics data');
             return res.json();
@@ -19,50 +32,86 @@ document.addEventListener('DOMContentLoaded', () => {
             const coreTopics = categories.filter(c => c.type === 'core');
             const moreTopics = categories.filter(c => c.type === 'more');
             
-            if (coreGrid) renderCoreTopics(coreTopics, coreGrid);
-            if (moreGrid) renderMoreTopics(moreTopics, moreGrid);
+            if (coreGrid) renderCoreTopics(coreTopics, coreGrid, basePath);
+            if (moreGrid) renderMoreTopics(moreTopics, moreGrid, basePath);
+            if (homeGrid) renderHomeTopics(coreTopics, homeGrid, basePath);
         })
         .catch(err => {
             console.error('Error rendering topics:', err);
-            if (coreGrid) coreGrid.innerHTML = '<p class="error-msg">Unable to load topics at this time. Please try again later.</p>';
         });
         
-    function renderCoreTopics(topics, container) {
+    function renderCoreTopics(topics, container, basePath) {
         container.innerHTML = '';
         topics.forEach(topic => {
             const card = document.createElement('div');
-            card.className = `card topic-card topic-accent-${topic.accent}`;
-            card.style.flexDirection = 'column';
-            card.style.alignItems = 'center';
-            card.style.textAlign = 'center';
-            card.style.gap = '0.5rem';
-            card.style.padding = '2rem 1.5rem';
+            card.className = `topic-card`;
+            
+            // Map accent from css variables
+            let accentVar = `var(--cat-${topic.accent}, var(--brand-primary))`;
+            
+            card.style.borderTop = `4px solid ${accentVar}`;
             
             card.innerHTML = `
-                <img src="${topic.icon}" alt="${topic.name}" style="width: 64px; height: 64px; margin-bottom: 1rem;">
-                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">${topic.name}</h3>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.5rem; flex-grow: 1;">
-                    ${topic.description}
-                </p>
-                <a href="${topic.url}" class="btn btn-primary" style="width: 100%; text-align: center;">Explore ${topic.name}</a>
+                <div class="topic-icon-wrap" style="border-radius: 50%; width: 72px; height: 72px; border: 1px solid rgba(255,255,255,0.05);">
+                    <img src="${basePath}/${topic.icon.replace('./', '')}" alt="${topic.name}" style="width: 40px; height: 40px; object-fit: contain;">
+                </div>
+                <h3 class="topic-title">${topic.name}</h3>
+                <p class="topic-desc">${topic.description}</p>
+                <a href="${basePath}/${topic.url}" class="btn btn-primary topic-cta">Explore ${topic.name}</a>
             `;
             container.appendChild(card);
         });
     }
-    
-    function renderMoreTopics(topics, container) {
+
+    function renderMoreTopics(topics, container, basePath) {
         container.innerHTML = '';
         topics.forEach(topic => {
             const card = document.createElement('a');
-            card.href = topic.url;
-            card.className = `card topic-card topic-accent-${topic.accent}`;
+            card.href = `${basePath}/${topic.url}`;
+            card.className = `card`;
             card.style.textDecoration = 'none';
             card.style.display = 'block';
             card.style.padding = '1.5rem';
             
+            let accentVar = `var(--cat-${topic.accent}, var(--brand-primary))`;
+            card.style.borderLeft = `3px solid ${accentVar}`;
+            
             card.innerHTML = `
-                <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">${topic.name}</h3>
+                <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-primary); transition: color 0.2s;">${topic.name}</h3>
                 <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0; line-height: 1.4;">${topic.description}</p>
+            `;
+            
+            // Hover effect for link
+            card.addEventListener('mouseenter', () => {
+                card.querySelector('h3').style.color = accentVar;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.querySelector('h3').style.color = 'var(--text-primary)';
+            });
+            
+            container.appendChild(card);
+        });
+    }
+
+    function renderHomeTopics(topics, container, basePath) {
+        container.innerHTML = '';
+        topics.forEach(topic => {
+            const card = document.createElement('div');
+            card.className = `topic-card`;
+            
+            
+            let accentVar = `var(--cat-${topic.accent}, var(--brand-primary))`;
+            card.style.borderTop = `3px solid ${accentVar}`;
+            
+            card.innerHTML = `
+                <div class="topic-icon-wrap">
+                    <img src="${basePath}/${topic.icon.replace('./', '')}" alt="${topic.name}" width="40" height="40" style="object-fit: contain;">
+                </div>
+                <h3 class="topic-title">${topic.name}</h3>
+                <p class="topic-desc">${topic.description}</p>
+                <a href="${basePath}/${topic.url}" class="topic-cta" style="color: ${accentVar};">
+                    Explore <i class="fa-solid fa-arrow-right" style="font-size: 0.8rem;"></i>
+                </a>
             `;
             container.appendChild(card);
         });

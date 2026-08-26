@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hub vs Switch | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+<p>Both Hubs and Switches are used to connect multiple devices in a local area network (LAN), but they handle data very differently. Today, Hubs are entirely obsolete.</p>
+<h2>The Hub (Layer 1)</h2>
+<p>A Hub is a "dumb" device. It operates at the Physical layer. When it receives a data signal on one port, it blindly copies and repeats that electrical signal out of <em>every other port</em>.</p>
+<ul>
+<li><strong>Security:</strong> Poor. Any device connected to the hub can "sniff" traffic meant for other devices.</li>
+<li><strong>Performance:</strong> Poor. Because it broadcasts everything, devices frequently talk over each other, causing collisions. Only one device can transmit successfully at a time (Half-Duplex).</li>
+</ul>
+<h2>The Switch (Layer 2)</h2>
+<p>A Switch is intelligent. It learns the MAC addresses of the devices connected to it by analyzing incoming traffic.</p>
+<ul>
+<li><strong>Targeted Delivery:</strong> When a switch receives data, it looks at the destination MAC address and forwards the data <em>only</em> out of the specific port where that device lives.</li>
+<li><strong>Performance:</strong> Excellent. Multiple devices can send and receive data simultaneously at full speed without causing collisions (Full-Duplex).</li>
+</ul>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <span></span>
+            <span></span>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

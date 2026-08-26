@@ -1,146 +1,290 @@
 /**
- * MJ Tech Hub - Search Logic
- * Client-side search across multiple JSON datasets.
- * Ensures DOM-safe injection without unsafe innerHTML.
+ * MJ Tech Hub - Global Search Module
+ * Secure, fast, Ctrl+K accessible global search.
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-    const searchForm = document.getElementById('search-form');
-    const searchInput = document.getElementById('search-input');
-    const resultsContainer = document.getElementById('search-results');
-    const resultsInfo = document.getElementById('results-info');
+(function() {
+    if (window.mjSearchInitialized) return;
+    window.mjSearchInitialized = true;
+
+    // 1. Determine Base Path
+    let basePath = '.';
+    const scripts = document.getElementsByTagName('script');
+    for (let script of scripts) {
+        if (script.src && script.src.includes('js/search.js')) {
+            const srcAttr = script.getAttribute('src');
+            basePath = srcAttr.substring(0, srcAttr.lastIndexOf('/js/search.js'));
+            if (basePath === '') basePath = '.';
+            break;
+        }
+    }
+
+    // 2. Inject Modal HTML safely
+    const modalHtml = `
+        <div class="search-modal-backdrop" id="search-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+            <div class="search-modal">
+                <div class="search-modal-header">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <input type="text" id="search-modal-input" class="search-modal-input" placeholder="Search tutorials, topics, commands..." aria-label="Search">
+                    <button class="search-modal-close" id="search-modal-close" aria-label="Close search">ESC</button>
+                </div>
+                <div class="search-results-container" id="search-results-container">
+                    <div class="search-empty-state" id="search-empty-state">
+                        Type to start searching...
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+    const backdrop = document.getElementById('search-modal-backdrop');
+    const input = document.getElementById('search-modal-input');
+    const resultsContainer = document.getElementById('search-results-container');
+    const emptyState = document.getElementById('search-empty-state');
     
-    let searchData = [];
-    
-    // Fetch all data
-    Promise.all([
-        fetch('./data/topics.json').then(res => res.json()),
-        fetch('./data/tutorials.json').then(res => res.json()),
-        fetch('./data/commands.json').then(res => res.json())
-    ]).then(([topics, tutorials, commands]) => {
+    let searchDataCache = null;
+    let isFetching = false;
+    let activeIndex = -1;
+    let currentResults = [];
+
+    // 3. Fetch Data Once
+    async function getSearchData() {
+        if (searchDataCache) return searchDataCache;
+        if (isFetching) return null; // wait
+        isFetching = true;
         
-        // Normalize data for search
-        if (topics.categories) {
-            topics.categories.forEach(c => {
-                searchData.push({
-                    type: 'Topic',
-                    title: c.name,
-                    description: c.description,
-                    keywords: c.keywords || '',
-                    url: c.url
-                });
-                
-                if (c.sections) {
-                    c.sections.forEach(s => {
-                        if (s.subtopics) {
-                            s.subtopics.forEach(sub => {
-                                searchData.push({
-                                    type: 'Tutorial',
-                                    title: sub.name,
-                                    description: `Learn about ${sub.name} in the ${c.name} category.`,
-                                    keywords: c.name.toLowerCase(),
-                                    url: sub.url
-                                });
-                            });
-                        }
+        let data = [];
+        try {
+            const [topicsRes, tutsRes] = await Promise.all([
+                fetch(`${basePath}/data/topics.json`).catch(()=>null),
+                fetch(`${basePath}/data/tutorials.json`).catch(()=>null)
+            ]);
+            
+            if (topicsRes && topicsRes.ok) {
+                const topics = await topicsRes.json();
+                const allTopics = Array.isArray(topics) ? topics : ((topics.coreTopics || []).concat(topics.moreTopics || []));
+                allTopics.forEach(t => {
+                    data.push({
+                        type: 'Topic',
+                        title: t.name || t.id || 'Topic',
+                        desc: t.description || '',
+                        tags: t.id ? t.id.toLowerCase() : '',
+                        url: t.url || `topics.html#${t.id}`
                     });
+                });
+            }
+            
+            if (tutsRes && tutsRes.ok) {
+                const tuts = await tutsRes.json();
+                const allTuts = Array.isArray(tuts) ? tuts : [];
+                allTuts.forEach(t => {
+                    const tutUrl = t.url ? t.url.replace('./', '') : '';
+                    data.push({
+                        type: 'Tutorial',
+                        title: t.title || 'Tutorial',
+                        desc: t.description || '',
+                        tags: (t.keywords || '') + ' ' + (t.category || '').toLowerCase(),
+                        url: tutUrl
+                    });
+                });
+            }
+            
+            const cmdsRes = await fetch(`${basePath}/data/commands.json`).catch(()=>null);
+            if (cmdsRes && cmdsRes.ok) {
+                const cmds = await cmdsRes.json();
+                cmds.forEach(c => {
+                    data.push({
+                        type: 'Command',
+                        title: c.command,
+                        desc: c.purpose,
+                        tags: (c.platform || '').toLowerCase(),
+                        url: 'commands.html'
+                    });
+                });
+            }
+            
+            searchDataCache = data;
+        } catch (e) {
+            console.error("Search data load failed", e);
+        }
+        isFetching = false;
+        return searchDataCache;
+    }
+
+    // 4. Ranking Algorithm
+    function rankResults(query, data) {
+        const q = query.toLowerCase().trim();
+        if (!q) return [];
+        
+        const scored = data.map(item => {
+            let score = 0;
+            const t = (item.title || '').toLowerCase();
+            const d = (item.desc || '').toLowerCase();
+            const tags = (item.tags || '').toLowerCase();
+            
+            if (t === q) score += 100;
+            else if (t.startsWith(q)) score += 80;
+            else if (t.includes(q)) score += 60;
+            
+            if (tags.includes(q)) score += 45;
+            
+            if (d.includes(q)) score += 20;
+            
+            return { item, score };
+        }).filter(r => r.score > 0);
+        
+        if (scored.length === 0 && q.length > 3) {
+            data.forEach(item => {
+                const t = (item.title || '').toLowerCase();
+                let matches = 0;
+                for (let i=0; i<q.length; i++) {
+                    if (t.includes(q[i])) matches++;
+                }
+                if (matches / q.length > 0.8) {
+                    scored.push({ item, score: 10 });
                 }
             });
         }
         
-        tutorials.forEach(t => searchData.push({
-            type: 'Tutorial',
-            title: t.title,
-            description: t.description,
-            keywords: t.keywords,
-            url: `topics.html` // Simplified routing
-        }));
-        
-        commands.forEach(c => searchData.push({
-            type: 'Command',
-            title: c.command,
-            description: c.purpose,
-            keywords: c.platform,
-            url: 'commands.html'
-        }));
-        
-    }).catch(err => {
-        console.error("Failed to load search data", err);
-    });
-    
-    // Focus input on load
-    if(searchInput) searchInput.focus();
-    
-    if (searchForm) {
-        searchForm.addEventListener('submit', performSearch);
+        return scored.sort((a, b) => b.score - a.score).slice(0, 12).map(r => r.item);
     }
-    
-    function performSearch() {
-        const query = searchInput.value.trim().toLowerCase();
-        
-        // Clear previous results safely
-        while (resultsContainer.firstChild) {
-            resultsContainer.removeChild(resultsContainer.firstChild);
-        }
-        
-        if (!query) {
-            resultsInfo.style.display = 'none';
-            return;
-        }
-        
-        const results = searchData.filter(item => {
-            return (item.title && item.title.toLowerCase().includes(query)) ||
-                   (item.description && item.description.toLowerCase().includes(query)) ||
-                   (item.keywords && item.keywords.toLowerCase().includes(query));
-        });
-        
-        renderResults(results, query);
-    }
-    
+
+    // 5. Safe Rendering
     function renderResults(results, query) {
-        resultsInfo.style.display = 'block';
-        resultsInfo.textContent = `Showing ${results.length} result(s) for "${query}"`;
+        resultsContainer.innerHTML = '';
+        currentResults = results;
+        activeIndex = -1;
         
         if (results.length === 0) {
-            const noRes = document.createElement('div');
-            noRes.className = 'no-results';
-            
-            const icon = document.createElement('i');
-            icon.className = 'fas fa-search';
-            noRes.appendChild(icon);
-            
-            const msg = document.createElement('h3');
-            msg.textContent = 'No results found. Try another keyword.';
-            noRes.appendChild(msg);
-            
-            resultsContainer.appendChild(noRes);
+            emptyState.textContent = `No results found for "${query}"`;
+            resultsContainer.appendChild(emptyState);
             return;
         }
         
-        results.forEach(res => {
-            const card = document.createElement('a');
-            card.className = 'result-card';
-            card.href = res.url;
-            card.style.display = 'block';
-            card.style.textDecoration = 'none';
+        results.forEach((res, index) => {
+            const a = document.createElement('a');
+            a.className = 'search-result-item';
             
-            const typeLabel = document.createElement('span');
-            typeLabel.className = 'result-type';
-            typeLabel.textContent = res.type;
+            let finalUrl = res.url;
+            if (finalUrl.startsWith('/')) finalUrl = finalUrl.substring(1);
+            if (!finalUrl.startsWith('http')) finalUrl = `${basePath}/${finalUrl}`;
+            a.href = finalUrl;
             
-            const title = document.createElement('h3');
-            title.className = 'result-title';
-            title.textContent = res.title;
+            const titleEl = document.createElement('div');
+            titleEl.className = 'search-result-title';
+            titleEl.textContent = res.title;
             
-            const desc = document.createElement('p');
-            desc.className = 'result-desc';
-            desc.textContent = res.description;
+            const descEl = document.createElement('div');
+            descEl.className = 'search-result-desc';
+            descEl.textContent = res.desc;
             
-            card.appendChild(typeLabel);
-            card.appendChild(title);
-            card.appendChild(desc);
+            const metaEl = document.createElement('div');
+            metaEl.className = 'search-result-meta';
+            const icon = document.createElement('i');
+            icon.className = res.type === 'Command' ? 'fas fa-terminal' : 
+                             res.type === 'Topic' ? 'fas fa-layer-group' : 'fas fa-book-open';
+            metaEl.appendChild(icon);
+            metaEl.appendChild(document.createTextNode(' ' + res.type));
             
-            resultsContainer.appendChild(card);
+            a.appendChild(titleEl);
+            a.appendChild(descEl);
+            a.appendChild(metaEl);
+            
+            a.addEventListener('mouseenter', () => setActiveIndex(index));
+            resultsContainer.appendChild(a);
         });
     }
-});
+
+    function setActiveIndex(index) {
+        const items = resultsContainer.querySelectorAll('.search-result-item');
+        items.forEach((item, i) => {
+            if (i === index) item.classList.add('active');
+            else item.classList.remove('active');
+        });
+        activeIndex = index;
+        if (index >= 0 && index < items.length) {
+            items[index].scrollIntoView({ block: 'nearest' });
+        }
+    }
+
+    // 6. Event Listeners
+    function openSearch() {
+        backdrop.classList.add('active');
+        input.value = '';
+        resultsContainer.innerHTML = '';
+        emptyState.textContent = 'Type to start searching...';
+        resultsContainer.appendChild(emptyState);
+        getSearchData();
+        setTimeout(() => input.focus(), 50);
+    }
+
+    function closeSearch() {
+        backdrop.classList.remove('active');
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            openSearch();
+        }
+        
+        if (e.key === 'Escape' && backdrop.classList.contains('active')) {
+            closeSearch();
+        }
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.search-box')) {
+            openSearch();
+        }
+        if (e.target === backdrop) {
+            closeSearch();
+        }
+    });
+    
+    document.getElementById('search-modal-close').addEventListener('click', closeSearch);
+
+    input.addEventListener('input', async (e) => {
+        const query = e.target.value;
+        if (!query.trim()) {
+            resultsContainer.innerHTML = '';
+            emptyState.textContent = 'Type to start searching...';
+            resultsContainer.appendChild(emptyState);
+            return;
+        }
+        
+        const data = await getSearchData();
+        if (data) {
+            const results = rankResults(query, data);
+            renderResults(results, query.trim());
+        } else {
+            resultsContainer.innerHTML = '';
+            emptyState.textContent = 'Loading search index...';
+            resultsContainer.appendChild(emptyState);
+        }
+    });
+
+    input.addEventListener('keydown', (e) => {
+        if (!currentResults.length) return;
+        
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            let n = activeIndex + 1;
+            if (n >= currentResults.length) n = 0;
+            setActiveIndex(n);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            let n = activeIndex - 1;
+            if (n < 0) n = currentResults.length - 1;
+            setActiveIndex(n);
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (activeIndex >= 0 && activeIndex < currentResults.length) {
+                const items = resultsContainer.querySelectorAll('.search-result-item');
+                if (items[activeIndex]) items[activeIndex].click();
+            }
+        }
+    });
+
+})();

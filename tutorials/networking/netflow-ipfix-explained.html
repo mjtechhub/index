@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO & Metadata -->
+    <title>NetFlow / IPFIX Explained | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn about NetFlow / IPFIX Explained in this Networking tutorial.">
+    <link rel="canonical" href="https://mjtechhub.github.io/index/tutorials/networking/netflow-ipfix-explained.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="NetFlow / IPFIX Explained | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn about NetFlow / IPFIX Explained in this Networking tutorial.">
+    <meta property="og:url" content="https://mjtechhub.github.io/index/tutorials/networking/netflow-ipfix-explained.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="NetFlow / IPFIX Explained | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn about NetFlow / IPFIX Explained in this Networking tutorial.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">NetFlow / IPFIX Explained</h1>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p>While <a href="syslog-explained.html">Syslog</a> tells you about device events and <a href="snmp-explained.html">SNMP</a> tells you interface utilization, <strong>Flow Telemetry</strong> tells you exactly <em>who</em> is talking to <em>whom</em> on the network.</p>
+            
+            <h3>NetFlow and IPFIX</h3>
+            <p><strong>NetFlow</strong> is a flow analysis technology originally developed by Cisco. <strong>IPFIX (IP Flow Information Export)</strong> is the open, standards-based equivalent derived from NetFlow v9 concepts. They are fundamentally similar but not exactly identical.</p>
+            
+            <h3>How it Works</h3>
+            <ul>
+                <li><strong>Exporter:</strong> A router or switch observes traffic and aggregates it into a "flow record." A flow is conceptually defined by fields like Source IP, Destination IP, Source Port, Destination Port, and Protocol.</li>
+                <li><strong>Collector:</strong> A server that receives the exported flow records.</li>
+                <li><strong>Analyzer:</strong> The software used to visualize and search the collected data.</li>
+            </ul>
+            
+            <h3>Flows vs. Packet Captures</h3>
+            <p>Flow telemetry is metadata/summary information. It tells you that IP A sent 500 MB to IP B on port 443 at 2:00 PM. It does <strong>not</strong> contain the actual application payload. Conversely, a <a href="wireshark-basics.html">Packet Capture (PCAP)</a> contains individual frames and payloads. PCAPs are massive and used for deep analysis, while flows are lightweight and used for long-term historical trending.</p>
+            
+            <h3>Use Cases</h3>
+            <p>Because flows track conversations, they are essential for identifying "Top Talkers" (who is causing the bandwidth spike), analyzing traffic patterns for capacity planning, investigating security incidents, and tracking bandwidth usage per application.</p>
+            <p><em>Note: On high-speed backbone links, routers often use "Sampled NetFlow," where only 1 in every N packets is inspected to reduce CPU load.</em></p>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='syslog-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Syslog Explained</a>
+            <a href='advanced-dns-troubleshooting.html' class='btn btn-secondary' style='border:none; padding: 0;'>Advanced DNS Troubleshooting &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO & Metadata -->
+    <title>Advanced VLAN Troubleshooting | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn about Advanced VLAN Troubleshooting in this Networking tutorial.">
+    <link rel="canonical" href="https://mjtechhub.github.io/index/tutorials/networking/advanced-vlan-troubleshooting.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Advanced VLAN Troubleshooting | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn about Advanced VLAN Troubleshooting in this Networking tutorial.">
+    <meta property="og:url" content="https://mjtechhub.github.io/index/tutorials/networking/advanced-vlan-troubleshooting.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Advanced VLAN Troubleshooting | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn about Advanced VLAN Troubleshooting in this Networking tutorial.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Advanced VLAN Troubleshooting</h1>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p>When a <a href="what-is-vlan.html">VLAN</a> issue escalates, it rarely remains a pure Layer 2 problem. Advanced troubleshooting requires validating the entire stack, from the switch port to the firewall policy.</p>
+            
+            <h3>Common Symptoms and Workflow</h3>
+            
+            <h4>1. Verify Physical and Access Port</h4>
+            <p>If a client cannot get on the network, verify link lights and interface status. Ensure the switch port is configured as an <strong>access port</strong> in the correct VLAN, not accidentally left in VLAN 1 or configured as a trunk.</p>
+            
+            <h4>2. Verify Trunk Allowed VLANs</h4>
+            <p>If a VLAN works on Switch A but clients on Switch B get no connectivity, the VLAN may not be permitted across the <a href="access-port-vs-trunk-port.html">trunk link</a> connecting them. Verify the allowed VLAN lists and ensure the Native VLAN matches on both sides to prevent STP issues or traffic leakage.</p>
+            
+            <h4>3. Verify End-to-End VLAN Existence</h4>
+            <p>A trunk allows a VLAN, but the VLAN must actually exist in the local VLAN database on every intermediate switch. If Switch C is a transit switch between A and D, Switch C must have the VLAN created in its database, even if it has no access ports assigned to it.</p>
+            
+            <h4>4. Verify Layer 3 and DHCP Interactions</h4>
+            <p>If a client receives a 169.254.x.x IP address (APIPA), they lack <a href="what-is-dhcp.html">DHCP</a>. A VLAN is a broadcast domain; DHCP broadcasts cannot cross routers. Verify that a Layer 3 gateway (like an SVI or firewall subinterface) exists for the VLAN. If the DHCP server is on a different subnet, verify the <a href="dhcp-relay-ip-helper-explained.html">DHCP Relay / IP Helper</a> is configured correctly on that Layer 3 interface.</p>
+            
+            <h4>5. Verify Routing and Firewall Policy</h4>
+            <p>If a client gets a correct IP and can ping their gateway but cannot reach the Internet or other subnets, the issue is likely Layer 3 or higher. Verify the <a href="routing-table-explained.html">routing table</a> on the gateway device. Furthermore, if the gateway is a <a href="stateful-firewall-explained.html">Stateful Firewall</a>, verify that a security policy explicitly permits traffic from the new VLAN's subnet to the destination.</p>
+            
+            <h4>6. Check Advanced Dependencies</h4>
+            <p>Does the topology involve <a href="spanning-tree-protocol-explained.html">STP</a> blocking a redundant path incorrectly? Are <a href="lacp-link-aggregation-explained.html">LACP</a> member links misconfigured with different allowed VLANs? Validate the underlying mechanics step-by-step.</p>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='vrrp-hsrp-gateway-redundancy.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; VRRP / HSRP & Gateway Redundancy</a>
+            <a href='network-troubleshooting-workflow.html' class='btn btn-secondary' style='border:none; padding: 0;'>Network Troubleshooting Workflow &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

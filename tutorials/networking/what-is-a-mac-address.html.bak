@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is a MAC Address? | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+<p>A <strong>Media Access Control (MAC) address</strong> is a unique identifier assigned to a network interface controller (NIC) for communications at the data link layer (Layer 2) of a network segment.</p>
+<h2>Format</h2>
+<p>MAC addresses are typically 48-bit (6-byte) numbers represented as six groups of two hexadecimal digits, separated by hyphens, colons, or without a separator.</p>
+<pre><code>Example: 00:1A:2B:3C:4D:5E</code></pre>
+<h2>How It Works</h2>
+<p>Unlike IP addresses which are used to route traffic across the Internet (Layer 3), MAC addresses are primarily used to send data within the local network (LAN). When data reaches your local network, the switch uses MAC addresses to forward frames to the correct device.</p>
+<h3>Unicast vs Multicast</h3>
+<p>The first octet of a MAC address determines whether it is a unicast (single destination) or multicast (group) address. The exact organizational unique identifier (OUI) is defined by the first three bytes, mapping to the hardware manufacturer.</p>
+<h3>Practical Command</h3>
+<p>In Windows, you can view your physical MAC address using:</p>
+<pre><code>ipconfig /all</code></pre>
+<p>In Linux, you can use:</p>
+<pre><code>ip link</code></pre>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <span></span>
+            <span></span>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

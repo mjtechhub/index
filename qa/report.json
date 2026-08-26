@@ -1,0 +1,28 @@
+{
+  "smoke_test": true,
+  "pages": [
+    "http://localhost/index/index.html",
+    "http://localhost/index/topics.html",
+    "http://localhost/index/commands.html",
+    "http://localhost/index/quiz.html",
+    "http://localhost/index/resources.html",
+    "http://localhost/index/about.html",
+    "http://localhost/index/tutorials/networking/what-is-a-mac-address.html",
+    "http://localhost/index/tutorials/networking/what-is-arp.html",
+    "http://localhost/index/tutorials/networking/what-is-a-subnet-mask.html",
+    "http://localhost/index/legal/privacy.html",
+    "http://localhost/index/legal/terms.html",
+    "http://localhost/index/legal/disclaimer.html",
+    "http://localhost/index/networking.html",
+    "http://localhost/index/windows.html",
+    "http://localhost/index/linux.html",
+    "http://localhost/index/servers.html",
+    "http://localhost/index/cybersecurity.html",
+    "http://localhost/index/cloud.html",
+    "http://localhost/index/tutorials/networking/what-is-a-computer-network.html",
+    "http://localhost/index/tutorials/networking/lan-vs-wan.html"
+  ],
+  "overflow_issues": [],
+  "console_errors": [],
+  "network_errors": []
+}

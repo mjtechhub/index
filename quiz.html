@@ -1,270 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- SEO & Metadata -->
+    <title>Practice Quizzes | MJ Tech Hub</title>
+    <meta name="description" content="Test your IT knowledge with interactive practice quizzes for networking and system administration.">
+    <link rel="canonical" href="https://mjtechhub.github.io/index/quiz.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Practice Quizzes | MJ Tech Hub">
+    <meta property="og:description" content="Test your IT knowledge with interactive practice quizzes for networking and system administration.">
+    <meta property="og:url" content="https://mjtechhub.github.io/index/quiz.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Practice Quizzes | MJ Tech Hub">
+    <meta name="twitter:description" content="Test your IT knowledge with interactive practice quizzes for networking and system administration.">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT Quizzes | MJ Tech Hub</title>
-    <meta name="description" content="Test your IT knowledge with interactive quizzes on Networking, Windows, Linux, and more.">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="css/themes.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
-    
-    <script src="js/theme.js"></script>
-    <script src="js/main.js" defer></script>
-    <script src="js/quiz.js" defer></script>
-    
-    <style>
-        .quiz-selection {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .quiz-app {
-            display: none;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .quiz-app.active {
-            display: block;
-        }
-        
-        .question-container {
-            margin-bottom: 2rem;
-        }
-        
-        .question-text {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-        
-        .options-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        
-        .option-label {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: var(--bg-secondary);
-        }
-        
-        .option-label:hover {
-            border-color: var(--brand-primary);
-            background: var(--bg-tertiary);
-        }
-        
-        .option-label.selected {
-            border-color: var(--brand-primary);
-            background: rgba(37, 99, 235, 0.1);
-        }
-        
-        .option-input {
-            margin-right: 1rem;
-            accent-color: var(--brand-primary);
-            width: 1.2rem;
-            height: 1.2rem;
-        }
-        
-        .quiz-controls {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        .quiz-progress {
-            margin-bottom: 2rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-        
-        .progress-bar {
-            height: 8px;
-            background: var(--bg-tertiary);
-            border-radius: 4px;
-            margin-top: 0.5rem;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: var(--brand-primary);
-            transition: width 0.3s ease;
-        }
-        
-        .result-screen {
-            display: none;
-            text-align: center;
-        }
-        
-        .result-screen.active {
-            display: block;
-        }
-        
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 8px solid var(--brand-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 2rem auto;
-            color: var(--brand-primary);
-        }
-        
-        .feedback {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            text-align: left;
-        }
-        .feedback.correct {
-            background-color: rgba(16, 185, 129, 0.1);
-            border-left: 4px solid var(--success);
-        }
-        .feedback.incorrect {
-            background-color: rgba(239, 68, 68, 0.1);
-            border-left: 4px solid var(--danger);
-        }
-    </style>
-    <meta property="og:site_name" content="MJ Tech Hub">
-    <meta property="og:title" content="MJ Tech Hub | Learn IT. Solve Problems. Grow Your Skills.">
-    <meta property="og:description" content="Practical IT tutorials, command guides and real-world troubleshooting knowledge.">
-    <meta property="og:image" content="./assets/logo/mj-tech-hub-logo.png">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container nav-container">
-            <!-- Logo -->
-            <a href="./index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
-                <img src="./assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
-            </a>
-            
-            <!-- Navigation -->
-            <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
-                <ul class="nav-links" id="nav-links">
-                    <li><a href="./index.html" class="nav-link" data-page="index.html">Home</a></li>
-                    <li><a href="./topics.html" class="nav-link" data-page="topics.html">Topics</a></li>
-                    <li><a href="./commands.html" class="nav-link" data-page="commands.html">Commands</a></li>
-                    <li><a href="./quiz.html" class="nav-link" data-page="quiz.html">Quiz</a></li>
-                    <li><a href="./resources.html" class="nav-link" data-page="resources.html">Resources</a></li>
-                    <li><a href="./about.html" class="nav-link" data-page="about.html">About</a></li>
-                </ul>
-            </nav>
-            
-            <!-- Search & Actions -->
-            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
-                <div class="header-search">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
-                </div>
-                
-                <!-- Toggle Dark Mode removed 
-                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-                    <i class="fas fa-sun"></i>
-                </button>
-                -->
-                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
-                    <i class="fas fa-bars"></i>
-                </button>
+    <div id="site-header"></div>
+    <main class="container py-4">
+        <!-- Category Header -->
+        <div class="category-header" style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color);">
+            <div class="category-icon" style="background: rgba(245, 158, 11, 0.1); width: 80px; height: 80px; border-radius: 20px; display: grid; place-items: center; color: var(--warning); font-size: 2.5rem;">
+                <i class="fa-solid fa-brain"></i>
+            </div>
+            <div>
+                <h1 style="font-size: 2.5rem; margin: 0 0 0.5rem 0;">Quizzes & Assessments</h1>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; margin: 0; max-width: 600px;">
+                    Test your knowledge, prepare for certifications, and validate your IT skills.
+                </p>
             </div>
         </div>
-    </header>
-    <main>
-        <section class="py-4">
-            <div class="container">
-                <h1 class="text-center mb-1">Knowledge Checks</h1>
-                <p class="text-center mb-2">Test your IT skills with our interactive quizzes.</p>
-                
-                <!-- Selection Screen -->
-                <div id="quiz-selector" class="quiz-selection">
-                    <div class="text-center" style="grid-column: 1 / -1;"><i class="fas fa-spinner fa-spin"></i> Loading quizzes...</div>
-                </div>
-
-                <!-- Quiz Application -->
-                <div id="quiz-app" class="quiz-app card">
-                    <button id="back-to-quizzes" class="btn btn-secondary" style="margin-bottom: 1rem; padding: 0.5rem 1rem;">&larr; Back to Quizzes</button>
-                    
-                    <div id="quiz-content">
-                        <h2 id="quiz-title" class="mb-1"></h2>
-                        <div class="quiz-progress">
-                            <span id="question-tracker">Question 1 of 10</span>
-                            <div class="progress-bar">
-                                <div id="progress-fill" class="progress-fill" style="width: 10%;"></div>
-                            </div>
-                        </div>
-                        
-                        <div id="question-container" class="question-container">
-                            <!-- Question injected here -->
-                        </div>
-                        
-                        <div id="feedback-container" style="display: none;"></div>
-                        
-                        <div class="quiz-controls">
-                            <button id="btn-prev" class="btn btn-secondary" disabled>Previous</button>
-                            <button id="btn-next" class="btn btn-primary">Next</button>
-                            <button id="btn-submit" class="btn btn-primary" style="display: none; background-color: var(--success);">Submit Quiz</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Result Screen -->
-                <div id="result-screen" class="result-screen card" style="max-width: 600px; margin: 0 auto;">
-                    <h2>Quiz Completed!</h2>
-                    <div id="score-circle" class="score-circle">0 / 0</div>
-                    <h3 id="score-message" class="mb-2"></h3>
-                    
-                    <div id="answers-review" style="text-align: left; margin-top: 2rem; margin-bottom: 2rem;">
-                        <!-- Review injected here -->
-                    </div>
-                    
-                    <div style="display: flex; gap: 1rem; justify-content: center;">
-                        <button id="btn-restart" class="btn btn-secondary">Restart Quiz</button>
-                        <button id="btn-all-quizzes" class="btn btn-primary">More Quizzes</button>
-                    </div>
-                </div>
+        
+        <div class="section-header">
+            <div>
+                <div class="section-badge">|| PRACTICE MODULES</div>
+                <h2>Available Quizzes</h2>
             </div>
-        </section>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="card" style="padding: 2.5rem; text-align: center; border: 1px dashed var(--border-color); background: transparent;">
+                <i class="fa-solid fa-flask" style="font-size: 3rem; color: var(--brand-secondary); margin-bottom: 1rem;"></i>
+                <h3 style="margin-bottom: 1rem;">Quiz Engine Coming Soon</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem;">We are building an interactive quiz engine to help you test your knowledge in real-time.</p>
+                <a href="index.html" class="btn btn-secondary">Return Home</a>
+            </div>
+        </div>
     </main>
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div>
-                &copy; 2026 MJ Tech Hub. All rights reserved.
-            </div>
-            
-            <ul class="footer-links">
-                <li><a href="./legal/privacy.html">Privacy Policy</a></li>
-                <li><a href="./legal/terms.html">Terms of Use</a></li>
-                <li><a href="./legal/disclaimer.html">Disclaimer</a></li>
-                <li><a href="./about.html">Contact</a></li>
-            </ul>
-            
-            <div>
-                Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
-            </div>
-        </div>
-    </footer>
+    <div id="site-footer"></div>
+    <script src="./js/components.js"></script>
+    <script src="./js/theme.js"></script>
 </body>
 </html>

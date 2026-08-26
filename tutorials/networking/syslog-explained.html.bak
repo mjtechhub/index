@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syslog Explained | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p><strong>Syslog</strong> is a standardized mechanism used by network devices (firewalls, routers, switches) and servers to send event and log messages to a centralized collector or logging server.</p>
+            
+            <h3>Message Components</h3>
+            <p>A standard syslog message contains several parts:</p>
+            <ul>
+                <li><strong>Timestamp:</strong> When the event occurred.</li>
+                <li><strong>Hostname / Source:</strong> Which device sent it.</li>
+                <li><strong>Facility:</strong> The subsystem that generated the log (e.g., kernel, mail, auth).</li>
+                <li><strong>Severity:</strong> How critical the event is.</li>
+                <li><strong>Message:</strong> The actual log content.</li>
+            </ul>
+            
+            <h3>Severity Levels</h3>
+            <p>Syslog uses a numerical severity scale where a <strong>lower numerical value indicates a more severe event.</strong></p>
+            <ol start="0">
+                <li><strong>Emergency (0):</strong> System is unusable.</li>
+                <li><strong>Alert (1):</strong> Action must be taken immediately.</li>
+                <li><strong>Critical (2):</strong> Critical conditions.</li>
+                <li><strong>Error (3):</strong> Error conditions.</li>
+                <li><strong>Warning (4):</strong> Warning conditions.</li>
+                <li><strong>Notice (5):</strong> Normal but significant condition.</li>
+                <li><strong>Informational (6):</strong> Informational messages.</li>
+                <li><strong>Debug (7):</strong> Debug-level messages.</li>
+            </ol>
+            
+            <h3>Transports and Security</h3>
+            <p>Traditional syslog commonly relies on <strong>UDP port 514</strong>. Because UDP is connectionless, logs can be lost in transit. Some implementations support TCP 514 for reliability. Secure syslog over TLS commonly uses <strong>TCP 6514</strong>, providing encryption to protect sensitive log data from interception.</p>
+            <p><em>Note: Log collection is not full monitoring. Logs complement active <a href="snmp-explained.html">SNMP</a> metrics and alerts.</em></p>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='network-baseline-and-capacity-planning.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Network Baseline & Capacity Planning</a>
+            <a href='netflow-ipfix-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>NetFlow / IPFIX Explained &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

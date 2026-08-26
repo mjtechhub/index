@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO & Metadata -->
+    <title>Port Forwarding and DNAT Explained | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn about Port Forwarding and DNAT Explained in this Networking tutorial.">
+    <link rel="canonical" href="https://mjtechhub.github.io/index/tutorials/networking/port-forwarding-and-dnat-explained.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Port Forwarding and DNAT Explained | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn about Port Forwarding and DNAT Explained in this Networking tutorial.">
+    <meta property="og:url" content="https://mjtechhub.github.io/index/tutorials/networking/port-forwarding-and-dnat-explained.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Port Forwarding and DNAT Explained | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn about Port Forwarding and DNAT Explained in this Networking tutorial.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Port Forwarding and DNAT Explained</h1>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p><strong>Port Forwarding</strong> is a consumer-friendly term for what is formally known in enterprise networking as <strong>Destination Network Address Translation (DNAT)</strong>. It allows external Internet clients to access a service hosted on a private, internal network.</p>
+            
+            <h3>How DNAT Works</h3>
+            <p>When an external client attempts to connect to your public IP address, the router/firewall intercepts the traffic, translates the destination IP address (and optionally the port) to an internal private IP address, and forwards the packet.</p>
+            
+            <h3>Safe Documentation Example</h3>
+            <p>Imagine you are hosting a web server.</p>
+            <ul>
+                <li><strong>Public IP:</strong> 203.0.113.20</li>
+                <li><strong>TCP Port:</strong> 443</li>
+                <li><strong>Internal Server:</strong> 192.168.10.50</li>
+            </ul>
+            
+            <p><strong>The Flow:</strong></p>
+            <pre><code>Internet Client
+       ↓
+203.0.113.20:443 (Public IP)
+       ↓
+Firewall / DNAT Rules applied
+       ↓
+192.168.10.50:443 (Internal Server)</code></pre>
+            
+            <p>For this to work, you need the DNAT translation rule, a corresponding firewall policy permitting the inbound traffic (see <a href="stateful-firewall-explained.html">Stateful Firewall</a>), and correct routing for the return traffic. In some internal scenarios, NAT reflection (or hairpin NAT) is required if internal clients try to access the internal server using its public IP address.</p>
+            
+            <h3>Important Security Considerations</h3>
+            <p>Exposing an internal service to the Internet significantly increases your attack surface. Anyone on the Internet can attempt to interact with the service. To secure it, recommend the following:</p>
+            <ul>
+                <li>Publish only absolutely necessary services.</li>
+                <li>Keep the internal service rigorously patched and updated.</li>
+                <li>Require strong authentication.</li>
+                <li>Enable extensive logging.</li>
+                <li>Use restrictive source IP firewall rules (whitelist) where possible.</li>
+                <li>Consider placing the service behind a reverse proxy or requiring a VPN instead of direct port forwarding.</li>
+            </ul>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='stateful-firewall-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Stateful Firewall Explained</a>
+            <a href='site-to-site-vpn-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>Site-to-Site VPN Explained &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

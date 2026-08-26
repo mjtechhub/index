@@ -1,66 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- SEO & Metadata -->
+    <title>Command Library | MJ Tech Hub</title>
+    <meta name="description" content="A curated library of essential CLI commands for Windows, Linux, and Networking.">
+    <link rel="canonical" href="https://mjtechhub.github.io/index/commands.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Command Library | MJ Tech Hub">
+    <meta property="og:description" content="A curated library of essential CLI commands for Windows, Linux, and Networking.">
+    <meta property="og:url" content="https://mjtechhub.github.io/index/commands.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Command Library | MJ Tech Hub">
+    <meta name="twitter:description" content="A curated library of essential CLI commands for Windows, Linux, and Networking.">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Command Library | MJ Tech Hub</title>
-    <meta name="description" content="A comprehensive library of essential IT commands for Windows, Linux, and Networking.">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="css/themes.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
-    
-    <script src="js/theme.js"></script>
-    <script src="js/main.js" defer></script>
-    <script src="js/commands.js" defer></script>
-    
     <style>
         .command-card {
             margin-bottom: 2rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
         }
         .command-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.5rem;
+            padding-bottom: 1rem;
         }
         .command-platform {
             font-size: 0.8rem;
-            background: var(--bg-tertiary);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            color: var(--brand-primary);
+            background: var(--brand-subtle);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            color: var(--brand-secondary);
             font-weight: 600;
+            text-transform: uppercase;
         }
         .command-code-block {
             background-color: var(--code-bg);
             color: var(--code-text);
-            padding: 1rem;
-            border-radius: 0.5rem;
-            font-family: monospace;
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+            font-family: 'Fira Code', monospace;
             position: relative;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             overflow-x: auto;
+            border: 1px solid var(--border-subtle);
         }
         .copy-btn {
             background: rgba(255, 255, 255, 0.1);
             color: var(--code-text);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 0.4rem 0.8rem;
-            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             transition: all 0.2s;
+            font-weight: 600;
         }
         .copy-btn:hover {
             background: rgba(255, 255, 255, 0.2);
@@ -71,6 +85,7 @@
         }
         .command-details p {
             margin-bottom: 0.5rem;
+            color: var(--text-secondary);
         }
         .command-label {
             font-weight: 600;
@@ -79,91 +94,56 @@
         .warning-box {
             background-color: rgba(239, 68, 68, 0.1);
             border-left: 4px solid var(--danger);
-            padding: 1rem;
-            margin-top: 1rem;
-            border-radius: 0 4px 4px 0;
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            color: var(--text-primary);
         }
-        
         .loading {
             text-align: center;
-            padding: 3rem;
+            padding: 4rem;
             color: var(--text-muted);
         }
     </style>
-    <meta property="og:site_name" content="MJ Tech Hub">
-    <meta property="og:title" content="MJ Tech Hub | Learn IT. Solve Problems. Grow Your Skills.">
-    <meta property="og:description" content="Practical IT tutorials, command guides and real-world troubleshooting knowledge.">
-    <meta property="og:image" content="./assets/logo/mj-tech-hub-logo.png">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container nav-container">
-            <!-- Logo -->
-            <a href="./index.html" class="brand-logo" aria-label="MJ Tech Hub Home">
-                <img src="./assets/brand/mj-tech-hub-header.png" alt="MJ Tech Hub" class="site-logo">
-            </a>
-            
-            <!-- Navigation -->
-            <nav style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
-                <ul class="nav-links" id="nav-links">
-                    <li><a href="./index.html" class="nav-link" data-page="index.html">Home</a></li>
-                    <li><a href="./topics.html" class="nav-link" data-page="topics.html">Topics</a></li>
-                    <li><a href="./commands.html" class="nav-link" data-page="commands.html">Commands</a></li>
-                    <li><a href="./quiz.html" class="nav-link" data-page="quiz.html">Quiz</a></li>
-                    <li><a href="./resources.html" class="nav-link" data-page="resources.html">Resources</a></li>
-                    <li><a href="./about.html" class="nav-link" data-page="about.html">About</a></li>
-                </ul>
-            </nav>
-            
-            <!-- Search & Actions -->
-            <div class="nav-actions" style="display: flex; align-items: center; gap: 1rem;">
-                <div class="header-search">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search tutorials, topics, commands..." aria-label="Search">
-                </div>
-                
-                <!-- Toggle Dark Mode removed 
-                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-                    <i class="fas fa-sun"></i>
-                </button>
-                -->
-                <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
-                    <i class="fas fa-bars"></i>
-                </button>
+    <div id="site-header"></div>
+    <main class="container py-4">
+        <!-- Category Header -->
+        <div class="category-header" style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color);">
+            <div class="category-icon" style="background: rgba(16, 185, 129, 0.1); width: 80px; height: 80px; border-radius: 20px; display: grid; place-items: center; color: var(--success); font-size: 2.5rem;">
+                <i class="fa-solid fa-terminal"></i>
+            </div>
+            <div>
+                <h1 style="font-size: 2.5rem; margin: 0 0 0.5rem 0;">Command Library</h1>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; margin: 0; max-width: 600px;">
+                    Essential commands for daily IT operations, automation, and troubleshooting across major platforms.
+                </p>
             </div>
         </div>
-    </header>
-    <main>
-        <section class="py-4">
-            <div class="container" style="max-width: 800px;">
-                <h1 class="text-center mb-1">Command Library</h1>
-                <p class="text-center mb-2">Essential commands for daily IT operations and troubleshooting.</p>
-                
-                <div id="commands-container">
-                    <div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading commands...</div>
-                </div>
+        
+        <div class="section-header">
+            <div>
+                <div class="section-badge">|| CHEAT SHEETS</div>
+                <h2>Search Commands</h2>
             </div>
-        </section>
+            <div class="filter-controls" style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; border-radius: 20px;">All</button>
+                <button class="btn btn-ghost btn-sm" style="padding: 0.5rem 1rem; border-radius: 20px;">Windows</button>
+                <button class="btn btn-ghost btn-sm" style="padding: 0.5rem 1rem; border-radius: 20px;">Linux</button>
+                <button class="btn btn-ghost btn-sm" style="padding: 0.5rem 1rem; border-radius: 20px;">Networking</button>
+            </div>
+        </div>
+        
+        <div style="max-width: 900px;">
+            <div id="commands-container">
+                <div class="loading"><i class="fas fa-circle-notch fa-spin"></i> Loading commands...</div>
+            </div>
+        </div>
     </main>
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div>
-                &copy; 2026 MJ Tech Hub. All rights reserved.
-            </div>
-            
-            <ul class="footer-links">
-                <li><a href="./legal/privacy.html">Privacy Policy</a></li>
-                <li><a href="./legal/terms.html">Terms of Use</a></li>
-                <li><a href="./legal/disclaimer.html">Disclaimer</a></li>
-                <li><a href="./about.html">Contact</a></li>
-            </ul>
-            
-            <div>
-                Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by The MJ Tech Hub
-            </div>
-        </div>
-    </footer>
+    <div id="site-footer"></div>
+    <script src="./js/components.js"></script>
+    <script src="./js/commands.js" defer></script>
+    <script src="./js/theme.js"></script>
 </body>
 </html>

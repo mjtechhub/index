@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO & Metadata -->
+    <title>QoS Explained | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn about QoS Explained in this Networking tutorial.">
+    <link rel="canonical" href="https://mjtechhub.github.io/index/tutorials/networking/qos-explained.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="QoS Explained | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn about QoS Explained in this Networking tutorial.">
+    <meta property="og:url" content="https://mjtechhub.github.io/index/tutorials/networking/qos-explained.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="QoS Explained | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn about QoS Explained in this Networking tutorial.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">QoS Explained</h1>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p><strong>QoS (Quality of Service)</strong> refers to mechanisms that manage the treatment of different traffic classes, especially when network resources (bandwidth) are constrained.</p>
+            <p><strong>Critical Rule:</strong> QoS does not create bandwidth. QoS manages how available bandwidth and hardware queues are utilized when congestion occurs.</p>
+            
+            <h3>QoS Components</h3>
+            <p>Implementing QoS involves several distinct processes:</p>
+            <ul>
+                <li><strong>Classification:</strong> Identifying and categorizing traffic (e.g., matching voice traffic based on <a href="common-network-ports.html">ports</a> or IPs).</li>
+                <li><strong>Marking:</strong> Altering the packet header (such as the IP DSCP field) so downstream routers recognize its priority without needing to deeply inspect it again.</li>
+                <li><strong>Queuing and Scheduling:</strong> Placing traffic into different hardware buffers (queues) and deciding which queue gets transmitted next. High-priority queues are serviced first to minimize latency.</li>
+            </ul>
+            
+            <h3>Shaping vs. Policing</h3>
+            <p>When enforcing bandwidth limits, routers use two different conceptual approaches:</p>
+            <ul>
+                <li><strong>Traffic Shaping:</strong> Buffers and delays excess traffic to smooth out bursts, forcing traffic to conform to a specific rate. This adds latency but minimizes drops.</li>
+                <li><strong>Policing:</strong> Typically drops (or remarks to a lower priority) traffic that exceeds configured limits. It does not buffer.</li>
+            </ul>
+            
+            <h3>Practical Categories</h3>
+            <p>A typical enterprise QoS policy categorizes traffic to ensure latency-sensitive applications aren't starved by large downloads:</p>
+            <ul>
+                <li><strong>Voice/Video:</strong> High priority, strictly low-latency queues (e.g., VoIP).</li>
+                <li><strong>Business Applications:</strong> Guaranteed minimum bandwidth.</li>
+                <li><strong>Bulk Downloads / Backups:</strong> Best-effort or scavenger class, utilizing whatever bandwidth is left over.</li>
+            </ul>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='mtu-and-mss-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; MTU and MSS Explained</a>
+            <a href='lacp-link-aggregation-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>LACP / Link Aggregation Explained &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

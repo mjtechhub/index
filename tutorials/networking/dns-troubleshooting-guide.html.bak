@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNS Troubleshooting Guide | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>If a user complains that "the internet is down," but they can reach internal servers by IP address, they are likely experiencing a <a href="what-is-dns.html">DNS (Domain Name System)</a> resolution failure. Follow this practical troubleshooting sequence to isolate and resolve DNS issues.</p>
+            
+            <h3>Troubleshooting Sequence</h3>
+            
+            <p><strong>1. Verify IP Configuration & DNS Server</strong></p>
+            <p>Check if the device has a valid IP address and see which DNS servers it is currently using.</p>
+            <pre><code>ipconfig /all</code></pre>
+            <p><em>Important Note for Active Directory:</em> Do not recommend setting public DNS (like 8.8.8.8) blindly on domain-joined Windows clients. AD clients rely heavily on the internal Domain Controller DNS to find domain services.</p>
+
+            <p><strong>2. Test IP Connectivity vs Hostname Resolution</strong></p>
+            <p>Try to ping an IP address directly (e.g., a known public IP like <code>1.1.1.1</code>), and then ping a hostname (like <code>example.com</code>).</p>
+            <pre><code>ping 1.1.1.1
+ping example.com</code></pre>
+            <p>If the IP ping succeeds but the hostname ping fails ("Ping request could not find host"), you have a confirmed name-resolution issue. Note that <code>ping</code> itself is not a definitive DNS troubleshooting tool, but it is a quick indicator.</p>
+
+            <p><strong>3. Query DNS Directly</strong></p>
+            <p>Bypass the ping command and ask the DNS server directly to resolve a name.</p>
+            <pre><code>nslookup example.com</code></pre>
+            <p>You can also use PowerShell:</p>
+            <pre><code>Resolve-DnsName example.com</code></pre>
+
+            <p><strong>4. Test Alternative DNS Servers</strong></p>
+            <p>If the default DNS server is failing, test against a different one explicitly to see if the issue is local to that specific server.</p>
+            <pre><code>nslookup example.com 8.8.8.8</code></pre>
+            <p>If this succeeds, your local DNS server might be down, misconfigured, or unreachable.</p>
+
+            <p><strong>5. Check the DNS Cache</strong></p>
+            <p>Sometimes the operating system caches a bad or outdated IP address. You can view the local DNS cache in Windows and clear it if necessary.</p>
+            <pre><code>ipconfig /displaydns
+ipconfig /flushdns</code></pre>
+
+            <p><strong>6. Server-Side Verification</strong></p>
+            <p>If you control the DNS records and they recently changed, verify that you entered the correct A, CNAME, or MX records on your DNS provider's dashboard. Remember that global DNS propagation can sometimes take time, although modern systems often update very quickly.</p>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='spanning-tree-protocol-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Spanning Tree Protocol (STP) Explained</a>
+            <a href='dhcp-troubleshooting-guide.html' class='btn btn-secondary' style='border:none; padding: 0;'>DHCP Troubleshooting Guide &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

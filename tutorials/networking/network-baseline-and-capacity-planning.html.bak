@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Baseline & Capacity Planning | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p>Effective <a href="network-monitoring-fundamentals.html">network monitoring</a> requires context. A baseline provides that context.</p>
+            
+            <h3>What is a Network Baseline?</h3>
+            <p>A baseline is a historical picture of normal network behavior over time. Relevant metrics include bandwidth utilization, latency, interface errors, client counts, CPU/memory usage, and application availability.</p>
+            <p>A baseline helps you instantly answer the crucial troubleshooting question: <em>"What changed?"</em> If users complain about a slow internet connection, and your monitoring shows WAN utilization at 95%, you need your baseline to know if 95% is a new anomaly or if it's been running at 95% every morning for six months.</p>
+            
+            <h3>Capacity Planning</h3>
+            <p>Capacity planning uses historical baseline data to predict when the network will run out of resources. You must account for current usage, expected organic growth, and business changes (e.g., deploying new video conferencing software, shifting to remote workers, or modifying backup schedules).</p>
+            
+            <h4>Sustained vs. Burst Behavior</h4>
+            <p>Avoid simplistic rules like "upgrade whenever bandwidth exceeds 70%." A network interface hitting 100% utilization for 3 seconds during a file transfer is normal burst behavior. Hitting 100% for 3 hours indicates sustained congestion.</p>
+            
+            <h4>The 95th Percentile</h4>
+            <p>A common concept in capacity planning and ISP billing is the <strong>95th percentile</strong>. This discards the top 5% of usage spikes (bursts) and measures the sustained usage level. While highly useful, it is not the only valid planning method; highly latency-sensitive networks may need to engineer for absolute peak bursts to avoid <a href="qos-explained.html">QoS</a> queuing delays.</p>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='unicast-vs-broadcast-vs-multicast.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Unicast vs Broadcast vs Multicast</a>
+            <a href='syslog-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>Syslog Explained &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

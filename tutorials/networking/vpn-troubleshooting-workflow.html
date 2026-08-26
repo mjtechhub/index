@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO & Metadata -->
+    <title>VPN Troubleshooting Workflow | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn about VPN Troubleshooting Workflow in this Networking tutorial.">
+    <link rel="canonical" href="https://mjtechhub.github.io/index/tutorials/networking/vpn-troubleshooting-workflow.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="VPN Troubleshooting Workflow | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn about VPN Troubleshooting Workflow in this Networking tutorial.">
+    <meta property="og:url" content="https://mjtechhub.github.io/index/tutorials/networking/vpn-troubleshooting-workflow.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="VPN Troubleshooting Workflow | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn about VPN Troubleshooting Workflow in this Networking tutorial.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">VPN Troubleshooting Workflow</h1>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p>Troubleshooting VPNs requires isolating the failure domain: is the tunnel failing to build, or is traffic failing to traverse the built tunnel?</p>
+            
+            <h3>1. Identify the Symptom</h3>
+            <ul>
+                <li>Tunnel does not establish at all.</li>
+                <li>Tunnel establishes, but no traffic flows.</li>
+                <li>VPN connects, but local Internet breaks (common <a href="remote-access-vpn-explained.html">Remote Access</a> split-tunnel issue).</li>
+                <li>Only specific subnets work (common <a href="site-to-site-vpn-explained.html">Site-to-Site</a> selector issue).</li>
+            </ul>
+            
+            <h3>2. Verify Reachability</h3>
+            <p>Can the client or peer router reach the external public IP of the VPN gateway? Check basic routing and ISP connectivity.</p>
+            
+            <h3>3. Phase 1: Authentication & Negotiation</h3>
+            <p>If the tunnel fails to build, check IKE/IPsec or TLS session status. For Site-to-Site, this is almost always a <strong>proposal mismatch</strong> (different encryption/hash algorithms configured on each side), an incorrect peer IP, or a mismatched pre-shared key/certificate. For Remote Access, verify user credentials, MFA prompts, and endpoint posture checks.</p>
+            
+            <h3>4. Phase 2: Selectors and Subnets</h3>
+            <p>If the tunnel builds but traffic fails, verify the "selectors" (the interesting traffic). In policy-based Site-to-Site VPNs, the local subnet configuration on Router A must perfectly mirror the remote subnet configuration on Router B. Overlapping subnets (where both sides use 192.168.1.0/24) will cause immediate routing failures.</p>
+            
+            <h3>5. Routing and NAT</h3>
+            <p>Does the firewall know to route the internal traffic into the tunnel? Is NAT (Network Address Translation) improperly translating the private IPs before they enter the tunnel? A "NAT Exemption" rule is often required to prevent this.</p>
+            
+            <h3>6. Firewall Policy and MTU</h3>
+            <p>VPN traffic is usually subject to <a href="stateful-firewall-explained.html">stateful firewall</a> inspection. Ensure a policy permits the decrypted traffic. Finally, if small pings work but file transfers fail, you likely have an <a href="mtu-and-mss-explained.html">MTU/MSS</a> fragmentation issue due to the VPN encapsulation overhead.</p>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='advanced-dns-troubleshooting.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Advanced DNS Troubleshooting</a>
+            <a href='enterprise-network-troubleshooting-case-studies.html' class='btn btn-secondary' style='border:none; padding: 0;'>Enterprise Network Troubleshooting Case Studies &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

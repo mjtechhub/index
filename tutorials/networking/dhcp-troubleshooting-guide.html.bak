@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHCP Troubleshooting Guide | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p><a href="what-is-dhcp.html">DHCP (Dynamic Host Configuration Protocol)</a> automates IP address assignment. When it fails, clients lose connectivity. Common symptoms include: no IP address, receiving a wrong subnet/gateway/DNS, duplicate IP conflicts, or lease renewal failures.</p>
+            
+            <h3>Troubleshooting Sequence</h3>
+            
+            <p><strong>1. Verify Physical & Layer 2 Connection</strong></p>
+            <p>Ensure the cable is plugged in, the Wi-Fi is connected, and the switch port is active. DHCP relies on broadcast traffic; if Layer 1 or Layer 2 is down, DHCP cannot work.</p>
+            
+            <p><strong>2. Check IP Configuration & APIPA</strong></p>
+            <p>Run the following command to check the current state:</p>
+            <pre><code>ipconfig /all</code></pre>
+            <p>Or in PowerShell:</p>
+            <pre><code>Get-NetIPConfiguration</code></pre>
+            <p>If you see an IP address starting with <code>169.254.x.x</code> (part of the <code>169.254.0.0/16</code> range), it means the device assigned itself an <strong>APIPA (Automatic Private IP Addressing)</strong> address because it couldn't reach a DHCP server. <em>Do not claim APIPA always proves the DHCP server itself is down.</em> The failure could be the local network, the VLAN assignment, a misconfigured DHCP relay, or the client itself.</p>
+
+            <p><strong>3. Determine DHCP vs Static</strong></p>
+            <p>Ensure the device is actually configured to "Obtain an IP address automatically" and hasn't been manually assigned a conflicting static IP.</p>
+
+            <p><strong>4. Release and Renew</strong></p>
+            <p>Force the client to drop its current lease and request a new one.</p>
+            <pre><code>ipconfig /release
+ipconfig /renew</code></pre>
+
+            <p><strong>5. Verify the DHCP Relay / IP Helper</strong></p>
+            <p>Because DHCP uses broadcast messages, the requests do not cross routers by default. If the DHCP server is on a different subnet than the client, the router interface for the client's subnet MUST be configured as a <strong>DHCP Relay</strong> (or IP Helper). If this is missing or misconfigured, clients won't get IPs.</p>
+
+            <p><strong>6. Check the DHCP Server & Scope</strong></p>
+            <p>On the server side:</p>
+            <ul>
+                <li>Verify the DHCP Service is running.</li>
+                <li>Check the scope for available addresses (is the scope 100% full?).</li>
+                <li>Ensure there are no excessive rogue reservations or conflict detections pausing the service.</li>
+            </ul>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='dns-troubleshooting-guide.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; DNS Troubleshooting Guide</a>
+            <a href='wi-fi-2-4-ghz-vs-5-ghz-vs-6-ghz.html' class='btn btn-secondary' style='border:none; padding: 0;'>Wi-Fi: 2.4 GHz vs 5 GHz vs 6 GHz &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

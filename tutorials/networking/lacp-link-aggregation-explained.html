@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO & Metadata -->
+    <title>LACP / Link Aggregation Explained | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn about LACP / Link Aggregation Explained in this Networking tutorial.">
+    <link rel="canonical" href="https://mjtechhub.github.io/index/tutorials/networking/lacp-link-aggregation-explained.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="LACP / Link Aggregation Explained | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn about LACP / Link Aggregation Explained in this Networking tutorial.">
+    <meta property="og:url" content="https://mjtechhub.github.io/index/tutorials/networking/lacp-link-aggregation-explained.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="LACP / Link Aggregation Explained | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn about LACP / Link Aggregation Explained in this Networking tutorial.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">LACP / Link Aggregation Explained</h1>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p><strong>Link aggregation</strong> is the practice of combining multiple physical network links into a single logical interface. This is commonly referred to by vendor terminology such as <em>Port-Channel</em> or <em>EtherChannel</em>.</p>
+            
+            <h3>Benefits and Use Cases</h3>
+            <p>Link aggregation provides two main benefits:</p>
+            <ul>
+                <li><strong>Redundancy:</strong> If one physical cable fails, traffic continues flowing over the remaining members without relying on <a href="spanning-tree-protocol-explained.html">STP (Spanning Tree Protocol)</a> to recalculate topologies.</li>
+                <li><strong>Aggregate Capacity:</strong> It increases total bandwidth capacity across multiple traffic flows.</li>
+            </ul>
+            <p>It is used extensively for Switch-to-Switch, Switch-to-Server, and Switch-to-Storage topologies.</p>
+            
+            <h3>LACP (Link Aggregation Control Protocol)</h3>
+            <p>While you can statically force links together, <strong>LACP (IEEE 802.1AX, historically 802.3ad)</strong> is the standard dynamic negotiation protocol. Switches exchange LACP packets to confirm the links are connected to the same device and configured correctly before bundling them. Interfaces are typically configured in Active (proactively sending LACP) or Passive (responding to LACP) modes.</p>
+            <p>For a LAG (Link Aggregation Group) to form, member links must share consistent configurations, including speed, duplex, and <a href="what-is-vlan.html">VLAN</a> settings.</p>
+            
+            <h3>IMPORTANT: The Single-Flow Limitation</h3>
+            <p>Do NOT assume that a single TCP file transfer will utilize the sum of all link speeds. If you bond four 1 Gbps links, a single file transfer will generally still max out at 1 Gbps.</p>
+            <p>Load distribution across a LAG commonly uses a <strong>hashing algorithm</strong> based on Source/Destination IP and MAC addresses. Because a single TCP flow always yields the same hash, all packets for that specific flow are pinned to one specific physical member link to ensure they arrive in order.</p>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='qos-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; QoS Explained</a>
+            <a href='vrrp-hsrp-gateway-redundancy.html' class='btn btn-secondary' style='border:none; padding: 0;'>VRRP / HSRP & Gateway Redundancy &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

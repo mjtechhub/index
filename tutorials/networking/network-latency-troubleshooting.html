@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO & Metadata -->
+    <title>Network Latency Troubleshooting | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn about Network Latency Troubleshooting in this Networking tutorial.">
+    <link rel="canonical" href="https://mjtechhub.github.io/index/tutorials/networking/network-latency-troubleshooting.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Network Latency Troubleshooting | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn about Network Latency Troubleshooting in this Networking tutorial.">
+    <meta property="og:url" content="https://mjtechhub.github.io/index/tutorials/networking/network-latency-troubleshooting.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Network Latency Troubleshooting | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn about Network Latency Troubleshooting in this Networking tutorial.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Network Latency Troubleshooting</h1>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p><strong>Network latency</strong> is the time it takes for data to travel from source to destination. In troubleshooting, we typically measure Round Trip Time (RTT)—the time taken for a packet to go and the response to come back.</p>
+            
+            <h3>Components of Latency</h3>
+            <ul>
+                <li><strong>Propagation Delay:</strong> The speed of light through fiber or copper. Distance inherently adds latency.</li>
+                <li><strong>Serialization / Transmission Delay:</strong> The time required to clock bits onto the physical wire.</li>
+                <li><strong>Queuing Delay:</strong> Time spent waiting in a router buffer during congestion.</li>
+                <li><strong>Processing Delay:</strong> Time taken by devices to inspect headers, encrypt packets (VPN overhead), or make routing decisions.</li>
+            </ul>
+            
+            <h3>Troubleshooting Workflow</h3>
+            <p>Because latency, bandwidth, and <a href="packet-loss-troubleshooting.html">packet loss</a> are different metrics, you must isolate the latency source:</p>
+            <ol>
+                <li>Ping your local gateway (expected &lt;1ms on LAN, slightly higher on Wi-Fi due to retries/interference).</li>
+                <li>Ping an internal service.</li>
+                <li>Ping an Internet destination.</li>
+                <li>Use <code>tracert</code> or <code>pathping</code> to visualize path delay.</li>
+                <li>Use an application port test (e.g., TCP ping) to rule out ICMP-specific delays.</li>
+            </ol>
+            
+            <h3>Important Distinctions</h3>
+            <p>Avoid applying absolute thresholds like "anything above 50 ms is bad" without context. 50 ms is terrible for a local database connection, but excellent for a trans-Atlantic WAN link.</p>
+            <p>Furthermore, distinguish between network latency and slow server/application performance. If a ping returns in 10ms but a web page takes 10 seconds to load, the network is likely fine; the server is slow.</p>
+            <p>Finally, as with packet loss, latency observed in a traceroute at an intermediate hop may not mean that hop is actually delaying forwarded traffic; routers often deprioritize generating ICMP Time Exceeded responses.</p>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='packet-loss-troubleshooting.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Packet Loss Troubleshooting</a>
+            <a href='mtu-and-mss-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>MTU and MSS Explained &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

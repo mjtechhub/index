@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is ARP? | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+<p>The <strong>Address Resolution Protocol (ARP)</strong> maps a known IPv4 address to an unknown Layer 2 MAC address on the local network.</p>
+<h2>The ARP Flow</h2>
+<p>When a host wants to send an IP packet to a destination on the same subnet, it must encapsulate it in a Layer 2 frame addressed to the destination's MAC address.</p>
+<ol>
+<li><strong>Host needs destination MAC:</strong> It checks its local ARP cache.</li>
+<li><strong>ARP Request:</strong> If missing, it broadcasts an ARP Request ("Who has IP 192.168.1.5? Tell 192.168.1.10").</li>
+<li><strong>ARP Reply:</strong> The device with that IP sends a unicast ARP Reply containing its MAC address.</li>
+<li><strong>ARP Cache:</strong> The requesting host stores this mapping in its ARP cache for future use.</li>
+</ol>
+<h3>Note on IPv6</h3>
+<p>ARP is strictly for IPv4. IPv6 uses the <em>Neighbor Discovery Protocol (NDP)</em> over ICMPv6 to accomplish the same goal.</p>
+<h3>Practical Command</h3>
+<p>To view your system's current ARP cache in Windows or Linux, run:</p>
+<pre><code>arp -a</code></pre>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <span></span>
+            <span></span>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

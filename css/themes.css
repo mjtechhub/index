@@ -1,53 +1,93 @@
 /* 
    MJ Tech Hub - Theme CSS
-   Light mode default, dark mode toggle.
+   Dark mode default, light mode toggle.
 */
 
 :root {
-    /* Light Mode (Default) */
+    /* Dark Theme (Default) */
+    --bg-primary: #0F172A; /* Premium slate dark */
+    --bg-secondary: #1E293B; /* Elevated slate */
+    --bg-tertiary: #334155;
+    
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+    
+    /* Brand Colors */
+    --brand-primary: #3B82F6; 
+    --brand-primary-hover: #2563EB;
+    --brand-secondary: #06B6D4;
+    --brand-accent: #8B5CF6; /* Purple accent */
+    --brand-subtle: rgba(59, 130, 246, 0.15);
+    
+    /* Category Colors */
+    --cat-networking: #3B82F6; /* Blue */
+    --cat-windows: #0EA5E9; /* Light Blue */
+    --cat-linux: #EAB308; /* Yellow */
+    --cat-servers: #8B5CF6; /* Purple */
+    --cat-cybersecurity: #EF4444; /* Red */
+    --cat-cloud: #10B981; /* Green */
+
+    --border-color: #334155;
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --hover-shadow: 0 10px 20px -3px rgba(0, 0, 0, 0.5);
+    
+    /* Code block colors */
+    --code-bg: #020617; /* Very dark slate for contrast */
+    --code-text: #E2E8F0;
+    
+    /* Functional */
+    --success: #10B981;
+    --danger: #EF4444;
+    --warning: #F59E0B;
+    
+    /* Radii */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-full: 9999px;
+    
+    /* Spacing */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-2xl: 3rem;
+    
+    /* Layout */
+    --container-width: 1200px;
+    --article-width: 800px;
+    --header-height: 72px;
+}
+
+[data-theme="light"] {
+    /* Light Mode */
     --bg-primary: #FFFFFF;
     --bg-secondary: #F8FAFC;
     --bg-tertiary: #F1F5F9;
+    
     --text-primary: #0F172A;
     --text-secondary: #475569;
-    --text-muted: #64748b;
+    --text-muted: #64748B;
+    
     --brand-primary: #2563EB;
-    --brand-secondary: #06B6D4;
-    --brand-accent: #F59E0B; /* Orange Highlights */
-    --brand-subtle: #8b5cf6; /* Purple where appropriate */
+    --brand-primary-hover: #1D4ED8;
+    --brand-secondary: #0891B2;
+    --brand-accent: #6D28D9;
+    --brand-subtle: rgba(37, 99, 235, 0.1);
+    
     --border-color: #E2E8F0;
+    --border-subtle: rgba(0, 0, 0, 0.05);
+    
     --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     
-    /* Code block colors */
-    --code-bg: #1e293b;
-    --code-text: #f8fafc;
-    
-    /* Functional */
-    --success: #10b981;
-    --danger: #ef4444;
-    --warning: #f59e0b;
-}
-
-[data-theme="dark"] {
-    /* Dark Theme */
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --bg-tertiary: #334155;
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-muted: #94a3b8;
-    --brand-primary: #3b82f6; /* Lighter blue for dark mode */
-    --brand-secondary: #38bdf8;
-    --brand-accent: #fb923c;
-    --brand-subtle: #a78bfa;
-    --border-color: #334155;
-    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-    --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
-    
-    /* Code block colors */
-    --code-bg: #000000;
-    --code-text: #f8fafc;
+    --code-bg: #F1F5F9;
+    --code-text: #0F172A;
 }
 
 /* Base Body Styles */
@@ -55,4 +95,42 @@ body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Phase 4: Dark Mode Visual Refinements */
+[data-theme="dark"] .site-logo {
+    filter: invert(1) hue-rotate(180deg) brightness(1.5);
+}
+
+[data-theme="dark"] .laptop-composite {
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.12); /* Subtle restrained blue glow */
+    background-color: rgba(15, 23, 42, 0.4);
+}
+
+[data-theme="dark"] .search-box input::placeholder,
+[data-theme="dark"] .search-modal-input::placeholder {
+    color: #94A3B8; /* High contrast placeholder in dark mode */
+    opacity: 1;
+}
+
+/* Phase 4: Light Mode Visual Refinements */
+[data-theme="light"] .laptop-composite {
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    background-color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .search-box input {
+    border-color: #CBD5E1; /* Slate 300 for slightly better contrast than default E2E8F0 */
+}
+
+[data-theme="light"] .search-box input::placeholder,
+[data-theme="light"] .search-modal-input::placeholder {
+    color: #64748B; /* Slate 500 */
+    opacity: 1;
 }

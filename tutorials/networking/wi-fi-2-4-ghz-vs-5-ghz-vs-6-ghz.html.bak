@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wi-Fi: 2.4 GHz vs 5 GHz vs 6 GHz | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>Modern Wi-Fi networks utilize different radio frequency bands. Understanding the physical characteristics of 2.4 GHz, 5 GHz, and the newer 6 GHz bands helps in planning coverage, troubleshooting interference, and optimizing network performance.</p>
+            
+            <h3>2.4 GHz Band</h3>
+            <p>The oldest and most broadly compatible Wi-Fi band.</p>
+            <ul>
+                <li><strong>Range & Penetration:</strong> Typically has a longer range and better wall/obstacle penetration due to its longer wavelength.</li>
+                <li><strong>Capacity & Congestion:</strong> Has very few non-overlapping channels (1, 6, and 11 in North America), making it highly susceptible to congestion and interference from microwaves, Bluetooth devices, and neighboring Wi-Fi networks.</li>
+            </ul>
+
+            <h3>5 GHz Band</h3>
+            <p>The standard for high-performance Wi-Fi over the last decade.</p>
+            <ul>
+                <li><strong>Range & Penetration:</strong> Generally has a shorter range than 2.4 GHz under similar conditions and struggles more to penetrate solid objects.</li>
+                <li><strong>Capacity:</strong> Offers significantly more channel capacity and commonly supports wider channels (40 MHz, 80 MHz), allowing for higher data rates.</li>
+            </ul>
+
+            <h3>6 GHz Band</h3>
+            <p>Introduced with Wi-Fi 6E and Wi-Fi 7, this band opens up a massive amount of new spectrum.</p>
+            <ul>
+                <li><strong>Capacity & Congestion:</strong> Provides abundant, wide channels with virtually zero legacy-device congestion.</li>
+                <li><strong>Requirements & Propagation:</strong> Requires compatible equipment (both the Access Point and the client). Due to the higher frequency, propagation characteristics generally make dense coverage planning important, as the signal drops off faster through walls than 5 GHz.</li>
+            </ul>
+
+            <h3>Comparison Overview</h3>
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Band</th>
+                            <th>Range / Penetration</th>
+                            <th>Interference Risk</th>
+                            <th>Typical Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>2.4 GHz</strong></td>
+                            <td>Best</td>
+                            <td>High</td>
+                            <td>IoT devices, long-range connectivity through walls</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5 GHz</strong></td>
+                            <td>Moderate</td>
+                            <td>Moderate</td>
+                            <td>Smartphones, laptops, streaming (Standard high-speed)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>6 GHz</strong></td>
+                            <td>Lowest</td>
+                            <td>Very Low</td>
+                            <td>VR, ultra-high-bandwidth applications, dense environments</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>A Note on Performance</h3>
+            <p>It is inaccurate to say "6 GHz is always faster" or "2.4 GHz is always slow." Actual performance depends heavily on the channel width configured, signal quality, the capabilities of the client and AP (e.g., MIMO streams), environmental interference, and the specific Wi-Fi generation standard in use.</p>
+            <p>Many modern access points use a feature called <strong>Band Steering</strong>, which attempts to automatically push dual-band clients towards the 5 GHz (or 6 GHz) band if the signal is strong enough, keeping the 2.4 GHz band free for devices that absolutely need it.</p>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='dhcp-troubleshooting-guide.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; DHCP Troubleshooting Guide</a>
+            <a href='network-troubleshooting-workflow.html' class='btn btn-secondary' style='border:none; padding: 0;'>Network Troubleshooting Workflow &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

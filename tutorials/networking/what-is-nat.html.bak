@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is NAT? | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+<p><strong>Network Address Translation (NAT)</strong> is a process used by routers to modify the source or destination IP addresses in packet headers while they are in transit.</p>
+<h2>Why is NAT used?</h2>
+<p>The primary reason NAT exists is IPv4 address exhaustion. There are simply not enough public IPv4 addresses for every device on Earth. NAT allows an entire private network to share a single public IP address to access the internet.</p>
+<h2>Example Scenario</h2>
+<p>Imagine your laptop on a home network:</p>
+<ul>
+<li><strong>Private Client IP:</strong> 192.168.1.10</li>
+<li><strong>Router Public IP:</strong> 203.0.113.5 (from your ISP)</li>
+</ul>
+<p>When your laptop requests a web page, the packet leaves the laptop with a source IP of 192.168.1.10. When it hits the router, the router uses NAT to change the source IP to its own public IP (203.0.113.5) before sending it to the Internet. When the web server replies to 203.0.113.5, the router remembers the connection, translates the destination IP back to 192.168.1.10, and forwards it to your laptop.</p>
+<h3>Port Address Translation (PAT)</h3>
+<p>To keep track of multiple devices sharing one public IP simultaneously, the router translates both the IP address and the source port. This specific type of NAT is called <strong>PAT (Port Address Translation)</strong> or NAT Overloading, and it is what virtually all home and office routers use today.</p>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <span></span>
+            <span></span>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

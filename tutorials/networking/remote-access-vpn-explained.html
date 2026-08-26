@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO & Metadata -->
+    <title>Remote Access VPN Explained | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn about Remote Access VPN Explained in this Networking tutorial.">
+    <link rel="canonical" href="https://mjtechhub.github.io/index/tutorials/networking/remote-access-vpn-explained.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Remote Access VPN Explained | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn about Remote Access VPN Explained in this Networking tutorial.">
+    <meta property="og:url" content="https://mjtechhub.github.io/index/tutorials/networking/remote-access-vpn-explained.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Remote Access VPN Explained | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn about Remote Access VPN Explained in this Networking tutorial.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Remote Access VPN Explained</h1>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p>A <strong>Remote Access VPN</strong> allows an individual remote user or device to connect securely over the Internet to a private network, granting them access to internal resources as if they were physically in the office.</p>
+            
+            <h3>How It Works</h3>
+            <p>The remote device runs VPN client software (or uses built-in OS capabilities). Upon successful authentication, a secure tunnel is established to the corporate VPN gateway. The gateway assigns the client a <strong>Virtual IP address</strong> from an internal pool, and injects routing instructions so the client knows how to reach the private network.</p>
+            
+            <h3>Full Tunneling vs Split Tunneling</h3>
+            <ul>
+                <li><strong>Full Tunneling:</strong> <em>All</em> traffic from the remote device, including general Internet browsing, is forced down the VPN tunnel to the corporate network. This allows the organization to inspect and filter all traffic for security, but requires significant bandwidth.</li>
+                <li><strong>Split Tunneling:</strong> Only traffic destined for the specific corporate subnets goes through the VPN. General Internet traffic goes directly out the user's local ISP connection. This saves corporate bandwidth but reduces visibility into the user's general web activity.</li>
+            </ul>
+            
+            <h3>Protocols: IPsec vs TLS/SSL</h3>
+            <p>Remote Access VPNs conceptually differ in underlying technology:</p>
+            <ul>
+                <li><strong>IPsec-based:</strong> Typically requires a dedicated software client and relies on standard IPsec negotiation.</li>
+                <li><strong>TLS/SSL-based:</strong> Often relies on the same encryption protocols that secure HTTPS websites. Note that while historically called "SSL VPNs," modern secure implementations universally use TLS, as SSL is obsolete.</li>
+            </ul>
+            
+            <h3>Security Best Practices</h3>
+            <p>Because remote devices operate in untrusted environments, strict security is required:</p>
+            <ul>
+                <li>Always mandate Multi-Factor Authentication (MFA).</li>
+                <li>Utilize Device Posture concepts (checking if the client has updated antivirus and patches before allowing connection).</li>
+                <li>Enforce the principle of Least Privilege (do not give remote users access to the entire network if they only need one server).</li>
+                <li>Patch VPN gateways immediately, as they are high-value targets. Disable obsolete cryptography.</li>
+                <li>Maintain thorough logging of connections and internal <a href="what-is-dns.html">DNS</a> queries.</li>
+            </ul>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='site-to-site-vpn-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Site-to-Site VPN Explained</a>
+            <a href='dhcp-relay-ip-helper-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>DHCP Relay / IP Helper Explained &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

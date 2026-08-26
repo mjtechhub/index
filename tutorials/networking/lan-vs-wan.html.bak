@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAN vs WAN | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>Networks are categorized by their geographic scope. The two most common types are LAN and WAN.</p><h3>LAN (Local Area Network)</h3><p>A network confined to a small area, like a single building, home, or office. It is usually fast and privately owned.</p><h3>WAN (Wide Area Network)</h3><p>A network that spans a large geographical area, connecting multiple LANs. The Internet is the largest WAN.</p><h3>Troubleshooting Tip</h3><p>If you can print to your local printer but cannot load a website, your LAN is likely fine, but your WAN connection (internet) is down.</p>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='what-is-a-computer-network.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; What Is a Network?</a>
+            <a href='what-is-an-ip-address.html' class='btn btn-secondary' style='border:none; padding: 0;'>What Is an IP Address? &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

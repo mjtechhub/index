@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disclaimer | MJ Tech Hub</title>
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="container">
+
+    <div class="container py-4">
+        <a href="../index.html" class="btn btn-secondary mb-2">&larr; Back to Home</a>
+        <h1>Disclaimer</h1>
+        <p>This is a placeholder for the MJ Tech Hub Disclaimer.</p>
+    </div>
+
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../js/components.js"></script>
+</body>
+</html>

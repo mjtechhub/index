@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO & Metadata -->
+    <title>Site-to-Site VPN Explained | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn about Site-to-Site VPN Explained in this Networking tutorial.">
+    <link rel="canonical" href="https://mjtechhub.github.io/index/tutorials/networking/site-to-site-vpn-explained.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Site-to-Site VPN Explained | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn about Site-to-Site VPN Explained in this Networking tutorial.">
+    <meta property="og:url" content="https://mjtechhub.github.io/index/tutorials/networking/site-to-site-vpn-explained.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Site-to-Site VPN Explained | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn about Site-to-Site VPN Explained in this Networking tutorial.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Site-to-Site VPN Explained</h1>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p>A <strong>Site-to-Site VPN</strong> creates a secure, encrypted tunnel between two distinct geographic networks across an untrusted network like the Internet.</p>
+            
+            <h3>The Conceptual Model</h3>
+            <p>Imagine an organization with two physical locations:</p>
+            <pre><code>Office A Subnet: 192.168.10.0/24
+Office B Subnet: 192.168.20.0/24
+
+Office A Gateway → Internet (Encrypted Tunnel) ← Office B Gateway</code></pre>
+            <p>Devices in Office A can communicate with devices in Office B using their private IP addresses. The VPN gateways at the edge of each network handle the encryption and routing invisibly to the end users.</p>
+            
+            <h3>IPsec and IKE Concepts</h3>
+            <p>Most enterprise site-to-site VPNs utilize IPsec (Internet Protocol Security). Building the tunnel generally involves two conceptual phases:</p>
+            <ul>
+                <li><strong>IKE Phase 1 / IKE SA:</strong> The two VPN gateways authenticate each other and negotiate a secure management channel.</li>
+                <li><strong>IPsec / Child SA (Phase 2):</strong> Within the secure Phase 1 channel, the gateways negotiate the actual encryption parameters and establish the data tunnel for the specific subnets (the "interesting traffic" or selectors).</li>
+            </ul>
+            <p><em>Note: Be careful, as IKEv1 and IKEv2 terminology differs. Do not imply "Phase 2" terminology applies identically to every modern IKEv2 implementation, where they are often referred to as Child SAs.</em></p>
+            
+            <h3>Common Troubleshooting Problems</h3>
+            <p>If a Site-to-Site VPN fails to establish or pass traffic, check for these common issues:</p>
+            <ul>
+                <li><strong>Mismatched Proposals:</strong> Encryption algorithms, hash algorithms, or Diffie-Hellman groups do not match on both sides.</li>
+                <li><strong>Incorrect Subnets (Selectors):</strong> The defined local and remote subnets do not perfectly mirror each other.</li>
+                <li><strong>Routing and NAT:</strong> The gateway doesn't know to route the traffic into the tunnel, or NAT is incorrectly translating the private IPs before they enter the tunnel (NAT Exemption is often required).</li>
+                <li><strong>Firewall Rules:</strong> Ensure UDP ports 500 and 4500 (for NAT-T) are permitted on the external interfaces, and the decrypted inner traffic is permitted by the <a href="stateful-firewall-explained.html">stateful firewall</a> policies.</li>
+            </ul>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='port-forwarding-and-dnat-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Port Forwarding and DNAT Explained</a>
+            <a href='remote-access-vpn-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>Remote Access VPN Explained &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

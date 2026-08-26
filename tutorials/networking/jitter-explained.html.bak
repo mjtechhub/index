@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jitter Explained | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p><strong>Jitter</strong> is the variation in packet delay over time. While latency measures the time it takes for a packet to reach its destination, jitter measures how consistent that time is.</p>
+            
+            <h3>Understanding Jitter</h3>
+            <p>Consider four packets sent at a steady rate:</p>
+            <ul>
+                <li>Packet 1: 20 ms <a href="network-latency-troubleshooting.html">latency</a></li>
+                <li>Packet 2: 21 ms latency</li>
+                <li>Packet 3: 65 ms latency</li>
+                <li>Packet 4: 19 ms latency</li>
+            </ul>
+            <p>Packet 3 experienced a significant delay compared to the others. This variation is jitter. High jitter destroys real-time applications like VoIP (Voice over IP), video calls, and gaming because the data arrives out of rhythm, causing choppy audio or video artifacts.</p>
+            
+            <h3>Jitter Buffers</h3>
+            <p>To combat this, applications use a <strong>jitter buffer</strong>. This conceptually holds incoming packets slightly longer than necessary before playing them to the user, smoothing out the inconsistent arrival times. However, if the buffer is too large, it adds unacceptable overall delay to the conversation.</p>
+            
+            <h3>Acceptable Thresholds</h3>
+            <p>There is no universal threshold like "30 ms jitter is always bad." Acceptable values depend entirely on the application, the codec being used, buffering capabilities, and network design. Standard ping tests alone do not provide a complete or reliable jitter measurement; specialized <a href="network-monitoring-fundamentals.html">monitoring tools</a> and active probes (like IP SLA) are required to measure it accurately.</p>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='bandwidth-vs-throughput-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Bandwidth vs Throughput Explained</a>
+            <a href='duplex-mismatch-and-speed-negotiation.html' class='btn btn-secondary' style='border:none; padding: 0;'>Duplex Mismatch & Speed Negotiation &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

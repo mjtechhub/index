@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is DNS? | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>DNS (Domain Name System) is the phonebook of the internet. It translates human-readable domain names (like <code>google.com</code>) into IP addresses (like <code>142.250.190.46</code>) that computers use to connect to each other.</p><h3>Troubleshooting Tip</h3><p>If you can access websites by their IP address but not by their name, you have a DNS issue. Try changing your DNS server to <code>8.8.8.8</code>.</p><h3>Related Command</h3><p>Use <a href='../../commands.html' class='cmd-badge' style='display:inline-block'>nslookup</a> to troubleshoot DNS resolution.</p>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='public-vs-private-ip-address.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Public vs Private IP</a>
+            <a href='what-is-dhcp.html' class='btn btn-secondary' style='border:none; padding: 0;'>What Is DHCP? &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

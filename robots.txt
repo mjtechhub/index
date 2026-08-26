@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /tools/
+Disallow: /scratch/
+Disallow: /components/
+Disallow: /qa/
+Disallow: /backup/
+
+Sitemap: https://mjtechhub.github.io/index/sitemap.xml

@@ -240,6 +240,186 @@
                             "url": "tutorials/networking/tcp-vs-udp.html"
                         }
                     ]
+                },
+                {
+                    "title": "ADVANCED ROUTING",
+                    "subtopics": [
+                        {
+                            "name": "OSPF Basics",
+                            "url": "tutorials/networking/ospf-basics.html"
+                        },
+                        {
+                            "name": "BGP Basics",
+                            "url": "tutorials/networking/bgp-basics.html"
+                        }
+                    ]
+                },
+                {
+                    "title": "NETWORK SECURITY",
+                    "subtopics": [
+                        {
+                            "name": "Access Control Lists (ACLs) Explained",
+                            "url": "tutorials/networking/access-control-lists-explained.html"
+                        },
+                        {
+                            "name": "Stateful Firewall Explained",
+                            "url": "tutorials/networking/stateful-firewall-explained.html"
+                        },
+                        {
+                            "name": "Port Forwarding and DNAT Explained",
+                            "url": "tutorials/networking/port-forwarding-and-dnat-explained.html"
+                        }
+                    ]
+                },
+                {
+                    "title": "VPN & REMOTE CONNECTIVITY",
+                    "subtopics": [
+                        {
+                            "name": "Site-to-Site VPN Explained",
+                            "url": "tutorials/networking/site-to-site-vpn-explained.html"
+                        },
+                        {
+                            "name": "Remote Access VPN Explained",
+                            "url": "tutorials/networking/remote-access-vpn-explained.html"
+                        }
+                    ]
+                },
+                {
+                    "title": "NETWORK SERVICES",
+                    "subtopics": [
+                        {
+                            "name": "DHCP Relay / IP Helper Explained",
+                            "url": "tutorials/networking/dhcp-relay-ip-helper-explained.html"
+                        },
+                        {
+                            "name": "DNS Record Types Explained",
+                            "url": "tutorials/networking/dns-record-types-explained.html"
+                        }
+                    ]
+                },
+                {
+                    "title": "IPV6",
+                    "subtopics": [
+                        {
+                            "name": "IPv6 Fundamentals",
+                            "url": "tutorials/networking/ipv6-fundamentals.html"
+                        }
+                    ]
+                },
+                {
+                    "title": "MONITORING & VISIBILITY",
+                    "subtopics": [
+                        {
+                            "name": "SNMP Explained",
+                            "url": "tutorials/networking/snmp-explained.html"
+                        },
+                        {
+                            "name": "Network Monitoring Fundamentals",
+                            "url": "tutorials/networking/network-monitoring-fundamentals.html"
+                        },
+                        {
+                            "name": "Wireshark Basics",
+                            "url": "tutorials/networking/wireshark-basics.html"
+                        }
+                    ]
+                },
+                {
+                    "title": "PERFORMANCE TROUBLESHOOTING",
+                    "subtopics": [
+                        {
+                            "name": "Packet Loss Troubleshooting",
+                            "url": "tutorials/networking/packet-loss-troubleshooting.html"
+                        },
+                        {
+                            "name": "Network Latency Troubleshooting",
+                            "url": "tutorials/networking/network-latency-troubleshooting.html"
+                        },
+                        {
+                            "name": "MTU and MSS Explained",
+                            "url": "tutorials/networking/mtu-and-mss-explained.html"
+                        },
+                        {
+                            "name": "QoS Explained",
+                            "url": "tutorials/networking/qos-explained.html"
+                        }
+                    ]
+                },
+                {
+                    "title": "REDUNDANCY & HIGH AVAILABILITY",
+                    "subtopics": [
+                        {
+                            "name": "LACP / Link Aggregation Explained",
+                            "url": "tutorials/networking/lacp-link-aggregation-explained.html"
+                        },
+                        {
+                            "name": "VRRP / HSRP & Gateway Redundancy",
+                            "url": "tutorials/networking/vrrp-hsrp-gateway-redundancy.html"
+                        }
+                    ]
+                },
+                {
+                    "title": "ADVANCED TROUBLESHOOTING",
+                    "subtopics": [
+                        {
+                            "name": "Advanced VLAN Troubleshooting",
+                            "url": "tutorials/networking/advanced-vlan-troubleshooting.html"
+                        },
+                        {
+                            "name": "Advanced DNS Troubleshooting",
+                            "url": "tutorials/networking/advanced-dns-troubleshooting.html"
+                        },
+                        {
+                            "name": "VPN Troubleshooting Workflow",
+                            "url": "tutorials/networking/vpn-troubleshooting-workflow.html"
+                        },
+                        {
+                            "name": "Enterprise Network Troubleshooting Case Studies",
+                            "url": "tutorials/networking/enterprise-network-troubleshooting-case-studies.html"
+                        }
+                    ]
+                },
+                {
+                    "title": "NETWORK PERFORMANCE",
+                    "subtopics": [
+                        {
+                            "name": "Bandwidth vs Throughput Explained",
+                            "url": "tutorials/networking/bandwidth-vs-throughput-explained.html"
+                        },
+                        {
+                            "name": "Jitter Explained",
+                            "url": "tutorials/networking/jitter-explained.html"
+                        },
+                        {
+                            "name": "Duplex Mismatch & Speed Negotiation",
+                            "url": "tutorials/networking/duplex-mismatch-and-speed-negotiation.html"
+                        }
+                    ]
+                },
+                {
+                    "title": "TRAFFIC TYPES & NETWORK BEHAVIOR",
+                    "subtopics": [
+                        {
+                            "name": "Unicast vs Broadcast vs Multicast",
+                            "url": "tutorials/networking/unicast-vs-broadcast-vs-multicast.html"
+                        }
+                    ]
+                },
+                {
+                    "title": "OBSERVABILITY & CAPACITY",
+                    "subtopics": [
+                        {
+                            "name": "Network Baseline & Capacity Planning",
+                            "url": "tutorials/networking/network-baseline-and-capacity-planning.html"
+                        },
+                        {
+                            "name": "Syslog Explained",
+                            "url": "tutorials/networking/syslog-explained.html"
+                        },
+                        {
+                            "name": "NetFlow / IPFIX Explained",
+                            "url": "tutorials/networking/netflow-ipfix-explained.html"
+                        }
+                    ]
                 }
             ]
         },

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO & Metadata -->
+    <title>Access Control Lists (ACLs) Explained | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn about Access Control Lists (ACLs) Explained in this Networking tutorial.">
+    <link rel="canonical" href="https://mjtechhub.github.io/index/tutorials/networking/access-control-lists-explained.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Access Control Lists (ACLs) Explained | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn about Access Control Lists (ACLs) Explained in this Networking tutorial.">
+    <meta property="og:url" content="https://mjtechhub.github.io/index/tutorials/networking/access-control-lists-explained.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Access Control Lists (ACLs) Explained | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn about Access Control Lists (ACLs) Explained in this Networking tutorial.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Access Control Lists (ACLs) Explained</h1>
+        </div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p>An <strong>Access Control List (ACL)</strong> defines rules used to permit or deny traffic passing through a network device according to matching criteria.</p>
+            
+            <h3>Matching Criteria</h3>
+            <p>Depending on the type of ACL and the vendor, rules can filter traffic based on:</p>
+            <ul>
+                <li>Source IP address</li>
+                <li>Destination IP address</li>
+                <li>Protocol (e.g., TCP, UDP, ICMP)</li>
+                <li>Source / Destination <a href="common-network-ports.html">ports</a></li>
+            </ul>
+            
+            <h3>Standard vs Extended ACLs</h3>
+            <p><em>Note: This is vendor/platform terminology, heavily used in Cisco environments.</em></p>
+            <ul>
+                <li><strong>Standard ACLs:</strong> Typically filter traffic based <em>only</em> on the source IP address.</li>
+                <li><strong>Extended ACLs:</strong> Can filter based on source IP, destination IP, protocol, and ports, offering granular control.</li>
+            </ul>
+            
+            <h3>Rule Processing and Implicit Deny</h3>
+            <p>ACLs are processed top-down in <strong>first-match</strong> behavior. Once a packet matches a rule, the action (permit or deny) is applied, and no further rules are checked.</p>
+            <p>Crucially, almost all ACLs end with an invisible <strong>implicit deny</strong> rule. If a packet does not match any explicitly configured rule in the list, it is dropped.</p>
+            
+            <h3>Conceptual Example Policy</h3>
+            <pre><code>Rule 1: Permit TCP from 10.10.10.0/24 to 10.20.20.50 eq 443
+Rule 2: Deny IP any any (Implicit or explicit)</code></pre>
+            <p>In this conceptual example, hosts on the <code>10.10.10.0/24</code> subnet can access a secure web server at <code>10.20.20.50</code>. All other traffic is denied. Note that syntax is not universal across vendors; always consult your platform's documentation.</p>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='bgp-basics.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; BGP Basics</a>
+            <a href='stateful-firewall-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>Stateful Firewall Explained &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

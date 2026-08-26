@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCP/IP Model Explained | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+<p>While the OSI model is heavily used for theoretical understanding and troubleshooting, the <strong>TCP/IP Model</strong> is a more practical framework that closely maps to how the modern Internet actually functions.</p>
+<h2>The 4 Layers of TCP/IP</h2>
+<ol>
+<li><strong>Network Access (or Link) Layer:</strong> Roughly corresponds to OSI Layers 1 and 2. It handles the physical transmission of data across a single link (e.g., Ethernet, Wi-Fi).</li>
+<li><strong>Internet Layer:</strong> Corresponds to OSI Layer 3. It uses IP addresses to route packets across multiple interconnected networks.</li>
+<li><strong>Transport Layer:</strong> Corresponds to OSI Layer 4. It provides host-to-host communication services using protocols like TCP (reliable) and UDP (unreliable).</li>
+<li><strong>Application Layer:</strong> Corresponds to OSI Layers 5, 6, and 7 combined. It represents the protocols that end-user applications use to interact, such as HTTP, DNS, and SSH.</li>
+</ol>
+<h2>TCP/IP vs OSI</h2>
+<p>It is important to remember that these models are just frameworks. They do not dictate how software <em>must</em> be written, but rather help us categorize how it works. The TCP/IP model is simpler because it groups presentation, session, and application logic into one broad Application Layer, which accurately reflects how most modern software is developed.</p>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <span></span>
+            <span></span>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

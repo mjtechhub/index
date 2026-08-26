@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSPF Basics | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p><strong>OSPF (Open Shortest Path First)</strong> is a link-state Interior Gateway Protocol used heavily in enterprise networks.</p>
+            
+            <h3>How OSPF Works</h3>
+            <p>Unlike simple distance-vector protocols, OSPF routers build a complete topological map of the network (the link-state database) by exchanging link-state advertisements (LSAs). Each router then runs the Shortest Path First (SPF) algorithm, also known as Dijkstra's algorithm, to calculate the best paths to all destinations within its autonomous system.</p>
+            
+            <h3>Key Concepts</h3>
+            <ul>
+                <li><strong>Autonomous System Context:</strong> OSPF operates within a single routing domain (Interior Gateway Protocol).</li>
+                <li><strong>Areas:</strong> OSPF uses a hierarchical design. All areas must connect to the backbone area, known as <strong>Area 0</strong>.</li>
+                <li><strong>Neighbors and Adjacency:</strong> Routers discover each other via Hello packets. Once they agree on parameters, they form an adjacency and exchange link-state information.</li>
+                <li><strong>Cost / Metric:</strong> OSPF path selection is determined by <em>cost</em>. It does NOT automatically choose the path with the fewest routers. Cost is typically derived from interface bandwidth, though vendors calculate default interface costs differently.</li>
+                <li><strong>Route Convergence:</strong> When a link fails, OSPF quickly floods the updated state to all routers, which recalculate their SPF trees, resulting in fast convergence.</li>
+            </ul>
+            
+            <h3>Simple Topology Example</h3>
+            <pre><code>   Router A
+      |
+   Router B
+  /        \
+R-C       R-D</code></pre>
+            <p>If R-C and R-D both connect to the same destination network, Router B will select the path with the lowest cumulative OSPF cost.</p>
+            
+            <h3>OSPFv2 vs OSPFv3</h3>
+            <p><strong>OSPFv2</strong> is typically used for IPv4 routing. <strong>OSPFv3</strong> was originally designed to support <a href="ipv6-fundamentals.html">IPv6</a>, but has evolved to support multiple address families (both IPv4 and IPv6) within its modern framing.</p>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='static-vs-dynamic-routing.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Static vs Dynamic Routing</a>
+            <a href='bgp-basics.html' class='btn btn-secondary' style='border:none; padding: 0;'>BGP Basics &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

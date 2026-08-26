@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is DHCP? | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>DHCP (Dynamic Host Configuration Protocol) automatically assigns IP addresses and network settings (like Subnet Mask and Default Gateway) to devices on a network.</p><h3>How It Works (DORA)</h3><ul><li><strong>Discover:</strong> Client broadcasts looking for a server.</li><li><strong>Offer:</strong> Server offers an IP.</li><li><strong>Request:</strong> Client requests the offered IP.</li><li><strong>Acknowledge:</strong> Server confirms the lease.</li></ul><h3>Troubleshooting Tip</h3><p>If your IP address starts with <code>169.254.x.x</code> (APIPA), your device failed to reach the DHCP server.</p>
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='what-is-dns.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; What Is DNS?</a>
+            <a href='what-is-vlan.html' class='btn btn-secondary' style='border:none; padding: 0;'>What Is VLAN? &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>

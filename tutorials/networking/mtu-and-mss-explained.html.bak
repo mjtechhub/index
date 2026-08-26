@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTU and MSS Explained | Networking | MJ Tech Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+\1\n    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header"></div>
+        
+        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+
+            <p>Understanding packet sizing is crucial when dealing with complex routing or VPN overhead.</p>
+            
+            <h3>MTU (Maximum Transmission Unit)</h3>
+            <p>MTU is the largest size (in bytes) that a particular interface can transmit without needing to fragment the packet. The most common standard Ethernet MTU is <strong>1500 bytes</strong>, though this is not universally mandatory (e.g., Jumbo Frames support 9000 bytes).</p>
+            
+            <h3>MSS (Maximum Segment Size)</h3>
+            <p>MSS is a TCP concept. It defines the maximum amount of application <em>payload</em> data that a host is willing to accept in a single TCP segment. MSS is calculated during the TCP handshake to prevent IP fragmentation.</p>
+            
+            <h4>The Conceptual Math</h4>
+            <p>For standard Ethernet IPv4 TCP traffic without extra options:</p>
+            <pre><code>  1500 bytes (MTU)
+-   20 bytes (IPv4 Header)
+-   20 bytes (TCP Header)
+-------------------------
+= 1460 bytes (TCP MSS)</code></pre>
+            <p>This is purely conceptual. Do not give 1460 as a universal value. IPv6 headers are larger (40 bytes), TCP options (like timestamps) reduce available payload, and encapsulation (such as VPN tunnels) will further reduce the effective MTU.</p>
+            
+            <h3>Fragmentation and PMTUD</h3>
+            <p>If a router receives a packet larger than the outbound interface's MTU, it must either fragment it or drop it. IPv4 allows intermediate fragmentation. However, if the packet is marked "Don't Fragment" (DF), the router drops it and is required to send an ICMP "Fragmentation Needed" message back to the source.</p>
+            <p><strong>Path MTU Discovery (PMTUD)</strong> relies on these ICMP messages to dynamically learn the smallest MTU along a path. If strict firewalls block these ICMP messages, PMTUD fails, resulting in a "black-hole" where small pings work, but large data transfers hang.</p>
+            
+            <h3>Testing MTU</h3>
+            <p>You can test path MTU on Windows by forcing the DF bit and specifying a payload size:</p>
+            <pre><code>ping example.com -f -l 1472</code></pre>
+            <p><em>Note: The `-l` value is payload size. 1472 payload + 28 bytes (ICMP/IP headers) = 1500 bytes total packet size on the wire.</em></p>
+        
+        </div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='network-latency-troubleshooting.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Network Latency Troubleshooting</a>
+            <a href='qos-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>QoS Explained &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="..\../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>
