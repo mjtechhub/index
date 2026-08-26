@@ -4,61 +4,59 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Menu Toggle
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const navLinks = document.getElementById('nav-links');
+    // Dynamic component initialization is handled via event delegation
+    // to support dynamically injected header/footer HTML.
     
-    if (mobileMenuBtn && navLinks) {
-        // Toggle menu
-        mobileMenuBtn.addEventListener('click', (e) => {
+    document.addEventListener('click', (e) => {
+        const mobileMenuBtn = e.target.closest('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        // 1. Toggle via hamburger button
+        if (mobileMenuBtn && navLinks) {
             e.stopPropagation();
             const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
-            mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
-            navLinks.classList.toggle('active');
             
-            // Toggle icon (hamburger to close)
-            const icon = mobileMenuBtn.querySelector('i');
-            if (icon) {
-                if (navLinks.classList.contains('active')) {
-                    icon.className = 'fas fa-times';
-                } else {
-                    icon.className = 'fas fa-bars';
+            if (isExpanded) {
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                navLinks.classList.remove('active');
+            } else {
+                mobileMenuBtn.setAttribute('aria-expanded', 'true');
+                navLinks.classList.add('active');
+            }
+            return;
+        }
+        
+        // 2. Close when clicking a nav link
+        if (e.target.closest('.nav-links a') && navLinks && navLinks.classList.contains('active')) {
+            const btn = document.querySelector('.mobile-menu-toggle');
+            navLinks.classList.remove('active');
+            if (btn) btn.setAttribute('aria-expanded', 'false');
+            return;
+        }
+        
+        // 3. Close when clicking outside
+        if (navLinks && navLinks.classList.contains('active')) {
+            if (!navLinks.contains(e.target)) {
+                const btn = document.querySelector('.mobile-menu-toggle');
+                navLinks.classList.remove('active');
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+            }
+        }
+    });
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks && navLinks.classList.contains('active')) {
+                const btn = document.querySelector('.mobile-menu-toggle');
+                navLinks.classList.remove('active');
+                if (btn) {
+                    btn.setAttribute('aria-expanded', 'false');
+                    btn.focus();
                 }
             }
-        });
-        
-        // Close menu when clicking a link
-        const links = navLinks.querySelectorAll('a');
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                mobileMenuBtn.setAttribute('aria-expanded', 'false');
-                const icon = mobileMenuBtn.querySelector('i');
-                if (icon) icon.className = 'fas fa-bars';
-            });
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                navLinks.classList.remove('active');
-                mobileMenuBtn.setAttribute('aria-expanded', 'false');
-                const icon = mobileMenuBtn.querySelector('i');
-                if (icon) icon.className = 'fas fa-bars';
-            }
-        });
-        
-        // Escape key to close
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-                mobileMenuBtn.setAttribute('aria-expanded', 'false');
-                const icon = mobileMenuBtn.querySelector('i');
-                if (icon) icon.className = 'fas fa-bars';
-                mobileMenuBtn.focus();
-            }
-        });
-    }
+        }
+    });
     
     // Set active class based on current URL
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
