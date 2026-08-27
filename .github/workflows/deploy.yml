@@ -27,7 +27,8 @@ jobs:
       - name: Prepare Public Directory
         run: |
           mkdir public
-          rsync -av --exclude='tools' --exclude='backup' --exclude='scratch' --exclude='.github' --exclude='.git' ./ public/
+          cp -r *.html assets components css data js legal tutorials public/
+          cp CNAME sitemap.xml public/ || true
       
       - name: Setup Pages
         uses: actions/configure-pages@v4

@@ -1,10 +1,15 @@
-﻿import json, os, re
-tut_dir = r"c:\xampp\htdocs\index\tutorials\networking"
-json_path = r"c:\xampp\htdocs\index\data\tutorials.json"
+import json, os, re
+from pathlib import Path
+
+# Resolve the repository root assuming this script is in the root directory
+repo_root = Path(__file__).resolve().parent
+tut_dir = repo_root / "tutorials" / "networking"
+json_path = repo_root / "data" / "tutorials.json"
+
 with open(json_path, 'r', encoding='utf-8') as f:
     tuts = json.load(f)
 
-files = [f for f in os.listdir(tut_dir) if f.endswith('.html')]
+files = [f.name for f in tut_dir.glob('*.html')]
 print(f"TOTAL NETWORKING HTML FILES: {len(files)}")
 print(f"TOTAL NETWORKING METADATA RECORDS: {len(tuts)}")
 
@@ -21,7 +26,7 @@ for t in tuts:
         mismatches += 1
         print(f"Mismatch: {fname} in JSON but not in files")
     else:
-        with open(os.path.join(tut_dir, fname), 'r', encoding='utf-8') as f:
+        with open(tut_dir / fname, 'r', encoding='utf-8') as f:
             content = f.read()
             if t['title'] not in content:
                 print(f"Mismatch: Title '{t['title']}' not found in {fname}")

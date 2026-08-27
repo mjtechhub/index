@@ -26,6 +26,39 @@
     <link rel="stylesheet" href="css/themes.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .quiz-panel { display: none; }
+        .quiz-panel.active { display: block; }
+        .option-label { 
+            display: block; 
+            padding: 1rem; 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            margin-bottom: 0.75rem; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+        }
+        .option-label:hover { 
+            background: var(--bg-secondary); 
+        }
+        .option-label.selected { 
+            border-color: var(--brand-primary); 
+            background: rgba(37, 99, 235, 0.1); 
+            font-weight: 500; 
+        }
+        .feedback { 
+            padding: 1rem; 
+            border-radius: 8px; 
+            margin-bottom: 1rem; 
+            background: var(--bg-secondary);
+        }
+        .feedback.correct { 
+            border-left: 4px solid var(--success); 
+        }
+        .feedback.incorrect { 
+            border-left: 4px solid var(--danger); 
+        }
+    </style>
 </head>
 <body>
     <div id="site-header"></div>
@@ -50,18 +83,47 @@
             </div>
         </div>
         
-        <div class="dashboard-grid">
-            <div class="card" style="padding: 2.5rem; text-align: center; border: 1px dashed var(--border-color); background: transparent;">
-                <i class="fa-solid fa-flask" style="font-size: 3rem; color: var(--brand-secondary); margin-bottom: 1rem;"></i>
-                <h3 style="margin-bottom: 1rem;">Quiz Engine Coming Soon</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 2rem;">We are building an interactive quiz engine to help you test your knowledge in real-time.</p>
-                <a href="index.html" class="btn btn-secondary">Return Home</a>
+                <div id="quiz-selector" style="display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+            <!-- Quizzes injected here -->
+        </div>
+        
+        <div id="quiz-app" class="card quiz-panel" style="padding: 2.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 id="quiz-title" style="margin: 0;"></h2>
+                <div id="question-tracker" style="color: var(--text-secondary); font-weight: 500;"></div>
+            </div>
+            
+            <div style="background: var(--bg-secondary); height: 8px; border-radius: 4px; margin-bottom: 2rem; overflow: hidden;">
+                <div id="progress-fill" style="background: var(--brand-primary); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+            </div>
+            
+            <div id="question-container" style="margin-bottom: 2rem;"></div>
+            <div id="feedback-container"></div>
+            
+            <div style="display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+                <button id="btn-prev" class="btn btn-secondary">Previous</button>
+                <button id="btn-next" class="btn btn-primary">Next</button>
+                <button id="btn-submit" class="btn btn-success" style="display: none;">Submit Quiz</button>
+            </div>
+        </div>
+        
+        <div id="result-screen" class="card quiz-panel" style="padding: 2.5rem; text-align: center;">
+            <h2 style="margin-bottom: 1.5rem;">Quiz Complete!</h2>
+            <div id="score-circle" style="font-size: 3.5rem; font-weight: 800; color: var(--brand-primary); margin-bottom: 1rem;"></div>
+            <h3 id="score-message" style="margin-bottom: 2rem;"></h3>
+            
+            <div id="answers-review" style="text-align: left; margin-bottom: 2rem;"></div>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button id="btn-restart" class="btn btn-primary">Restart Quiz</button>
+                <button id="btn-all-quizzes" class="btn btn-secondary" id="back-to-quizzes">Back to Quizzes</button>
             </div>
         </div>
     </main>
     <div id="site-footer"></div>
     <script src="./js/components.js"></script>
     <script src="./js/theme.js"></script>
+    <script src="./js/quiz.js"></script>
 </body>
 </html>
 

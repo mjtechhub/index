@@ -61,6 +61,23 @@
 
 /* Small Mobile */
 @media (max-width: 480px) {
+    .filter-controls {
+        flex-wrap: wrap;
+    }
+    
+    h1 {
+        font-size: 2rem !important;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+    
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-bottom: 1.5rem;
+    }
+
     .container {
         padding: 0 1rem;
     }

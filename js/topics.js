@@ -66,28 +66,43 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderMoreTopics(topics, container, basePath) {
         container.innerHTML = '';
         topics.forEach(topic => {
-            const card = document.createElement('a');
-            card.href = `${basePath}/${topic.url}`;
+            const isComingSoon = topic.url === '#' || topic.url === '';
+            const card = document.createElement(isComingSoon ? 'div' : 'a');
+            
+            if (!isComingSoon) {
+                card.href = `${basePath}/${topic.url}`;
+                card.style.cursor = 'pointer';
+            } else {
+                card.style.cursor = 'default';
+            }
+            
             card.className = `card`;
             card.style.textDecoration = 'none';
             card.style.display = 'block';
             card.style.padding = '1.5rem';
+            card.style.position = 'relative';
             
             let accentVar = `var(--cat-${topic.accent}, var(--brand-primary))`;
             card.style.borderLeft = `3px solid ${accentVar}`;
             
+            let comingSoonBadge = isComingSoon ? `<span style="position: absolute; top: 1rem; right: 1rem; font-size: 0.7rem; background: var(--bg-secondary); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--text-secondary); border: 1px solid var(--border-color);">Coming Soon</span>` : '';
+
             card.innerHTML = `
+                ${comingSoonBadge}
                 <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-primary); transition: color 0.2s;">${topic.name}</h3>
                 <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0; line-height: 1.4;">${topic.description}</p>
             `;
             
-            // Hover effect for link
-            card.addEventListener('mouseenter', () => {
-                card.querySelector('h3').style.color = accentVar;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.querySelector('h3').style.color = 'var(--text-primary)';
-            });
+            if (!isComingSoon) {
+                card.addEventListener('mouseenter', () => {
+                    card.querySelector('h3').style.color = accentVar;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.querySelector('h3').style.color = 'var(--text-primary)';
+                });
+            } else {
+                card.querySelector('h3').style.color = 'var(--text-secondary)';
+            }
             
             container.appendChild(card);
         });
