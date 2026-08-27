@@ -39,21 +39,72 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">What Is a MAC Address?</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-<p>A <strong>Media Access Control (MAC) address</strong> is a unique identifier assigned to a network interface controller (NIC) for communications at the data link layer (Layer 2) of a network segment.</p>
-<h2>Format</h2>
-<p>MAC addresses are typically 48-bit (6-byte) numbers represented as six groups of two hexadecimal digits, separated by hyphens, colons, or without a separator.</p>
-<pre><code>Example: 00:1A:2B:3C:4D:5E</code></pre>
-<h2>How It Works</h2>
-<p>Unlike IP addresses which are used to route traffic across the Internet (Layer 3), MAC addresses are primarily used to send data within the local network (LAN). When data reaches your local network, the switch uses MAC addresses to forward frames to the correct device.</p>
-<h3>Unicast vs Multicast</h3>
-<p>The first octet of a MAC address determines whether it is a unicast (single destination) or multicast (group) address. The exact organizational unique identifier (OUI) is defined by the first three bytes, mapping to the hardware manufacturer.</p>
-<h3>Practical Command</h3>
-<p>In Windows, you can view your physical MAC address using:</p>
-<pre><code>ipconfig /all</code></pre>
-<p>In Linux, you can use:</p>
-<pre><code>ip link</code></pre>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>A <strong>MAC (Media Access Control) Address</strong> is a unique hardware identifier burned into the network interface controller (NIC) of every networked device. Whether it's an Ethernet port on a server, a Wi-Fi chip in a smartphone, or a Bluetooth adapter in headphones, every physical network interface requires a unique MAC address to communicate.</p>
+
+            <h2>MAC Address vs IP Address</h2>
+            <p>To understand networking, you must understand the difference between these two addresses:</p>
+            <ul>
+                <li>An <a href="what-is-an-ip-address.html">IP Address</a> is logical, software-based, and changes depending on what network you connect to (like a mailing address for a house). It is used for end-to-end routing across the internet.</li>
+                <li>A <strong>MAC Address</strong> is physical, hardware-based, and generally permanent (like a vehicle's VIN number). It is used only for local communication on the same physical network or <a href="what-is-vlan.html">VLAN</a>.</li>
+            </ul>
+
+            <h2>Common MAC Address Notation</h2>
+            <p>A MAC address is a 48-bit value, represented as 12 hexadecimal digits. Depending on the operating system or hardware vendor, it can be displayed in slightly different formats:</p>
+            <ul>
+                <li><strong>Windows format:</strong> <code>00-1A-2B-3C-4D-5E</code></li>
+                <li><strong>Linux / macOS format:</strong> <code>00:1a:2b:3c:4d:5e</code></li>
+                <li><strong>Cisco switch format:</strong> <code>001a.2b3c.4d5e</code></li>
+            </ul>
+            <p>The first half of the address (24 bits) is the OUI (Organizationally Unique Identifier), which identifies the hardware manufacturer (e.g., Apple, Dell, Cisco). The second half is a unique serial number assigned by that manufacturer.</p>
+
+            <h2>How Switches Use MAC Addresses</h2>
+            <p>Unlike <a href="what-is-routing.html">routers</a> which read IP addresses, standard Layer 2 network switches do not care about IP addresses. They make all their forwarding decisions based strictly on MAC addresses.</p>
+            <p>When a switch is powered on, its MAC address table is empty. As devices connect and send data, the switch looks at the <em>Source MAC Address</em> of the incoming Ethernet frame and records which physical port that MAC address is plugged into. </p>
+            <p>When the switch needs to forward a frame to a specific destination, it checks its MAC address table. If it knows which port the destination MAC is on, it sends the frame only out of that port (Unicast). If it doesn't know, it floods the frame out of all ports (Broadcast) until it learns the location. You can read more in <a href="unicast-vs-broadcast-vs-multicast.html">Unicast vs Broadcast vs Multicast</a>.</p>
+
+            <h2>MAC Randomization (Privacy Feature)</h2>
+            <p>Historically, a MAC address was permanently burned into the hardware. Because mobile devices broadcast their MAC addresses while searching for Wi-Fi networks, retail stores and advertisers used MAC tracking to follow users physically around a mall or city.</p>
+            <p>To combat this, modern iOS, Android, and Windows devices implement <strong>MAC Randomization</strong>. When connecting to a public Wi-Fi network, the device generates a fake, random MAC address rather than revealing its true hardware address. This protects user privacy but can frustrate network administrators trying to enforce MAC-based access controls or captive portals.</p>
+
+            <h2>Commands to Find Your MAC Address</h2>
+            
+            <h3>Windows</h3>
+            <p>Use the <code>ipconfig /all</code> command to view detailed network information. The MAC address is listed as the <strong>Physical Address</strong>.</p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                > ipconfig /all<br><br>
+                Ethernet adapter Local Area Connection:<br>
+                &nbsp;&nbsp;Description . . . . . . . . . . . : Intel(R) Gigabit Network Connection<br>
+                &nbsp;&nbsp;Physical Address. . . . . . . . . : 00-1A-2B-3C-4D-5E
+            </div>
+
+            <h3>Linux</h3>
+            <p>Use the <code>ip link</code> command. The MAC address is listed next to <code>link/ether</code>.</p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                $ ip link show eth0<br>
+                2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;link/ether 00:1a:2b:3c:4d:5e brd ff:ff:ff:ff:ff:ff
+            </div>
+
+            <h2>Common Troubleshooting Scenarios</h2>
+
+            <h3>1. The Wrong Interface MAC</h3>
+            <p><strong>Problem:</strong> A network administrator sets up a DHCP reservation or firewall rule allowing a specific server based on its MAC address. However, the server cannot connect.</p>
+            <p><strong>Troubleshooting:</strong> Modern servers and laptops often have multiple network interfaces (e.g., Wi-Fi, Ethernet, VPN virtual adapters, or Docker bridge networks). The administrator likely copied the MAC address for the Wi-Fi adapter, but the server is currently plugged in via the physical Ethernet port. Always ensure you are looking at the <em>active</em> interface's physical address.</p>
+
+            <h3>2. MAC Address Filtering Failures</h3>
+            <p><strong>Problem:</strong> A home or corporate Wi-Fi network uses MAC filtering (whitelisting only known devices). A user upgrades to a new iPhone, and despite having the correct Wi-Fi password, they cannot connect.</p>
+            <p><strong>Troubleshooting:</strong> Because of MAC Randomization, the new iPhone is presenting a random, unrecognized MAC address to the router. The user must disable "Private Wi-Fi Address" for that specific corporate network to reveal their true MAC, which the administrator can then whitelist.</p>
+
+            <h2>Quick Summary</h2>
+            <ul>
+                <li>A MAC address is a physical hardware identifier used for local network communication.</li>
+                <li><a href="what-is-arp.html">ARP</a> is used to link logical IP addresses to physical MAC addresses.</li>
+                <li>Switches use MAC addresses to forward traffic directly to the correct port.</li>
+                <li>Modern mobile devices randomize their MAC addresses for privacy on public networks.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -67,3 +118,4 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+

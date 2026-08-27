@@ -39,34 +39,57 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Wireshark Basics</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>While tools like <a href="snmp-explained.html">SNMP</a> and <a href="netflow-ipfix-explained.html">NetFlow</a> provide aggregated statistics about network performance, they cannot tell you exactly why a specific application connection is failing. To solve deep protocol-level issues, network administrators use a protocol analyzer—the most famous being <strong>Wireshark</strong>.</p>
+            
+            <h2>What is Wireshark?</h2>
+            <p>Wireshark is a packet capture (PCAP) tool. It captures individual Ethernet frames traversing a network interface, decodes the raw binary data, and visually dissects it into human-readable protocol layers. Wireshark can dissect everything from foundational protocols like Ethernet, IP, TCP, and UDP, to application protocols like <a href="what-is-dns.html">DNS</a> and HTTP.</p>
 
-            <p><strong>Wireshark</strong> is the industry standard for packet capture and network protocol analysis. It captures frames from a network interface and decodes the encapsulated packets into human-readable formats.</p>
-            
-            <h3>Capture Filters vs. Display Filters</h3>
-            <p>It is critical not to confuse these two distinct filter engines, as they use completely different syntax:</p>
+            <h2>Capture Filters vs Display Filters</h2>
+            <p>In high-speed networks, capturing every single packet will fill a hard drive in seconds. Wireshark uses two types of filters to manage this:</p>
             <ul>
-                <li><strong>Capture Filters:</strong> Configured <em>before</em> starting a capture. They use Berkeley Packet Filter (BPF) syntax (e.g., <code>host 192.0.2.10</code>). They drop unwanted traffic at the hardware/OS level, saving disk space and memory.</li>
-                <li><strong>Display Filters:</strong> Configured <em>during or after</em> a capture. They use Wireshark's proprietary display filter syntax. They hide traffic from the screen without deleting it from the capture file.</li>
+                <li><strong>Capture Filters:</strong> Applied <em>before</em> the capture starts. The network card hardware drops uninteresting traffic and only saves matching packets to disk. This is highly efficient but permanently discards other traffic.</li>
+                <li><strong>Display Filters:</strong> Applied <em>after</em> a capture is taken. You capture everything, save it to disk, and then use display filters to visually hide irrelevant packets on the screen. This allows you to hunt for specific needles in the haystack.</li>
             </ul>
+
+            <h2>Safe, Practical Display Filter Examples</h2>
+            <p>To analyze traffic effectively, you must learn basic display filter syntax.</p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                dns                             # Show only DNS traffic<br>
+                icmp                            # Show only ICMP (ping) traffic<br>
+                tcp                             # Show only TCP traffic<br>
+                udp                             # Show only UDP traffic<br>
+                ip.addr == 192.0.2.10           # Show any traffic to or from this IP<br>
+                tcp.port == 443                 # Show only HTTPS traffic<br>
+                dns.qry.name == "example.com"   # Show DNS lookups for exactly this domain
+            </div>
+
+            <h2>Analyzing Legitimate Troubleshooting Scenarios</h2>
             
-            <h3>Common Display Filters</h3>
-            <p>When analyzing a large capture, display filters are essential:</p>
+            <h3>1. The TCP Handshake Problem</h3>
+            <p>Before any data can transfer over TCP, a 3-way handshake must occur: <strong>SYN → SYN-ACK → ACK</strong>. If an internal server is complaining it cannot reach an external API, capture the traffic. If you see your server send a SYN packet, but it never receives a SYN-ACK back, you instantly know a firewall is blocking the traffic, or the remote server is down.</p>
+            
+            <h3>2. DNS Lookup Failures</h3>
+            <p>If a user types a URL and gets an error, apply the <code>dns</code> filter. Look at the DNS Response packet. Does it contain a valid IP address, or does it return an error like "No Such Name" (NXDOMAIN)? If it returns NXDOMAIN, the network routing is fine, but the DNS record doesn't exist.</p>
+
+            <h3>3. Identifying Packet Loss</h3>
+            <p>When investigating <a href="ping-explained.html">Packet Loss</a> or slow application performance, look for Wireshark's built-in expert warnings:</p>
             <ul>
-                <li><code>ip.addr == 192.0.2.10</code> : Shows traffic sourced from or destined to that IP.</li>
-                <li><code>tcp.port == 443</code> : Shows traffic involving port 443.</li>
-                <li><code>dns</code> : Shows only DNS query/response traffic.</li>
-                <li><code>icmp</code> : Shows ICMP traffic (pings, error messages).</li>
-                <li><code>tcp.flags.syn == 1</code> : Shows TCP packets attempting to initiate a handshake.</li>
+                <li><strong>TCP Retransmission:</strong> The sender never received an acknowledgment for a packet, assuming it was dropped in transit, and is sending it again. A high volume of retransmissions indicates a terrible network link.</li>
+                <li><strong>Duplicate ACK:</strong> The receiver is telling the sender, "I received packet 1, 2, and 4. I am still waiting for packet 3."</li>
+                <li><strong>RST (Reset):</strong> A server abruptly slamming the connection shut, often due to a crashed application or a firewall intervention.</li>
             </ul>
-            
-            <h3>Basic Troubleshooting</h3>
-            <p>By observing raw packets, you can definitively prove network behavior. For example, you can observe a <a href="dns-record-types-explained.html">DNS</a> query leaving an interface and verify if the response actually arrives. You can observe the three-way TCP handshake to confirm a remote server is listening, or look for TCP Retransmissions indicating network drops.</p>
-            
-            <h3>Security and Privacy Considerations</h3>
-            <p>Packet captures inherently contain sensitive data, including IP addresses, hostnames, application payloads, cookies, and credentials if insecure protocols are used. Always advise safe handling, obtain authorization before capturing traffic, and never use packet capture for unauthorized credential sniffing.</p>
-        
+
+            <h2>Packet Capture Best Practices</h2>
+            <p>Because packet captures contain the literal contents of network traffic, they represent a significant security and privacy risk.</p>
+            <ul>
+                <li><strong>Authorized Use Only:</strong> Only capture traffic you are explicitly authorized to analyze for legitimate administrative troubleshooting.</li>
+                <li><strong>Narrow the Scope:</strong> Use Capture Filters to record only the specific IPs or ports involved in the incident. Do not indiscriminately capture all office traffic.</li>
+                <li><strong>Avoid Sensitive Payloads:</strong> Where possible, truncate the capture to only save packet headers (e.g., the first 64 bytes), discarding the actual data payloads containing files or emails.</li>
+                <li><strong>Protect PCAP Files:</strong> PCAP files may contain unencrypted tokens, usernames, or proprietary data. Treat them as highly confidential files. Delete them immediately after the investigation is concluded.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -80,3 +103,5 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

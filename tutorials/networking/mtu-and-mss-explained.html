@@ -39,35 +39,72 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">MTU and MSS Explained</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>When investigating highly specific network failures—such as small web pages loading fine, but large file transfers freezing—engineers often discover issues related to <strong>MTU</strong> and <strong>MSS</strong>. Understanding these concepts requires looking at how data is physically packaged on the wire.</p>
 
-            <p>Understanding packet sizing is crucial when dealing with complex routing or VPN overhead.</p>
+            <h2>What is MTU (Maximum Transmission Unit)?</h2>
+            <p>The MTU dictates the absolute maximum size of an IP packet (including the IP headers and data payload) that can be transmitted out of a network interface without being broken into smaller pieces (fragmented).</p>
+            <p>On standard Ethernet networks, the <strong>default IP MTU is universally 1500 bytes</strong>. </p>
+
+            <h2>What is MSS (Maximum Segment Size)?</h2>
+            <p>While MTU applies to the entire IP packet at Layer 3, the MSS applies strictly to the TCP payload at Layer 4. The MSS tells the other side of a TCP connection: <em>"This is the largest chunk of application data I can accept in a single packet."</em></p>
+            <p>Because an IPv4 header is 20 bytes, and a TCP header is 20 bytes, the standard MSS calculation is: <strong>1500 (MTU) - 20 (IP) - 20 (TCP) = 1460 bytes.</strong></p>
             
-            <h3>MTU (Maximum Transmission Unit)</h3>
-            <p>MTU is the largest size (in bytes) that a particular interface can transmit without needing to fragment the packet. The most common standard Ethernet MTU is <strong>1500 bytes</strong>, though this is not universally mandatory (e.g., Jumbo Frames support 9000 bytes).</p>
+            <table style="width: 100%; text-align: left; border-collapse: collapse; margin: 1.5rem 0; overflow-x: auto; display: block;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border-color);">
+                        <th style="padding: 0.75rem;">Concept</th>
+                        <th style="padding: 0.75rem;">Default Ethernet Value</th>
+                        <th style="padding: 0.75rem;">Applies To</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>MTU</strong></td>
+                        <td style="padding: 0.75rem;">1500 Bytes</td>
+                        <td style="padding: 0.75rem;">The entire IP Packet (Headers + Data)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>MSS</strong></td>
+                        <td style="padding: 0.75rem;">1460 Bytes</td>
+                        <td style="padding: 0.75rem;">The TCP Payload (Application Data only)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>The Problem: Tunnels and Encapsulation Overhead</h2>
+            <p>MTU issues almost always occur when traffic enters a VPN (IPsec) or a tunnel (GRE, PPPoE). </p>
+            <p>If a PC generates a standard 1500-byte packet and sends it to the firewall, the firewall must encrypt it and wrap it in a new IPsec header to send it across the VPN. That new header adds roughly 60 bytes of overhead. The packet is now 1560 bytes. But the firewall's WAN interface has a hard physical MTU limit of 1500 bytes. </p>
+            <p>The firewall has two choices:</p>
+            <ol>
+                <li><strong>Fragment the packet:</strong> Break it into two smaller packets. This destroys router CPU performance and is deeply inefficient.</li>
+                <li><strong>Drop the packet:</strong> If the PC set the "Don't Fragment" (DF) bit on the packet (which almost all modern OSs do), the firewall drops the packet and sends an ICMP "Fragmentation Needed" message back to the PC, telling it to try again with a smaller size (Path MTU Discovery).</li>
+            </ol>
+
+            <h2>Symptoms of MTU Mismatch</h2>
+            <ul>
+                <li>Small tasks work perfectly (pings, DNS queries, SSH).</li>
+                <li>Large tasks stall completely (downloading a PDF, loading a massive website image).</li>
+                <li>The VPN tunnel says "Connected," but internal web apps hang endlessly on a white screen.</li>
+            </ul>
+
+            <h2>Troubleshooting and Workarounds</h2>
             
-            <h3>MSS (Maximum Segment Size)</h3>
-            <p>MSS is a TCP concept. It defines the maximum amount of application <em>payload</em> data that a host is willing to accept in a single TCP segment. MSS is calculated during the TCP handshake to prevent IP fragmentation.</p>
-            
-            <h4>The Conceptual Math</h4>
-            <p>For standard Ethernet IPv4 TCP traffic without extra options:</p>
-            <pre><code>  1500 bytes (MTU)
--   20 bytes (IPv4 Header)
--   20 bytes (TCP Header)
--------------------------
-= 1460 bytes (TCP MSS)</code></pre>
-            <p>This is purely conceptual. Do not give 1460 as a universal value. IPv6 headers are larger (40 bytes), TCP options (like timestamps) reduce available payload, and encapsulation (such as VPN tunnels) will further reduce the effective MTU.</p>
-            
-            <h3>Fragmentation and PMTUD</h3>
-            <p>If a router receives a packet larger than the outbound interface's MTU, it must either fragment it or drop it. IPv4 allows intermediate fragmentation. However, if the packet is marked "Don't Fragment" (DF), the router drops it and is required to send an ICMP "Fragmentation Needed" message back to the source.</p>
-            <p><strong>Path MTU Discovery (PMTUD)</strong> relies on these ICMP messages to dynamically learn the smallest MTU along a path. If strict firewalls block these ICMP messages, PMTUD fails, resulting in a "black-hole" where small pings work, but large data transfers hang.</p>
-            
-            <h3>Testing MTU</h3>
-            <p>You can test path MTU on Windows by forcing the DF bit and specifying a payload size:</p>
-            <pre><code>ping example.com -f -l 1472</code></pre>
-            <p><em>Note: The `-l` value is payload size. 1472 payload + 28 bytes (ICMP/IP headers) = 1500 bytes total packet size on the wire.</em></p>
-        
+            <h3>1. Ping with DF Bit (Diagnostics)</h3>
+            <p>You can use ping to find the maximum allowed MTU on a path by forcing the Don't Fragment flag and adjusting the payload size.</p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                # Windows (1472 payload + 28 bytes ICMP/IP header = 1500 MTU)<br>
+                ping 8.8.8.8 -f -l 1472<br><br>
+                
+                # Linux (Forces DF and sets payload size)<br>
+                ping 8.8.8.8 -M do -s 1472
+            </div>
+            <p>If this returns <em>"Packet needs to be fragmented but DF set,"</em> lower the number (e.g., 1400) until pings succeed. This proves an MTU bottleneck exists on the path.</p>
+
+            <h3>2. TCP MSS Clamping</h3>
+            <p>In routed environments where ICMP messages are aggressively blocked by firewalls (breaking Path MTU Discovery), the standard fix is <strong>TCP MSS Clamping</strong>. The VPN firewall intercepts the initial TCP handshake and artificially lowers the MSS value (e.g., to 1350). The PC and the Server agree to send smaller chunks of data, guaranteeing the packets will fit through the VPN tunnel without ever needing fragmentation.</p>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -81,3 +118,5 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

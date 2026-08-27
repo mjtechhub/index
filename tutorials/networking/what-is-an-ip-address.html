@@ -39,9 +39,81 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">What Is an IP Address?</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p>An IP (Internet Protocol) address is a unique numerical label assigned to every device connected to a computer network that uses the Internet Protocol for communication.</p><h3>IPv4 vs IPv6</h3><p>IPv4 addresses look like <code>192.168.1.5</code>. Because we ran out of IPv4 addresses, IPv6 was introduced, which looks like <code>2001:0db8:85a3:0000:0000:8a2e:0370:7334</code>.</p><h3>Related Command</h3><p>Use <a href='../../commands.html' class='cmd-badge' style='display:inline-block'>ipconfig /all</a> on Windows or <code>ifconfig</code> on Linux to check your IP.</p>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>An <strong>Internet Protocol (IP) address</strong> is a unique numerical label assigned to every device connected to a computer network that uses the Internet Protocol for communication. Just as a physical house needs a street address to receive mail, a computer needs an IP address to send and receive data across a network or the internet.</p>
+            
+            <h2>IPv4 Basics and Structure</h2>
+            <p>The most common version of the IP protocol in use today is IPv4. An IPv4 address is a 32-bit number, typically written in "dotted-decimal" format consisting of four numbers separated by periods (e.g., <code>192.168.1.15</code>). Each number can range from 0 to 255.</p>
+            <p>Every IP address contains two hidden parts determined by its <a href="what-is-a-subnet-mask.html">Subnet Mask</a>:</p>
+            <ul>
+                <li><strong>The Network Portion:</strong> Identifies the specific network the device is on (like the street name).</li>
+                <li><strong>The Host Portion:</strong> Identifies the specific device on that network (like the house number).</li>
+            </ul>
+            <p>For example, if the IP is <code>192.0.2.50</code> with a standard <code>255.255.255.0</code> mask, the network portion is <code>192.0.2</code> and the host is <code>50</code>.</p>
+
+            <h2>Public vs Private IP Addresses</h2>
+            <p>Because there are a limited number of IPv4 addresses, they are split into two main types:</p>
+            <ul>
+                <li><strong>Public IP Addresses:</strong> These are unique across the entire global internet. Servers, public websites, and your home router's outside connection use public IPs.</li>
+                <li><strong>Private IP Addresses:</strong> These are reserved for internal use within a home or office network (e.g., <code>192.168.x.x</code> or <code>10.x.x.x</code>). Millions of homes can use <code>192.168.1.5</code> internally because they are not directly reachable from the internet.</li>
+            </ul>
+            <p>To learn more about how private IPs reach the internet, read our <a href="public-vs-private-ip-address.html">Public vs Private IP Address</a> guide.</p>
+
+            <h2>Special IP Addresses</h2>
+            <ul>
+                <li><strong>Loopback Address (127.0.0.1):</strong> This address points directly back to the local computer. Pinging <code>127.0.0.1</code> verifies that the computer's network stack is functioning correctly.</li>
+                <li><strong>APIPA / Link-Local (169.254.x.x):</strong> If a Windows computer is configured to get an IP automatically but fails to reach a DHCP server, it will assign itself an Automatic Private IP Address (APIPA). Devices with APIPA can only talk to other APIPA devices on the same local switch.</li>
+            </ul>
+
+            <h2>Static vs Dynamic IPs and DHCP</h2>
+            <p>An IP address can be assigned in two ways:</p>
+            <ul>
+                <li><strong>Static IP:</strong> Manually typed into the device's network settings by an administrator. Used for servers and printers that must never change their address.</li>
+                <li><strong>Dynamic IP:</strong> Automatically assigned by a <a href="what-is-dhcp.html">DHCP</a> server when the device connects to the network. Used for laptops, phones, and most employee workstations.</li>
+            </ul>
+
+            <h2>The Default Gateway Relationship</h2>
+            <p>If a computer wants to talk to a device on its <em>own</em> network (e.g., <code>192.0.2.10</code> talking to <code>192.0.2.20</code>), it communicates directly. However, if it wants to reach the internet (like Google's <code>8.8.8.8</code>), it must send the traffic to the <a href="what-is-a-default-gateway.html">Default Gateway</a> (usually the local router).</p>
+
+            <h2>Simple Office Example</h2>
+            <p>Imagine a small office using the <code>198.51.100.0/24</code> network. The router (Default Gateway) is assigned <code>198.51.100.1</code>. The office file server has a <em>Static IP</em> of <code>198.51.100.10</code> so employees can always map network drives to it. When an employee connects a laptop to the Wi-Fi, the DHCP server grants it a <em>Dynamic IP</em> like <code>198.51.100.150</code>.</p>
+
+            <h2>Commands to Check IP Configuration</h2>
+            
+            <h3>Windows</h3>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                > ipconfig<br>
+                IPv4 Address. . . . . . . . . . . : 192.168.1.15<br>
+                Subnet Mask . . . . . . . . . . . : 255.255.255.0<br>
+                Default Gateway . . . . . . . . . : 192.168.1.1
+            </div>
+
+            <h3>Linux / macOS</h3>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                # Modern Linux command<br>
+                $ ip addr show<br><br>
+                # Older Linux / macOS command<br>
+                $ ifconfig
+            </div>
+
+            <h2>Common IP Problems and Troubleshooting</h2>
+            
+            <h3>1. IP Conflict</h3>
+            <p><strong>Problem:</strong> Two devices on the same network have the exact same IP address. Both devices will experience intermittent drops or total loss of connectivity.</p>
+            <p><strong>Troubleshooting:</strong> This usually happens when an administrator assigns a static IP to a server that falls inside the DHCP server's dynamic pool. Check your DHCP scope and exclude the statically assigned IPs.</p>
+
+            <h3>2. The APIPA Address (169.254.x.x)</h3>
+            <p><strong>Problem:</strong> A user complains they have "no internet." You run <code>ipconfig</code> and see their IP is <code>169.254.20.50</code>.</p>
+            <p><strong>Troubleshooting:</strong> The PC cannot reach the DHCP server. Check the physical cable, ensure the switchport is active, and verify the DHCP server is online. If the client is on a different VLAN, ensure the DHCP Relay is configured.</p>
+
+            <h3>3. Wrong Default Gateway</h3>
+            <p><strong>Problem:</strong> A computer can ping other PCs in the office, but cannot reach the internet.</p>
+            <p><strong>Troubleshooting:</strong> Check the IP configuration. If the Default Gateway is blank or pointing to the wrong IP, the computer does not know how to route traffic outside its local network.</p>
+
+            <h2>Looking to the Future</h2>
+            <p>Because the world has run out of IPv4 addresses, the internet is slowly migrating to IPv6. You can learn about the next generation of IP addressing in our <a href="ipv6-fundamentals.html">IPv6 Fundamentals</a> guide.</p>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -55,3 +127,5 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

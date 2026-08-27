@@ -39,46 +39,90 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Routing Table Explained</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p>A routing table is an internal database maintained by a router (or a computer) that tells it how to forward IP packets. When a packet arrives, the router looks up the destination IP address in this table to determine the best path to send the data.</p>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>A <strong>Routing Table</strong> is the brain of a router (or any Layer 3 device). It is a database stored in the router's RAM that lists all the network destinations the router knows about, and exactly how to reach them. Without a routing table, a router would receive a packet, not know what to do with it, and immediately drop it.</p>
+            <p>Before reading this, ensure you understand the basic concept of <a href="what-is-routing.html">Routing</a>.</p>
+
+            <h2>What Does a Routing Table Contain?</h2>
+            <p>While the exact output varies between vendors (Cisco, Juniper, Linux, Windows), every routing table entry generally contains the following pieces of information:</p>
             
-            <h3>Understanding Routing Table Fields</h3>
-            <p>While the output format varies between Windows, Linux, and network switches, routing tables generally contain the following key fields:</p>
             <ul>
-                <li><strong>Destination / Network Prefix:</strong> The target network or IP address range.</li>
-                <li><strong>Prefix Length (or Netmask):</strong> Specifies how large the network is (e.g., /24 or 255.255.255.0).</li>
-                <li><strong>Next Hop / Gateway:</strong> The IP address of the next router in the path to the destination.</li>
-                <li><strong>Interface:</strong> The physical or virtual network interface used to send the packet out (e.g., eth0 or GigabitEthernet0/1).</li>
-                <li><strong>Metric:</strong> A cost value representing the "distance" or preference for this route. Lower metrics are preferred.</li>
+                <li><strong>Destination Network:</strong> The remote network (e.g., <code>198.51.100.0</code>).</li>
+                <li><strong>Prefix / Subnet Mask:</strong> The size of that network (e.g., <code>/24</code> or <code>255.255.255.0</code>).</li>
+                <li><strong>Next Hop IP:</strong> The IP address of the next router in the path to hand the packet to.</li>
+                <li><strong>Outgoing Interface:</strong> The physical port on the router that the packet should exit (e.g., <code>GigabitEthernet0/1</code> or <code>eth0</code>).</li>
+                <li><strong>Metric / Cost:</strong> A numerical value representing how "expensive" or "far" the route is. If the router knows two paths to the same destination, it chooses the one with the lowest metric.</li>
+                <li><strong>Route Type:</strong> How the router learned this route (e.g., Connected, Static, or Dynamic like OSPF).</li>
             </ul>
 
-            <h3>Types of Routes</h3>
+            <h2>Types of Routes</h2>
             <ul>
-                <li><strong>Connected Route:</strong> Networks directly attached to the router's own interfaces (e.g., <code>192.168.10.0/24</code> directly connected).</li>
-                <li><strong>Specific Route:</strong> A route added manually (static) or dynamically for a specific destination network (e.g., <code>10.20.0.0/16</code>).</li>
-                <li><strong>Default Route (0.0.0.0/0):</strong> The "catch-all" route used when the router does not have a more specific match for the destination. This is essentially the default gateway.</li>
+                <li><strong>Directly Connected Routes:</strong> These are automatically added to the routing table the moment an administrator assigns an IP address to a router interface and turns the port on. The router inherently knows how to reach networks physically plugged into it.</li>
+                <li><strong>Static Routes:</strong> Manually configured by an administrator. (See <a href="static-vs-dynamic-routing.html">Static vs Dynamic Routing</a>).</li>
+                <li><strong>Dynamically Learned Routes:</strong> Routes learned automatically from other routers using routing protocols.</li>
+                <li><strong>Default Route:</strong> The "catch-all" route (<code>0.0.0.0/0</code>). Used when the router doesn't know a specific path to the destination.</li>
             </ul>
 
-            <h3>The Longest Prefix Match Rule</h3>
-            <p>One of the most critical concepts in routing is that <strong>more-specific prefixes are preferred over less-specific prefixes.</strong></p>
-            <p>When a router examines its table, it looks for the longest matching prefix (the most specific match). For example, if a router receives a packet for <code>10.20.30.50</code> and its routing table contains both:</p>
+            <h2>The Longest Prefix Match Rule</h2>
+            <p>A router might have multiple routes in its table that match a single destination IP. The universal rule of routing is: <strong>The router always chooses the most specific matching route.</strong> This is known as the Longest Prefix Match.</p>
+            
+            <p>Imagine a router has the following three entries in its table:</p>
+            <ol>
+                <li><code>0.0.0.0/0</code> (The Default Route, pointing to the Internet via ISP 1)</li>
+                <li><code>192.0.2.0/24</code> (The main remote branch office network, pointing to a VPN)</li>
+                <li><code>192.0.2.128/25</code> (A highly secure subnet inside the branch office, pointing to a specific internal firewall)</li>
+            </ol>
+            
+            <p>If the router receives a packet destined for <code>192.0.2.150</code>, which route does it take?</p>
             <ul>
-                <li><code>10.20.30.0/24</code> (very specific)</li>
-                <li><code>10.20.0.0/16</code> (less specific)</li>
-                <li><code>0.0.0.0/0</code> (default route)</li>
+                <li>It matches Route 1 (0 bits match, everything matches default).</li>
+                <li>It matches Route 2 (24 bits match the network).</li>
+                <li>It matches Route 3 (25 bits match the network).</li>
             </ul>
-            <p>The router will choose the <code>10.20.30.0/24</code> route because it is the most specific match. <strong>Longest prefix match occurs before route metric is relevant.</strong> The metric is only used as a tie-breaker if there are multiple identical routes with the exact same prefix length.</p>
+            <p><strong>The Winner:</strong> Route 3. Because <code>/25</code> is a longer, more specific prefix than <code>/24</code> or <code>/0</code>, the router sends the packet to the internal firewall.</p>
 
-            <h3>Viewing the Routing Table</h3>
-            <p>You can inspect the routing table on end devices using these commands:</p>
+            <h2>Viewing the Local Routing Table</h2>
+            <p>Even your PC has a local routing table to determine if traffic should go to the local Wi-Fi or to a VPN adapter.</p>
             
-            <p><strong>Windows:</strong></p>
-            <pre><code>route print
-Get-NetRoute</code></pre>
+            <h3>Windows</h3>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto; white-space: pre;">
+> route print
+Network Destination        Netmask          Gateway       Interface  Metric
+          0.0.0.0          0.0.0.0      192.168.1.1     192.168.1.10     25
+      192.168.1.0    255.255.255.0         On-link      192.168.1.10    281
+     192.168.1.10  255.255.255.255         On-link      192.168.1.10    281
+            </div>
+
+            <h3>Linux</h3>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto; white-space: pre;">
+$ ip route
+default via 192.168.1.1 dev eth0 proto dhcp metric 100 
+192.168.1.0/24 dev eth0 proto kernel scope link src 192.168.1.10 metric 100
+            </div>
+
+            <h2>Common Routing Table Troubleshooting</h2>
             
-            <p><strong>Linux / macOS:</strong></p>
-            <pre><code>ip route</code></pre>
+            <h3>1. Missing Default Route</h3>
+            <p>If your router can reach internal subnets but cannot reach the internet, check the routing table for <code>0.0.0.0/0</code>. If it is missing, the router drops all internet traffic because it has no path to the web.</p>
+            
+            <h3>2. Incorrect Next Hop</h3>
+            <p>If a route exists but traffic never arrives, the Next Hop IP might be a dead router, or point to an interface that is down. Use <a href="traceroute-explained.html">Traceroute</a> to see where the packet is actually being sent.</p>
+
+            <h3>3. Asymmetric Routing</h3>
+            <p>If PC-A pings PC-B, the packet might take Router 1 to get there. However, PC-B's routing table might dictate that the reply should be sent back via Router 2. If Router 2 has a firewall enabled, it might drop the reply because it never saw the initial connection request. A route must be valid in both directions for two-way communication.</p>
+
+            <h3>4. Route Exists, Destination Unreachable</h3>
+            <p>A routing table only proves the router <em>thinks</em> it has a valid path. If the destination server is turned off, or a firewall blocks the traffic halfway there, the routing table will still look perfect while the connection fails.</p>
+
+            <h2>Quick Summary</h2>
+            <ul>
+                <li>A routing table dictates exactly where a router sends every packet it receives.</li>
+                <li>Entries contain the destination network, next hop, outgoing interface, and metric.</li>
+                <li>The router always prefers the most specific route (Longest Prefix Match).</li>
+                <li>Local computers also possess routing tables to manage multiple network adapters.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -92,3 +136,5 @@ Get-NetRoute</code></pre>
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

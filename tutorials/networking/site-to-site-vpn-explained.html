@@ -39,36 +39,69 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Site-to-Site VPN Explained</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-
-            <p>A <strong>Site-to-Site VPN</strong> creates a secure, encrypted tunnel between two distinct geographic networks across an untrusted network like the Internet.</p>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>A <strong>Site-to-Site VPN (Virtual Private Network)</strong> is a technology that allows a company to securely connect two geographically separated office networks together over the public Internet. Once connected, computers in the Headquarters (HQ) can communicate directly with computers in the Branch office just as if they were plugged into the same physical switch.</p>
             
-            <h3>The Conceptual Model</h3>
-            <p>Imagine an organization with two physical locations:</p>
-            <pre><code>Office A Subnet: 192.168.10.0/24
-Office B Subnet: 192.168.20.0/24
-
-Office A Gateway → Internet (Encrypted Tunnel) ← Office B Gateway</code></pre>
-            <p>Devices in Office A can communicate with devices in Office B using their private IP addresses. The VPN gateways at the edge of each network handle the encryption and routing invisibly to the end users.</p>
-            
-            <h3>IPsec and IKE Concepts</h3>
-            <p>Most enterprise site-to-site VPNs utilize IPsec (Internet Protocol Security). Building the tunnel generally involves two conceptual phases:</p>
+            <h2>The Concept of the Encrypted Tunnel</h2>
+            <p>If HQ sends unencrypted private data across the internet to the Branch, anyone intercepting the traffic (like an ISP or malicious actor) can read it. Furthermore, internet routers will drop packets destined for private <a href="what-is-an-ip-address.html">IP Addresses</a> like <code>192.168.x.x</code>.</p>
+            <p>A Site-to-Site VPN solves this by creating an <strong>Encrypted Tunnel</strong> between two VPN Gateways (usually the edge firewalls). </p>
             <ul>
-                <li><strong>IKE Phase 1 / IKE SA:</strong> The two VPN gateways authenticate each other and negotiate a secure management channel.</li>
-                <li><strong>IPsec / Child SA (Phase 2):</strong> Within the secure Phase 1 channel, the gateways negotiate the actual encryption parameters and establish the data tunnel for the specific subnets (the "interesting traffic" or selectors).</li>
+                <li>When a PC at HQ sends a packet to the Branch, the HQ firewall intercepts it.</li>
+                <li>The HQ firewall encrypts the entire original packet, wraps it inside a brand new packet addressed to the Branch firewall's Public IP, and sends it across the internet.</li>
+                <li>The Branch firewall receives the packet, decrypts it, un-wraps the original private packet, and forwards it to the Branch PC.</li>
             </ul>
-            <p><em>Note: Be careful, as IKEv1 and IKEv2 terminology differs. Do not imply "Phase 2" terminology applies identically to every modern IKEv2 implementation, where they are often referred to as Child SAs.</em></p>
+
+            <h2>How IPsec VPNs Work (Phase 1 & Phase 2)</h2>
+            <p>The vast majority of enterprise site-to-site VPNs rely on a suite of protocols called IPsec. Establishing an IPsec tunnel occurs in two distinct phases:</p>
             
-            <h3>Common Troubleshooting Problems</h3>
-            <p>If a Site-to-Site VPN fails to establish or pass traffic, check for these common issues:</p>
+            <h3>Phase 1 (IKE / ISAKMP) - Building the Secure Channel</h3>
+            <p>Before any data can be transferred, the two firewalls must verify each other's identities. They negotiate encryption algorithms (e.g., AES-256) and authenticate using a Pre-Shared Key (a long password) or digital certificates. If successful, they establish a secure control channel.</p>
+            
+            <h3>Phase 2 (IPsec SA) - Building the Data Tunnel</h3>
+            <p>Inside the secure Phase 1 channel, the firewalls negotiate the parameters for actually sending user data. They define the <strong>Interesting Traffic</strong>—which local subnets are allowed to talk to which remote subnets. If both firewalls agree on the subnets and encryption settings, the Phase 2 tunnel comes up, and data can flow.</p>
+
+            <h2>Route-Based vs Policy-Based VPNs</h2>
+            <p>Vendors handle VPN traffic routing in two different ways:</p>
             <ul>
-                <li><strong>Mismatched Proposals:</strong> Encryption algorithms, hash algorithms, or Diffie-Hellman groups do not match on both sides.</li>
-                <li><strong>Incorrect Subnets (Selectors):</strong> The defined local and remote subnets do not perfectly mirror each other.</li>
-                <li><strong>Routing and NAT:</strong> The gateway doesn't know to route the traffic into the tunnel, or NAT is incorrectly translating the private IPs before they enter the tunnel (NAT Exemption is often required).</li>
-                <li><strong>Firewall Rules:</strong> Ensure UDP ports 500 and 4500 (for NAT-T) are permitted on the external interfaces, and the decrypted inner traffic is permitted by the <a href="stateful-firewall-explained.html">stateful firewall</a> policies.</li>
+                <li><strong>Policy-Based:</strong> The VPN requires explicit ACLs (e.g., "Encrypt traffic from 192.168.1.0/24 going to 10.10.10.0/24"). If the traffic matches the policy, it enters the tunnel. This is common in older Cisco ASA configurations.</li>
+                <li><strong>Route-Based:</strong> The VPN tunnel is treated as a virtual network interface (like <code>tunnel0</code>). The administrator simply adds a standard <a href="routing-table-explained.html">Static Route</a> pointing the remote subnet to the tunnel interface. This is modern, highly flexible, and standard on Palo Alto, Fortinet, and AWS.</li>
             </ul>
-        
+
+            <table style="width: 100%; text-align: left; border-collapse: collapse; margin: 1.5rem 0; overflow-x: auto; display: block;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border-color);">
+                        <th style="padding: 0.75rem;">Symptom</th>
+                        <th style="padding: 0.75rem;">Common Causes & Troubleshooting</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Phase 1 Fails (Tunnel completely down)</strong></td>
+                        <td style="padding: 0.75rem;">Mismatched Pre-Shared Key. Public IPs are incorrect. Mismatched IKE proposals (e.g., one side uses SHA1, the other SHA256). ISP is blocking UDP Port 500.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Phase 1 Up, Phase 2 Fails</strong></td>
+                        <td style="padding: 0.75rem;">The local and remote subnets configured on each side do not perfectly mirror each other. Mismatched Phase 2 encryption proposals. PFS (Perfect Forward Secrecy) mismatch.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Phase 1 & 2 Up, but No Traffic Flows</strong></td>
+                        <td style="padding: 0.75rem;">Missing <a href="what-is-routing.html">Routing</a> pointing to the tunnel. Missing <a href="stateful-firewall-explained.html">Firewall Policies</a> allowing the two zones to communicate. <a href="what-is-nat.html">NAT</a> rules are accidentally translating the VPN traffic out to the internet instead of letting it pass through the tunnel.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Common Design Problems: Overlapping Subnets</h2>
+            <p>The most devastating mistake when building a VPN is when both the HQ and the Branch happen to use the same internal subnet (e.g., <code>192.168.1.0/24</code>). When a PC at HQ tries to ping a server at the Branch, the HQ router looks at the destination (<code>192.168.1.x</code>), assumes it's on the local LAN, and refuses to send the packet across the VPN. </p>
+            <p>This is why enterprise network engineers must carefully document and allocate unique IP blocks to every site, avoiding default router blocks like 192.168.1.x entirely.</p>
+
+            <h2>Best Practices</h2>
+            <ul>
+                <li><strong>Document Networks:</strong> Maintain an IP address management (IPAM) spreadsheet to ensure no two branch offices ever use the same subnet.</li>
+                <li><strong>Monitor Tunnel Health:</strong> Configure network monitoring tools to alert you if Phase 1 drops, as VPNs can fail silently without users noticing immediately.</li>
+                <li><strong>Use Strong Crypto:</strong> Avoid deprecated algorithms like DES, 3DES, or MD5. Use AES-256 and SHA-256 or higher, provided both firewalls support hardware acceleration.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -82,3 +115,5 @@ Office A Gateway → Internet (Encrypted Tunnel) ← Office B Gateway</code></pr
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

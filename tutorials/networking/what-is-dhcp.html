@@ -39,9 +39,78 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">What Is DHCP?</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p>DHCP (Dynamic Host Configuration Protocol) automatically assigns IP addresses and network settings (like Subnet Mask and Default Gateway) to devices on a network.</p><h3>How It Works (DORA)</h3><ul><li><strong>Discover:</strong> Client broadcasts looking for a server.</li><li><strong>Offer:</strong> Server offers an IP.</li><li><strong>Request:</strong> Client requests the offered IP.</li><li><strong>Acknowledge:</strong> Server confirms the lease.</li></ul><h3>Troubleshooting Tip</h3><p>If your IP address starts with <code>169.254.x.x</code> (APIPA), your device failed to reach the DHCP server.</p>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p><strong>DHCP (Dynamic Host Configuration Protocol)</strong> is a network management protocol used to automatically assign IP addresses and other communication parameters to devices connected to a network. Without DHCP, a network administrator would have to manually configure the IP address, subnet mask, default gateway, and DNS servers for every single computer, phone, or printer on the network.</p>
+            <p>By automating this process, DHCP greatly simplifies network administration and prevents configuration errors, such as assigning the same IP address to two different devices (an IP conflict).</p>
+
+            <h2>Why is DHCP Used?</h2>
+            <p>In modern networking, DHCP is absolutely essential for several reasons:</p>
+            <ul>
+                <li><strong>Automation:</strong> Devices can join a network and gain internet access instantly without manual intervention.</li>
+                <li><strong>Mobility:</strong> As users move their laptops and phones between different Wi-Fi networks (home, coffee shop, office), DHCP automatically provisions the correct settings for each unique network.</li>
+                <li><strong>IP Address Conservation:</strong> IP addresses are leased temporarily. If a device leaves the network, its IP address is eventually returned to the pool so it can be reassigned to a new device.</li>
+                <li><strong>Centralized Management:</strong> Changing the DNS server for an entire company requires updating only one setting on the DHCP server, rather than manually updating hundreds of individual PCs.</li>
+            </ul>
+
+            <h2>How Does DHCP Work? (The DORA Process)</h2>
+            <p>When a device (the DHCP client) connects to a network, it does not have an IP address. It uses a four-step broadcast process known as <strong>DORA</strong> to obtain one from the DHCP server.</p>
+            
+            <ol>
+                <li><strong>D - Discover:</strong> The client broadcasts a DHCP Discover message to the entire local network (IP <code>255.255.255.255</code>) saying, "Are there any DHCP servers out there? I need an IP address."</li>
+                <li><strong>O - Offer:</strong> Any DHCP server that receives the Discover message checks its pool of available addresses and replies with a DHCP Offer, proposing an IP address, lease time, and other network configurations.</li>
+                <li><strong>R - Request:</strong> The client receives the Offer. If there are multiple DHCP servers, it accepts the first offer it receives and broadcasts a DHCP Request, stating, "I accept the IP address offered by Server X."</li>
+                <li><strong>A - Acknowledge (ACK):</strong> The chosen DHCP server sends a DHCP Acknowledge (ACK) message to confirm the lease. The client applies the network settings and can now communicate on the network.</li>
+            </ol>
+
+            <h2>Key DHCP Concepts</h2>
+            
+            <h3>DHCP Scope and Pool</h3>
+            <p>A DHCP scope is a valid range of IP addresses (the pool) that the server is allowed to distribute. For example, a home router might have a scope of <code>192.168.1.100</code> through <code>192.168.1.199</code>.</p>
+            
+            <h3>Lease Time</h3>
+            <p>DHCP does not assign IP addresses permanently; it "leases" them. The lease time can be minutes, days, or weeks. When a lease is halfway expired (50%), the client automatically attempts to renew it with the server. If a device leaves the network and the lease expires, the IP is returned to the available pool.</p>
+            
+            <h3>DHCP Reservations</h3>
+            <p>Sometimes you want a specific device (like a network printer or file server) to always receive the exact same IP address without using a static IP configuration on the device itself. A DHCP Reservation maps a specific MAC address to a specific IP address in the DHCP server. Every time that MAC address requests an IP, the server assigns the reserved one.</p>
+
+            <h3>DHCP Relay (IP Helper)</h3>
+            <p>DHCP Discover messages are broadcasts, and routers block broadcast traffic. If your DHCP server is on VLAN 10, and a client is on VLAN 20, the client's Discover broadcast will never reach the server. A DHCP Relay Agent (or IP Helper) is configured on the router to intercept the broadcast and forward it directly to the DHCP server as a unicast packet. You can read more about this in our <a href="dhcp-relay-ip-helper-explained.html">DHCP Relay Explained</a> guide.</p>
+
+            <h2>Common DHCP Problems and Troubleshooting</h2>
+            <p>When devices fail to connect to the network, DHCP is a primary suspect. Read our <a href="dhcp-troubleshooting-guide.html">DHCP Troubleshooting Guide</a> for deep analysis, but here are the basics:</p>
+            
+            <h3>1. The APIPA Address (169.254.x.x)</h3>
+            <p>If a Windows PC fails to reach a DHCP server, it will automatically assign itself an Automatic Private IP Address (APIPA) in the range of <code>169.254.0.1</code> to <code>169.254.255.254</code>. </p>
+            <p><strong>Troubleshooting Step:</strong> If you run <code>ipconfig</code> and see a <code>169.254.x.x</code> address, it means the DORA process failed. Check the physical cable, verify the switchport is active, and ensure the DHCP server is running. If the server is on another subnet, ensure the DHCP Relay is configured.</p>
+
+            <h3>2. IP Address Conflicts</h3>
+            <p>This happens if someone manually assigns a static IP address to a server (e.g., <code>192.168.1.50</code>), but that IP is also part of the DHCP pool. The DHCP server might lease it to a laptop, causing both devices to lose connectivity.</p>
+            <p><strong>Troubleshooting Step:</strong> Always exclude statically assigned IP addresses from your DHCP scope to prevent overlap.</p>
+
+            <h3>3. DHCP Pool Exhaustion</h3>
+            <p>If the scope has 100 available IP addresses, but 120 devices try to connect (e.g., in a busy coffee shop or conference), the 101st device will fail to obtain an IP address.</p>
+            <p><strong>Troubleshooting Step:</strong> You must expand the DHCP scope (by changing the subnet mask, e.g., from /24 to /23) or reduce the lease time so inactive devices return their IP addresses to the pool much faster.</p>
+
+            <h2>Useful Commands (Windows)</h2>
+            <p>You can force a PC to restart the DORA process using the command prompt:</p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                # Release the current DHCP lease<br>
+                > ipconfig /release<br><br>
+                # Request a new DHCP lease from the server<br>
+                > ipconfig /renew<br><br>
+                # View all DHCP settings, including the DHCP Server and Lease Times<br>
+                > ipconfig /all
+            </div>
+
+            <h2>Quick Summary</h2>
+            <ul>
+                <li>DHCP automatically assigns IP addresses, subnet masks, gateways, and DNS (<a href="what-is-dns.html">What is DNS?</a>) servers to devices.</li>
+                <li>It uses a four-step broadcast process known as DORA (Discover, Offer, Request, Acknowledge).</li>
+                <li>IPs are leased temporarily and returned to a pool when expired.</li>
+                <li>A <code>169.254.x.x</code> IP address means the client could not reach the DHCP server.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -55,3 +124,5 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

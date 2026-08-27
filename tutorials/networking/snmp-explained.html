@@ -39,36 +39,84 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">SNMP Explained</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p><strong>Simple Network Management Protocol (SNMP)</strong> is a widely used Internet Standard protocol for collecting and organizing information about managed devices on IP networks. Network Monitoring Systems (NMS) rely heavily on SNMP to query infrastructure devices to determine their health and performance.</p>
 
-            <p><strong>SNMP (Simple Network Management Protocol)</strong> is designed for monitoring and managing network-connected devices, such as routers, switches, and servers.</p>
-            
-            <h3>Core Architecture</h3>
+            <h2>Core SNMP Architecture</h2>
+            <p>SNMP operates on a manager/agent model consisting of several key components:</p>
             <ul>
-                <li><strong>Manager / NMS:</strong> The Network Management System that requests information from devices.</li>
-                <li><strong>Agent:</strong> Software running on the managed device that collects metrics and responds to the Manager.</li>
-                <li><strong>MIB (Management Information Base):</strong> A hierarchical database of objects (metrics) that can be monitored on the device.</li>
-                <li><strong>OID (Object Identifier):</strong> A unique numeric sequence identifying a specific MIB object, like an interface's inbound traffic counter.</li>
+                <li><strong>SNMP Manager:</strong> The central server (e.g., your monitoring software) that actively requests information or listens for alerts.</li>
+                <li><strong>SNMP Agent:</strong> A software module residing on a <em>Managed Device</em> (like a router, firewall, switch, UPS, or wireless access point). The agent answers queries from the Manager.</li>
+                <li><strong>MIB (Management Information Base):</strong> A text file acting as a "dictionary" that tells the SNMP Manager what data the Agent is capable of providing.</li>
+                <li><strong>OID (Object Identifier):</strong> A long string of numbers (e.g., <code>1.3.6.1.2.1.2.2.1.10</code>) that points to exactly one specific piece of data, such as a switch port's inbound traffic counter.</li>
             </ul>
+
+            <h2>How Polling and Counters Work</h2>
+            <p>The standard workflow is <strong>Polling</strong>. Every 60 seconds, the Monitoring Server sends an SNMP Query (UDP Port 161) to the Device Agent asking for specific OIDs. The Agent responds.</p>
             
-            <h3>Polling vs. Traps</h3>
-            <p>SNMP operates on two primary communication models:</p>
+            <p>Most network data is stored as a <strong>Counter</strong>. For example, <code>ifInOctets</code> counts the total number of bytes received on an interface since the device booted. If the counter reads 1,000,000 bytes at 12:00 PM, and 1,060,000 bytes at 12:01 PM, the monitoring server calculates the difference (60,000 bytes in 60 seconds) to plot an interface bandwidth rate of 8 kilobits per second on a graph.</p>
+            <p><em>Note: Modern networks with gigabit speeds require 64-bit counters (SNMPv2c/v3). Older 32-bit counters will "wrap" or reset to zero too quickly on high-speed interfaces, resulting in broken, inaccurate graphs.</em></p>
+
+            <h2>Typical SNMP Metrics</h2>
             <ul>
-                <li><strong>Polling (UDP 161):</strong> The Manager proactively queries the Agent at set intervals to read counters (e.g., interface utilization) or set configurations.</li>
-                <li><strong>Traps and Informs (UDP 162):</strong> The Agent asynchronously sends an alert to the Manager when a specific event occurs (e.g., an interface goes down). <em>Informs</em> are essentially reliable traps that require the Manager to acknowledge receipt.</li>
+                <li>Interface Status (Up / Down)</li>
+                <li>Bandwidth Utilization (In/Out Octets)</li>
+                <li>Interface Errors and Discards</li>
+                <li>Device CPU and Memory Utilization</li>
+                <li>System Uptime</li>
+                <li>Temperature (where hardware sensors are supported)</li>
             </ul>
-            
-            <h3>SNMP Versions and Security</h3>
-            <p><strong>SNMPv1</strong> and <strong>SNMPv2c</strong> are widely used but historically insecure. They rely on plaintext "community strings" (acting like a shared password) for access control. You should never publish or use default community strings on a production network.</p>
-            <p><strong>SNMPv3</strong> provides modern cryptographic security, offering authentication (ensuring the user is who they say they are) and encryption (keeping the payload private). Always recommend SNMPv3 where supported for sensitive or production environments.</p>
-            
-            <h3>Practical Examples</h3>
-            <p>Tools like <code>snmpwalk</code> and <code>snmpget</code> (available via third-party packages on most OSes) are used to query devices manually.</p>
-            <pre><code># Example conceptual command to walk a MIB
-snmpwalk -v2c -c &lt;community_string&gt; &lt;device-ip&gt;</code></pre>
-            <p><em>Note: Use placeholders and secure credential management when dealing with real infrastructure.</em></p>
-        
+
+            <h2>Traps and Informs</h2>
+            <p>Polling is slow (usually every 1–5 minutes). If a power supply fails, you do not want to wait 5 minutes to find out. <strong>SNMP Traps</strong> allow the Managed Device to instantly send an unsolicited alert to the Manager (on UDP Port 162) the exact millisecond a failure occurs.</p>
+            <p>An <strong>Inform</strong> is essentially a Trap that requires an acknowledgment receipt from the Manager, ensuring the alert wasn't lost in transit.</p>
+
+            <h2>SNMP Versions</h2>
+            <table style="width: 100%; text-align: left; border-collapse: collapse; margin: 1.5rem 0; overflow-x: auto; display: block;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border-color);">
+                        <th style="padding: 0.75rem;">Version</th>
+                        <th style="padding: 0.75rem;">Authentication</th>
+                        <th style="padding: 0.75rem;">Privacy / Encryption</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>SNMPv1</strong></td>
+                        <td style="padding: 0.75rem;">Plaintext Community String (Insecure)</td>
+                        <td style="padding: 0.75rem;">None</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>SNMPv2c</strong></td>
+                        <td style="padding: 0.75rem;">Plaintext Community String (Insecure)</td>
+                        <td style="padding: 0.75rem;">None (Adds 64-bit counter support)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>SNMPv3</strong></td>
+                        <td style="padding: 0.75rem;">Cryptographic Hash (SHA/MD5)</td>
+                        <td style="padding: 0.75rem;">AES/DES Encryption</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><em>Note: A "Community String" acts as a password. You should never expose real community strings in documentation or code.</em></p>
+
+            <h2>Common Troubleshooting</h2>
+            <ul>
+                <li><strong>Wrong Version or Credentials:</strong> The monitoring system is sending SNMPv2c queries, but the switch is configured only for SNMPv3.</li>
+                <li><strong>Firewall Blocking:</strong> A <a href="stateful-firewall-explained.html">Stateful Firewall</a> or local ACL is blocking UDP 161.</li>
+                <li><strong>Unsupported MIB / Incorrect OID:</strong> You are asking a Cisco switch for a temperature OID that only exists on Juniper hardware.</li>
+                <li><strong>Interface Index Changes:</strong> Sometimes when a device reboots, its internal interface IDs change (e.g., eth0 moves from ID 2 to ID 3). The monitoring server continues polling ID 2, resulting in graphing the wrong port.</li>
+            </ul>
+
+            <h2>Security Best Practices</h2>
+            <ul>
+                <li>Prefer SNMPv3 where practical for its cryptographic security.</li>
+                <li>Never expose SNMP to the public Internet.</li>
+                <li>Restrict permitted monitoring sources using strict ACLs on the managed device (only allow the exact IP of the monitoring server to query the device).</li>
+                <li>Monitor your devices for SNMP authentication failure traps.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -82,3 +130,5 @@ snmpwalk -v2c -c &lt;community_string&gt; &lt;device-ip&gt;</code></pre>
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

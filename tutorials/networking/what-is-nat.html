@@ -39,20 +39,77 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">What Is NAT?</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-<p><strong>Network Address Translation (NAT)</strong> is a process used by routers to modify the source or destination IP addresses in packet headers while they are in transit.</p>
-<h2>Why is NAT used?</h2>
-<p>The primary reason NAT exists is IPv4 address exhaustion. There are simply not enough public IPv4 addresses for every device on Earth. NAT allows an entire private network to share a single public IP address to access the internet.</p>
-<h2>Example Scenario</h2>
-<p>Imagine your laptop on a home network:</p>
-<ul>
-<li><strong>Private Client IP:</strong> 192.168.1.10</li>
-<li><strong>Router Public IP:</strong> 203.0.113.5 (from your ISP)</li>
-</ul>
-<p>When your laptop requests a web page, the packet leaves the laptop with a source IP of 192.168.1.10. When it hits the router, the router uses NAT to change the source IP to its own public IP (203.0.113.5) before sending it to the Internet. When the web server replies to 203.0.113.5, the router remembers the connection, translates the destination IP back to 192.168.1.10, and forwards it to your laptop.</p>
-<h3>Port Address Translation (PAT)</h3>
-<p>To keep track of multiple devices sharing one public IP simultaneously, the router translates both the IP address and the source port. This specific type of NAT is called <strong>PAT (Port Address Translation)</strong> or NAT Overloading, and it is what virtually all home and office routers use today.</p>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p><strong>Network Address Translation (NAT)</strong> is a process used by routers and firewalls to modify the source or destination IP addresses in the headers of IP packets while they are in transit across a traffic routing device.</p>
+            
+            <p>To understand NAT, you must first understand the difference between <a href="public-vs-private-ip-address.html">Public and Private IP Addresses</a>. Private IPs (like <code>192.168.x.x</code> or <code>10.x.x.x</code>) cannot be routed on the global internet. If a packet with a private Source IP reaches an internet backbone router, it is immediately dropped. NAT solves this problem.</p>
+
+            <h2>Why NAT is Used</h2>
+            <ul>
+                <li><strong>IPv4 Conservation:</strong> There are billions of devices on earth, but only 4.3 billion available IPv4 addresses. NAT allows an entire office of 500 computers (using private IPs) to share a single public IP address to access the internet.</li>
+                <li><strong>Publishing Internal Services:</strong> If you host a web server on a private network, people on the internet cannot reach it. NAT translates public requests to the internal server's private address.</li>
+                <li><strong>Security By Obscurity (Debated):</strong> NAT hides internal network structures from the outside world. However, <em>NAT does NOT replace a <a href="stateful-firewall-explained.html">Stateful Firewall</a></em>. It is a routing mechanism, not a security boundary.</li>
+            </ul>
+
+            <h2>Types of NAT</h2>
+
+            <h3>1. Source NAT (SNAT) / Many-to-One / PAT</h3>
+            <p>Also known as Port Address Translation (PAT) or NAT Overload. This is the NAT used in every home and office for outbound internet access.</p>
+            <p><strong>The Flow:</strong> A LAN host (<code>192.0.2.10</code>) wants to reach a web server at <code>198.51.100.20:443</code>. It sends the packet to the firewall. The firewall intercepts the packet, strips away the private Source IP (<code>192.0.2.10</code>), and replaces it with the firewall's own Public IP (<code>203.0.113.10</code>). It also assigns a unique temporary Source Port (e.g., 54321).</p>
+            <p>The firewall records this in its Translation Table. When the web server replies to <code>203.0.113.10:54321</code>, the firewall intercepts the packet, checks the table, translates the destination back to <code>192.0.2.10</code>, and delivers it to the LAN host.</p>
+
+            <h3>2. Destination NAT (DNAT) / Port Forwarding</h3>
+            <p>Used to allow external traffic from the internet to reach an internal server. The firewall translates the Destination IP of the incoming packet. For a deep dive, see <a href="port-forwarding-and-dnat-explained.html">Port Forwarding and DNAT Explained</a>.</p>
+
+            <h3>3. One-to-One NAT (Static NAT)</h3>
+            <p>Used when a company owns a block of public IPs and wants to permanently map one specific Public IP to one specific Internal Private IP. This is common for mail servers (SMTP) or dedicated web servers.</p>
+
+            <table style="width: 100%; text-align: left; border-collapse: collapse; margin: 1.5rem 0; overflow-x: auto; display: block;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border-color);">
+                        <th style="padding: 0.75rem;">NAT Type</th>
+                        <th style="padding: 0.75rem;">What Changes?</th>
+                        <th style="padding: 0.75rem;">Primary Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>SNAT (PAT)</strong></td>
+                        <td style="padding: 0.75rem;">Source IP (Private to Public)</td>
+                        <td style="padding: 0.75rem;">Allowing internal users to browse the internet.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>DNAT</strong></td>
+                        <td style="padding: 0.75rem;">Destination IP (Public to Private)</td>
+                        <td style="padding: 0.75rem;">Publishing internal services to the outside world.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>1-to-1 NAT</strong></td>
+                        <td style="padding: 0.75rem;">Source and Destination based on direction</td>
+                        <td style="padding: 0.75rem;">Dedicated servers requiring a permanent public IP.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Common NAT Troubleshooting</h2>
+            
+            <h3>1. Overlapping Networks over VPN</h3>
+            <p>If you build a <a href="site-to-site-vpn-explained.html">Site-to-Site VPN</a> between two offices, and both offices use <code>192.168.1.0/24</code> internally, routing is impossible. You must use complex NAT rules (Policy NAT) to translate one side's traffic into a fake subnet so the routers can distinguish between the two sites.</p>
+
+            <h3>2. Double NAT</h3>
+            <p>If an ISP provides a router that performs NAT, and a user plugs their own Wi-Fi router (which also performs NAT) behind it, traffic is translated twice. This can break gaming consoles, VoIP phones, and port forwarding rules.</p>
+
+            <h3>3. Firewall Policy Missing</h3>
+            <p>NAT is just translation, not permission. If you configure SNAT to translate internal IPs to the internet, you still must configure a Firewall Policy allowing the internal subnet to access the external zone. Without both, traffic fails.</p>
+
+            <h2>Quick Summary</h2>
+            <ul>
+                <li>NAT translates IP addresses in packet headers as they pass through a router.</li>
+                <li>SNAT (PAT) is used for outbound internet access, sharing one public IP among many private IPs.</li>
+                <li>NAT is a requirement for IPv4 routing to the internet, but does not provide security on its own.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -66,3 +123,4 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+

@@ -39,9 +39,86 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">What Is DNS?</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p>DNS (Domain Name System) is the phonebook of the internet. It translates human-readable domain names (like <code>google.com</code>) into IP addresses (like <code>142.250.190.46</code>) that computers use to connect to each other.</p><h3>Troubleshooting Tip</h3><p>If you can access websites by their IP address but not by their name, you have a DNS issue. Try changing your DNS server to <code>8.8.8.8</code>.</p><h3>Related Command</h3><p>Use <a href='../../commands.html' class='cmd-badge' style='display:inline-block'>nslookup</a> to troubleshoot DNS resolution.</p>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>The <strong>Domain Name System (DNS)</strong> is fundamentally the phonebook of the internet. Humans access information online through domain names like <code>google.com</code> or <code>mjtechhub.site</code>. Web browsers, however, interact through Internet Protocol (IP) addresses. DNS translates these human-readable domain names into machine-readable IP addresses so browsers can load internet resources.</p>
+            <p>Each device connected to the internet has a unique IP address which other machines use to find the device. DNS servers eliminate the need for humans to memorize IP addresses such as <code>192.168.1.1</code> (in IPv4) or more complex newer alphanumeric IP addresses such as <code>2400:cb00:2048:1::c629:d7a2</code> (in IPv6).</p>
+            
+            <h2>Why is DNS Used?</h2>
+            <p>Without DNS, navigating the web would be incredibly tedious. You would have to memorize a string of numbers for every single website you want to visit. Furthermore, websites frequently change their IP addresses (due to load balancing, migrations, or changing hosting providers). If a website changes its IP address, DNS handles the update seamlessly behind the scenes, ensuring the domain name still points to the correct new IP address without any disruption to the user.</p>
+            
+            <h2>How Does DNS Work? (The Lookup Flow)</h2>
+            <p>When you type a web address into your browser, a complex but incredibly fast process occurs. Here is a simplified breakdown of the DNS lookup flow:</p>
+            <ol>
+                <li><strong>The DNS Query:</strong> You type <code>example.com</code> into your web browser. Your computer first checks its local DNS cache to see if it already knows the IP address. If not, it sends a query to a DNS Resolver.</li>
+                <li><strong>The DNS Resolver (Recursive Resolver):</strong> This is usually provided by your Internet Service Provider (ISP) or a third-party like Google (<code>8.8.8.8</code>). The resolver checks its own cache. If the IP isn't there, it starts the hunt.</li>
+                <li><strong>The Root Nameserver:</strong> The resolver asks the Root Nameserver. The Root Nameserver doesn't know the IP, but it knows where to find the server responsible for the Top-Level Domain (TLD) like <code>.com</code> or <code>.net</code>.</li>
+                <li><strong>The TLD Nameserver:</strong> The resolver then asks the TLD Nameserver for <code>.com</code>. The TLD server knows the Authoritative Nameserver for <code>example.com</code> and points the resolver there.</li>
+                <li><strong>The Authoritative Nameserver:</strong> Finally, the resolver queries the Authoritative Nameserver for <code>example.com</code>. This server holds the actual DNS records. It returns the exact IP address to the resolver.</li>
+                <li><strong>Connection Established:</strong> The resolver gives the IP address back to your computer (and caches it for future use). Your web browser now connects to the IP address and loads the website.</li>
+            </ol>
+
+            <h2>Basic DNS Record Types</h2>
+            <p>DNS isn't just for websites; it handles email, text verification, and more using different record types. To learn about all the records in depth, you can read our <a href="dns-record-types-explained.html">DNS Record Types Explained</a> tutorial. Here are the fundamental ones:</p>
+            <ul>
+                <li><strong>A Record (Address Record):</strong> Maps a domain name (like <code>example.com</code>) to an IPv4 address (like <code>198.51.100.10</code>). This is the most common record.</li>
+                <li><strong>AAAA Record (Quad-A Record):</strong> Similar to the A record, but it maps the domain to an IPv6 address.</li>
+                <li><strong>CNAME Record (Canonical Name):</strong> Aliases one domain name to another domain name. For example, <code>www.example.com</code> might be a CNAME pointing to <code>example.com</code>.</li>
+                <li><strong>MX Record (Mail Exchange):</strong> Directs email to a mail server. It tells the internet where to deliver emails sent to your domain.</li>
+                <li><strong>NS Record (Name Server):</strong> Indicates which DNS servers are authoritative for a domain.</li>
+                <li><strong>TXT Record (Text Record):</strong> Originally for human-readable text, but now heavily used for domain verification, SPF, and DKIM email security.</li>
+            </ul>
+
+            <h2>Simple Real-World Example</h2>
+            <p>Imagine you want to call a business named "Tech Supplies Inc." You don't know their phone number, so you open the contact directory on your phone (Local Cache). If you don't have it saved, you call the operator (DNS Resolver). The operator doesn't know the exact number but knows the directory for businesses in that city (TLD Nameserver). The city directory tells the operator to check the specific office directory (Authoritative Nameserver). The office directory provides the exact phone number (IP address). The operator gives you the number, and you make the call.</p>
+
+            <h2>Common Commands and Tools</h2>
+            <p>Network administrators frequently use command-line tools to query DNS servers and troubleshoot issues.</p>
+            
+            <h3>nslookup (Windows / Linux)</h3>
+            <p><code>nslookup</code> is a built-in tool used to query DNS to find IP addresses or specific DNS records.</p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                > nslookup example.com<br>
+                Server:  dns.google<br>
+                Address:  8.8.8.8<br><br>
+                Non-authoritative answer:<br>
+                Name:    example.com<br>
+                Address:  93.184.216.34
+            </div>
+
+            <h3>dig (Linux / macOS)</h3>
+            <p><code>dig</code> (Domain Information Groper) is a more flexible and detailed tool heavily favored by network and systems administrators.</p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                $ dig example.com +short<br>
+                93.184.216.34
+            </div>
+
+            <h2>Common DNS Problems and Troubleshooting</h2>
+            <p>DNS is often the hidden culprit behind network connectivity issues. A classic IT joke is: "It's always DNS."</p>
+            
+            <h3>1. The Site Can't Be Reached (But Ping Works)</h3>
+            <p>If you can <code>ping 8.8.8.8</code> successfully (meaning you have internet access), but navigating to a website fails, your DNS resolver is likely failing. </p>
+            <p><strong>Troubleshooting Step:</strong> Try manually changing your computer's DNS settings to a public resolver like Google (<code>8.8.8.8</code>) or Cloudflare (<code>1.1.1.1</code>).</p>
+
+            <h3>2. Cached Outdated Information</h3>
+            <p>If a website recently changed its server (IP address), your local computer or ISP resolver might still have the old IP cached. This results in loading an old version of the site or getting an error.</p>
+            <p><strong>Troubleshooting Step:</strong> On Windows, open Command Prompt and run <code>ipconfig /flushdns</code> to clear your local cache. If the issue persists, the ISP resolver might still be caching it (which just requires waiting for the TTL to expire).</p>
+
+            <h3>3. Authoritative DNS Misconfiguration</h3>
+            <p>If you are managing a domain and the website is down globally, the Authoritative Nameservers might have incorrect A records or missing NS records.</p>
+            <p><strong>Troubleshooting Step:</strong> Use a tool like <code>dig</code> or online propagation checkers to verify what records the authoritative servers are actually broadcasting to the world.</p>
+
+            <p>For more detailed troubleshooting workflows, refer to the <a href="dns-troubleshooting-guide.html">DNS Troubleshooting Guide</a> and <a href="advanced-dns-troubleshooting.html">Advanced DNS Troubleshooting</a>.</p>
+
+            <h2>Quick Summary</h2>
+            <ul>
+                <li>DNS acts as the internet's phonebook, turning domain names into IP addresses.</li>
+                <li>The process involves a Resolver, Root servers, TLD servers, and Authoritative servers.</li>
+                <li>DNS caching speeds up future lookups.</li>
+                <li>If you can reach an IP but not a domain, you have a DNS problem.</li>
+                <li>Common tools include <code>nslookup</code> and <code>dig</code>.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -55,3 +132,5 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

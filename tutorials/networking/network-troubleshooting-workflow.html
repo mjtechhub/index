@@ -39,65 +39,56 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Network Troubleshooting Workflow</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p>Effective network troubleshooting relies on a structured, layer-by-layer methodology (often following the <a href="osi-model-explained.html">OSI Model</a>) rather than guessing. Follow this workflow to isolate and identify connectivity issues efficiently.</p>
-            
-            <h3>The Initial Isolation Phase</h3>
-            <p>Before touching the command line, ask critical isolation questions:</p>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>The difference between a junior technician and a senior network engineer is not just technical knowledge—it is the methodology they use to solve problems. Randomly changing firewall rules, rebooting switches, or blindly blaming the ISP ("guess-and-change") causes outages. A professional engineer follows a strict, repeatable <strong>Troubleshooting Workflow</strong>: <em>Measure, Compare, Isolate, Correlate, Verify, Document.</em></p>
+
+            <h2>1. Define the Problem</h2>
+            <p>Never start troubleshooting a vague complaint like <em>"The internet is slow."</em> You must force the user to define exactly what is broken. A well-defined problem statement looks like: <em>"Users on VLAN 10 experience 15–25% packet loss when accessing the internal CRM server between 10:00 and 11:00 AM."</em></p>
+
+            <h2>2. Determine the Scope</h2>
+            <p>Scope isolation instantly eliminates 90% of the network from suspicion. Ask:</p>
             <ul>
-                <li>Is it happening to just <strong>one device</strong>, or multiple?</li>
-                <li>Is it affecting an entire <strong>VLAN</strong> or physical switch?</li>
-                <li>Is it limited to <strong>one site</strong> or the whole company?</li>
-                <li>Is the user failing to reach <strong>one specific hostname</strong>, or everything?</li>
-                <li>Is it failing on <strong>one protocol</strong> (e.g., HTTPS works, but SSH fails)?</li>
+                <li>Is it one user, or everyone on the floor? (If one user, check their PC/cable. If the floor, check the access switch).</li>
+                <li>Is it one VLAN, or all VLANs? (If one VLAN, check routing/DHCP. If all, check the core).</li>
+                <li>Is it one application, or all internet traffic?</li>
             </ul>
 
-            <h3>Step-by-Step Diagnostic Workflow</h3>
-            
-            <p><strong>STEP 1 &mdash; Physical / Wi-Fi Layer</strong></p>
-            <p>Check the hardware and link status. Is the Ethernet cable plugged in securely? Are the link lights active on the switch port and PC? For wireless, check the SSID and signal strength.</p>
-            
-            <p><strong>STEP 2 &mdash; Local IP Configuration</strong></p>
-            <p>Verify what the OS actually thinks its networking state is. Check the IP address, subnet mask, gateway, and DNS servers.</p>
-            <pre><code>ipconfig /all</code></pre>
-            <p>If you see an APIPA address or a blank config, refer to the <a href="dhcp-troubleshooting-guide.html">DHCP troubleshooting guide</a>.</p>
-            
-            <p><strong>STEP 3 &mdash; Local Stack</strong></p>
-            <p>Ensure the local TCP/IP stack and NIC are functioning properly. (Note: Modern OSs sometimes skip this, but it's a solid fundamental step).</p>
-            <pre><code>ping 127.0.0.1</code></pre>
-            
-            <p><strong>STEP 4 &mdash; Local Network (Gateway Reachability)</strong></p>
-            <p>Can you reach your own router? Ping the Default Gateway IP found in Step 2. If this fails, the problem is on the local switch, VLAN, or the gateway is down.</p>
-            <pre><code>ping &lt;gateway-ip&gt;</code></pre>
-            <p>You can also check your local ARP cache to verify MAC address resolution:</p>
-            <pre><code>arp -a</code></pre>
-            
-            <p><strong>STEP 5 &mdash; Routing</strong></p>
-            <p>If you have multiple network interfaces or VPNs, check the routing table to ensure traffic is leaving out the correct interface.</p>
-            <pre><code>route print</code></pre>
-            
-            <p><strong>STEP 6 &mdash; Remote IP Connectivity</strong></p>
-            <p>Can you route outside the local network? Ping a known, highly reliable public IP address (assuming ICMP is allowed out of your network).</p>
-            <pre><code>ping 1.1.1.1</code></pre>
-            <p>If the gateway responds but remote IPs do not, check the firewall, ISP connection, or external routing.</p>
-            
-            <p><strong>STEP 7 &mdash; DNS Resolution</strong></p>
-            <p>If pinging an IP works but browsing to a website fails, test name resolution. See the <a href="dns-troubleshooting-guide.html">DNS troubleshooting guide</a> for details.</p>
-            <pre><code>nslookup example.com
-Resolve-DnsName example.com</code></pre>
-            
-            <p><strong>STEP 8 &mdash; Path Tracing</strong></p>
-            <p>If connectivity is dropping somewhere in the middle, or routing in a complex WAN is suspect, trace the path to see where it stops or loops.</p>
-            <pre><code>tracert example.com
-pathping example.com</code></pre>
-            
-            <p><strong>STEP 9 &mdash; Service / Port Layer</strong></p>
-            <p>Just because you can <a href="ping-explained.html">ping</a> a server does not mean the application service (like a web server or database) is running and allowed through the firewall. Test specific TCP ports.</p>
-            <pre><code>Test-NetConnection example.com -Port 443</code></pre>
-            
-            <p><strong>STEP 10 &mdash; Application Layer</strong></p>
-            <p>If all lower layers succeed, the issue resides in the application itself. Check web browsers, application proxies, host-based firewalls, SSL certificates, or the service configuration on the destination server.</p>
+            <h2>3. Check the Physical Layer</h2>
+            <p>Before checking complex BGP routes, verify the link is physically UP. Check the cables, SFP transceivers, and interface statistics. Are there <a href="duplex-mismatch-and-speed-negotiation.html">Duplex Mismatches</a>, CRC errors, or heavy wireless interference?</p>
+
+            <h2>4. Check IP Configuration</h2>
+            <p>Does the client have a valid IP address, subnet mask, default gateway, and DNS server? A machine with a <code>169.254.x.x</code> address simply cannot reach a DHCP server.</p>
+
+            <h2>5. The Connectivity Ladder</h2>
+            <p>Always test connectivity methodically from the inside out:</p>
+            <ol>
+                <li><strong>Ping Localhost (127.0.0.1):</strong> Proves the local TCP/IP stack works.</li>
+                <li><strong>Ping Local IP:</strong> Proves the network adapter works.</li>
+                <li><strong>Ping Default Gateway:</strong> Proves local LAN switching and cabling work.</li>
+                <li><strong>Ping Remote IP (e.g., 8.8.8.8):</strong> Proves routing and internet access work.</li>
+                <li><strong>Ping DNS Name (e.g., example.com):</strong> Proves <a href="what-is-dns.html">DNS</a> resolution works.</li>
+                <li><strong>Test Application Port:</strong> Proves the firewall allows the traffic (e.g., <code>Test-NetConnection example.com -Port 443</code>).</li>
+            </ol>
+
+            <h2>6. Check Routing</h2>
+            <p>If you can ping the gateway but not the remote IP, check the routing table. Does the router have a path to the destination? Use a traceroute to see where the traffic dies. (Remember: <a href="icmp-explained.html">ICMP</a> non-responses in the middle of a trace do not automatically mean a failure).</p>
+
+            <h2>7. Check DNS</h2>
+            <p>If a user can reach <code>8.8.8.8</code> but cannot open a website, the network is perfect, but DNS is broken. Do not troubleshoot routing for a DNS failure.</p>
+
+            <h2>8. Check the Firewall / ACLs</h2>
+            <p>Are security policies blocking the traffic? Review firewall logs for Deny events. Check NAT translations. <strong>Never immediately disable security controls as a troubleshooting method.</strong> Analyze the logs instead.</p>
+
+            <h2>9. Check the Application / Service</h2>
+            <p>If the network passes all tests, the problem is likely the server. Is the web service actually listening on Port 443? Is the backend database crashed? Do not blame the network without evidence.</p>
+
+            <h2>10. Check Performance & Monitor</h2>
+            <p>If connectivity exists but the complaint is "slow", correlate metrics using your <a href="network-monitoring-fundamentals.html">Network Monitoring</a> platform. Check for <a href="network-latency-troubleshooting.html">Latency</a>, <a href="packet-loss-troubleshooting.html">Packet Loss</a>, <a href="jitter-explained.html">Jitter</a>, and bandwidth saturation.</p>
+
+            <h2>11. Apply Fix, Verify, and Document</h2>
+            <p>Make one change at a time. If it doesn't fix the problem, revert it. Once fixed, verify from the user's perspective, and document the root cause and preventive actions to ensure it never happens again.</p>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -111,3 +102,5 @@ pathping example.com</code></pre>
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

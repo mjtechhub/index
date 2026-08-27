@@ -39,41 +39,68 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">What Is Routing?</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p>Routing is the process of moving network packets from one IP network to another. When you send data over the internet or across different subnets in an office, routing determines the exact path the packets will take to reach their final destination.</p>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p><strong>Routing</strong> is the fundamental process of selecting a path for traffic in a network or between or across multiple networks. At its core, routing allows devices on completely different networks—perhaps separated by thousands of miles—to communicate with each other.</p>
+            <p>Routing occurs at Layer 3 (the Network Layer) of the OSI model. The hardware devices primarily responsible for this process are <strong>Routers</strong> and <strong>Layer 3 Switches</strong>.</p>
             
-            <h3>Local Subnet vs Remote Subnet</h3>
-            <p>Before a device sends out a packet, it determines if the destination is on the <strong>local subnet</strong> or a <strong>remote subnet</strong> by checking its own IP address and <a href="what-is-a-subnet-mask.html">Subnet Mask</a>.</p>
+            <h2>The Routing Process Conceptually</h2>
+            <p>To understand routing, you must understand how a computer decides where to send a packet of data. Every <a href="what-is-an-ip-address.html">IP Address</a> contains a network portion and a host portion.</p>
+            
+            <p>When a computer wants to send data, it asks one question: <em>"Is the destination IP on my local network, or a remote network?"</em></p>
             <ul>
-                <li><strong>Local Subnet:</strong> If the destination is on the same subnet, the device communicates directly using MAC addresses (Layer 2) via Switches.</li>
-                <li><strong>Remote Subnet:</strong> If the destination is on a different subnet, the packet must be sent to the <strong><a href="what-is-a-default-gateway.html">Default Gateway</a></strong>. The gateway is a Router or Layer 3 Switch responsible for handling traffic leaving the local network.</li>
+                <li><strong>Directly Connected Networks:</strong> If the destination is local, the computer uses ARP to find the MAC address and sends the data directly through a local switch.</li>
+                <li><strong>Remote Networks:</strong> If the destination is on a different network, the computer knows it cannot reach it directly. It must forward the packet to a router. The specific router responsible for handling outbound traffic from a local network is called the <a href="what-is-a-default-gateway.html">Default Gateway</a>.</li>
             </ul>
 
-            <h3>How Layer 3 Forwarding Works</h3>
-            <p>A Router operates at Layer 3 (Network Layer) of the OSI model. When a packet arrives, the router inspects the <strong>Destination IP address</strong> inside the packet header. It does not route traffic based on MAC addresses, because MAC addresses are only significant on the local network segment (Layer 2).</p>
+            <h2>The Routing Journey: Host to Destination</h2>
+            <p>Imagine a PC at <code>192.0.2.50</code> trying to load a webpage from a web server at <code>198.51.100.80</code>. Here is the step-by-step routing flow:</p>
             
-            <p>The router then consults its <strong>Routing Table</strong>—a map of known networks—to find the best path. If a match is found, the router forwards the packet to the appropriate interface or the <strong>next hop</strong> (the next router in the path). If there is no specific match, the router usually sends it to a <strong>default route</strong>.</p>
+            <ol>
+                <li><strong>The Host:</strong> The PC determines <code>198.51.100.80</code> is a remote network. It packages the data with a Source IP of <code>192.0.2.50</code> and a Destination IP of <code>198.51.100.80</code>. It sends this packet to its Default Gateway (the local office router).</li>
+                <li><strong>The First Router:</strong> The local router receives the packet. It strips away the local Ethernet frame, reads the Destination IP, and checks its <a href="routing-table-explained.html">Routing Table</a> to see if it knows how to reach the <code>198.51.100.0/24</code> network.</li>
+                <li><strong>The Next Hop:</strong> The routing table tells the router to forward the packet to the next router along the path (the <em>Next Hop</em>), which might be an ISP router.</li>
+                <li><strong>The Hops Continue:</strong> Each router along the path receives the packet, checks its own routing table, and forwards it to the next hop. The Source IP and Destination IP remain unchanged during this journey (unless NAT is used).</li>
+                <li><strong>The Destination:</strong> Eventually, a router realizes it is directly connected to the <code>198.51.100.0/24</code> network. It sends the packet down to the local switch, which delivers it directly to the web server.</li>
+            </ol>
 
-            <h3>A Practical Routing Example</h3>
-            <p>Let's consider a practical scenario:</p>
+            <h2>The Default Route (0.0.0.0/0)</h2>
+            <p>The internet contains nearly a million unique routes. It is impossible for a small office router to know all of them. Instead, it relies on a <strong>Default Route</strong> (often written as <code>0.0.0.0/0</code>). This route simply means: <em>"If you don't know where to send a packet, send it here."</em> The local router sends all unknown internet traffic to the ISP's router, which has much larger, more comprehensive routing tables.</p>
+
+            <h2>How Routers Learn Routes</h2>
+            <p>Routers can learn how to reach remote networks in two ways, which are detailed in our <a href="static-vs-dynamic-routing.html">Static vs Dynamic Routing</a> guide:</p>
             <ul>
-                <li><strong>PC IP Address:</strong> 192.168.10.25/24</li>
-                <li><strong>PC Default Gateway:</strong> 192.168.10.1</li>
-                <li><strong>Destination IP:</strong> 10.20.30.50</li>
+                <li><strong>Static Routing:</strong> An administrator manually types the network and next hop into the router's configuration.</li>
+                <li><strong>Dynamic Routing:</strong> Routers automatically talk to each other using protocols like OSPF or BGP to map out the network and calculate the best paths automatically.</li>
             </ul>
-            <p>Because the destination (<code>10.20.30.50</code>) is completely different from the PC's network (<code>192.168.10.0/24</code>), the PC knows the destination is on a remote subnet. The PC does not know how to reach <code>10.20.30.50</code> directly, so it simply sends the packet to its Default Gateway (<code>192.168.10.1</code>). The router takes over from there, making the forwarding decisions hop-by-hop until the packet arrives.</p>
 
-            <h3>Viewing Routing Information</h3>
-            <p>You can view your device's routing table using built-in commands:</p>
+            <h2>Useful Commands</h2>
+            <p>To diagnose routing issues, you can inspect how your local machine handles routing.</p>
             
-            <p><strong>Windows:</strong></p>
-            <pre><code>route print
-Get-NetRoute</code></pre>
+            <h3>Windows</h3>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                > ipconfig                 # View your Default Gateway<br>
+                > route print              # View your computer's local routing table<br>
+                > tracert 8.8.8.8          # View every router hop to a destination
+            </div>
+
+            <h3>Linux (e.g., Ubuntu/Debian)</h3>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                $ ip addr                  # View your local IP configuration<br>
+                $ ip route                 # View your local routing table and gateway<br>
+                $ traceroute 8.8.8.8       # View every router hop
+            </div>
             
-            <p><strong>Linux:</strong></p>
-            <pre><code>ip route</code></pre>
-            
+            <p>For more on how to use tracing tools, see <a href="traceroute-explained.html">Traceroute Explained</a>.</p>
+
+            <h2>Quick Summary</h2>
+            <ul>
+                <li>Routing is the Layer 3 process of forwarding packets toward a remote destination.</li>
+                <li>Devices use their Default Gateway to reach any IP not on their local subnet.</li>
+                <li>Routers use routing tables to determine the best "Next Hop" for every packet.</li>
+                <li>The Default Route is used when a router does not have a specific path to a destination.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -87,3 +114,5 @@ Get-NetRoute</code></pre>
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

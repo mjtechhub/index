@@ -39,40 +39,61 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">DHCP Troubleshooting Guide</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p><a href="what-is-dhcp.html">DHCP (Dynamic Host Configuration Protocol)</a> automates IP address assignment. When it fails, clients lose connectivity. Common symptoms include: no IP address, receiving a wrong subnet/gateway/DNS, duplicate IP conflicts, or lease renewal failures.</p>
-            
-            <h3>Troubleshooting Sequence</h3>
-            
-            <p><strong>1. Verify Physical & Layer 2 Connection</strong></p>
-            <p>Ensure the cable is plugged in, the Wi-Fi is connected, and the switch port is active. DHCP relies on broadcast traffic; if Layer 1 or Layer 2 is down, DHCP cannot work.</p>
-            
-            <p><strong>2. Check IP Configuration & APIPA</strong></p>
-            <p>Run the following command to check the current state:</p>
-            <pre><code>ipconfig /all</code></pre>
-            <p>Or in PowerShell:</p>
-            <pre><code>Get-NetIPConfiguration</code></pre>
-            <p>If you see an IP address starting with <code>169.254.x.x</code> (part of the <code>169.254.0.0/16</code> range), it means the device assigned itself an <strong>APIPA (Automatic Private IP Addressing)</strong> address because it couldn't reach a DHCP server. <em>Do not claim APIPA always proves the DHCP server itself is down.</em> The failure could be the local network, the VLAN assignment, a misconfigured DHCP relay, or the client itself.</p>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>The <a href="what-is-dhcp.html">Dynamic Host Configuration Protocol (DHCP)</a> is responsible for providing IP addresses, subnet masks, default gateways, and DNS servers to client devices. When DHCP fails, devices cannot communicate on the network.</p>
 
-            <p><strong>3. Determine DHCP vs Static</strong></p>
-            <p>Ensure the device is actually configured to "Obtain an IP address automatically" and hasn't been manually assigned a conflicting static IP.</p>
+            <h2>The DORA Process (A Brief Recap)</h2>
+            <p>To troubleshoot DHCP, you must understand how a client gets an address:</p>
+            <ol>
+                <li><strong>Discover:</strong> The client boots up and shouts a Broadcast message to the entire local network: <em>"Are there any DHCP servers here?"</em></li>
+                <li><strong>Offer:</strong> The DHCP server hears the broadcast and replies: <em>"I am here, and I can offer you IP 192.168.1.50."</em></li>
+                <li><strong>Request:</strong> The client replies: <em>"I accept that IP."</em></li>
+                <li><strong>Acknowledge (ACK):</strong> The server confirms: <em>"It is yours. Here is your lease time, Gateway, and DNS."</em></li>
+            </ol>
+            <p>Because the initial <em>Discover</em> is a broadcast, it cannot cross a router. If the DHCP server is on a different <a href="what-is-vlan.html">VLAN</a> than the client, the router must be configured with a <a href="dhcp-relay-ip-helper-explained.html">DHCP Relay</a> (IP Helper) to intercept the broadcast and forward it directly to the server as a unicast packet.</p>
 
-            <p><strong>4. Release and Renew</strong></p>
-            <p>Force the client to drop its current lease and request a new one.</p>
-            <pre><code>ipconfig /release
-ipconfig /renew</code></pre>
-
-            <p><strong>5. Verify the DHCP Relay / IP Helper</strong></p>
-            <p>Because DHCP uses broadcast messages, the requests do not cross routers by default. If the DHCP server is on a different subnet than the client, the router interface for the client's subnet MUST be configured as a <strong>DHCP Relay</strong> (or IP Helper). If this is missing or misconfigured, clients won't get IPs.</p>
-
-            <p><strong>6. Check the DHCP Server & Scope</strong></p>
-            <p>On the server side:</p>
+            <h2>Common Symptoms and Causes</h2>
             <ul>
-                <li>Verify the DHCP Service is running.</li>
-                <li>Check the scope for available addresses (is the scope 100% full?).</li>
-                <li>Ensure there are no excessive rogue reservations or conflict detections pausing the service.</li>
+                <li><strong>APIPA (169.254.x.x):</strong> If a Windows machine is configured for DHCP but fails to contact a server (or the server ignores it), Windows automatically assigns itself an Automatic Private IP Address (APIPA) in the <code>169.254.0.0/16</code> range. If you see this, DHCP is completely failing.</li>
+                <li><strong>Scope Exhausted:</strong> A guest Wi-Fi network has a /24 subnet (254 addresses), but 300 guests arrive. The DHCP server runs out of addresses in the "Scope" and stops replying to Discover messages.</li>
+                <li><strong>Wrong Gateway or DNS:</strong> The client receives an IP, but cannot reach the internet or resolve names. The DHCP Server's "Options" are misconfigured.</li>
+                <li><strong>Only One VLAN Affected:</strong> If VLAN 10 gets IPs but VLAN 20 gets APIPA, the DHCP server is online, but the router's DHCP Relay configuration on VLAN 20 is missing or pointing to the wrong IP.</li>
+                <li><strong>Duplicate IP Address:</strong> A user hardcoded a static IP on their laptop that the DHCP server had already leased to a printer.</li>
             </ul>
+
+            <h2>Practical Troubleshooting Sequence</h2>
+            <ol>
+                <li><strong>Confirm Physical/Link Connectivity:</strong> A PC with a disconnected cable or a switch port in the wrong VLAN will never reach the server.</li>
+                <li><strong>Check Client IP State:</strong> Is the PC holding an old lease, an APIPA address, or a completely static IP?</li>
+                <li><strong>Renew the Lease:</strong> Force the client to drop its IP and restart the DORA process.</li>
+                <li><strong>Check DHCP Server Availability:</strong> Can you ping the DHCP server from a static machine on the same VLAN?</li>
+                <li><strong>Check the Scope:</strong> Log into the DHCP server. Are there available addresses in the pool?</li>
+                <li><strong>Check DHCP Relay / Helper:</strong> If the server is on a remote subnet, verify the router interface has the correct IP Helper address applied.</li>
+                <li><strong>Check Firewall / ACLs:</strong> DHCP uses UDP Ports 67 and 68. Ensure internal firewalls are not blocking these broadcasts or relay packets.</li>
+                <li><strong>Check Server Logs:</strong> Is the server actually receiving the Discover messages but refusing to reply due to a MAC address filter or reservation mismatch?</li>
+                <li><strong>Verify Options:</strong> Ensure the server is handing out the correct Default Gateway and DNS servers for that specific scope.</li>
+            </ol>
+
+            <h2>Useful Diagnostic Commands</h2>
+            
+            <h3>Windows</h3>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                ipconfig /all         # View IP, Mask, Gateway, DNS, and DHCP Lease times<br>
+                ipconfig /release     # Surrender the current DHCP lease<br>
+                ipconfig /renew       # Send a new DHCP Request/Discover
+            </div>
+
+            <h3>Linux</h3>
+            <p><em>Note: Linux network management varies heavily. NetworkManager handles this automatically on desktop distros.</em></p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                ip addr               # View current IP assignments<br>
+                ip route              # View the default gateway<br>
+                sudo dhclient -r      # Release lease (on systems using dhclient)<br>
+                sudo dhclient         # Renew lease (on systems using dhclient)<br>
+                journalctl -u NetworkManager # View network connection logs conceptually
+            </div>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -86,3 +107,5 @@ ipconfig /renew</code></pre>
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

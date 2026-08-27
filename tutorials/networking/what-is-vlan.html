@@ -39,9 +39,68 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">What Is VLAN?</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p>A VLAN (Virtual Local Area Network) logically separates a single physical network into multiple isolated virtual networks.</p><h3>Why Use VLANs?</h3><p>Security and performance. For example, you can put Guest Wi-Fi on VLAN 10 and Corporate devices on VLAN 20. Even though they share the same physical switches, they cannot communicate unless routed through a firewall.</p>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>A <strong>VLAN (Virtual Local Area Network)</strong> is a custom network created from one or more existing physical local area networks. It enables groups of devices from multiple networks (both wired and wireless) to be combined into one logical network, regardless of their physical location on a network switch.</p>
+            <p>By default, all ports on a standard, unconfigured network switch belong to the same broadcast domain (VLAN 1). This means if one device sends a broadcast message, every other device on the switch receives it. VLANs allow network administrators to logically segment this switch into multiple, isolated broadcast domains.</p>
+            
+            <h2>Why Are VLANs Used?</h2>
+            <p>VLANs solve many design and scalability challenges in modern network engineering. Their primary benefits include:</p>
+            <ul>
+                <li><strong>Security:</strong> By separating departments (e.g., HR and Guest WiFi), sensitive traffic is isolated. A compromised guest device cannot easily scan or attack the HR network because they are in separate VLANs.</li>
+                <li><strong>Performance and Broadcast Control:</strong> In large networks, broadcast traffic (like ARP requests) can consume significant bandwidth and CPU resources on end devices. VLANs break large networks into smaller broadcast domains, containing the "noise."</li>
+                <li><strong>Logical Grouping:</strong> Users can be grouped by function or department rather than physical location. A user moving to a different floor can remain in the exact same VLAN without needing to change physical router interfaces.</li>
+                <li><strong>Cost Reduction:</strong> Instead of buying separate physical switches for different networks, one large switch can be logically partitioned into many virtual switches.</li>
+            </ul>
+            
+            <h2>Core VLAN Concepts</h2>
+            
+            <h3>VLAN IDs (Tags)</h3>
+            <p>VLANs are identified by a number between 1 and 4094. VLAN 1 is usually the default, native VLAN on most vendor switches (like Cisco). Devices assigned to VLAN 10 can only communicate with other devices on VLAN 10 natively.</p>
+
+            <h3>The 802.1Q Standard</h3>
+            <p>When VLAN traffic needs to cross between two switches, the receiving switch needs to know which VLAN a packet belongs to. IEEE 802.1Q is the industry-standard networking protocol used to add a VLAN tag (a 4-byte header) to an Ethernet frame. This tag carries the VLAN ID as it travels across trunk links.</p>
+
+            <h3>Access Ports vs Trunk Ports</h3>
+            <p>To fully understand VLANs, you must understand port types. For a deeper dive, read <a href="access-port-vs-trunk-port.html">Access Port vs Trunk Port</a>.</p>
+            <ul>
+                <li><strong>Access Port:</strong> Connects to an end device (like a PC, printer, or server). The port is assigned to a single VLAN. The end device has no idea it is on a VLAN; the switch strips the VLAN tag before sending the frame to the PC.</li>
+                <li><strong>Trunk Port:</strong> Connects switches to other switches or to routers. Trunk ports carry traffic for multiple VLANs simultaneously by leaving the 802.1Q tags intact so the receiving device can sort the traffic.</li>
+            </ul>
+
+            <h3>Inter-VLAN Routing</h3>
+            <p>Because VLANs create isolated broadcast domains, devices in VLAN 10 cannot communicate directly with devices in VLAN 20, even if they are plugged into the same switch. To allow communication between different VLANs, a Layer 3 device (a router or a Layer 3 switch) is required. This process is called Inter-VLAN Routing.</p>
+
+            <h2>Simple Real-World Example</h2>
+            <p>Imagine a small company with three departments: Accounting, Sales, and Guest WiFi. They all share a single 48-port physical switch.</p>
+            <ul>
+                <li>Ports 1-10 are assigned to VLAN 10 (Accounting).</li>
+                <li>Ports 11-30 are assigned to VLAN 20 (Sales).</li>
+                <li>Ports 31-40 are assigned to VLAN 30 (Guest).</li>
+            </ul>
+            <p>If a Sales PC on Port 11 sends a broadcast request, only ports 11-30 will receive it. The Accounting PCs will not see the traffic. If a Guest PC tries to ping an Accounting Server, the switch drops the packet entirely unless a router explicitly permits and routes the connection.</p>
+
+            <h2>Common VLAN Problems and Troubleshooting</h2>
+            <p>When setting up VLANs, several configuration mistakes are common.</p>
+
+            <h3>1. PC is in the Wrong VLAN</h3>
+            <p>If a user cannot access their department's servers, check the switchport configuration. The port might be accidentally assigned to the default VLAN 1 instead of the intended department VLAN.</p>
+
+            <h3>2. Missing Trunk Configurations</h3>
+            <p>If VLAN 10 exists on Switch A and Switch B, but PCs on Switch A cannot reach PCs on Switch B, the link connecting the two switches might not be configured as an 802.1Q Trunk. Alternatively, the specific VLAN might be pruned (blocked) from the trunk allowed list.</p>
+
+            <h3>3. Native VLAN Mismatch</h3>
+            <p>The native VLAN is used for untagged traffic crossing a trunk. If Switch A expects the native VLAN to be 1, and Switch B is configured for native VLAN 99, STP loops and traffic leakage can occur. Always ensure native VLANs match across trunk links. You can read more in our <a href="spanning-tree-protocol-explained.html">Spanning Tree Protocol (STP)</a> and <a href="advanced-vlan-troubleshooting.html">Advanced VLAN Troubleshooting</a> tutorials.</p>
+
+            <h2>Quick Summary</h2>
+            <ul>
+                <li>VLANs logically divide a single physical network into multiple isolated virtual networks.</li>
+                <li>They improve security, reduce broadcast traffic, and organize networks logically.</li>
+                <li><strong>Access ports</strong> connect to end-user devices (PCs).</li>
+                <li><strong>Trunk ports</strong> carry multiple VLANs between switches using 802.1Q tags.</li>
+                <li>A Layer 3 router is required for different VLANs to talk to each other.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -55,3 +114,5 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

@@ -39,36 +39,65 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Access Control Lists (ACLs) Explained</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>An <strong>Access Control List (ACL)</strong> is a sequential list of permit or deny statements that apply to IP addresses or upper-layer protocols. While <a href="stateful-firewall-explained.html">Stateful Firewalls</a> track entire sessions, ACLs are typically stateless and are traditionally deployed directly on <a href="what-is-routing.html">Routers</a> and Layer 3 Switches to perform basic traffic filtering.</p>
+            
+            <p><em>Note: Terminology varies heavily by vendor. Cisco refers to them as ACLs, while cloud providers like AWS refer to them as Network ACLs (NACLs).</em></p>
 
-            <p>An <strong>Access Control List (ACL)</strong> defines rules used to permit or deny traffic passing through a network device according to matching criteria.</p>
-            
-            <h3>Matching Criteria</h3>
-            <p>Depending on the type of ACL and the vendor, rules can filter traffic based on:</p>
+            <h2>How ACLs Work (Top-Down Processing)</h2>
+            <p>When a router receives a packet on an interface with an ACL applied, it reads the ACL rules sequentially from the top down.</p>
             <ul>
-                <li>Source IP address</li>
-                <li>Destination IP address</li>
-                <li>Protocol (e.g., TCP, UDP, ICMP)</li>
-                <li>Source / Destination <a href="common-network-ports.html">ports</a></li>
+                <li>The router compares the packet to Rule 1. If it matches, it executes the action (Permit or Deny) and <strong>stops reading</strong>.</li>
+                <li>If it doesn't match Rule 1, it moves to Rule 2, and so on.</li>
+                <li>If the packet reaches the bottom of the list without matching any rule, it hits the <strong>Implicit Deny</strong>. The router silently drops the packet.</li>
             </ul>
-            
-            <h3>Standard vs Extended ACLs</h3>
-            <p><em>Note: This is vendor/platform terminology, heavily used in Cisco environments.</em></p>
+
+            <h2>Standard vs Extended ACLs</h2>
+            <p>In traditional routing environments (like Cisco IOS):</p>
             <ul>
-                <li><strong>Standard ACLs:</strong> Typically filter traffic based <em>only</em> on the source IP address.</li>
-                <li><strong>Extended ACLs:</strong> Can filter based on source IP, destination IP, protocol, and ports, offering granular control.</li>
+                <li><strong>Standard ACLs:</strong> Can only filter traffic based on the <em>Source IP Address</em>. They are simple but lack precision.</li>
+                <li><strong>Extended ACLs:</strong> Can filter based on Source IP, Destination IP, Protocol (TCP/UDP), and specific <a href="common-network-ports.html">Network Ports</a>.</li>
             </ul>
+
+            <h2>Conceptual Example: Securing a Server</h2>
+            <p>Imagine we have a web server at <code>198.51.100.10</code>. We want to allow our internal office network (<code>192.0.2.0/24</code>) to access it via HTTPS, but block absolutely everyone else.</p>
             
-            <h3>Rule Processing and Implicit Deny</h3>
-            <p>ACLs are processed top-down in <strong>first-match</strong> behavior. Once a packet matches a rule, the action (permit or deny) is applied, and no further rules are checked.</p>
-            <p>Crucially, almost all ACLs end with an invisible <strong>implicit deny</strong> rule. If a packet does not match any explicitly configured rule in the list, it is dropped.</p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto; white-space: pre;">
+Rule 10: PERMIT TCP Source 192.0.2.0/24 Destination 198.51.100.10 Port 443
+Rule 20: DENY IP Source ANY Destination ANY
+            </div>
             
-            <h3>Conceptual Example Policy</h3>
-            <pre><code>Rule 1: Permit TCP from 10.10.10.0/24 to 10.20.20.50 eq 443
-Rule 2: Deny IP any any (Implicit or explicit)</code></pre>
-            <p>In this conceptual example, hosts on the <code>10.10.10.0/24</code> subnet can access a secure web server at <code>10.20.20.50</code>. All other traffic is denied. Note that syntax is not universal across vendors; always consult your platform's documentation.</p>
-        
+            <p>Because ACLs are stateless, if you apply this to a router, you must remember that traffic flows in two directions. If you apply an ACL blocking all inbound traffic from the server, the server's replies to the office PC will be blocked. You would need a complementary rule allowing return traffic.</p>
+
+            <h2>Inbound vs Outbound Application</h2>
+            <p>Writing an ACL is only half the job. You must apply it to a physical interface in a specific direction:</p>
+            <ul>
+                <li><strong>Inbound (Ingress):</strong> Filters packets as they arrive <em>into</em> the router's interface, before the router makes a routing decision.</li>
+                <li><strong>Outbound (Egress):</strong> Filters packets as they exit the router, after the router has checked its routing table.</li>
+            </ul>
+
+            <h2>Common ACL Troubleshooting</h2>
+
+            <h3>1. The Shadowed Rule</h3>
+            <p><strong>Problem:</strong> You wrote a rule to permit <code>192.0.2.50</code>, but it's being blocked.</p>
+            <p><strong>Troubleshooting:</strong> Because ACLs are processed top-down, rule order is critical. If Rule 10 denies the entire <code>192.0.2.0/24</code> subnet, and Rule 20 permits <code>192.0.2.50</code>, Rule 20 is "shadowed." The router drops the packet at Rule 10 and never even sees Rule 20. You must move the specific permit rule above the general deny rule.</p>
+
+            <h3>2. Wrong Wildcard Mask / Subnet</h3>
+            <p><strong>Problem:</strong> An ACL is permitting traffic it shouldn't.</p>
+            <p><strong>Troubleshooting:</strong> Many vendors (like Cisco) use inverse wildcard masks instead of standard <a href="what-is-a-subnet-mask.html">Subnet Masks</a> for ACLs. A standard mask of <code>255.255.255.0</code> becomes a wildcard mask of <code>0.0.0.255</code>. Using the wrong notation will completely alter the scope of the rule.</p>
+
+            <h3>3. Unexpected Implicit Deny</h3>
+            <p><strong>Problem:</strong> You applied an ACL to an interface to block one specific bad IP. Suddenly, the entire network went down.</p>
+            <p><strong>Troubleshooting:</strong> You forgot the Implicit Deny. When you applied the ACL containing only one DENY statement, the router added an invisible DENY ANY at the bottom. To fix this, you must explicitly add a PERMIT ANY ANY rule at the very bottom of the ACL.</p>
+
+            <h2>Best Practices</h2>
+            <ul>
+                <li><strong>Document Intent:</strong> Always add remarks or comments to your ACLs explaining <em>why</em> a rule exists and who requested it.</li>
+                <li><strong>Test Before Production:</strong> A single typo in an ACL can disconnect an entire datacenter.</li>
+                <li><strong>Least Privilege:</strong> Only permit exactly what is required. Avoid broad permits like "Permit IP Any Any" unless strictly necessary.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -82,3 +111,5 @@ Rule 2: Deny IP any any (Implicit or explicit)</code></pre>
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

@@ -39,31 +39,83 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Stateful Firewall Explained</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>A <strong>Firewall</strong> is a network security device that monitors and controls incoming and outgoing network traffic based on predetermined security rules. Its primary purpose is to establish a barrier between a trusted internal network and an untrusted external network (like the Internet).</p>
+            
+            <h2>Stateful vs Stateless Filtering</h2>
+            <p>To understand modern firewalls, you must understand the concept of <em>state</em>.</p>
+            
+            <table style="width: 100%; text-align: left; border-collapse: collapse; margin: 1.5rem 0; overflow-x: auto; display: block;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border-color);">
+                        <th style="padding: 0.75rem;">Feature</th>
+                        <th style="padding: 0.75rem;">Stateless Filtering (Legacy)</th>
+                        <th style="padding: 0.75rem;">Stateful Filtering (Modern)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>How it works</strong></td>
+                        <td style="padding: 0.75rem;">Examines every single packet individually in isolation.</td>
+                        <td style="padding: 0.75rem;">Understands the full context of a connection over time (a session).</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Return Traffic</strong></td>
+                        <td style="padding: 0.75rem;">Requires two manual rules: one to allow traffic out, one to allow the reply back in.</td>
+                        <td style="padding: 0.75rem;">Automatically allows return traffic for established connections.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Primary use</strong></td>
+                        <td style="padding: 0.75rem;">Basic <a href="access-control-lists-explained.html">ACLs</a> on routers.</td>
+                        <td style="padding: 0.75rem;">Enterprise Firewalls (Palo Alto, Fortinet, Cisco).</td>
+                    </tr>
+                </tbody>
+            </table>
 
-            <p>A <strong>Stateful Firewall</strong> inspects traffic and monitors the active connection/session state, allowing it to make intelligent filtering decisions compared to older, stateless packet filters (like simple <a href="access-control-lists-explained.html">ACLs</a>).</p>
+            <h2>How a Stateful Firewall Tracks Sessions</h2>
+            <p>Imagine a User PC (<code>192.0.2.50</code>) trying to securely browse the Internet (HTTPS on Port 443).</p>
             
-            <h3>Stateless vs Stateful Filtering</h3>
+            <ol>
+                <li><strong>Outbound Packet:</strong> The PC sends a TCP SYN packet destined for a web server at <code>198.51.100.80</code> on Port 443.</li>
+                <li><strong>Policy Check:</strong> The firewall receives the packet. It checks its security policies top-to-bottom. It finds a rule allowing the Internal Zone to reach the External Zone on Port 443.</li>
+                <li><strong>Connection Tracking:</strong> Because it is a stateful firewall, it creates an entry in its internal <strong>State Table</strong>. It records the Source IP, Destination IP, Source Port, Destination Port, and Protocol (TCP).</li>
+                <li><strong>Return Traffic:</strong> When the web server replies, the packet hits the <em>outside</em> interface of the firewall. <strong>The firewall does not check its security policies again.</strong> Instead, it checks its State Table. It sees this reply is part of an already established, approved session, and immediately allows it through to the PC.</li>
+            </ol>
+
+            <h2>Common Firewall Rule Components</h2>
+            <p>Every firewall vendor has a different graphical interface, but almost all policies require the following elements:</p>
             <ul>
-                <li><strong>Stateless Filtering:</strong> Evaluates every single packet in isolation based on static rules. To allow a client to browse the web, you would need one rule allowing traffic out to port 443, and a separate inbound rule allowing traffic back from port 443 to the client's high random port.</li>
-                <li><strong>Stateful Inspection:</strong> Evaluates packets in the context of an established session. If an internal client initiates a TCP connection to a web server, the firewall adds that session to its state table. Return traffic belonging to that exact session is automatically permitted, without needing a completely independent inbound rule.</li>
+                <li><strong>Source:</strong> The IP address, subnet, or Zone where the traffic originates.</li>
+                <li><strong>Destination:</strong> The target IP address, subnet, or Zone.</li>
+                <li><strong>Service / Port:</strong> The application protocol being used (e.g., TCP 443). (See <a href="common-network-ports.html">Common Network Ports</a>).</li>
+                <li><strong>Action:</strong> Permit or Deny.</li>
+                <li><strong>Logging:</strong> Whether the firewall should record the event to memory or a Syslog server.</li>
             </ul>
+            <p><strong>Implicit Deny:</strong> The invisible rule at the absolute bottom of every firewall policy list is <em>"Deny Everything."</em> If traffic does not explicitly match a permit rule above it, it is silently dropped.</p>
+
+            <h2>Common Firewall Troubleshooting</h2>
             
-            <h3>The Session Table</h3>
-            <p>The firewall maintains a dynamic state table containing information such as:</p>
+            <h3>1. Routing or DNS Mistaken for Firewall</h3>
+            <p>If a user cannot reach a website, engineers often blame the firewall first. Ensure the PC actually has a valid <a href="what-is-a-default-gateway.html">Default Gateway</a> and can resolve the hostname via DNS before assuming the firewall is blocking it.</p>
+
+            <h3>2. Asymmetric Routing</h3>
+            <p>If a packet leaves the network through Firewall A, but the reply packet comes back through Firewall B, Firewall B will drop it. Why? Because Firewall B never saw the start of the connection. It has no entry in its State Table, so it considers the unexpected reply packet to be an attack.</p>
+
+            <h3>3. Rule Order Issues</h3>
+            <p>Firewalls read rules from top to bottom. If Rule 1 says "Deny all traffic to 198.51.100.0/24" and Rule 2 says "Permit traffic to Web Server 198.51.100.80", the traffic will be blocked. Rule 1 caught it first, and the firewall stopped reading.</p>
+
+            <h3>4. Missing NAT</h3>
+            <p>A firewall rule might permit <code>192.168.1.50</code> to reach the internet, but if you forgot to configure <a href="what-is-nat.html">NAT</a>, the ISP will drop the private IP traffic immediately after it leaves the firewall.</p>
+
+            <h2>Best Practices</h2>
             <ul>
-                <li>Source and Destination IP</li>
-                <li>Source and Destination Service/Port</li>
-                <li>Protocol</li>
-                <li>Ingress and Egress Interface/Zone</li>
-                <li>TCP connection state (e.g., SYN-SENT, ESTABLISHED)</li>
+                <li><strong>Principle of Least Privilege:</strong> Only open the exact ports necessary for a business application to function. Never use "ANY/ANY" rules.</li>
+                <li><strong>Clear Naming:</strong> Name your rules descriptively (e.g., "Allow_HR_to_Payroll_App").</li>
+                <li><strong>Review Unused Rules:</strong> Periodically audit firewall logs. If a rule hasn't seen a hit in 6 months, it should likely be disabled and removed.</li>
+                <li><strong>Log Denies:</strong> Always log dropped traffic at the bottom of your policy to assist with rapid troubleshooting.</li>
             </ul>
-            <p>For UDP, which is inherently stateless, the firewall typically creates a "pseudo-state" tracking the session based on IP and port pairs with a timeout mechanism, depending on the implementation.</p>
-            
-            <h3>Security Distinctions</h3>
-            <p>Do NOT claim all firewalls behave identically; behavior varies heavily by vendor and configuration. Furthermore, do NOT imply HTTPS traffic contents are automatically visible merely because a firewall is stateful. A stateful firewall tracks the TCP connection flow, but the payload inside the HTTPS traffic remains encrypted. Encrypted-traffic inspection (Deep Packet Inspection / SSL Decryption) is a separate advanced concept.</p>
-        
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -77,3 +129,5 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

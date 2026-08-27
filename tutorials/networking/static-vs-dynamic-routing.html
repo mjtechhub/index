@@ -39,78 +39,107 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Static vs Dynamic Routing</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p>Routers must know where networks are located to forward traffic properly. They learn these paths either through manual configuration (Static Routing) or by learning them from other routers (Dynamic Routing).</p>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>A router relies on its <a href="routing-table-explained.html">Routing Table</a> to forward packets. But how do routes get into that table in the first place? There are two primary methods: <strong>Static Routing</strong> and <strong>Dynamic Routing</strong>. Both have distinct advantages, disadvantages, and ideal use cases in enterprise networking.</p>
+
+            <h2>Static Routing</h2>
+            <p>Static routing is a manual process. A network administrator logs into a router and manually types a command explicitly defining the destination network and the next hop IP address.</p>
             
-            <h3>Static Routing</h3>
-            <p>Static routes are paths manually configured by a network administrator. The administrator types in the destination network and the next-hop IP address directly into the router.</p>
-            
-            <p><strong>Advantages:</strong></p>
+            <h3>Advantages:</h3>
             <ul>
-                <li>Simple to understand and implement in small networks.</li>
-                <li>Highly predictable; traffic always takes the exact specified path.</li>
-                <li>Low protocol overhead since routers don't exchange routing updates.</li>
+                <li><strong>Predictable:</strong> Traffic always takes the exact path the administrator specified.</li>
+                <li><strong>Low Overhead:</strong> Static routes consume zero network bandwidth and require almost zero CPU processing, as routers do not need to calculate paths.</li>
+                <li><strong>Secure:</strong> Routers do not share routing information with neighbors, preventing attackers from injecting false routes into the network.</li>
             </ul>
             
-            <p><strong>Limitations:</strong></p>
+            <h3>Disadvantages:</h3>
             <ul>
-                <li>Manual maintenance. If a link goes down or a new network is added, the administrator must manually update the configuration on all affected routers.</li>
-                <li>Does not automatically adapt to topology changes or failures.</li>
+                <li><strong>No Failover (by default):</strong> If a link goes down, the static route remains in the routing table (pointing to a dead link), and traffic is dropped. The router cannot automatically route around the failure.</li>
+                <li><strong>Administrative Burden:</strong> In a large network with 50 routers, adding a single new subnet might require logging into all 50 routers to manually update their tables. This is highly prone to human error.</li>
             </ul>
-            <p>A typical use case for static routing is a small branch network pointing a default route to its ISP gateway.</p>
 
-            <h3>Dynamic Routing</h3>
-            <p>Dynamic routing relies on routing protocols that allow routers to exchange routing information automatically. The routers calculate the best path based on this shared information and update their routing tables dynamically when changes occur.</p>
+            <h2>Dynamic Routing</h2>
+            <p>Dynamic routing relies on routing protocols (software running on the router) to automate the process. Routers advertise the networks they are connected to, listen to advertisements from neighboring routers, and use algorithms to calculate the absolute best path to every destination.</p>
             
-            <p><strong>Examples of Dynamic Routing Protocols:</strong></p>
+            <p>Common dynamic routing protocols include:</p>
             <ul>
-                <li><strong>OSPF (Open Shortest Path First):</strong> An interior gateway protocol heavily used in large enterprise networks to quickly adapt to link failures and calculate shortest paths.</li>
-                <li><strong>BGP (Border Gateway Protocol):</strong> The protocol that runs the Internet, used to exchange routing information between massive autonomous systems and ISPs.</li>
-                <li><strong>RIP (Routing Information Protocol):</strong> Historically used in older, smaller networks, but generally considered obsolete for modern complex environments.</li>
+                <li><strong>OSPF (Open Shortest Path First):</strong> Extremely common for routing traffic <em>inside</em> an enterprise network. For more, see <a href="ospf-basics.html">OSPF Basics</a>.</li>
+                <li><strong>BGP (Border Gateway Protocol):</strong> The protocol that runs the global Internet. It is used to route traffic <em>between</em> large organizations and ISPs. For more, see <a href="bgp-basics.html">BGP Basics</a>.</li>
+                <li><strong>RIP (Routing Information Protocol):</strong> An older, simpler protocol based purely on hop-count. Mostly obsolete today but useful for historical context.</li>
+            </ul>
+            
+            <h3>Advantages:</h3>
+            <ul>
+                <li><strong>Automatic Failover (Convergence):</strong> If a link gets severed by a backhoe, dynamic routers instantly realize the path is dead, recalculate the topology, and reroute traffic over a backup link in milliseconds.</li>
+                <li><strong>High Scalability:</strong> If you add a new subnet to Router A, Router A automatically advertises it to every other router in the company.</li>
+            </ul>
+            
+            <h3>Disadvantages:</h3>
+            <ul>
+                <li><strong>Overhead:</strong> Routers must constantly exchange "hello" messages and topology updates, consuming some CPU, RAM, and network bandwidth.</li>
+                <li><strong>Complexity:</strong> Protocols like OSPF and BGP require deep networking knowledge to design, configure, and troubleshoot properly.</li>
             </ul>
 
-            <h3>Comparison Table</h3>
-            <div class="table-responsive">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Feature</th>
-                            <th>Static Routing</th>
-                            <th>Dynamic Routing</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Configuration</strong></td>
-                            <td>Manual</td>
-                            <td>Automated (via protocols)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Scalability</strong></td>
-                            <td>Poor in large networks</td>
-                            <td>Excellent for enterprise & Internet</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Adaptability</strong></td>
-                            <td>No automatic failover</td>
-                            <td>Adapts to link failures dynamically</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Overhead</strong></td>
-                            <td>Zero protocol overhead</td>
-                            <td>Requires CPU, RAM, and bandwidth</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Best For</strong></td>
-                            <td>Small networks, stub networks</td>
-                            <td>Large enterprise, ISP routing</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <h2>Key Concepts in Dynamic Routing</h2>
+            <ul>
+                <li><strong>Convergence:</strong> The time it takes for all routers in a network to agree on the new topology after a link fails. Fast convergence is critical to prevent dropped calls or disconnected applications.</li>
+                <li><strong>Metrics:</strong> How a protocol determines the "best" path. OSPF uses link bandwidth (a 10Gbps link is preferred over a 1Gbps link). RIP simply counted the number of router hops, ignoring bandwidth entirely.</li>
+                <li><strong>Administrative Distance (Route Preference):</strong> What if a router learns a path to <code>192.0.2.0/24</code> via a Static Route, and also learns a path to the same network via OSPF? The router uses Administrative Distance to choose the winner. A static route is almost always preferred over a dynamically learned route.</li>
+            </ul>
 
-            <p>Note: <em>Dynamic routing is not always "better."</em> Many enterprise networks use a hybrid approach, using OSPF for internal routes and a static default route for their main internet connection.</p>
+            <h2>Comparison Table</h2>
+            <table style="width: 100%; text-align: left; border-collapse: collapse; margin: 1.5rem 0;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border-color);">
+                        <th style="padding: 0.75rem;">Feature</th>
+                        <th style="padding: 0.75rem;">Static Routing</th>
+                        <th style="padding: 0.75rem;">Dynamic Routing</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Configuration</strong></td>
+                        <td style="padding: 0.75rem;">Manual</td>
+                        <td style="padding: 0.75rem;">Automatic via Protocols</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Scalability</strong></td>
+                        <td style="padding: 0.75rem;">Poor (Best for small networks)</td>
+                        <td style="padding: 0.75rem;">Excellent (Best for large enterprises)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Overhead</strong></td>
+                        <td style="padding: 0.75rem;">None</td>
+                        <td style="padding: 0.75rem;">Consumes CPU, RAM, and Bandwidth</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Failure Recovery</strong></td>
+                        <td style="padding: 0.75rem;">None (Requires manual intervention)</td>
+                        <td style="padding: 0.75rem;">Automatic (Reroutes via backup links)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Complexity</strong></td>
+                        <td style="padding: 0.75rem;">Simple</td>
+                        <td style="padding: 0.75rem;">Advanced</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Practical Branch Office Example</h2>
+            <p>Consider a retail company with a Headquarters and a small Store Branch.</p>
+            <ul>
+                <li><strong>The Store Branch:</strong> It only has one router connected to the internet. It does not need a complex dynamic protocol. The admin simply configures a <strong>Static Default Route</strong> (<code>0.0.0.0/0</code>) pointing all traffic out the front door to the ISP.</li>
+                <li><strong>The Headquarters:</strong> HQ has redundant internet connections, a backup datacenter, and multiple <a href="site-to-site-vpn-explained.html">Site-to-Site VPNs</a>. The admin configures <strong>Dynamic Routing (BGP)</strong> so if the primary ISP fails, the network automatically shifts all traffic to the backup ISP within seconds.</li>
+            </ul>
+
+            <h2>Quick Summary</h2>
+            <ul>
+                <li>Static routes are manually typed, highly predictable, and great for small, simple networks (stub networks).</li>
+                <li>Dynamic routes are learned automatically via protocols like OSPF and BGP, providing automatic failover for complex enterprise networks.</li>
+                <li>In most modern architectures, engineers use a hybrid approach: OSPF/BGP for the core network, and static default routes at the absolute edge.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -124,3 +153,5 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

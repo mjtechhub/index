@@ -39,34 +39,49 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Duplex Mismatch & Speed Negotiation</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>In Ethernet networking, devices must agree on two physical-layer parameters before they can communicate effectively: <strong>Speed</strong> (e.g., 100 Mbps or 1000 Mbps) and <strong>Duplex</strong>.</p>
+            
+            <ul>
+                <li><strong>Half Duplex:</strong> A device can send data, or receive data, but it cannot do both at the same time. Think of a two-way radio (walkie-talkie). If both devices transmit simultaneously, a <em>collision</em> occurs, destroying the data.</li>
+                <li><strong>Full Duplex:</strong> A device can send and receive data simultaneously without collisions. Think of a telephone. </li>
+            </ul>
 
-            <p>Understanding how devices negotiate physical link properties is critical for resolving low-level <a href="packet-loss-troubleshooting.html">packet loss</a> and performance issues.</p>
+            <h2>Auto-Negotiation</h2>
+            <p>When you plug a cable between a PC and a switch, they send fast link pulses to advertise their capabilities. This is <strong>Auto-Negotiation</strong>. If both support 1000 Mbps Full Duplex, they agree to use it.</p>
+            <p><em>Note: Gigabit Ethernet (1000 Mbps) fundamentally relies on Auto-Negotiation and is designed exclusively for Full Duplex operation.</em></p>
+
+            <h2>The Duplex Mismatch Scenario</h2>
+            <p>A Duplex Mismatch occurs when the two ends of a single cable operate in different duplex modes. The classic scenario happens when a network engineer manually hardcodes a switch port to "100 Mbps / Full Duplex" but leaves the connected server set to "Auto". </p>
             
-            <h3>Duplex Modes</h3>
+            <p>The server attempts to auto-negotiate. Because the switch port is hardcoded, the switch stays silent. The server detects the 100 Mbps electrical signal, but because it didn't receive an auto-negotiation reply, it falls back to the Ethernet failsafe standard: <strong>Half Duplex</strong>.</p>
+            
+            <p>You now have:</p>
             <ul>
-                <li><strong>Half Duplex:</strong> A device can send OR receive data at any given time, but not both simultaneously. Often associated with legacy hubs or highly congested Wi-Fi.</li>
-                <li><strong>Full Duplex:</strong> A device can send AND receive data simultaneously. This is the standard for modern switched Ethernet.</li>
+                <li><strong>Switch Port:</strong> 100 Mbps / Full Duplex</li>
+                <li><strong>Server Port:</strong> 100 Mbps / Half Duplex</li>
             </ul>
+
+            <h2>The Symptoms</h2>
+            <p>A duplex mismatch is insidious because the link status shows "UP" and basic pings usually work perfectly. The network appears healthy until placed under load.</p>
             
-            <h3>Auto-Negotiation</h3>
-            <p>Ethernet auto-negotiation allows two connected devices to agree on the best possible speed and duplex mode. In modern switched Ethernet networks, full-duplex with auto-negotiation enabled is typically preferred and expected.</p>
-            
-            <h3>The Duplex Mismatch</h3>
-            <p>A classic duplex mismatch occurs when one side of a link is manually hardcoded (e.g., to 100/Full) while the other side is left to auto-negotiate. The auto-negotiating side can usually detect the speed, but cannot detect the duplex, falling back to a safe default of Half-Duplex.</p>
-            
-            <p><strong>Symptoms of a mismatch include:</strong></p>
+            <p>When the server tries to download a large file, the switch (thinking it is in Full Duplex) blasts packets at the server while simultaneously listening for replies. The server (in Half Duplex) assumes a collision has occurred because it is receiving data while trying to transmit. The server drops the packets and backs off. </p>
+            <p>Symptoms include:</p>
             <ul>
-                <li>Extremely poor throughput (while basic pings might work fine).</li>
-                <li>Collisions or late-collision counters incrementing on legacy or shared Ethernet interfaces.</li>
-                <li>Frame errors and heavy TCP retransmissions.</li>
-                <li>General performance instability.</li>
+                <li>Excruciatingly poor <a href="bandwidth-vs-throughput-explained.html">Throughput</a> (e.g., a 100 Mbps link transferring at 2 Mbps).</li>
+                <li>High interface error counters on the switch (specifically Late Collisions and FCS/CRC errors).</li>
+                <li>Intermittent application timeouts and massive TCP retransmissions.</li>
             </ul>
-            
-            <h3>Modern Accuracy</h3>
-            <p>Duplex mismatches are significantly less common on modern infrastructure. Modern 1 Gbps and higher Ethernet standards mandate auto-negotiation to establish master/slave clocking correctly. While you can sometimes force speed/duplex on 1G interfaces depending on the vendor, disabling auto-negotiation on modern multi-gigabit links is generally discouraged and often unsupported.</p>
-        
+
+            <h2>Troubleshooting Workflow</h2>
+            <ol>
+                <li><strong>Check Link State:</strong> Verify both ends of the cable agree on speed and duplex. (e.g., <code>show interfaces</code> on a switch, or the Network Adapter properties in Windows).</li>
+                <li><strong>Check Interface Errors:</strong> A high count of Late Collisions is the hallmark of a mismatch. <em>(Note: In a healthy, modern Full Duplex switched network, collisions do not exist. Any collision counter increasing indicates a physical problem or a mismatch.)</em></li>
+                <li><strong>Check Cabling:</strong> A severely damaged cable can cause auto-negotiation to fail or negotiate at lower speeds (e.g., a Gigabit port negotiating at 100 Mbps Half).</li>
+                <li><strong>Verify Auto-Negotiation:</strong> Avoid the outdated 1990s advice of hardcoding speed and duplex. Modern best practice is to leave all ports on Auto-Negotiate unless connecting to legacy specialized equipment.</li>
+            </ol>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -80,3 +95,5 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

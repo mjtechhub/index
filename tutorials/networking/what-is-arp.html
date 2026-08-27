@@ -39,22 +39,71 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">What Is ARP?</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-<p>The <strong>Address Resolution Protocol (ARP)</strong> maps a known IPv4 address to an unknown Layer 2 MAC address on the local network.</p>
-<h2>The ARP Flow</h2>
-<p>When a host wants to send an IP packet to a destination on the same subnet, it must encapsulate it in a Layer 2 frame addressed to the destination's MAC address.</p>
-<ol>
-<li><strong>Host needs destination MAC:</strong> It checks its local ARP cache.</li>
-<li><strong>ARP Request:</strong> If missing, it broadcasts an ARP Request ("Who has IP 192.168.1.5? Tell 192.168.1.10").</li>
-<li><strong>ARP Reply:</strong> The device with that IP sends a unicast ARP Reply containing its MAC address.</li>
-<li><strong>ARP Cache:</strong> The requesting host stores this mapping in its ARP cache for future use.</li>
-</ol>
-<h3>Note on IPv6</h3>
-<p>ARP is strictly for IPv4. IPv6 uses the <em>Neighbor Discovery Protocol (NDP)</em> over ICMPv6 to accomplish the same goal.</p>
-<h3>Practical Command</h3>
-<p>To view your system's current ARP cache in Windows or Linux, run:</p>
-<pre><code>arp -a</code></pre>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>The <strong>Address Resolution Protocol (ARP)</strong> is a critical Layer 2 protocol that bridges the gap between physical networking and logical networking. Its sole purpose is to map a known logical IPv4 address to an unknown physical <a href="what-is-a-mac-address.html">MAC Address</a>.</p>
+            <p>When a computer wants to send data to another device on the same local network, it knows the destination IP address (e.g., <code>192.168.1.50</code>). However, network switches do not understand IP addresses; they route traffic based on MAC addresses. The sending computer must use ARP to ask the local network, "Who has this IP address, and what is your MAC address?"</p>
+
+            <h2>How ARP Works: The Packet Flow</h2>
+            <p>ARP operates using a simple Request and Reply mechanism.</p>
+            
+            <h3>1. The ARP Request (Broadcast)</h3>
+            <p>If PC-A wants to ping PC-B (<code>192.168.1.50</code>), it first checks its internal <strong>ARP Cache</strong> to see if it already knows PC-B's MAC address. If the cache is empty, PC-A sends an ARP Request broadcast to the entire local network (VLAN). The message translates to: <em>"Who has IP 192.168.1.50? Tell 192.168.1.10."</em></p>
+            
+            <h3>2. The ARP Reply (Unicast)</h3>
+            <p>Every device on the local network receives this broadcast, but only PC-B replies. PC-B sends an ARP Reply directly back to PC-A (unicast) stating: <em>"I have 192.168.1.50, and my MAC address is 00:1A:2B:3C:4D:5E."</em></p>
+            
+            <h3>3. The ARP Cache</h3>
+            <p>PC-A receives the reply, saves the mapping in its local ARP cache for a few minutes to avoid spamming the network with broadcasts, and finally transmits the <a href="ping-explained.html">Ping</a> packet.</p>
+
+            <h2>ARP and the Default Gateway</h2>
+            <p>What happens if PC-A wants to ping <code>8.8.8.8</code> on the internet? PC-A knows <code>8.8.8.8</code> is not on its local subnet. Therefore, it does <em>not</em> send an ARP Request for <code>8.8.8.8</code>. </p>
+            <p>Instead, PC-A sends an ARP Request for the IP address of its <a href="what-is-a-default-gateway.html">Default Gateway</a> (the local router). Once PC-A learns the router's MAC address, it sends the packet destined for <code>8.8.8.8</code> to the physical MAC address of the router.</p>
+
+            <h2>Commands to View the ARP Table</h2>
+            <p>You can view your computer's current ARP cache to see which IP addresses have been successfully resolved to MAC addresses.</p>
+            
+            <h3>Windows</h3>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                > arp -a<br><br>
+                Interface: 192.168.1.10 --- 0x4<br>
+                &nbsp;&nbsp;Internet Address      Physical Address      Type<br>
+                &nbsp;&nbsp;192.168.1.1           a0-b1-c2-d3-e4-f5     dynamic<br>
+                &nbsp;&nbsp;192.168.1.50          00-1a-2b-3c-4d-5e     dynamic<br>
+                &nbsp;&nbsp;192.168.1.255         ff-ff-ff-ff-ff-ff     static
+            </div>
+
+            <h3>Linux / macOS</h3>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                $ arp -n<br>
+                # Modern Linux alternative:<br>
+                $ ip neigh show
+            </div>
+
+            <h2>Common ARP Problems and Troubleshooting</h2>
+
+            <h3>1. Stale ARP Entries</h3>
+            <p>If you replace a network printer, the new printer might get the same IP address (<code>192.168.1.100</code>) but will definitely have a new hardware MAC address. Your PC might still hold the old MAC address in its ARP cache. When you try to print, the traffic goes to a dead MAC address, and the connection times out.</p>
+            <p><strong>Troubleshooting:</strong> Clear the ARP cache. On Windows, run <code>arp -d *</code> from an Administrator command prompt. On Linux, run <code>ip -s -s neigh flush all</code>.</p>
+
+            <h3>2. Duplicate IP Addresses</h3>
+            <p>If two computers accidentally have the exact same <a href="what-is-an-ip-address.html">IP Address</a>, they will both respond to ARP Requests. The switch and the sending PC will become confused as the ARP cache rapidly flips back and forth between two different MAC addresses. This causes intermittent, severe packet loss.</p>
+            <p><strong>Troubleshooting:</strong> If you suspect an IP conflict, check the ARP table. If the MAC address for the server keeps changing every few seconds, a rogue device has stolen the IP.</p>
+
+            <h3>3. ARP Not Resolving (Incomplete)</h3>
+            <p>If you ping a device on the same subnet and it fails, check your ARP table. If the entry for that IP shows as incomplete or missing, it means the ARP Request was sent, but no ARP Reply was received. This indicates a physical layer issue, an incorrect <a href="what-is-vlan.html">VLAN</a> assignment, or a completely dead device.</p>
+
+            <h2>Security Note: ARP Spoofing</h2>
+            <p>ARP is a trusting protocol with no built-in authentication. A malicious device on the local network can broadcast fake ARP Replies, telling everyone, "I am the Default Gateway." All computers will update their ARP caches and blindly send their internet traffic to the attacker. This is called ARP Spoofing or ARP Poisoning (a Man-in-the-Middle attack). Enterprise switches combat this using security features like Dynamic ARP Inspection (DAI).</p>
+
+            <h2>Quick Summary</h2>
+            <ul>
+                <li>ARP resolves a known IP address to an unknown MAC address.</li>
+                <li>It broadcasts a Request and waits for a unicast Reply.</li>
+                <li>Computers cache ARP mappings temporarily to save bandwidth.</li>
+                <li>If a computer needs to reach the internet, it ARPs for the Default Gateway's MAC address, not the internet IP.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -68,3 +117,4 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+

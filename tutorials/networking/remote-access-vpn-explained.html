@@ -39,37 +39,75 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Remote Access VPN Explained</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>A <strong>Remote Access VPN (Virtual Private Network)</strong> allows individual users to establish a secure, encrypted connection to their corporate network from an untrusted public network, such as a coffee shop Wi-Fi or their home internet. This provides the user with the same access to internal corporate servers and applications as if they were physically sitting at a desk in the office.</p>
 
-            <p>A <strong>Remote Access VPN</strong> allows an individual remote user or device to connect securely over the Internet to a private network, granting them access to internal resources as if they were physically in the office.</p>
-            
-            <h3>How It Works</h3>
-            <p>The remote device runs VPN client software (or uses built-in OS capabilities). Upon successful authentication, a secure tunnel is established to the corporate VPN gateway. The gateway assigns the client a <strong>Virtual IP address</strong> from an internal pool, and injects routing instructions so the client knows how to reach the private network.</p>
-            
-            <h3>Full Tunneling vs Split Tunneling</h3>
+            <h2>Remote Access vs Site-to-Site VPN</h2>
+            <table style="width: 100%; text-align: left; border-collapse: collapse; margin: 1.5rem 0; overflow-x: auto; display: block;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border-color);">
+                        <th style="padding: 0.75rem;">Feature</th>
+                        <th style="padding: 0.75rem;">Remote Access VPN</th>
+                        <th style="padding: 0.75rem;">Site-to-Site VPN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Primary Goal</strong></td>
+                        <td style="padding: 0.75rem;">Connect a single user/device to the corporate network.</td>
+                        <td style="padding: 0.75rem;">Connect two entire office networks together permanently.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Endpoint</strong></td>
+                        <td style="padding: 0.75rem;">A software client (app) installed on a laptop or phone.</td>
+                        <td style="padding: 0.75rem;">A hardware firewall or router at the branch office.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>IP Address</strong></td>
+                        <td style="padding: 0.75rem;">Dynamically assigned from a VPN Address Pool.</td>
+                        <td style="padding: 0.75rem;">Uses the permanent, static local LAN subnets.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>How It Works: The Traffic Flow</h2>
+            <p>When a remote employee needs to access an internal payroll server, the process looks like this:</p>
+            <ol>
+                <li><strong>The Client:</strong> The user opens the VPN application on their laptop and enters their credentials.</li>
+                <li><strong>Authentication:</strong> The laptop connects to the corporate VPN Gateway's public IP over the internet. The gateway verifies the username, password, and typically a Multi-Factor Authentication (MFA) token. It may also check for a valid machine certificate.</li>
+                <li><strong>Tunnel Establishment:</strong> Once authenticated, an encrypted tunnel (using IPsec or SSL/TLS) is built between the laptop and the firewall.</li>
+                <li><strong>IP & DNS Assignment:</strong> The firewall assigns the laptop a virtual private IP address from a dedicated VPN Address Pool and assigns the corporate <a href="what-is-dns.html">DNS</a> servers to the laptop's virtual network adapter.</li>
+                <li><strong>Access:</strong> The user can now securely reach the internal payroll server through the encrypted tunnel.</li>
+            </ol>
+
+            <h2>Split Tunnel vs Full Tunnel</h2>
+            <p>When a user connects, the VPN administrator dictates how the user's internet traffic is routed:</p>
             <ul>
-                <li><strong>Full Tunneling:</strong> <em>All</em> traffic from the remote device, including general Internet browsing, is forced down the VPN tunnel to the corporate network. This allows the organization to inspect and filter all traffic for security, but requires significant bandwidth.</li>
-                <li><strong>Split Tunneling:</strong> Only traffic destined for the specific corporate subnets goes through the VPN. General Internet traffic goes directly out the user's local ISP connection. This saves corporate bandwidth but reduces visibility into the user's general web activity.</li>
+                <li><strong>Full Tunnel:</strong> Absolutely all traffic from the laptop is forced through the encrypted tunnel. If the user tries to watch YouTube, the video streams from YouTube, into the corporate firewall, through the VPN tunnel, and down to the laptop. This is highly secure but consumes massive corporate bandwidth.</li>
+                <li><strong>Split Tunnel:</strong> Only traffic destined for corporate IP addresses (e.g., <code>10.0.0.0/8</code>) enters the tunnel. General internet traffic (like YouTube) goes directly out the user's local home Wi-Fi. This saves corporate bandwidth but means the user's internet traffic is not protected by the corporate web filters.</li>
             </ul>
+
+            <h2>Common Troubleshooting Scenarios</h2>
             
-            <h3>Protocols: IPsec vs TLS/SSL</h3>
-            <p>Remote Access VPNs conceptually differ in underlying technology:</p>
+            <h3>1. Authentication Failures</h3>
+            <p>The most common help desk ticket. The user cannot connect at all. Verify their Active Directory account isn't locked out, their password hasn't expired, and their MFA app (like Duo or Microsoft Authenticator) is approving the push notification. If using certificates, ensure the machine certificate hasn't expired.</p>
+
+            <h3>2. VPN Connects, but Internal Resources Unavailable</h3>
+            <p>The tunnel says "Connected," but the user can't load the intranet. Check the <strong>VPN Address Pool</strong>. If the pool only holds 100 IP addresses, and the 101st user connects, the tunnel may negotiate, but they won't get an IP address to route traffic.</p>
+            <p>Another common cause is <strong>DNS</strong>. If the VPN client fails to apply the corporate DNS servers to the virtual adapter, the laptop won't be able to resolve internal hostnames like <code>intranet.local</code>.</p>
+
+            <h3>3. Overlapping Home Networks</h3>
+            <p>A classic, difficult-to-diagnose problem. The corporate network uses <code>192.168.1.0/24</code>. The user's home Wi-Fi router also uses <code>192.168.1.0/24</code>. When the user tries to ping the corporate file server at <code>192.168.1.50</code>, their laptop thinks the server is on the local home Wi-Fi and refuses to send the traffic across the VPN tunnel. <strong>Resolution:</strong> The corporate network must stop using default consumer subnets like 192.168.1.x.</p>
+
+            <h2>Security Best Practices</h2>
+            <p>Because Remote Access VPNs punch a hole from the internet into the internal network, they are a massive target for ransomware operators.</p>
             <ul>
-                <li><strong>IPsec-based:</strong> Typically requires a dedicated software client and relies on standard IPsec negotiation.</li>
-                <li><strong>TLS/SSL-based:</strong> Often relies on the same encryption protocols that secure HTTPS websites. Note that while historically called "SSL VPNs," modern secure implementations universally use TLS, as SSL is obsolete.</li>
+                <li><strong>Enforce MFA:</strong> A password alone is no longer acceptable for VPN access. Always enforce Multi-Factor Authentication.</li>
+                <li><strong>Patch VPN Gateways:</strong> Vulnerabilities in VPN appliances are routinely exploited. Keep firmware updated.</li>
+                <li><strong>Least Privilege:</strong> Do not allow the VPN Address Pool unrestricted access to the entire network. Use a <a href="stateful-firewall-explained.html">Stateful Firewall</a> policy to restrict remote users strictly to the servers they need.</li>
             </ul>
-            
-            <h3>Security Best Practices</h3>
-            <p>Because remote devices operate in untrusted environments, strict security is required:</p>
-            <ul>
-                <li>Always mandate Multi-Factor Authentication (MFA).</li>
-                <li>Utilize Device Posture concepts (checking if the client has updated antivirus and patches before allowing connection).</li>
-                <li>Enforce the principle of Least Privilege (do not give remote users access to the entire network if they only need one server).</li>
-                <li>Patch VPN gateways immediately, as they are high-value targets. Disable obsolete cryptography.</li>
-                <li>Maintain thorough logging of connections and internal <a href="what-is-dns.html">DNS</a> queries.</li>
-            </ul>
-        
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -83,3 +121,5 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

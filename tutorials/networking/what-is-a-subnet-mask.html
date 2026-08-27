@@ -39,23 +39,75 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">What Is a Subnet Mask?</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-<p>A <strong>Subnet Mask</strong> is a 32-bit number that accompanies an IPv4 address. It separates the IP address into two distinct portions: the <em>Network portion</em> and the <em>Host portion</em>.</p>
-<h2>Why is it necessary?</h2>
-<p>Computers need a way to determine if a destination IP address is on their local network (meaning they can talk to it directly) or on a remote network (meaning they must send traffic to the Default Gateway). The subnet mask provides this boundary.</p>
-<h2>Examples</h2>
-<p>Consider the IP address <code>192.168.1.50</code> with a subnet mask of <code>255.255.255.0</code>.</p>
-<ul>
-<li>The <strong>255</strong> sections mean "Network".</li>
-<li>The <strong>0</strong> section means "Host".</li>
-</ul>
-<p>Therefore, the network is <code>192.168.1.0</code>, and this specific host is number <code>50</code>.</p>
-<h3>CIDR Notation</h3>
-<p>Subnet masks are often written in <strong>CIDR (Classless Inter-Domain Routing)</strong> notation, representing the number of "1" bits in the mask. For example, <code>255.255.255.0</code> is commonly written as <strong>/24</strong>.</p>
-<h3>Practical Command</h3>
-<p>You can see your subnet mask in Windows by running:</p>
-<pre><code>ipconfig</code></pre>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>A <strong>Subnet Mask</strong> is a core networking concept that works in tandem with an <a href="what-is-an-ip-address.html">IP Address</a>. While an IP address identifies a device, the subnet mask determines <em>how much</em> of that IP address represents the network, and how much represents the specific host.</p>
+            <p>When a computer wants to send a packet, it uses its subnet mask to answer one critical question: <strong>"Is the destination IP address on my local network, or is it on a remote network?"</strong></p>
+            
+            <h2>How a Subnet Mask Works</h2>
+            <p>Like an IPv4 address, a subnet mask is a 32-bit number, typically written in dotted-decimal notation (e.g., <code>255.255.255.0</code>). In binary, a subnet mask is always a contiguous string of <code>1</code>s followed by a contiguous string of <code>0</code>s.</p>
+            <ul>
+                <li>The <code>1</code>s represent the <strong>Network Bits</strong>.</li>
+                <li>The <code>0</code>s represent the <strong>Host Bits</strong>.</li>
+            </ul>
+
+            <h2>CIDR Notation</h2>
+            <p>Network engineers rarely say "two-five-five dot two-five-five dot two-five-five dot zero". Instead, they use <strong>CIDR (Classless Inter-Domain Routing)</strong> notation, also known as slash notation. This simply counts the number of <code>1</code>s in the binary subnet mask.</p>
+
+            <h3>Common Examples:</h3>
+            <ul>
+                <li><strong>/24 (255.255.255.0):</strong> The most common mask for home and small office networks. The first three numbers (24 bits) are the network; the last number (8 bits) is the host. It provides 254 usable IPs.</li>
+                <li><strong>/16 (255.255.0.0):</strong> Used for larger enterprise networks. The first two numbers are the network; the last two are hosts. It provides 65,534 usable IPs.</li>
+                <li><strong>/30 (255.255.255.252):</strong> Used exclusively for point-to-point router links. It provides exactly 2 usable IP addresses.</li>
+            </ul>
+
+            <h2>Determining Local vs Remote</h2>
+            <p>If PC-A (<code>192.168.1.10</code> with mask <code>255.255.255.0</code>) wants to ping <code>192.168.1.50</code>, PC-A compares the network portions. Since both start with <code>192.168.1</code>, PC-A knows the destination is on the local network and communicates directly using a switch.</p>
+            <p>However, if PC-A wants to ping <code>8.8.8.8</code>, it sees the networks do not match. PC-A must forward this packet to its <a href="what-is-a-default-gateway.html">Default Gateway</a> (the router) to handle delivery.</p>
+
+            <h2>Simple Subnetting Example</h2>
+            <p>Imagine a company is assigned the block <code>203.0.113.0/24</code> (254 IPs). Instead of putting all computers in one giant network, the network engineer divides it into two smaller subnets using a <code>/25</code> mask (<code>255.255.255.128</code>).</p>
+            <ul>
+                <li><strong>Subnet 1:</strong> <code>203.0.113.0/25</code> (Hosts: .1 to .126) - Assigned to Sales.</li>
+                <li><strong>Subnet 2:</strong> <code>203.0.113.128/25</code> (Hosts: .129 to .254) - Assigned to HR.</li>
+            </ul>
+            <p>This isolates the traffic and improves security. For deeper calculations, see <a href="subnetting-basics.html">Subnetting Basics</a>.</p>
+
+            <h2>Commands to View Subnet Masks</h2>
+            
+            <h3>Windows</h3>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                > ipconfig<br>
+                IPv4 Address. . . . . . . . . . . : 192.168.1.15<br>
+                Subnet Mask . . . . . . . . . . . : 255.255.255.0
+            </div>
+
+            <h3>Linux (CIDR Notation)</h3>
+            <p>Modern Linux displays the subnet mask using CIDR notation directly attached to the IP address.</p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                $ ip addr show<br>
+                inet 192.168.1.15/24 brd 192.168.1.255 scope global eth0
+            </div>
+
+            <h2>Troubleshooting Incorrect Subnet Masks</h2>
+            <p>A mismatched subnet mask is a classic, difficult-to-diagnose networking problem.</p>
+
+            <h3>1. The "Too Small" Mask</h3>
+            <p><strong>Scenario:</strong> A router is configured as <code>192.168.1.1/24</code> (Mask: <code>255.255.255.0</code>). A PC is statically misconfigured as <code>192.168.1.10/26</code> (Mask: <code>255.255.255.192</code>). A server on the same physical switch is at <code>192.168.1.100/24</code>.</p>
+            <p><strong>Result:</strong> The PC cannot reach the server! Based on the PC's <code>/26</code> mask, its local network ends at <code>.62</code>. The PC thinks the server at <code>.100</code> is on a remote network and sends the traffic to the router instead of directly to the server. The router might drop it, causing a bizarre one-way communication failure.</p>
+
+            <h3>2. The "Too Large" Mask</h3>
+            <p><strong>Scenario:</strong> A PC is misconfigured with a <code>/16</code> mask (<code>255.255.0.0</code>) while the rest of the network is <code>/24</code>.</p>
+            <p><strong>Result:</strong> The PC thinks a massive range of IPs are physically local to it. If it tries to reach an IP that is actually on the internet (e.g., <code>192.168.5.5</code>, which might be a remote branch office), it will broadcast locally asking for it instead of sending the packet to the Default Gateway. The traffic will never reach the remote branch.</p>
+
+            <h2>Quick Summary</h2>
+            <ul>
+                <li>A subnet mask splits an IP address into a Network portion and a Host portion.</li>
+                <li>It allows a computer to determine if a destination is local or remote (requiring <a href="what-is-routing.html">Routing</a>).</li>
+                <li><strong>/24</strong> is CIDR notation for <code>255.255.255.0</code>.</li>
+                <li>Mismatched masks on the same network will cause severe and confusing connectivity drops.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -69,3 +121,4 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+

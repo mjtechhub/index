@@ -39,31 +39,63 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Bandwidth vs Throughput Explained</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>When users complain about "slow internet," they are usually conflating several different network concepts. To troubleshoot effectively, network engineers must understand the exact differences between Bandwidth, Throughput, and Goodput.</p>
 
-            <p>While often used interchangeably, bandwidth and throughput are fundamentally different concepts in networking.</p>
-            
-            <h3>Bandwidth</h3>
-            <p><strong>Bandwidth</strong> is the theoretical or configured maximum capacity of a network link. It is the size of the "pipe." If you purchase a 1 Gbps internet connection, your bandwidth is 1 Gigabit per second.</p>
-            
-            <h3>Throughput</h3>
-            <p><strong>Throughput</strong> is the actual rate of useful data transferred over a period of time. A 1 Gbps link does <em>not</em> automatically mean you get 1 Gbps application download performance. Throughput is almost always lower than bandwidth.</p>
-            
-            <h3>Goodput</h3>
-            <p><strong>Goodput</strong> is the actual application-level payload delivered, excluding all protocol overhead (like Ethernet, IP, and <a href="tcp-ip-model-explained.html">TCP</a> headers) and any packet retransmissions.</p>
-            
-            <h3>Factors Influencing Throughput</h3>
+            <h2>Definitions</h2>
+            <table style="width: 100%; text-align: left; border-collapse: collapse; margin: 1.5rem 0; overflow-x: auto; display: block;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border-color);">
+                        <th style="padding: 0.75rem;">Term</th>
+                        <th style="padding: 0.75rem;">Definition</th>
+                        <th style="padding: 0.75rem;">Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Bandwidth</strong></td>
+                        <td style="padding: 0.75rem;">The theoretical maximum capacity or configured speed of the physical link.</td>
+                        <td style="padding: 0.75rem;">A 300 Mbps ISP fiber connection.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Throughput</strong></td>
+                        <td style="padding: 0.75rem;">The actual, measured rate of total data successfully transmitted over the link.</td>
+                        <td style="padding: 0.75rem;">A speed test maxing out at 285 Mbps.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Goodput</strong></td>
+                        <td style="padding: 0.75rem;">The actual rate of <em>useful application payload</em> delivered (excluding protocol headers and retransmissions).</td>
+                        <td style="padding: 0.75rem;">A file downloading at 260 Mbps.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Bits vs Bytes (The Ultimate Confusion)</h2>
+            <p>Internet speeds are sold in <strong>bits</strong> per second (Mbps with a lowercase 'b'). However, web browsers and file transfers display speeds in <strong>Bytes</strong> per second (MB/s with an uppercase 'B').</p>
+            <p><strong>8 bits = 1 Byte.</strong></p>
+            <p>If you purchase a 100 Mbps internet connection, your maximum theoretical download speed is roughly 12.5 MB/s. <em>(100 ÷ 8 = 12.5)</em>. If a user sees a file downloading at "11 MB/s" and assumes they are only getting 11% of their 100 Mbps connection, they are misinterpreting the units.</p>
+
+            <h2>Why is Throughput Always Lower Than Bandwidth?</h2>
+            <p>You will never achieve 300 Mbps of goodput on a 300 Mbps link. Expected limitations include:</p>
             <ul>
-                <li><strong>Protocol Overhead:</strong> IP and TCP headers consume bytes that aren't application data. <a href="mtu-and-mss-explained.html">VPN overhead</a> consumes even more.</li>
-                <li><strong>Latency and TCP Behavior:</strong> High <a href="network-latency-troubleshooting.html">latency</a> can limit TCP throughput due to window sizing mechanics.</li>
-                <li><strong>Packet Loss:</strong> Dropped packets require retransmissions, severely reducing goodput.</li>
-                <li><strong>Hardware Limits:</strong> Server CPU limits, slow storage drives, or congested Wi-Fi environments.</li>
+                <li><strong>Protocol Overhead:</strong> Every single packet requires Ethernet, IP, and TCP headers. If you are downloading a 10 GB file, a noticeable percentage of the bandwidth is consumed just sending the headers that carry the file chunks.</li>
+                <li><strong>VPN Encryption Overhead:</strong> Wrapping traffic in IPsec encrypts the data but adds massive headers, drastically lowering the available throughput for the actual file.</li>
+                <li><strong>Wi-Fi Conditions:</strong> A laptop might have a "Bandwidth" connection rate of 866 Mbps to the Wi-Fi access point, but due to RF interference and half-duplex contention, actual throughput might be only 200 Mbps.</li>
+                <li><strong>TCP Behavior:</strong> If there is high <a href="network-latency-troubleshooting.html">Latency</a> or <a href="packet-loss-troubleshooting.html">Packet Loss</a>, TCP windowing algorithms deliberately slow down the transmission rate, causing throughput to plummet far below the available bandwidth.</li>
             </ul>
-            
-            <h3>Bits vs. Bytes</h3>
-            <p>Network speeds are measured in <strong>bits</strong> (lowercase 'b'), while file sizes are measured in <strong>Bytes</strong> (uppercase 'B'). Because <strong>8 bits = 1 Byte</strong>, a theoretical 100 Mbps connection maxes out at 12.5 MB/s (100 / 8 = 12.5) <em>before</em> any overhead or limitations are applied.</p>
-        
+
+            <h2>Troubleshooting Poor Throughput</h2>
+            <p>A web-based speed test alone does not diagnose the cause of slow throughput. Use this workflow to isolate the bottleneck:</p>
+            <ol>
+                <li><strong>Confirm Negotiated Speed:</strong> Check the physical switch port. Is the PC accidentally negotiating at 100 Mbps instead of 1 Gbps due to a <a href="access-port-vs-trunk-port.html">Duplex Mismatch</a> or a damaged cable?</li>
+                <li><strong>Test Wired First:</strong> Always bypass Wi-Fi. Run the test hardwired directly to the router to eliminate RF variables.</li>
+                <li><strong>Check Current Utilization:</strong> Look at your <a href="network-monitoring-fundamentals.html">Network Monitoring</a> graphs. If you have a 300 Mbps link, and another user is currently downloading an OS update at 250 Mbps, your throughput will be awful. The link is simply congested.</li>
+                <li><strong>Check CPU Bottlenecks:</strong> Can your firewall actually inspect traffic at 1 Gbps? Older firewalls with Deep Packet Inspection turned on might max out their CPU at 400 Mbps, artificially capping your throughput.</li>
+                <li><strong>Test LAN Independently:</strong> Copy a file between two servers on the same local switch. If it runs at gigabit speeds, the LAN is healthy, and the bottleneck is the Firewall, the WAN, or the ISP.</li>
+                <li><strong>Compare Multiple Servers:</strong> If downloading from Server A is slow, but downloading from Server B is fast, your network is fine. The bottleneck is the remote server.</li>
+            </ol>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -77,3 +109,5 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

@@ -39,34 +39,61 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">OSPF Basics</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p><strong>Open Shortest Path First (OSPF)</strong> is one of the most widely used enterprise routing protocols in the world. It is an Interior Gateway Protocol (IGP), meaning it is used to route traffic <em>inside</em> an organization's network, rather than across the global internet (which is handled by <a href="bgp-basics.html">BGP</a>).</p>
+            
+            <h2>What is a Link-State Protocol?</h2>
+            <p>OSPF is a link-state routing protocol. Unlike older protocols that simply count how many "hops" it takes to reach a destination, an OSPF router builds a complete mathematical map of the entire network.</p>
+            <p>Every router using OSPF originates a Link-State Advertisement (LSA) that lists all its connected interfaces, subnets, and the "Cost" (speed) of those links. These LSAs are flooded throughout the network. Every router collects these LSAs and builds an identical Link-State Database (LSDB). Finally, every router independently runs the Shortest Path First (SPF) algorithm (Dijkstra's algorithm) to calculate the absolute fastest, most efficient path to every destination.</p>
 
-            <p><strong>OSPF (Open Shortest Path First)</strong> is a link-state Interior Gateway Protocol used heavily in enterprise networks.</p>
-            
-            <h3>How OSPF Works</h3>
-            <p>Unlike simple distance-vector protocols, OSPF routers build a complete topological map of the network (the link-state database) by exchanging link-state advertisements (LSAs). Each router then runs the Shortest Path First (SPF) algorithm, also known as Dijkstra's algorithm, to calculate the best paths to all destinations within its autonomous system.</p>
-            
-            <h3>Key Concepts</h3>
+            <h2>OSPF Cost and Path Selection</h2>
+            <p>OSPF calculates the "best" path based on <strong>Cost</strong>. The cost is derived from the bandwidth of the link. A 10 Gbps fiber optic link has a much lower cost than a 100 Mbps copper link.</p>
+            <p>Imagine Router 1 wants to reach Router 3. It has two physical paths:</p>
             <ul>
-                <li><strong>Autonomous System Context:</strong> OSPF operates within a single routing domain (Interior Gateway Protocol).</li>
-                <li><strong>Areas:</strong> OSPF uses a hierarchical design. All areas must connect to the backbone area, known as <strong>Area 0</strong>.</li>
-                <li><strong>Neighbors and Adjacency:</strong> Routers discover each other via Hello packets. Once they agree on parameters, they form an adjacency and exchange link-state information.</li>
-                <li><strong>Cost / Metric:</strong> OSPF path selection is determined by <em>cost</em>. It does NOT automatically choose the path with the fewest routers. Cost is typically derived from interface bandwidth, though vendors calculate default interface costs differently.</li>
-                <li><strong>Route Convergence:</strong> When a link fails, OSPF quickly floods the updated state to all routers, which recalculate their SPF trees, resulting in fast convergence.</li>
+                <li><strong>Path A:</strong> Go directly to Router 3 over a 10 Mbps microwave link (High Cost).</li>
+                <li><strong>Path B:</strong> Go through Router 2, then to Router 3 over dual 10 Gbps fiber links (Low Cost).</li>
             </ul>
+            <p>Even though Path A is physically shorter (fewer hops), OSPF will choose Path B because the total cumulative cost of the high-speed fiber links is much lower.</p>
+
+            <h2>Neighbor Adjacencies</h2>
+            <p>Before OSPF routers can exchange routing databases, they must discover each other and become "Neighbors." They do this by continuously multicasting <strong>Hello Packets</strong> out of their OSPF-enabled interfaces.</p>
+            <p>For two routers to form a neighbor adjacency, several parameters in their Hello packets must perfectly match:</p>
+            <ul>
+                <li><strong>Area ID:</strong> Both interfaces must be assigned to the same OSPF Area.</li>
+                <li><strong>Subnet and Mask:</strong> The interfaces connecting them must be in the exact same IP subnet.</li>
+                <li><strong>Hello and Dead Timers:</strong> They must agree on how frequently to send Hellos, and how long to wait before declaring a silent neighbor "dead."</li>
+                <li><strong>Authentication:</strong> If a password is configured, it must match.</li>
+                <li><strong>MTU:</strong> If the Maximum Transmission Unit doesn't match, they may become neighbors but fail to exchange their databases.</li>
+            </ul>
+
+            <h2>OSPF Areas and the Backbone</h2>
+            <p>If an enterprise has 500 routers, running the SPF mathematical algorithm every time a link flaps would overwhelm the routers' CPUs. To solve this, OSPF uses a hierarchical design called <strong>Areas</strong>.</p>
+            <ul>
+                <li><strong>Area 0 (The Backbone):</strong> The core of the network. Every other area must connect directly to Area 0.</li>
+                <li><strong>Non-Backbone Areas (e.g., Area 10, Area 20):</strong> Used for branch offices or specific building floors.</li>
+            </ul>
+            <p>By dividing the network into Areas, an administrator can summarize routes. If a single link flaps inside Area 20, the routers in Area 20 recalculate their SPF algorithm, but the routers in Area 0 and Area 10 are shielded from the CPU spike.</p>
+
+            <h2>Common OSPF Troubleshooting</h2>
+            <p>When OSPF routes are missing from your <a href="routing-table-explained.html">Routing Table</a>, follow this workflow:</p>
             
-            <h3>Simple Topology Example</h3>
-            <pre><code>   Router A
-      |
-   Router B
-  /        \
-R-C       R-D</code></pre>
-            <p>If R-C and R-D both connect to the same destination network, Router B will select the path with the lowest cumulative OSPF cost.</p>
-            
-            <h3>OSPFv2 vs OSPFv3</h3>
-            <p><strong>OSPFv2</strong> is typically used for IPv4 routing. <strong>OSPFv3</strong> was originally designed to support <a href="ipv6-fundamentals.html">IPv6</a>, but has evolved to support multiple address families (both IPv4 and IPv6) within its modern framing.</p>
-        
+            <ol>
+                <li><strong>Is the interface UP?</strong> OSPF cannot run over a physically down port.</li>
+                <li><strong>Is OSPF enabled on the interface?</strong> Ensure the network statement or interface-level command correctly activates OSPF for that specific subnet.</li>
+                <li><strong>Is the Area correct?</strong> Ensure the interface is assigned to the correct Area, and that it matches the router on the other end of the cable.</li>
+                <li><strong>Are neighbors established?</strong> Check the OSPF neighbor table (e.g., <code>show ip ospf neighbor</code>). If the state is stuck in INIT, 2-WAY, or EXSTART, investigate MTU mismatches, timer mismatches, or firewall ACLs blocking Multicast 224.0.0.5.</li>
+                <li><strong>Is the interface Passive?</strong> A "Passive Interface" is a security best practice used on <a href="access-port-vs-trunk-port.html">Access Ports</a> facing end-users. It advertises the subnet into OSPF, but suppresses the transmission of Hello packets so users cannot form rogue adjacencies. Ensure you didn't accidentally make a router-to-router link passive.</li>
+            </ol>
+
+            <h2>Quick Summary</h2>
+            <ul>
+                <li>OSPF is a dynamic, link-state routing protocol used within enterprise networks.</li>
+                <li>It uses the SPF algorithm to find the lowest-cost (fastest bandwidth) path to destinations.</li>
+                <li>Routers must form perfect neighbor adjacencies before exchanging routes.</li>
+                <li>Networks are divided into hierarchical Areas (centered on Backbone Area 0) to scale efficiently.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -80,3 +107,5 @@ R-C       R-D</code></pre>
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

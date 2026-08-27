@@ -39,31 +39,111 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Subnetting Basics</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-<p><strong>Subnetting</strong> is the process of taking a single large network and dividing it into multiple smaller, more efficient networks (subnets).</p>
-<h2>Why Subnet?</h2>
-<ul>
-<li><strong>Security:</strong> Isolate sensitive devices (e.g., placing servers in a different subnet than guest Wi-Fi).</li>
-<li><strong>Performance:</strong> Reduce the size of broadcast domains, preventing excessive broadcast traffic from slowing down the network.</li>
-<li><strong>Organization:</strong> Group devices by department or physical location.</li>
-</ul>
-<h2>Subnetting Example using CIDR</h2>
-<p>Consider the common network: <code>192.168.1.0/24</code>. This provides 256 total IP addresses.</p>
-<p>If we borrow one bit from the host portion, we split the network into two smaller <strong>/25</strong> subnets, each with 128 addresses.</p>
-<h3>Subnet 1: 192.168.1.0/25</h3>
-<ul>
-<li><strong>Network Address:</strong> 192.168.1.0</li>
-<li><strong>Usable Hosts:</strong> 192.168.1.1 to 192.168.1.126</li>
-<li><strong>Broadcast Address:</strong> 192.168.1.127</li>
-</ul>
-<h3>Subnet 2: 192.168.1.128/25</h3>
-<ul>
-<li><strong>Network Address:</strong> 192.168.1.128</li>
-<li><strong>Usable Hosts:</strong> 192.168.1.129 to 192.168.1.254</li>
-<li><strong>Broadcast Address:</strong> 192.168.1.255</li>
-</ul>
-<p><em>Note:</em> In every subnet, the first address is reserved as the Network Address, and the last address is reserved as the Broadcast Address. They cannot be assigned to devices.</p>
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>To scale the internet, a single massive network is broken down into smaller, manageable networks called subnets. <a href="what-is-an-ip-address.html">IP Addresses</a> and <a href="what-is-a-subnet-mask.html">Subnet Masks</a> work together to define exactly where a network begins and ends. Understanding subnetting is a mandatory foundational skill for any IT professional configuring <a href="what-is-routing.html">Routing</a> or <a href="what-is-vlan.html">VLANs</a>.</p>
+
+            <h2>The Network Portion and Host Portion</h2>
+            <p>Every IP address is split into two parts:</p>
+            <ul>
+                <li><strong>The Network Portion:</strong> Identifies the specific neighborhood or subnet (e.g., the Accounting Department VLAN).</li>
+                <li><strong>The Host Portion:</strong> Identifies the specific device within that neighborhood (e.g., Bob's Printer).</li>
+            </ul>
+            <p>The Subnet Mask is what tells the computer exactly where the Network Portion ends and the Host Portion begins.</p>
+
+            <h2>CIDR Notation (Prefix Length)</h2>
+            <p>Instead of writing out a cumbersome mask like <code>255.255.255.0</code>, engineers use <strong>CIDR (Classless Inter-Domain Routing) Notation</strong>, also known as the prefix length. It simply counts the number of binary "1" bits in the subnet mask. </p>
+            <p>A subnet mask of <code>255.255.255.0</code> has exactly 24 ones in binary, so it is written as <strong>/24</strong>.</p>
+
+            <h2>The Anatomy of a Subnet</h2>
+            <p>Every IPv4 subnet contains three critical components:</p>
+            <ol>
+                <li><strong>Network Address:</strong> The very first address in the block. It represents the subnet itself and cannot be assigned to a PC.</li>
+                <li><strong>Usable Host Range:</strong> The addresses in the middle. These are assigned to PCs, servers, and the <a href="what-is-a-default-gateway.html">Default Gateway</a>.</li>
+                <li><strong>Broadcast Address:</strong> The very last address in the block. It is used to send a message to every device in the subnet simultaneously and cannot be assigned to a PC.</li>
+            </ol>
+
+            <div style="padding: 1rem; background-color: var(--bg-secondary); border-left: 4px solid var(--accent-color); margin: 1.5rem 0;">
+                <strong>Usable Host Calculation:</strong> Because the Network and Broadcast addresses are reserved, the formula for finding the number of usable hosts on a standard IPv4 subnet is <code>(Total Addresses) - 2</code>. <em>(Note: Point-to-point /31 links are a special routing exception where both addresses are usable).</em>
+            </div>
+
+            <h2>Common IPv4 Subnet Sizes</h2>
+            
+            <table style="width: 100%; text-align: left; border-collapse: collapse; margin: 1.5rem 0; overflow-x: auto; display: block;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border-color);">
+                        <th style="padding: 0.75rem;">Prefix (CIDR)</th>
+                        <th style="padding: 0.75rem;">Subnet Mask</th>
+                        <th style="padding: 0.75rem;">Total Addresses (Block Size)</th>
+                        <th style="padding: 0.75rem;">Typical Usable Hosts</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;">/24</td>
+                        <td style="padding: 0.75rem;">255.255.255.0</td>
+                        <td style="padding: 0.75rem;">256</td>
+                        <td style="padding: 0.75rem;">254</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;">/25</td>
+                        <td style="padding: 0.75rem;">255.255.255.128</td>
+                        <td style="padding: 0.75rem;">128</td>
+                        <td style="padding: 0.75rem;">126</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;">/26</td>
+                        <td style="padding: 0.75rem;">255.255.255.192</td>
+                        <td style="padding: 0.75rem;">64</td>
+                        <td style="padding: 0.75rem;">62</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;">/27</td>
+                        <td style="padding: 0.75rem;">255.255.255.224</td>
+                        <td style="padding: 0.75rem;">32</td>
+                        <td style="padding: 0.75rem;">30</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;">/28</td>
+                        <td style="padding: 0.75rem;">255.255.255.240</td>
+                        <td style="padding: 0.75rem;">16</td>
+                        <td style="padding: 0.75rem;">14</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;">/30</td>
+                        <td style="padding: 0.75rem;">255.255.255.252</td>
+                        <td style="padding: 0.75rem;">4</td>
+                        <td style="padding: 0.75rem;">2 (Router Links)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Practical Subnet Boundaries</h2>
+            
+            <h3>Example 1: The Standard /24</h3>
+            <p>You are given the network <code>192.0.2.0/24</code>.</p>
+            <ul>
+                <li><strong>Network Address:</strong> 192.0.2.0</li>
+                <li><strong>Usable Hosts:</strong> 192.0.2.1 through 192.0.2.254</li>
+                <li><strong>Broadcast Address:</strong> 192.0.2.255</li>
+            </ul>
+
+            <h3>Example 2: Splitting into smaller blocks (/26)</h3>
+            <p>You need to put the servers in a smaller subnet. You are given <code>192.0.2.0/26</code>. Looking at the table above, a /26 has a block size of 64 addresses. Therefore, the boundaries jump by 64.</p>
+            <ul>
+                <li><strong>Network Address:</strong> 192.0.2.0</li>
+                <li><strong>Usable Hosts:</strong> 192.0.2.1 through 192.0.2.62</li>
+                <li><strong>Broadcast Address:</strong> 192.0.2.63</li>
+            </ul>
+            <p>The very next subnet would begin at <code>192.0.2.64</code>.</p>
+
+            <h2>The Routing Requirement</h2>
+            <p>Why does this matter? Because devices inside the <em>same</em> subnet can talk directly to each other via a local switch. Devices in <em>different</em> subnets require a router to communicate.</p>
+            <ul>
+                <li><strong>Same Subnet:</strong> <code>192.0.2.10/24</code> wants to talk to <code>192.0.2.50/24</code>. The PC sees they are in the same network, finds the destination MAC address, and sends the packet directly over the LAN.</li>
+                <li><strong>Different Subnet:</strong> <code>192.0.2.10/24</code> wants to talk to <code>198.51.100.10/24</code>. The PC sees the destination is outside its subnet mask boundary. It immediately forwards the packet to its Default Gateway (the router), asking the router to deliver it.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -77,3 +157,4 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+

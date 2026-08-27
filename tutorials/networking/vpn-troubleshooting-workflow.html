@@ -39,34 +39,81 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">VPN Troubleshooting Workflow</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>Troubleshooting a <a href="site-to-site-vpn-explained.html">Site-to-Site VPN</a> can be one of the most frustrating tasks for a network engineer. Because VPNs involve encryption, routing, and firewall policies across two entirely different organizations, pinpointing the failure requires a methodical, step-by-step workflow. Guessing will waste hours of your time.</p>
 
-            <p>Troubleshooting VPNs requires isolating the failure domain: is the tunnel failing to build, or is traffic failing to traverse the built tunnel?</p>
-            
-            <h3>1. Identify the Symptom</h3>
+            <h2>Step 1: Define the Exact Problem</h2>
+            <p>Never start changing settings until you know exactly what is broken. Check your firewall logs and dashboard to define the symptom:</p>
+            <table style="width: 100%; text-align: left; border-collapse: collapse; margin: 1.5rem 0; overflow-x: auto; display: block;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border-color);">
+                        <th style="padding: 0.75rem;">Symptom</th>
+                        <th style="padding: 0.75rem;">Likely Failure Point</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Tunnel completely down</strong></td>
+                        <td style="padding: 0.75rem;">Internet connectivity, Phase 1 negotiation, Authentication, or Peer IPs.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Tunnel says "UP", but ping fails</strong></td>
+                        <td style="padding: 0.75rem;">Routing, Firewall Policies, or NAT issues.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>One-way traffic only</strong></td>
+                        <td style="padding: 0.75rem;">Missing return route, Asymmetric routing, or one-way Firewall Policy.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Small pings work, large files fail</strong></td>
+                        <td style="padding: 0.75rem;">MTU (Maximum Transmission Unit) fragmentation issues.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Step 2: Check Basic Reachability</h2>
+            <p>If Phase 1 is failing, first verify that the two firewalls can actually talk to each other over the internet.</p>
             <ul>
-                <li>Tunnel does not establish at all.</li>
-                <li>Tunnel establishes, but no traffic flows.</li>
-                <li>VPN connects, but local Internet breaks (common <a href="remote-access-vpn-explained.html">Remote Access</a> split-tunnel issue).</li>
-                <li>Only specific subnets work (common <a href="site-to-site-vpn-explained.html">Site-to-Site</a> selector issue).</li>
+                <li>Can Firewall A ping the Public Peer IP of Firewall B?</li>
+                <li>Is a firewall or ISP in the middle blocking UDP Port 500 (IKE) or UDP Port 4500 (NAT-T)?</li>
             </ul>
+
+            <h2>Step 3: Check Tunnel Negotiation (Phase 1 & Phase 2)</h2>
+            <p>IPsec VPNs require both sides to agree <em>perfectly</em> on a massive list of parameters. If a single setting is mismatched, the tunnel will not form.</p>
             
-            <h3>2. Verify Reachability</h3>
-            <p>Can the client or peer router reach the external public IP of the VPN gateway? Check basic routing and ISP connectivity.</p>
-            
-            <h3>3. Phase 1: Authentication & Negotiation</h3>
-            <p>If the tunnel fails to build, check IKE/IPsec or TLS session status. For Site-to-Site, this is almost always a <strong>proposal mismatch</strong> (different encryption/hash algorithms configured on each side), an incorrect peer IP, or a mismatched pre-shared key/certificate. For Remote Access, verify user credentials, MFA prompts, and endpoint posture checks.</p>
-            
-            <h3>4. Phase 2: Selectors and Subnets</h3>
-            <p>If the tunnel builds but traffic fails, verify the "selectors" (the interesting traffic). In policy-based Site-to-Site VPNs, the local subnet configuration on Router A must perfectly mirror the remote subnet configuration on Router B. Overlapping subnets (where both sides use 192.168.1.0/24) will cause immediate routing failures.</p>
-            
-            <h3>5. Routing and NAT</h3>
-            <p>Does the firewall know to route the internal traffic into the tunnel? Is NAT (Network Address Translation) improperly translating the private IPs before they enter the tunnel? A "NAT Exemption" rule is often required to prevent this.</p>
-            
-            <h3>6. Firewall Policy and MTU</h3>
-            <p>VPN traffic is usually subject to <a href="stateful-firewall-explained.html">stateful firewall</a> inspection. Ensure a policy permits the decrypted traffic. Finally, if small pings work but file transfers fail, you likely have an <a href="mtu-and-mss-explained.html">MTU/MSS</a> fragmentation issue due to the VPN encapsulation overhead.</p>
-        
+            <p><strong>Phase 1 (IKE) Mismatches:</strong></p>
+            <ul>
+                <li><strong>Pre-Shared Key (PSK):</strong> Is the password identical? Are there trailing spaces?</li>
+                <li><strong>Encryption & Hash:</strong> Does one side propose AES-256 with SHA-256, while the other side only allows AES-128 with SHA-1?</li>
+                <li><strong>Diffie-Hellman (DH) Group:</strong> Both sides must agree on the DH group for key exchange.</li>
+            </ul>
+
+            <p><strong>Phase 2 (IPsec) Mismatches:</strong></p>
+            <ul>
+                <li><strong>Local and Remote Networks:</strong> In policy-based VPNs, the subnets defined in the "Interesting Traffic" ACL must perfectly mirror each other. If Site A says <code>192.168.1.0/24</code> to <code>10.0.0.0/8</code>, Site B must say <code>10.0.0.0/8</code> to <code>192.168.1.0/24</code>. If Site A uses a <code>/24</code> and Site B uses a <code>/25</code>, Phase 2 will fail.</li>
+                <li><strong>Perfect Forward Secrecy (PFS):</strong> If one side enables PFS and the other doesn't, Phase 2 will fail to negotiate.</li>
+            </ul>
+
+            <h2>Step 4: Check Routing</h2>
+            <p>If the tunnel is UP (both Phase 1 and 2 succeed), but traffic won't pass, the problem is no longer the VPN—it is a routing or policy issue.</p>
+            <p>In a modern route-based VPN, the tunnel is treated as a virtual interface (e.g., <code>tunnel.1</code>). Check the <a href="routing-table-explained.html">Routing Table</a> on both firewalls. Does Firewall A actually have a static route pointing traffic destined for Site B out the <code>tunnel.1</code> interface? If not, it will send the private traffic out the Default Gateway to the internet, where it will be dropped.</p>
+
+            <h2>Step 5: Check Firewall Security Policies</h2>
+            <p>Firewalls block traffic by default. Even if the routing is perfect and the tunnel is up, you must create a <a href="stateful-firewall-explained.html">Stateful Firewall</a> policy explicitly allowing the traffic to pass. For example: <em>"Allow traffic from Internal_Zone to VPN_Zone."</em></p>
+            <p>Remember that firewalls require bidirectional policies if connections can be initiated from either side.</p>
+
+            <h2>Step 6: Check NAT (The Silent Killer)</h2>
+            <p>When traffic leaves an internal network headed for a WAN interface, firewalls usually apply <a href="what-is-nat.html">NAT (Source NAT)</a> to translate the private IP into a public IP. </p>
+            <p>If your VPN traffic accidentally gets caught by a broad NAT rule, the Source IP will be translated to a Public IP before it enters the tunnel. The remote firewall will receive traffic from a Public IP it doesn't recognize and drop it. You must configure a <strong>NAT Exemption</strong> (or "No-NAT") rule explicitly telling the firewall: <em>"If traffic is destined for the remote VPN subnet, DO NOT translate it."</em></p>
+
+            <h2>Step 7: Check the Return Path (Asymmetric Routing)</h2>
+            <p>If you can ping a remote server, but the server cannot ping you, you have a one-way traffic problem. </p>
+            <p>Check the return path. Your packet successfully reached the server. But when the server replies, where does its Default Gateway send the packet? If the server's local router doesn't have a route pointing back across the VPN to your subnet, the reply packet gets sent to the internet and dropped. A successful network connection requires a complete, unbroken round-trip path.</p>
+
+            <h2>Quick Summary</h2>
+            <p>Don't guess. If Phase 1 fails, check PSKs and IKE proposals. If Phase 2 fails, check network subnet definitions. If the tunnel is up but traffic fails, check Routes, Firewall Policies, and NAT Exemptions.</p>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -80,3 +127,5 @@
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+

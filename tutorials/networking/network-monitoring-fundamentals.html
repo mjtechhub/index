@@ -39,41 +39,83 @@
             <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Network Monitoring Fundamentals</h1>
         </div>
         
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p><strong>Network Monitoring</strong> is the systematic process of continuously observing a computer network's components (routers, switches, firewalls, servers) to evaluate their health, performance, and availability. When a component fails or degrades, the monitoring system immediately alerts administrators, allowing them to resolve the issue—ideally before users even notice.</p>
+            <p>At an enterprise scale, you cannot wait for the CEO's phone call to know the internet is down. You need proactive fault detection and trend analysis.</p>
 
-            <p>Network monitoring is the practice of continuously observing a network to detect failing or slow components. It matters because proactive visibility minimizes downtime and degrades gracefully instead of failing catastrophically.</p>
-            
-            <h3>What to Monitor</h3>
+            <h2>Monitoring vs Logging vs Observability</h2>
+            <p>While often used interchangeably, these represent different layers of maturity:</p>
             <ul>
-                <li><strong>Availability:</strong> Is the device online? Are specific service checks (like HTTP) responding?</li>
-                <li><strong>Performance:</strong> What is the <a href="network-latency-troubleshooting.html">latency</a> or <a href="packet-loss-troubleshooting.html">packet loss</a> across critical paths?</li>
-                <li><strong>Capacity:</strong> Are interfaces approaching bandwidth limits? Are device CPU, memory, or hardware sensors (temperature) exceeding thresholds?</li>
-                <li><strong>Errors:</strong> Are interfaces silently dropping packets or recording CRC errors?</li>
+                <li><strong>Logging (<a href="syslog-explained.html">Syslog</a>):</strong> Recording discrete events that happened in the past ("User logged in").</li>
+                <li><strong>Monitoring (<a href="snmp-explained.html">SNMP</a>):</strong> Tracking predefined metrics against static thresholds ("CPU is at 99%").</li>
+                <li><strong>Observability:</strong> A modern concept where systems export highly detailed telemetry, allowing engineers to ask arbitrary questions to debug complex, unknown failures without relying on pre-configured dashboards.</li>
             </ul>
+
+            <h2>Key Monitoring Areas and Methods</h2>
             
-            <h3>Monitoring Concepts</h3>
-            <p>Visibility is achieved through combinations of <strong>active checks</strong> (synthetic ping/HTTP requests), <strong>polling</strong> (pulling stats via <a href="snmp-explained.html">SNMP</a> or APIs), and <strong>passive data</strong> (receiving Syslog events, SNMP traps, or flow telemetry like NetFlow).</p>
-            <p>Modern tools use this data to establish <strong>baselines</strong> (normal historical behavior), identify <strong>trending</strong> patterns, and trigger <strong>alerting</strong> when metrics cross defined <strong>thresholds</strong>.</p>
-            
-            <h3>Troubleshooting Context</h3>
-            <p>An alert is evidence of a condition, not automatically proof of root cause. A high-CPU alert on a router might be normal during a routing table recalculation, or it might be a denial-of-service attack.</p>
-            
-            <h4>Example Workflow</h4>
-            <pre><code>Monitor detects WAN packet loss
-       ↓
-Verify router interface counters (check for physical errors)
-       ↓
-Ping local gateway
-       ↓
-Ping ISP next hop
-       ↓
-Compare latency/loss at each step
-       ↓
-Check interface bandwidth utilization
-       ↓
-Escalate with gathered evidence</code></pre>
-        
+            <table style="width: 100%; text-align: left; border-collapse: collapse; margin: 1.5rem 0; overflow-x: auto; display: block;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border-color);">
+                        <th style="padding: 0.75rem;">Category</th>
+                        <th style="padding: 0.75rem;">What is Monitored</th>
+                        <th style="padding: 0.75rem;">Typical Method</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Availability</strong></td>
+                        <td style="padding: 0.75rem;">Is the device physically turned on and reachable?</td>
+                        <td style="padding: 0.75rem;">ICMP (<a href="ping-explained.html">Ping</a>)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Interfaces</strong></td>
+                        <td style="padding: 0.75rem;">Port up/down status, bandwidth utilization, errors, discards.</td>
+                        <td style="padding: 0.75rem;">SNMP Polling</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Device Health</strong></td>
+                        <td style="padding: 0.75rem;">CPU, Memory, Temperature, Uptime, Power supply status.</td>
+                        <td style="padding: 0.75rem;">SNMP Polling / API</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Traffic Flow</strong></td>
+                        <td style="padding: 0.75rem;">Who is talking to whom, and consuming the most bandwidth.</td>
+                        <td style="padding: 0.75rem;"><a href="netflow-ipfix-explained.html">NetFlow / IPFIX</a></td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>Network Services</strong></td>
+                        <td style="padding: 0.75rem;">Is DNS resolving? Is the VPN tunnel up? Is the website responding with HTTP 200?</td>
+                        <td style="padding: 0.75rem;">Active Service Checks</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Understanding Thresholds and Baselines</h2>
+            <p>A common mistake for junior engineers is assuming static, arbitrary thresholds (e.g., "Alert me if bandwidth hits 80%"). Thresholds depend entirely on business requirements, link capacity, and historical traffic patterns.</p>
+            <ul>
+                <li><strong>Baseline:</strong> What does "normal" look like? If a backup server runs every night at 2 AM and consumes 95% of a gigabit link, that is normal. Alerting on it would be useless noise.</li>
+                <li><strong>Warning vs Critical:</strong> A Warning threshold (e.g., 75% disk space) might generate an email ticket for next-day review. A Critical threshold (e.g., 95% disk space) might trigger a pager to wake an engineer up at 3 AM.</li>
+                <li><strong>Duration:</strong> A CPU hitting 100% for 5 seconds is normal operation. A CPU hitting 100% for 15 straight minutes is a fault. Alerts should require a duration condition to prevent "Flapping" (alerts turning on and off constantly).</li>
+            </ul>
+
+            <h2>A Practical Troubleshooting Workflow</h2>
+            <p>How does monitoring integrate into daily operations? Consider this workflow for an office's WAN connection:</p>
+            <ol>
+                <li><strong>Detection:</strong> The monitoring server detects the WAN router failing 3 consecutive ICMP pings. It triggers a Critical Alert.</li>
+                <li><strong>Verification:</strong> An engineer receives the alert. They check the dashboard and confirm the interface status is DOWN.</li>
+                <li><strong>Investigation:</strong> They review Syslog and see a message indicating the physical fiber link dropped. They run a <a href="vpn-troubleshooting-workflow.html">Troubleshooting Workflow</a> to verify if the backup VPN has successfully failed over.</li>
+                <li><strong>Escalation:</strong> They contact the ISP, providing exact timestamps and logs from the monitoring platform as evidence of the outage.</li>
+            </ol>
+
+            <h2>Alert Design Best Practices</h2>
+            <p>Poorly designed monitoring leads directly to <strong>Alert Fatigue</strong>—a dangerous scenario where engineers receive so many useless alerts that they begin ignoring them, eventually missing a critical failure.</p>
+            <ul>
+                <li><strong>Actionable Alerts:</strong> If an alert triggers, there must be a clear action an engineer can take to fix it. If the alert is "informational," it belongs in a dashboard, not an email.</li>
+                <li><strong>Dependency Awareness:</strong> If a core switch goes down, the 50 servers plugged into it will also become unreachable. A smart monitoring system suppresses the 50 server alerts and only sends one alert for the core switch.</li>
+                <li><strong>Maintenance Windows:</strong> Always pause alerting before performing scheduled reboots or upgrades to avoid waking up the on-call team unnecessarily.</li>
+            </ul>
         </div>
+</div>
         
         <!-- Navigation -->
         <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
@@ -87,3 +129,5 @@ Escalate with gathered evidence</code></pre>
     <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
 </body>
 </html>
+
+
