@@ -94,10 +94,13 @@
 body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    transition: background-color 0.3s ease, color 0.3s ease;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     margin: 0;
     padding: 0;
+}
+
+body.theme-transition {
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Phase 4: Dark Mode Visual Refinements */

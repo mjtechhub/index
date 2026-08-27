@@ -9,12 +9,6 @@
     const root = document.documentElement;
     const storageKey = 'mj-theme';
     
-    function getPreferredTheme() {
-        const saved = localStorage.getItem(storageKey);
-        if (saved) return saved;
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    
     function applyTheme(theme) {
         root.setAttribute('data-theme', theme);
         
@@ -25,16 +19,15 @@
         });
     }
 
-    // Apply immediately on script execution
-    const initialTheme = getPreferredTheme();
-    applyTheme(initialTheme);
-
     // 2. Setup Event Delegation for toggling (works with dynamically injected header)
     document.addEventListener('click', (e) => {
         const toggleBtn = e.target.closest('.theme-toggle');
         if (toggleBtn) {
             const currentTheme = root.getAttribute('data-theme') || 'light';
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            // Enable CSS transitions before changing the theme
+            document.body.classList.add('theme-transition');
             
             localStorage.setItem(storageKey, newTheme);
             applyTheme(newTheme);
