@@ -2,44 +2,93 @@
 <html lang="en">
 <head>
     <!-- SEO & Metadata -->
-    <title>Privacy | MJ Tech Hub</title>
-    <meta name="description" content="Privacy policy for MJ Tech Hub.">
+    <title>Privacy Policy | MJ Tech Hub</title>
+    <meta name="description" content="Privacy Policy for MJ Tech Hub.">
     <link rel="canonical" href="https://mjtechhub.github.io/index/legal/privacy.html">
     
-    <!-- Open Graph -->
-    <meta property="og:title" content="Privacy | MJ Tech Hub">
-    <meta property="og:description" content="Privacy policy for MJ Tech Hub.">
-    <meta property="og:url" content="https://mjtechhub.github.io/index/legal/privacy.html">
-    <meta property="og:site_name" content="MJ Tech Hub">
-    <meta property="og:type" content="website">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Privacy | MJ Tech Hub">
-    <meta name="twitter:description" content="Privacy policy for MJ Tech Hub.">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/themes.css">
     <link rel="stylesheet" href="../css/main.css">
 </head>
-
 <body>
     <div id="site-header"></div>
-    <!-- Header -->
     
-    <main class="container">
+    <main class="container legal-page">
+        <a href="../index.html" class="legal-back"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+        
+        <div class="legal-hero">
+            <div class="legal-eyebrow">Legal</div>
+            <h1>Privacy Policy</h1>
+            <p class="legal-desc">How we handle information and preferences when you use MJ Tech Hub.</p>
+            <div class="legal-meta">
+                <i class="fa-regular fa-calendar"></i> Last Updated: August 27, 2026
+                <span class="status-dot" style="margin-left: 0.5rem;"></span> Educational Website
+            </div>
+        </div>
+        
+        <div class="legal-layout">
+            <!-- Sticky TOC -->
+            <aside>
+                <nav class="legal-toc">
+                    <div class="legal-toc-title">On this page</div>
+                    <ul>
+                        <li><a href="#information">1. Information We Collect</a></li>
+                        <li><a href="#local-storage">2. Local Storage (Cookies)</a></li>
+                        <li><a href="#hosting">3. Hosting and Server Logs</a></li>
+                        <li><a href="#third-party">4. Third-Party Links</a></li>
+                        <li><a href="#changes">5. Changes to Policy</a></li>
+                        <li><a href="#contact">6. Contact Us</a></li>
+                    </ul>
+                </nav>
+            </aside>
+            
+            <!-- Main Article -->
+            <article class="legal-article">
+                <p>At MJ Tech Hub, accessible from mjtechhub.github.io, the privacy of our visitors is of extreme importance to us. This Privacy Policy document outlines the types of personal information that is received and collected by MJ Tech Hub and how it is used.</p>
 
-    <div class="container py-4">
-        <a href="../index.html" class="btn btn-secondary mb-2">&larr; Back to Home</a>
-        <h1>Privacy Policy</h1>
-        <p>This is a placeholder for the MJ Tech Hub Privacy Policy.</p>
-    </div>
+                <section id="information" class="legal-section">
+                    <h2>1. Information We Collect</h2>
+                    <p>MJ Tech Hub is designed as a static educational resource. We do not require you to create an account, and we do not provide forms that collect your personal information (such as your name, email address, or phone number) directly on this site.</p>
+                </section>
 
+                <section id="local-storage" class="legal-section">
+                    <h2>2. Local Storage (Cookies)</h2>
+                    <p>To enhance your user experience, MJ Tech Hub uses your browser's <code>localStorage</code> mechanism strictly to save your UI preferences. Specifically, we store:</p>
+                    <ul>
+                        <li>Your preferred theme setting (Light Mode or Dark Mode) to persist your choice across pages and subsequent visits.</li>
+                    </ul>
+                    <p>This data remains on your device and is not transmitted to our servers.</p>
+                </section>
+
+                <section id="hosting" class="legal-section">
+                    <h2>3. Hosting and Server Logs</h2>
+                    <p>MJ Tech Hub is hosted on GitHub Pages. As part of providing this hosting infrastructure, GitHub may collect standard internet log information, such as your IP address, browser type, internet service provider (ISP), date/time stamp, and referring/exit pages. This information is collected by GitHub and is governed by <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener noreferrer">GitHub's Privacy Statement</a>.</p>
+                </section>
+
+                <section id="third-party" class="legal-section">
+                    <h2>4. Third-Party Links</h2>
+                    <p>Our website may contain links to other websites of interest. However, once you have used these links to leave our site, you should note that we do not have any control over that other website. Therefore, we cannot be responsible for the protection and privacy of any information which you provide whilst visiting such sites and such sites are not governed by this privacy statement.</p>
+                </section>
+
+                <section id="changes" class="legal-section">
+                    <h2>5. Changes to This Privacy Policy</h2>
+                    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes.</p>
+                </section>
+
+                <section id="contact" class="legal-section">
+                    <h2>6. Contact Us</h2>
+                    <p>If you require any more information or have any questions about our privacy policy, please feel free to reach out via the project's GitHub repository.</p>
+                </section>
+            </article>
+        </div>
     </main>
-    <!-- Footer -->
     
     <div id="site-footer"></div>
     <script src="../js/components.js"></script>
+    <script src="../js/main.js" defer></script>
+    <script src="../js/theme.js"></script>
 </body>
 </html>

@@ -14,15 +14,52 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then(commands => {
-            renderCommands(commands, container);
+            renderCommands(commands, container, 'All');
+            setupFilters(commands, container);
         })
         .catch(error => {
             console.error('Error loading commands:', error);
             container.innerHTML = '<div class="card"><p style="color: var(--danger); text-align: center;">Failed to load commands. Please try again later.</p></div>';
         });
 
-    function renderCommands(commands, container) {
+    function setupFilters(allCommands, container) {
+        const filterControls = document.querySelector('.filter-controls');
+        if (!filterControls) return;
+        
+        const buttons = filterControls.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => {
+                    b.classList.remove('btn-secondary');
+                    b.classList.add('btn-ghost');
+                });
+                btn.classList.remove('btn-ghost');
+                btn.classList.add('btn-secondary');
+                
+                const filterValue = btn.textContent.trim();
+                let filtered = allCommands;
+                
+                if (filterValue !== 'All') {
+                    // Use case-insensitive includes for compound platforms like "Windows/Linux" or check category
+                    filtered = allCommands.filter(c => 
+                        c.platform.toLowerCase().includes(filterValue.toLowerCase()) ||
+                        (c.category && c.category.toLowerCase().includes(filterValue.toLowerCase()))
+                    );
+                }
+                
+                renderCommands(filtered, container, filterValue);
+            });
+        });
+    }
+
+    function renderCommands(commands, container, filterValue = 'All') {
         container.innerHTML = ''; // Clear loading
+        
+        if (commands.length === 0) {
+            const platformText = filterValue !== 'All' ? filterValue + ' ' : '';
+            container.innerHTML = `<div class="card" style="padding: 4rem 2rem; text-align: center; border: 1px dashed var(--border-color);"><i class="fa-solid fa-terminal" style="font-size: 2.5rem; color: var(--border-color); margin-bottom: 1rem; display: block;"></i><p style="color: var(--text-muted); font-size: 1.1rem; margin: 0;">No ${platformText}commands available yet.</p></div>`;
+            return;
+        }
         
         commands.forEach((cmd, index) => {
             const card = document.createElement('div');

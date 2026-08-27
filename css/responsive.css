@@ -7,9 +7,6 @@
     .container {
         padding: 0 2rem;
     }
-    .site-logo {
-        height: 48px;
-    }
     
     .dashboard-grid {
         grid-template-columns: 1fr;
@@ -66,10 +63,6 @@
 @media (max-width: 480px) {
     .container {
         padding: 0 1rem;
-    }
-    
-    .site-logo {
-        height: 38px;
     }
     
     .hero-section h1 {

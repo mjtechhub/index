@@ -398,6 +398,7 @@ img {
     .search-box { width: 220px; }
     .nav-links a { padding: 0.5rem; font-size: 0.8rem; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
+    .site-logo { height: 48px; }
 }
 
 @media (max-width: 850px) {
@@ -461,6 +462,7 @@ img {
     .brand-text { display: none; }
     .header-actions { gap: 0.5rem; }
     .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .site-logo { height: 38px; }
 }
 
 /* ==========================================================================
@@ -1052,4 +1054,693 @@ img {
     padding: 2rem;
     text-align: center;
     color: var(--text-muted);
+}
+
+/* ==========================================================================
+   LEGAL PAGES (SaaS Design)
+   ========================================================================== */
+.legal-page {
+    padding-bottom: 5rem;
+}
+
+.legal-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    transition: color 0.2s;
+}
+
+.legal-back:hover {
+    color: var(--brand-primary);
+}
+
+.legal-hero {
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.legal-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--brand-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.legal-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.legal-desc {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin-bottom: 1.5rem;
+}
+
+.legal-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-tertiary);
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.legal-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+@media (min-width: 900px) {
+    .legal-layout {
+        display: grid;
+        grid-template-columns: 240px minmax(0, 820px);
+        gap: 3rem;
+        align-items: start;
+    }
+}
+
+.legal-toc {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+}
+
+@media (min-width: 900px) {
+    .legal-toc {
+        position: sticky;
+        top: calc(var(--header-height, 74px) + 2rem);
+        background: transparent;
+        border: none;
+        padding: 0;
+    }
+}
+
+.legal-toc-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.legal-toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.legal-toc li {
+    margin-bottom: 0.75rem;
+}
+
+.legal-toc a {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s;
+}
+
+.legal-toc a:hover {
+    color: var(--brand-primary);
+}
+
+.legal-article {
+    color: var(--text-secondary);
+    line-height: 1.75;
+    font-size: 1rem;
+}
+
+.legal-section {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    scroll-margin-top: calc(var(--header-height, 74px) + 2rem);
+}
+
+.legal-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.legal-section h2 {
+    color: var(--text-primary);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    margin-bottom: 1.25rem;
+}
+
+.legal-section h3 {
+    color: var(--text-primary);
+    font-size: 1.15rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.legal-section p {
+    margin-bottom: 1.25rem;
+}
+
+.legal-section ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.legal-section li {
+    margin-bottom: 0.5rem;
+}
+
+.legal-section li::marker {
+    color: var(--brand-primary);
+}
+
+.legal-callout {
+    background: var(--brand-subtle);
+    border-left: 4px solid var(--brand-primary);
+    padding: 1.5rem;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: 1.5rem 0;
+    color: var(--text-primary);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.legal-callout-icon {
+    color: var(--brand-primary);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.legal-callout-content p {
+    margin: 0;
+}
+
+.search-empty-state {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   LEGAL PAGES (SaaS Design)
+   ========================================================================== */
+.legal-page {
+    padding-bottom: 5rem;
+}
+
+.legal-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    transition: color 0.2s;
+}
+
+.legal-back:hover {
+    color: var(--brand-primary);
+}
+
+.legal-hero {
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.legal-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--brand-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.legal-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.legal-desc {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin-bottom: 1.5rem;
+}
+
+.legal-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-tertiary);
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.legal-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+@media (min-width: 900px) {
+    .legal-layout {
+        display: grid;
+        grid-template-columns: 240px minmax(0, 820px);
+        gap: 3rem;
+        align-items: start;
+    }
+}
+
+.legal-toc {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+}
+
+@media (min-width: 900px) {
+    .legal-toc {
+        position: sticky;
+        top: calc(var(--header-height, 74px) + 2rem);
+        background: transparent;
+        border: none;
+        padding: 0;
+    }
+}
+
+.legal-toc-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.legal-toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.legal-toc li {
+    margin-bottom: 0.75rem;
+}
+
+.legal-toc a {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s;
+}
+
+.legal-toc a:hover {
+    color: var(--brand-primary);
+}
+
+.legal-article {
+    color: var(--text-secondary);
+    line-height: 1.75;
+    font-size: 1rem;
+}
+
+.legal-section {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    scroll-margin-top: calc(var(--header-height, 74px) + 2rem);
+}
+
+.legal-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.legal-section h2 {
+    color: var(--text-primary);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    margin-bottom: 1.25rem;
+}
+
+.legal-section h3 {
+    color: var(--text-primary);
+    font-size: 1.15rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.legal-section p {
+    margin-bottom: 1.25rem;
+}
+
+.legal-section ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.legal-section li {
+    margin-bottom: 0.5rem;
+}
+
+.legal-section li::marker {
+    color: var(--brand-primary);
+}
+
+.legal-callout {
+    background: var(--brand-subtle);
+    border-left: 4px solid var(--brand-primary);
+    padding: 1.5rem;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: 1.5rem 0;
+    color: var(--text-primary);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.legal-callout-icon {
+    color: var(--brand-primary);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.legal-callout-content p {
+    margin: 0;
+}
+
+/* ==========================================================================
+   ABOUT PAGE
+   ========================================================================== */
+.about-hero {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 4rem 0 3rem;
+}
+
+.about-eyebrow {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--brand-primary);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.about-hero h1 {
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.about-desc {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.about-section {
+    padding: 4rem 0;
+}
+
+.about-section-alt {
+    background-color: var(--bg-tertiary);
+}
+
+.about-section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 700px;
+    margin-inline: auto;
+}
+
+.about-section-header h2 {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+}
+
+.split-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .split-section {
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 4rem;
+    }
+}
+
+.mission-text p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.mission-visual {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-shadow: var(--card-shadow);
+}
+
+.mission-concept {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.mission-concept i {
+    font-size: 1.5rem;
+    color: var(--brand-primary);
+    width: 48px;
+    height: 48px;
+    background: var(--brand-subtle);
+    border-radius: var(--radius-md);
+    display: grid;
+    place-items: center;
+}
+
+.mission-concept span {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (min-width: 600px) {
+    .about-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 900px) {
+    .about-grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .about-grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.about-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.about-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow);
+}
+
+.about-card-number {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--brand-primary);
+    margin-bottom: 1rem;
+    font-family: monospace;
+}
+
+.about-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.about-card p {
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.about-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-pill {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.about-pill:hover {
+    background: var(--brand-subtle);
+    border-color: var(--brand-primary);
+    color: var(--brand-primary);
+}
+
+.creator-profile {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+    align-items: center;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .creator-profile {
+        flex-direction: row;
+        text-align: left;
+        align-items: flex-start;
+        padding: 4rem;
+        gap: 3rem;
+    }
+}
+
+.creator-avatar {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: white;
+    font-size: 3rem;
+    font-weight: 800;
+    flex-shrink: 0;
+    box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+}
+
+.creator-info h3 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.creator-info p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.creator-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .creator-tags {
+        justify-content: flex-start;
+    }
+}
+
+.creator-tag {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+}
+
+.quote-callout {
+    background: var(--brand-subtle);
+    border: 1px solid var(--brand-primary);
+    border-radius: var(--radius-xl);
+    padding: 3rem 2rem;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.quote-callout h3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--brand-primary);
+    font-style: italic;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.quote-callout p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
 }

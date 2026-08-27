@@ -3,43 +3,92 @@
 <head>
     <!-- SEO & Metadata -->
     <title>Disclaimer | MJ Tech Hub</title>
-    <meta name="description" content="Disclaimer policy for MJ Tech Hub.">
+    <meta name="description" content="Disclaimer for MJ Tech Hub.">
     <link rel="canonical" href="https://mjtechhub.github.io/index/legal/disclaimer.html">
     
-    <!-- Open Graph -->
-    <meta property="og:title" content="Disclaimer | MJ Tech Hub">
-    <meta property="og:description" content="Disclaimer policy for MJ Tech Hub.">
-    <meta property="og:url" content="https://mjtechhub.github.io/index/legal/disclaimer.html">
-    <meta property="og:site_name" content="MJ Tech Hub">
-    <meta property="og:type" content="website">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Disclaimer | MJ Tech Hub">
-    <meta name="twitter:description" content="Disclaimer policy for MJ Tech Hub.">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/themes.css">
     <link rel="stylesheet" href="../css/main.css">
 </head>
-
 <body>
     <div id="site-header"></div>
-    <!-- Header -->
     
-    <main class="container">
+    <main class="container legal-page">
+        <a href="../index.html" class="legal-back"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+        
+        <div class="legal-hero">
+            <div class="legal-eyebrow">Legal</div>
+            <h1>Disclaimer</h1>
+            <p class="legal-desc">Important information regarding the educational nature of this platform.</p>
+            <div class="legal-meta">
+                <i class="fa-regular fa-calendar"></i> Last Updated: August 27, 2026
+                <span class="status-dot" style="margin-left: 0.5rem;"></span> Educational Website
+            </div>
+        </div>
+        
+        <div class="legal-layout">
+            <!-- Sticky TOC -->
+            <aside>
+                <nav class="legal-toc">
+                    <div class="legal-toc-title">On this page</div>
+                    <ul>
+                        <li><a href="#advice">1. IT Advice Disclaimer</a></li>
+                        <li><a href="#external-links">2. External Links</a></li>
+                        <li><a href="#fair-use">3. Fair Use & Trademarks</a></li>
+                        <li><a href="#as-is">4. "As Is" Basis</a></li>
+                    </ul>
+                </nav>
+            </aside>
+            
+            <!-- Main Article -->
+            <article class="legal-article">
+                <p>The information provided by MJ Tech Hub ("we," "us," or "our") on mjtechhub.github.io is for general educational and informational purposes only. All information on the site is provided in good faith, however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the site.</p>
 
-    <div class="container py-4">
-        <a href="../index.html" class="btn btn-secondary mb-2">&larr; Back to Home</a>
-        <h1>Disclaimer</h1>
-        <p>This is a placeholder for the MJ Tech Hub Disclaimer.</p>
-    </div>
+                <section id="advice" class="legal-section">
+                    <h2>1. IT and Technical Advice Disclaimer</h2>
+                    <p>The tutorials, commands, scripts, and configuration examples provided on MJ Tech Hub are intended for educational learning. IT environments vary drastically in their architecture, security requirements, and operational constraints.</p>
+                    <ul>
+                        <li>The execution of commands (especially root, administrative, or networking commands) carries inherent risks, including the potential for data loss, service interruption, or system instability.</li>
+                        <li>You should never execute commands or apply configurations in a live production environment without first thoroughly testing them in an isolated staging or lab environment.</li>
+                        <li>Always ensure you have verified, restorable backups before making system-level changes.</li>
+                    </ul>
+                    
+                    <div class="legal-callout">
+                        <div class="legal-callout-icon">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div class="legal-callout-content">
+                            <p><strong>Important:</strong> Always test commands, scripts, and configurations in a safe or staging environment before applying them to production systems.</p>
+                        </div>
+                    </div>
+                    
+                    <p>Under no circumstance shall we have any liability to you for any loss or damage of any kind incurred as a result of the use of the site or reliance on any information provided on the site.</p>
+                </section>
 
+                <section id="external-links" class="legal-section">
+                    <h2>2. External Links Disclaimer</h2>
+                    <p>The site may contain links to other websites or content belonging to or originating from third parties. Such external links are not investigated, monitored, or checked for accuracy, adequacy, validity, reliability, availability, or completeness by us. We do not warrant, endorse, guarantee, or assume responsibility for the accuracy or reliability of any information offered by third-party websites.</p>
+                </section>
+
+                <section id="fair-use" class="legal-section">
+                    <h2>3. Fair Use & Trademarks</h2>
+                    <p>MJ Tech Hub is an independent educational initiative and is not affiliated with, endorsed by, or sponsored by any of the companies whose technologies are discussed (e.g., Microsoft, Linux Foundation, Cisco). All product names, logos, and brands are property of their respective owners and are used for identification and instructional purposes only under fair use principles.</p>
+                </section>
+
+                <section id="as-is" class="legal-section">
+                    <h2>4. "As Is" Basis</h2>
+                    <p>All content is provided on an "as is" and "as available" basis without any warranties of any kind. Your use of the site and your reliance on any information on the site is solely at your own risk.</p>
+                </section>
+            </article>
+        </div>
     </main>
-    <!-- Footer -->
     
     <div id="site-footer"></div>
     <script src="../js/components.js"></script>
+    <script src="../js/main.js" defer></script>
+    <script src="../js/theme.js"></script>
 </body>
 </html>

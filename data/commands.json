@@ -7,6 +7,7 @@
         "example": "ipconfig /all",
         "expectedResult": "Shows IPv4 address, subnet mask, default gateway, DNS server, DHCP status, and MAC address.",
         "useCase": "Troubleshooting network connectivity, checking if DHCP assigned an IP correctly.",
+        "category": "Networking",
         "warnings": null
     },
     {
@@ -17,6 +18,7 @@
         "example": "ping 8.8.8.8",
         "expectedResult": "Replies from the destination indicating latency and packet loss.",
         "useCase": "Verifying internet connection or if a specific server is online.",
+        "category": "Networking",
         "warnings": null
     },
     {
@@ -27,6 +29,7 @@
         "example": "tracert google.com",
         "expectedResult": "List of routers (hops) the packet passed through and response times.",
         "useCase": "Finding where a network connection drops or slows down.",
+        "category": "Networking",
         "warnings": null
     },
     {
@@ -37,6 +40,7 @@
         "example": "nslookup example.com",
         "expectedResult": "IP addresses associated with the domain name.",
         "useCase": "Troubleshooting DNS resolution issues.",
+        "category": "Networking",
         "warnings": null
     },
     {
@@ -47,6 +51,7 @@
         "example": "netstat -ano | findstr 8080",
         "expectedResult": "List of active connections and their state, along with the process ID.",
         "useCase": "Finding which application is using a specific port.",
+        "category": "Networking",
         "warnings": null
     },
     {
@@ -57,6 +62,7 @@
         "example": "sfc /scannow",
         "expectedResult": "Verifies files and replaces incorrect versions with correct Microsoft versions.",
         "useCase": "Fixing corrupted Windows system files causing crashes or strange behavior.",
+        "category": "System",
         "warnings": "Must be run as Administrator."
     }
 ]

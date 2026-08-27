@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             let tutorials = data;
             if (!Array.isArray(data)) {
-                // If the json is an object { tutorials: [...] }
                 tutorials = data.tutorials || [];
             }
 
@@ -37,18 +36,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 tutorials = tutorials.filter(t => t.category === categoryFilter);
             }
             
-            renderTutorials(tutorials, grid, basePath);
+            renderTutorials(tutorials, grid, basePath, 'All');
+            setupFilters(tutorials, grid, basePath);
         })
         .catch(err => {
             console.error('Error rendering tutorials:', err);
             grid.innerHTML = `<div style="grid-column: 1 / -1; padding: 2rem; color: var(--danger); text-align: center;">Failed to load tutorials.</div>`;
         });
         
-    function renderTutorials(tutorials, container, basePath) {
+    function setupFilters(allTutorials, grid, basePath) {
+        const filterControls = document.querySelector('.filter-controls');
+        if (!filterControls) return;
+        
+        const buttons = filterControls.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => {
+                    b.classList.remove('btn-secondary');
+                    b.classList.add('btn-ghost');
+                });
+                btn.classList.remove('btn-ghost');
+                btn.classList.add('btn-secondary');
+                
+                const filterValue = btn.textContent.trim();
+                let filtered = allTutorials;
+                
+                if (filterValue !== 'All') {
+                    filtered = allTutorials.filter(t => t.level === filterValue);
+                }
+                
+                renderTutorials(filtered, grid, basePath, filterValue);
+            });
+        });
+    }
+        
+    function renderTutorials(tutorials, container, basePath, filterValue = 'All') {
         container.innerHTML = '';
         
         if (tutorials.length === 0) {
-            container.innerHTML = `<div style="grid-column: 1 / -1; padding: 2rem; color: var(--text-muted); text-align: center;">No tutorials found.</div>`;
+            const levelText = filterValue !== 'All' ? filterValue + ' ' : '';
+            container.innerHTML = `<div style="grid-column: 1 / -1; padding: 4rem 2rem; color: var(--text-muted); text-align: center; background: var(--bg-secondary); border-radius: var(--radius-lg); border: 1px dashed var(--border-color);"><i class="fa-solid fa-folder-open" style="font-size: 2.5rem; color: var(--border-color); margin-bottom: 1rem; display: block;"></i><p style="font-size: 1.1rem; margin: 0;">No ${levelText}tutorials available yet.</p></div>`;
             return;
         }
 
