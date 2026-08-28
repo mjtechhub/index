@@ -28,7 +28,7 @@ jobs:
         run: |
           mkdir public
           cp -r *.html assets components css data js legal tutorials public/
-          cp CNAME sitemap.xml public/ || true
+          cp CNAME sitemap.xml robots.txt public/ || true
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
