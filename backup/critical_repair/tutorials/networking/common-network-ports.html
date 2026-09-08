@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <!-- SEO & Metadata -->
+    <title>Common Network Ports | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="A quick reference guide for essential TCP and UDP ports.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/networking/common-network-ports.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Common Network Ports | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="A quick reference guide for essential TCP and UDP ports.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/networking/common-network-ports.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Common Network Ports | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="A quick reference guide for essential TCP and UDP ports.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Common Network Ports</h1>
+        </div>
+        
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>In networking, an IP address gets data to the correct computer, but a <strong>Network Port</strong> ensures the data reaches the correct application running on that computer. A port is a logical endpoint represented by a number between 1 and 65,535.</p>
+            <p>Think of an IP address as a large apartment building. When a package arrives at the building, the delivery driver needs the apartment number (the Port) to know which specific tenant should receive the package. Without ports, a server couldn't simultaneously host a website, an email server, and a file share on the same IP address.</p>
+
+            <h2>TCP vs UDP Ports</h2>
+            <p>Ports are utilized by Transport Layer protocols, primarily <a href="tcp-vs-udp.html">TCP and UDP</a>. Port 53 using TCP is technically entirely different from Port 53 using UDP, though by convention, services often reserve both. TCP is used for reliable connections (like loading a webpage), while UDP is used for fast, connectionless data (like streaming video or <a href="what-is-dns.html">DNS</a> queries).</p>
+
+            <h2>Well-Known Ports Reference Table</h2>
+            <p>Ports 0 through 1023 are classified as "Well-Known Ports" and are standardized by IANA for specific foundational services. Every IT professional should memorize these common ports:</p>
+            
+            <table style="width: 100%; text-align: left; border-collapse: collapse; margin: 1.5rem 0;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border-color);">
+                        <th style="padding: 0.75rem;">Port</th>
+                        <th style="padding: 0.75rem;">Protocol</th>
+                        <th style="padding: 0.75rem;">Service</th>
+                        <th style="padding: 0.75rem;">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>20 / 21</strong></td>
+                        <td style="padding: 0.75rem;">TCP</td>
+                        <td style="padding: 0.75rem;">FTP</td>
+                        <td style="padding: 0.75rem;">File Transfer Protocol. Port 21 is for control, 20 for data transfer.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>22</strong></td>
+                        <td style="padding: 0.75rem;">TCP</td>
+                        <td style="padding: 0.75rem;">SSH</td>
+                        <td style="padding: 0.75rem;">Secure Shell. Used for secure remote command-line access.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>23</strong></td>
+                        <td style="padding: 0.75rem;">TCP</td>
+                        <td style="padding: 0.75rem;">Telnet</td>
+                        <td style="padding: 0.75rem;">Unencrypted remote access. Highly insecure; mostly obsolete.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>25</strong></td>
+                        <td style="padding: 0.75rem;">TCP</td>
+                        <td style="padding: 0.75rem;">SMTP</td>
+                        <td style="padding: 0.75rem;">Simple Mail Transfer Protocol. Used for sending emails between servers.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>53</strong></td>
+                        <td style="padding: 0.75rem;">UDP / TCP</td>
+                        <td style="padding: 0.75rem;">DNS</td>
+                        <td style="padding: 0.75rem;">Domain Name System. UDP for standard queries, TCP for zone transfers.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>67 / 68</strong></td>
+                        <td style="padding: 0.75rem;">UDP</td>
+                        <td style="padding: 0.75rem;">DHCP</td>
+                        <td style="padding: 0.75rem;">Dynamic Host Configuration. 67 is for the server, 68 for the client.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>80</strong></td>
+                        <td style="padding: 0.75rem;">TCP</td>
+                        <td style="padding: 0.75rem;">HTTP</td>
+                        <td style="padding: 0.75rem;">Unencrypted web traffic.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>110</strong></td>
+                        <td style="padding: 0.75rem;">TCP</td>
+                        <td style="padding: 0.75rem;">POP3</td>
+                        <td style="padding: 0.75rem;">Email retrieval protocol (downloads and deletes from server).</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>123</strong></td>
+                        <td style="padding: 0.75rem;">UDP</td>
+                        <td style="padding: 0.75rem;">NTP</td>
+                        <td style="padding: 0.75rem;">Network Time Protocol. Used for clock synchronization across networks.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>143</strong></td>
+                        <td style="padding: 0.75rem;">TCP</td>
+                        <td style="padding: 0.75rem;">IMAP</td>
+                        <td style="padding: 0.75rem;">Email retrieval protocol (syncs folders with server).</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>161 / 162</strong></td>
+                        <td style="padding: 0.75rem;">UDP</td>
+                        <td style="padding: 0.75rem;">SNMP</td>
+                        <td style="padding: 0.75rem;">Simple Network Management Protocol. 161 for polling, 162 for traps.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>389</strong></td>
+                        <td style="padding: 0.75rem;">TCP</td>
+                        <td style="padding: 0.75rem;">LDAP</td>
+                        <td style="padding: 0.75rem;">Lightweight Directory Access Protocol. Used for Active Directory queries.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>443</strong></td>
+                        <td style="padding: 0.75rem;">TCP</td>
+                        <td style="padding: 0.75rem;">HTTPS</td>
+                        <td style="padding: 0.75rem;">Encrypted web traffic (TLS/SSL).</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>445</strong></td>
+                        <td style="padding: 0.75rem;">TCP</td>
+                        <td style="padding: 0.75rem;">SMB</td>
+                        <td style="padding: 0.75rem;">Server Message Block. Used for Windows file sharing.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>514</strong></td>
+                        <td style="padding: 0.75rem;">UDP</td>
+                        <td style="padding: 0.75rem;">Syslog</td>
+                        <td style="padding: 0.75rem;">Used for sending network logs to a central server.</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 0.75rem;"><strong>636</strong></td>
+                        <td style="padding: 0.75rem;">TCP</td>
+                        <td style="padding: 0.75rem;">LDAPS</td>
+                        <td style="padding: 0.75rem;">Secure LDAP (Encrypted Directory Access).</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem;"><strong>3389</strong></td>
+                        <td style="padding: 0.75rem;">TCP / UDP</td>
+                        <td style="padding: 0.75rem;">RDP</td>
+                        <td style="padding: 0.75rem;">Remote Desktop Protocol. Used for Windows remote GUI access.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Listening Ports vs Ephemeral Source Ports</h2>
+            <p>It is a common misconception that all communication on the web happens on Port 443. </p>
+            <p>Servers use <strong>Listening Ports</strong>. A web server sits quietly, listening on Port 443 for incoming connections.</p>
+            <p>Clients (your web browser) use <strong>Ephemeral Source Ports</strong>. When your browser connects to a web server, your computer generates a temporary, random high-number port (e.g., Port 54321) as its return address. The connection is established between <code>Your_IP:54321</code> and <code>Server_IP:443</code>. Once you close the tab, your computer releases Port 54321 for future use.</p>
+
+            <h2>Commands to Verify and Test Ports</h2>
+            
+            <h3>1. Checking Local Listening Ports (What is running on my machine?)</h3>
+            <p>If you start a web server but it fails to load, you need to check if the application successfully bound to Port 80 or 443.</p>
+            
+            <p><strong>Windows (Command Prompt):</strong></p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                > netstat -ano | findstr LISTENING<br>
+                &nbsp;&nbsp;TCP    0.0.0.0:443        0.0.0.0:0          LISTENING       1452
+            </div>
+
+            <p><strong>Linux:</strong></p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                $ ss -tulpn | grep LISTEN
+            </div>
+
+            <h3>2. Testing Remote Port Connectivity (Is the firewall blocking it?)</h3>
+            <p>If you cannot access a remote server, pinging it is not enough. Ping only tests Layer 3. You must test the specific TCP port.</p>
+
+            <p><strong>Windows (PowerShell):</strong></p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                PS> Test-NetConnection 192.168.1.50 -Port 3389<br>
+                ComputerName     : 192.168.1.50<br>
+                RemoteAddress    : 192.168.1.50<br>
+                RemotePort       : 3389<br>
+                TcpTestSucceeded : True
+            </div>
+
+            <p><strong>Linux / macOS (using netcat):</strong></p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                $ nc -vz 192.168.1.50 22<br>
+                Connection to 192.168.1.50 22 port [tcp/ssh] succeeded!
+            </div>
+
+            <h2>Common Troubleshooting Errors</h2>
+            <p>When testing a TCP connection with tools like <code>netcat</code>, <code>curl</code>, or your web browser, the error message tells you exactly where the failure occurred:</p>
+
+            <h3>1. Connection Refused</h3>
+            <p>The packet reached the destination server, but the server actively rejected it. This usually means the server is online, but the service (like Apache or SSH) is crashed, stopped, or listening on the wrong port. It can also mean a host-based firewall actively rejected the packet.</p>
+
+            <h3>2. Connection Timeout</h3>
+            <p>The packet was sent, but no response was ever received. The packet vanished into a black hole. This almost always indicates that a <a href="stateful-firewall-explained.html">Stateful Firewall</a> is silently dropping the traffic along the route.</p>
+
+            <h2>Quick Summary</h2>
+            <ul>
+                <li>Ports identify the specific application receiving the data.</li>
+                <li>Servers listen on well-known standard ports (e.g., 443 for HTTPS).</li>
+                <li>Clients use temporary ephemeral source ports to receive the replies.</li>
+                <li><code>netstat</code> and <code>ss</code> check local listening ports.</li>
+                <li>PowerShell's <code>Test-NetConnection</code> and Linux's <code>nc</code> test remote port reachability through firewalls.</li>
+            </ul>
+        </div>
+</div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <span></span>
+            <span></span>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>
+

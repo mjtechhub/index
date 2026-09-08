@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Resources",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "title", "description", "category", "type", "url", "status"],
+    "properties": {
+      "id": { "type": "string" },
+      "title": { "type": "string" },
+      "description": { "type": "string" },
+      "category": { "type": "string" },
+      "type": { "type": "string" },
+      "url": { "type": "string" },
+      "tags": { "type": "string" },
+      "status": { "type": "string" }
+    }
+  }
+}

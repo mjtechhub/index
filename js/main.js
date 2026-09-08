@@ -3,9 +3,14 @@
  * Handles global functionality like mobile menu
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Dynamic component initialization is handled via event delegation
-    // to support dynamically injected header/footer HTML.
+if (window.mjMainInitialized) {
+    // Prevent duplicate initialization
+} else {
+    window.mjMainInitialized = true;
+
+    function initMain() {
+        // Dynamic component initialization is handled via event delegation
+        // to support dynamically injected header/footer HTML.
     
     document.addEventListener('click', (e) => {
         const mobileMenuBtn = e.target.closest('.mobile-menu-toggle');
@@ -60,6 +65,51 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
 
+    // Dynamic Statistics (Homepage)
+    const statTutorials = document.getElementById('stat-tutorials');
+    const statCommands = document.getElementById('stat-commands');
+    const statTopics = document.getElementById('stat-topics');
+    const statQuizzes = document.getElementById('stat-quizzes');
+
+    if (statTutorials || statCommands || statTopics || statQuizzes) {
+        fetch('./data/tutorials.json')
+            .then(res => res.ok ? res.json() : [])
+            .then(data => {
+                if (statTutorials && Array.isArray(data)) {
+                    statTutorials.textContent = data.length + '+';
+                }
+            })
+            .catch(() => {});
+
+        fetch('./data/commands.json')
+            .then(res => res.ok ? res.json() : [])
+            .then(data => {
+                if (statCommands && Array.isArray(data)) {
+                    statCommands.textContent = data.length;
+                }
+            })
+            .catch(() => {});
+
+        fetch('./data/topics.json')
+            .then(res => res.ok ? res.json() : {})
+            .then(data => {
+                if (statTopics && data.categories) {
+                    const coreCount = data.categories.filter(c => c.type === 'core').length;
+                    statTopics.textContent = coreCount || 6;
+                }
+            })
+            .catch(() => {});
+
+        fetch('./data/quizzes.json')
+            .then(res => res.ok ? res.json() : [])
+            .then(data => {
+                if (statQuizzes && Array.isArray(data)) {
+                    statQuizzes.textContent = data.length;
+                }
+            })
+            .catch(() => {});
+    }
+
     // Dynamic Latest Tutorials (Homepage)
     const latestTutorialsList = document.getElementById('latest-tutorials-list');
     if (latestTutorialsList) {
@@ -69,134 +119,118 @@ document.addEventListener('DOMContentLoaded', () => {
                 return res.json();
             })
             .then(data => {
-                if (!data || data.length === 0) {
+                if (!data || !Array.isArray(data) || data.length === 0) {
                     latestTutorialsList.textContent = 'No tutorials published yet.';
                     return;
                 }
 
+                function parseDate(val) {
+                    if (!val || val === 'UNKNOWN') return 0;
+                    const d = new Date(val).getTime();
+                    return isNaN(d) ? 0 : d;
+                }
+
                 // Sort by date descending
-                data.sort((a, b) => {
-                    const dateA = new Date(a.updatedAt || a.publishedAt || a.createdAt || 0);
-                    const dateB = new Date(b.updatedAt || b.publishedAt || b.createdAt || 0);
+                const sorted = [...data].sort((a, b) => {
+                    const dateA = parseDate(a.updatedAt || a.publishedAt || a.createdAt);
+                    const dateB = parseDate(b.updatedAt || b.publishedAt || b.createdAt);
                     return dateB - dateA;
                 });
 
-                const topTutorials = data.slice(0, 3);
+                const topTutorials = sorted.slice(0, 3);
                 latestTutorialsList.innerHTML = ''; // Clear container
 
                 topTutorials.forEach(tut => {
-                    // Wrapper Link
                     const link = document.createElement('a');
-                    link.href = tut.url ? tut.url : '#';
-                    link.className = 'list-card-link';
+                    link.href = tut.url || '#';
+                    link.className = 'dash-tut-card';
 
-                    // Main Card
-                    const card = document.createElement('div');
-                    card.className = 'list-card';
-
-                    // Determine Icon and Colors based on category
-                    let iconClass = 'fas fa-terminal';
-                    let iconBg = '#000';
-                    let iconColor = 'white';
-                    let badgeBg = 'var(--bg-tertiary)';
-                    let badgeColor = 'var(--brand-primary)';
+                    // Determine icon and colors based on category
+                    let iconPath = './assets/icons/networking.png';
+                    let badgeBg = 'rgba(37, 99, 235, 0.1)';
+                    let badgeColor = 'var(--cat-networking, #2563EB)';
 
                     const cat = (tut.category || '').toLowerCase();
                     if (cat.includes('windows')) {
-                        iconClass = 'fab fa-windows';
-                        iconBg = '#0078D7';
+                        iconPath = './assets/icons/windows.png';
+                        badgeBg = 'rgba(2, 132, 199, 0.1)';
+                        badgeColor = 'var(--cat-windows, #0284C7)';
                     } else if (cat.includes('linux')) {
-                        iconClass = 'fab fa-linux';
-                        iconBg = '#f1f5f9';
-                        iconColor = 'black';
-                        badgeBg = 'rgba(16,185,129,0.1)';
-                        badgeColor = 'var(--success)';
-                    } else if (cat.includes('network') || cat.includes('active directory')) {
-                        iconClass = 'fas fa-network-wired';
-                        iconBg = '#e0f2fe';
-                        iconColor = 'var(--brand-secondary)';
+                        iconPath = './assets/icons/linux.png';
+                        badgeBg = 'rgba(16, 185, 129, 0.1)';
+                        badgeColor = 'var(--cat-linux, #10B981)';
                     } else if (cat.includes('server')) {
-                        iconClass = 'fas fa-server';
-                        iconBg = '#4b5563';
+                        iconPath = './assets/icons/servers.png';
+                        badgeBg = 'rgba(124, 58, 237, 0.1)';
+                        badgeColor = 'var(--cat-servers, #7C3AED)';
                     } else if (cat.includes('cyber') || cat.includes('security')) {
-                        iconClass = 'fas fa-shield-alt';
-                        iconBg = '#fef08a';
-                        iconColor = '#854d0e';
-                    } else if (cat.includes('cloud')) {
-                        iconClass = 'fas fa-cloud';
-                        iconBg = '#0ea5e9';
+                        iconPath = './assets/icons/cybersecurity.png';
+                        badgeBg = 'rgba(249, 115, 22, 0.1)';
+                        badgeColor = 'var(--cat-cybersecurity, #F97316)';
+                    } else if (cat.includes('cloud') || cat.includes('ai')) {
+                        iconPath = './assets/icons/cloud-ai.png';
+                        badgeBg = 'rgba(6, 182, 212, 0.1)';
+                        badgeColor = 'var(--cat-cloud, #06B6D4)';
                     }
 
-                    // Icon Div
-                    const iconDiv = document.createElement('div');
-                    iconDiv.style.width = '80px';
-                    iconDiv.style.height = '60px';
-                    iconDiv.style.background = iconBg;
-                    iconDiv.style.borderRadius = '8px';
-                    iconDiv.style.display = 'flex';
-                    iconDiv.style.alignItems = 'center';
-                    iconDiv.style.justifyContent = 'center';
-                    iconDiv.style.color = iconColor;
-                    iconDiv.style.fontSize = '1.5rem';
-                    const iconEl = document.createElement('i');
-                    iconEl.className = iconClass;
-                    iconDiv.appendChild(iconEl);
-                    card.appendChild(iconDiv);
+                    // Thumbnail
+                    const thumb = document.createElement('div');
+                    thumb.className = 'dash-tut-thumb';
+                    const thumbImg = document.createElement('img');
+                    thumbImg.src = iconPath;
+                    thumbImg.alt = '';
+                    thumbImg.width = 26;
+                    thumbImg.height = 26;
+                    thumb.appendChild(thumbImg);
+                    link.appendChild(thumb);
 
-                    // Content Div
-                    const contentDiv = document.createElement('div');
-                    contentDiv.style.flexGrow = '1';
+                    // Body
+                    const body = document.createElement('div');
+                    body.className = 'dash-tut-body';
 
-                    // Header Row (Title and Badge)
-                    const headerRow = document.createElement('div');
-                    headerRow.style.display = 'flex';
-                    headerRow.style.justifyContent = 'space-between';
-                    
+                    // Title Row
+                    const titleRow = document.createElement('div');
+                    titleRow.className = 'dash-tut-title-row';
+
                     const titleEl = document.createElement('h4');
-                    titleEl.style.margin = '0';
-                    titleEl.style.fontSize = '0.95rem';
+                    titleEl.className = 'dash-tut-title';
                     titleEl.textContent = tut.title || 'Untitled';
-                    
+
                     const badgeEl = document.createElement('span');
-                    badgeEl.style.fontSize = '0.7rem';
-                    badgeEl.style.background = badgeBg;
+                    badgeEl.className = 'dash-tut-badge';
+                    badgeEl.style.backgroundColor = badgeBg;
                     badgeEl.style.color = badgeColor;
-                    badgeEl.style.padding = '2px 6px';
-                    badgeEl.style.borderRadius = '4px';
-                    badgeEl.textContent = tut.category || 'Uncategorized';
-                    
-                    headerRow.appendChild(titleEl);
-                    headerRow.appendChild(badgeEl);
-                    contentDiv.appendChild(headerRow);
+                    badgeEl.textContent = tut.category || 'General';
+
+                    titleRow.appendChild(titleEl);
+                    titleRow.appendChild(badgeEl);
+                    body.appendChild(titleRow);
 
                     // Description
                     const descEl = document.createElement('p');
-                    descEl.style.fontSize = '0.8rem';
-                    descEl.style.color = 'var(--text-secondary)';
-                    descEl.style.margin = '0.25rem 0';
+                    descEl.className = 'dash-tut-desc';
                     descEl.textContent = tut.description || '';
-                    contentDiv.appendChild(descEl);
+                    body.appendChild(descEl);
 
-                    // Meta Row (Read Time, Level, Date)
+                    // Meta Row
                     const metaRow = document.createElement('div');
-                    metaRow.style.display = 'flex';
-                    metaRow.style.justifyContent = 'space-between';
-                    metaRow.style.fontSize = '0.75rem';
-                    metaRow.style.color = 'var(--text-muted)';
-                    
-                    const leftMeta = document.createElement('span');
-                    leftMeta.innerHTML = `<i class="fas fa-clock"></i> ${tut.readTime || '5 min'} &nbsp;&nbsp; <i class="fas fa-signal"></i> ${tut.level || 'Beginner'}`;
-                    
-                    const rightMeta = document.createElement('span');
-                    const dateObj = new Date(tut.updatedAt || tut.publishedAt || tut.createdAt || 0);
-                    rightMeta.textContent = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                    
-                    metaRow.appendChild(leftMeta);
-                    metaRow.appendChild(rightMeta);
-                    contentDiv.appendChild(metaRow);
+                    metaRow.className = 'dash-tut-meta';
 
-                    card.appendChild(contentDiv);
-                    link.appendChild(card);
+                    const metaLeft = document.createElement('span');
+                    metaLeft.innerHTML = `<i class="fa-regular fa-clock" aria-hidden="true"></i> ${tut.readTime || '5 min read'} &nbsp;&bull;&nbsp; <i class="fa-solid fa-signal" aria-hidden="true"></i> ${tut.level || 'Beginner'}`;
+
+                    metaRow.appendChild(metaLeft);
+
+                    const timeVal = parseDate(tut.updatedAt || tut.publishedAt || tut.createdAt);
+                    if (timeVal > 0) {
+                        const dateSpan = document.createElement('span');
+                        dateSpan.className = 'dash-tut-date';
+                        dateSpan.textContent = new Date(timeVal).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                        metaRow.appendChild(dateSpan);
+                    }
+
+                    body.appendChild(metaRow);
+                    link.appendChild(body);
                     latestTutorialsList.appendChild(link);
                 });
             })
@@ -205,4 +239,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 latestTutorialsList.textContent = 'Unable to load tutorials.';
             });
     }
-});
+
+    // Dynamic Popular Commands (Homepage)
+    const popularCommandsList = document.getElementById('popular-commands-list');
+    if (popularCommandsList) {
+        fetch('./data/commands.json')
+            .then(res => res.ok ? res.json() : [])
+            .then(commands => {
+                popularCommandsList.innerHTML = '';
+                if (!Array.isArray(commands) || commands.length === 0) {
+                    popularCommandsList.textContent = 'No commands available.';
+                    return;
+                }
+
+                commands.slice(0, 12).forEach(cmd => {
+                    const pill = document.createElement('a');
+                    pill.href = 'commands.html';
+                    pill.className = 'command-pill';
+                    if (cmd.purpose) {
+                        pill.title = cmd.purpose;
+                    }
+                    const code = document.createElement('code');
+                    code.textContent = cmd.command;
+                    pill.appendChild(code);
+                    popularCommandsList.appendChild(pill);
+                });
+            })
+            .catch(err => {
+                console.error('Failed to load popular commands:', err);
+            });
+    }
+}
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMain);
+    } else {
+        initMain();
+    }
+}

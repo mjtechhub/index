@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Topics",
+  "type": "object",
+  "required": ["categories"],
+  "properties": {
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "type", "description", "url"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "type": { "type": "string", "enum": ["core", "more"] },
+          "description": { "type": "string" },
+          "url": { "type": "string" },
+          "accent": { "type": "string" },
+          "icon": { "type": "string" },
+          "keywords": { "type": "string" },
+          "sections": { "type": "array" }
+        }
+      }
+    }
+  }
+}

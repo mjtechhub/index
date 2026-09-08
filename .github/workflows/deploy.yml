@@ -23,12 +23,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Site & Data Validation
+        run: |
+          python scripts/validate_site.py
       
       - name: Prepare Public Directory
         run: |
           mkdir public
           cp -r *.html assets components css data js legal tutorials public/
           cp CNAME sitemap.xml robots.txt public/ || true
+
       
       - name: Setup Pages
         uses: actions/configure-pages@v4

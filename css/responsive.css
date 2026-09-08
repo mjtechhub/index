@@ -93,8 +93,8 @@
     
     .footer-links {
         flex-direction: column;
-        gap: 1rem;
-        align-items: center;
+        gap: 0.5rem;
+        align-items: flex-start;
     }
     
     .badge-grid {

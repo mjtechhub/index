@@ -55,7 +55,8 @@
                             "level": "Beginner",
                             "url": "tutorials/networking/what-is-a-mac-address.html"
                         }
-                    ]
+                    ],
+                    "title": "Networking Fundamentals"
                 },
                 {
                     "name": "IP Addressing",
@@ -84,7 +85,8 @@
                             "level": "Intermediate",
                             "url": "tutorials/networking/subnetting-basics.html"
                         }
-                    ]
+                    ],
+                    "title": "IP Addressing"
                 },
                 {
                     "name": "DNS",
@@ -95,7 +97,8 @@
                             "level": "Beginner",
                             "url": "tutorials/networking/what-is-dns.html"
                         }
-                    ]
+                    ],
+                    "title": "DNS"
                 },
                 {
                     "name": "DHCP",
@@ -106,7 +109,8 @@
                             "level": "Beginner",
                             "url": "tutorials/networking/what-is-dhcp.html"
                         }
-                    ]
+                    ],
+                    "title": "DHCP"
                 },
                 {
                     "name": "Switching & VLAN",
@@ -129,7 +133,8 @@
                             "level": "Intermediate",
                             "url": "tutorials/networking/spanning-tree-protocol-explained.html"
                         }
-                    ]
+                    ],
+                    "title": "Switching & VLAN"
                 },
                 {
                     "name": "Routing",
@@ -176,7 +181,8 @@
                             "level": "Beginner",
                             "url": "tutorials/networking/icmp-explained.html"
                         }
-                    ]
+                    ],
+                    "title": "Routing"
                 },
                 {
                     "name": "Wireless",
@@ -187,7 +193,8 @@
                             "level": "Beginner",
                             "url": "tutorials/networking/wi-fi-2-4-ghz-vs-5-ghz-vs-6-ghz.html"
                         }
-                    ]
+                    ],
+                    "title": "Wireless"
                 },
                 {
                     "name": "Troubleshooting",
@@ -222,7 +229,8 @@
                             "level": "Intermediate",
                             "url": "tutorials/networking/network-troubleshooting-workflow.html"
                         }
-                    ]
+                    ],
+                    "title": "Troubleshooting"
                 },
                 {
                     "name": "Ports & Protocols",
@@ -239,7 +247,8 @@
                             "level": "Intermediate",
                             "url": "tutorials/networking/tcp-vs-udp.html"
                         }
-                    ]
+                    ],
+                    "title": "Ports & Protocols"
                 },
                 {
                     "title": "ADVANCED ROUTING",
@@ -252,7 +261,8 @@
                             "name": "BGP Basics",
                             "url": "tutorials/networking/bgp-basics.html"
                         }
-                    ]
+                    ],
+                    "name": "Advanced Routing"
                 },
                 {
                     "title": "NETWORK SECURITY",
@@ -269,7 +279,8 @@
                             "name": "Port Forwarding and DNAT Explained",
                             "url": "tutorials/networking/port-forwarding-and-dnat-explained.html"
                         }
-                    ]
+                    ],
+                    "name": "Network Security"
                 },
                 {
                     "title": "VPN & REMOTE CONNECTIVITY",
@@ -282,7 +293,8 @@
                             "name": "Remote Access VPN Explained",
                             "url": "tutorials/networking/remote-access-vpn-explained.html"
                         }
-                    ]
+                    ],
+                    "name": "Vpn & Remote Connectivity"
                 },
                 {
                     "title": "NETWORK SERVICES",
@@ -295,7 +307,8 @@
                             "name": "DNS Record Types Explained",
                             "url": "tutorials/networking/dns-record-types-explained.html"
                         }
-                    ]
+                    ],
+                    "name": "Network Services"
                 },
                 {
                     "title": "IPV6",
@@ -304,7 +317,8 @@
                             "name": "IPv6 Fundamentals",
                             "url": "tutorials/networking/ipv6-fundamentals.html"
                         }
-                    ]
+                    ],
+                    "name": "Ipv6"
                 },
                 {
                     "title": "MONITORING & VISIBILITY",
@@ -321,7 +335,8 @@
                             "name": "Wireshark Basics",
                             "url": "tutorials/networking/wireshark-basics.html"
                         }
-                    ]
+                    ],
+                    "name": "Monitoring & Visibility"
                 },
                 {
                     "title": "PERFORMANCE TROUBLESHOOTING",
@@ -342,7 +357,8 @@
                             "name": "QoS Explained",
                             "url": "tutorials/networking/qos-explained.html"
                         }
-                    ]
+                    ],
+                    "name": "Performance Troubleshooting"
                 },
                 {
                     "title": "REDUNDANCY & HIGH AVAILABILITY",
@@ -355,7 +371,8 @@
                             "name": "VRRP / HSRP & Gateway Redundancy",
                             "url": "tutorials/networking/vrrp-hsrp-gateway-redundancy.html"
                         }
-                    ]
+                    ],
+                    "name": "Redundancy & High Availability"
                 },
                 {
                     "title": "ADVANCED TROUBLESHOOTING",
@@ -376,7 +393,8 @@
                             "name": "Enterprise Network Troubleshooting Case Studies",
                             "url": "tutorials/networking/enterprise-network-troubleshooting-case-studies.html"
                         }
-                    ]
+                    ],
+                    "name": "Advanced Troubleshooting"
                 },
                 {
                     "title": "NETWORK PERFORMANCE",
@@ -393,7 +411,8 @@
                             "name": "Duplex Mismatch & Speed Negotiation",
                             "url": "tutorials/networking/duplex-mismatch-and-speed-negotiation.html"
                         }
-                    ]
+                    ],
+                    "name": "Network Performance"
                 },
                 {
                     "title": "TRAFFIC TYPES & NETWORK BEHAVIOR",
@@ -402,7 +421,8 @@
                             "name": "Unicast vs Broadcast vs Multicast",
                             "url": "tutorials/networking/unicast-vs-broadcast-vs-multicast.html"
                         }
-                    ]
+                    ],
+                    "name": "Traffic Types & Network Behavior"
                 },
                 {
                     "title": "OBSERVABILITY & CAPACITY",
@@ -419,7 +439,8 @@
                             "name": "NetFlow / IPFIX Explained",
                             "url": "tutorials/networking/netflow-ipfix-explained.html"
                         }
-                    ]
+                    ],
+                    "name": "Observability & Capacity"
                 }
             ]
         },

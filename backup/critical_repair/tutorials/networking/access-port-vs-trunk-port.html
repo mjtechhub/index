@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <!-- SEO & Metadata -->
+    <title>Access Port vs Trunk Port | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn the difference between access ports and trunk ports in VLAN configurations.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/networking/access-port-vs-trunk-port.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Access Port vs Trunk Port | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn the difference between access ports and trunk ports in VLAN configurations.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/networking/access-port-vs-trunk-port.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Access Port vs Trunk Port | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn the difference between access ports and trunk ports in VLAN configurations.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Access Port vs Trunk Port</h1>
+        </div>
+        
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>In modern enterprise networking, physical network switches are almost always partitioned into multiple <a href="what-is-vlan.html">VLANs (Virtual Local Area Networks)</a> to improve security and performance. To make VLANs work across an entire building or campus, network engineers must properly configure switch ports as either <strong>Access Ports</strong> or <strong>Trunk Ports</strong>.</p>
+            
+            <h2>What is an Access Port?</h2>
+            <p>An access port is designed to connect to an <strong>endpoint device</strong>—such as a desktop PC, a printer, an IP phone, or a server. </p>
+            <ul>
+                <li><strong>One VLAN Only:</strong> An access port belongs to exactly one specific VLAN (often called the Access VLAN). </li>
+                <li><strong>Untagged Traffic:</strong> Endpoints like Windows PCs or basic printers do not understand VLAN tags. The switch completely hides the concept of VLANs from the endpoint. When a PC sends a standard Ethernet frame into the switch, the switch receives it and internally assigns it to the configured Access VLAN. When the switch sends a frame back to the PC, it strips any VLAN tags off so the PC can read it.</li>
+            </ul>
+            
+            <h2>What is a Trunk Port?</h2>
+            <p>A trunk port is designed to pass traffic for <strong>multiple VLANs</strong> simultaneously across a single physical cable. Trunk ports are used to connect network infrastructure devices together, such as switch-to-switch, switch-to-router, switch-to-firewall, or switch-to-hypervisor (like VMware ESXi).</p>
+            <ul>
+                <li><strong>802.1Q Tagging:</strong> If Switch A sends a frame to Switch B, Switch B needs to know which VLAN that frame belongs to. To solve this, Switch A inserts a 4-byte 802.1Q VLAN Tag into the Ethernet header before sending it across the trunk cable. Switch B reads the tag, knows the traffic belongs to VLAN 10, and forwards it to the correct access ports.</li>
+                <li><strong>Allowed VLAN List:</strong> By default, a trunk allows all VLANs to cross it. For security and performance, engineers often restrict this using an Allowed VLAN List, ensuring only necessary traffic crosses the link.</li>
+            </ul>
+
+            <h2>The Native VLAN Concept</h2>
+            <p>What happens if a trunk port receives an Ethernet frame that does <em>not</em> have an 802.1Q tag? </p>
+            <p>The switch assigns untagged frames to the <strong>Native VLAN</strong>. By default on most vendors (like Cisco), the Native VLAN is VLAN 1. For security reasons, best practices dictate changing the Native VLAN to an unused "black hole" VLAN to prevent traffic leakage. The Native VLAN must match on both ends of a trunk link, or a native VLAN mismatch error will occur (which breaks <a href="spanning-tree-protocol-explained.html">STP</a>).</p>
+
+            <h2>Real-World Office Example</h2>
+            <p>Imagine a small office with two 48-port switches (Switch 1 on the first floor, Switch 2 on the second floor). The company uses four VLANs:</p>
+            <ul>
+                <li>VLAN 10: Users</li>
+                <li>VLAN 20: Servers</li>
+                <li>VLAN 30: Management</li>
+                <li>VLAN 40: CCTV Cameras</li>
+            </ul>
+            
+            <p><strong>The Access Ports:</strong> The CCTV camera in the lobby is plugged into Port 5 on Switch 1. Port 5 is configured as an Access Port on VLAN 40. The camera just sends standard, untagged video data. The switch receives it and internally tags it as VLAN 40.</p>
+            
+            <p><strong>The Trunk Port:</strong> Port 48 on Switch 1 connects to Port 48 on Switch 2 via a fiber optic cable. Port 48 is configured as a Trunk Port. When the video traffic needs to go to the recording server on the second floor, Switch 1 adds an 802.1Q tag with the number "40" and sends it across the trunk. Switch 2 receives it, reads the tag, strips the tag off, and sends the raw video data out the Access Port connected to the server.</p>
+
+            <h2>Common Troubleshooting Scenarios</h2>
+            <p>Misconfigured switchports account for a massive percentage of Help Desk tickets. (See <a href="advanced-vlan-troubleshooting.html">Advanced VLAN Troubleshooting</a>).</p>
+            
+            <h3>1. The Wrong Access VLAN</h3>
+            <p><strong>Problem:</strong> A user's PC cannot reach the internet or internal servers.</p>
+            <p><strong>Troubleshooting:</strong> The physical cable might be plugged into Port 12, but Port 12 is configured for the Guest VLAN instead of the Employee VLAN. The PC receives an IP address for the wrong network. Changing the port's Access VLAN to the Employee VLAN immediately resolves the issue.</p>
+
+            <h3>2. Missing VLAN on the Trunk</h3>
+            <p><strong>Problem:</strong> PCs on Switch 1 (VLAN 10) cannot ping PCs on Switch 2 (VLAN 10). However, they can ping other PCs on their own switch.</p>
+            <p><strong>Troubleshooting:</strong> Check the trunk link connecting the two switches. The Allowed VLAN list might be restricting VLAN 10 from crossing the link. Alternatively, the administrator may have forgotten to actually create VLAN 10 in the global configuration of Switch 2.</p>
+
+            <h3>3. PC Plugged into a Trunk Port</h3>
+            <p><strong>Problem:</strong> An employee unplugs a cable from a broken network switch and plugs their laptop directly into the wall jack. They get no network connectivity.</p>
+            <p><strong>Troubleshooting:</strong> That wall jack was wired to a Trunk port designed to feed the broken switch. The laptop's standard network card does not understand the 802.1Q tagged frames coming from the wall and drops them.</p>
+
+            <h2>Quick Summary</h2>
+            <ul>
+                <li><strong>Access Ports</strong> connect to endpoints (PCs). They handle one VLAN, and send/receive untagged traffic.</li>
+                <li><strong>Trunk Ports</strong> connect switches to other infrastructure devices. They handle multiple VLANs using 802.1Q tags to keep traffic separated.</li>
+                <li>The Native VLAN is used to handle any untagged traffic that accidentally arrives on a trunk port.</li>
+            </ul>
+        </div>
+</div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='icmp-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; ICMP Explained</a>
+            <a href='spanning-tree-protocol-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>Spanning Tree Protocol (STP) Explained &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>
+
+

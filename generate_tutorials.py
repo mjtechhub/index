@@ -2,22 +2,15 @@ import json
 import os
 import re
 from datetime import datetime
+from pathlib import Path
 
-# Read header and footer from what-is-dns.html
-html_path = r'c:\xampp\htdocs\index\tutorials\networking\what-is-dns.html'
-with open(html_path, 'r', encoding='utf-8') as f:
-    dns_html = f.read()
-
-header_match = re.search(r'(<!-- Header -->.*?</header>)', dns_html, re.DOTALL)
-header = header_match.group(1) if header_match else ''
-
-footer_match = re.search(r'(<!-- Footer -->.*?</footer>)', dns_html, re.DOTALL)
-footer = footer_match.group(1) if footer_match else ''
+REPO_ROOT = Path(__file__).resolve().parent
 
 def generate_lesson(slug, title, category, level, readTime, html_content):
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="../../js/theme-init.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{title} | {category} | MJ Tech Hub</title>
@@ -25,41 +18,25 @@ def generate_lesson(slug, title, category, level, readTime, html_content):
     <link rel="stylesheet" href="../../css/themes.css">
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/responsive.css">
-    <script src="../../js/theme.js"></script>
-    <script src="../../js/main.js" defer></script>
 </head>
 <body>
-    {header}
+    <div id="site-header"></div>
     <main class="lesson-container py-4">
-        <!-- Breadcrumb -->
-        <div style="margin-bottom: 1rem; font-size: 0.85rem; color: var(--text-muted);">
-            <a href="../../index.html" style="color: var(--text-secondary);">Home</a> &gt; 
-            <a href="../../topics.html" style="color: var(--text-secondary);">Topics</a> &gt; 
-            <a href="../../{category.lower()}.html" style="color: var(--text-secondary);">{category}</a> &gt; 
-            <span style="color: var(--brand-primary);">{title}</span>
+        <div id="tutorial-header">
+            <h1 class="static-h1">{title}</h1>
         </div>
         
-        <span style="font-size: 0.8rem; background: var(--bg-tertiary); color: var(--brand-primary); padding: 4px 10px; border-radius: 4px; font-weight: 600; text-transform: uppercase;">{category}</span>
-        <h1 style="font-size: 2.5rem; margin: 1rem 0; color: var(--text-primary);">{title}</h1>
-        
-        <div style="display: flex; gap: 1rem; margin-bottom: 2rem; font-size: 0.85rem; color: var(--text-muted);">
-            <span><i class="fas fa-signal" style="color: var(--success);"></i> {level}</span>
-            <span><i class="fas fa-clock"></i> {readTime}</span>
-        </div>
-        
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+        <div class="content lesson-content">
 {html_content}
         </div>
-        
-        <!-- Navigation -->
-        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
-            <span></span>
-            <span></span>
-        </div>
     </main>
-    {footer}
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js"></script>
+    <script src="../../js/theme.js"></script>
 </body>
 </html>"""
+
 
 tutorials = [
     {
@@ -318,19 +295,18 @@ tutorials = [
     }
 ]
 
-json_path = r'c:\xampp\htdocs\index\data\tutorials.json'
+json_path = REPO_ROOT / 'data' / 'tutorials.json'
 with open(json_path, 'r', encoding='utf-8') as f:
     tut_data = json.load(f)
 
 existing_ids = {t['id'] for t in tut_data}
 today = datetime.today().strftime('%Y-%m-%d')
-script_dir = r'c:\xampp\htdocs\index\tutorials\networking'
-if not os.path.exists(script_dir):
-    os.makedirs(script_dir)
+script_dir = REPO_ROOT / 'tutorials' / 'networking'
+script_dir.mkdir(parents=True, exist_ok=True)
 
 for t in tutorials:
     filename = f"{t['id']}.html"
-    filepath = os.path.join(script_dir, filename)
+    filepath = script_dir / filename
     
     html_out = generate_lesson(t['id'], t['title'], t['category'], t['level'], t['readTime'], t['html'])
     with open(filepath, 'w', encoding='utf-8') as f:
@@ -356,3 +332,4 @@ for t in tutorials:
 with open(json_path, 'w', encoding='utf-8') as f:
     json.dump(tut_data, f, indent=4)
 print("Updated tutorials.json")
+

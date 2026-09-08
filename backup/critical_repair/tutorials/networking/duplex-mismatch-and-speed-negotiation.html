@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <!-- SEO & Metadata -->
+    <title>Duplex Mismatch & Speed Negotiation | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn about Duplex Mismatch & Speed Negotiation in this Networking tutorial.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/networking/duplex-mismatch-and-speed-negotiation.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Duplex Mismatch & Speed Negotiation | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn about Duplex Mismatch & Speed Negotiation in this Networking tutorial.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/networking/duplex-mismatch-and-speed-negotiation.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Duplex Mismatch & Speed Negotiation | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn about Duplex Mismatch & Speed Negotiation in this Networking tutorial.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Duplex Mismatch & Speed Negotiation</h1>
+        </div>
+        
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>In Ethernet networking, devices must agree on two physical-layer parameters before they can communicate effectively: <strong>Speed</strong> (e.g., 100 Mbps or 1000 Mbps) and <strong>Duplex</strong>.</p>
+            
+            <ul>
+                <li><strong>Half Duplex:</strong> A device can send data, or receive data, but it cannot do both at the same time. Think of a two-way radio (walkie-talkie). If both devices transmit simultaneously, a <em>collision</em> occurs, destroying the data.</li>
+                <li><strong>Full Duplex:</strong> A device can send and receive data simultaneously without collisions. Think of a telephone. </li>
+            </ul>
+
+            <h2>Auto-Negotiation</h2>
+            <p>When you plug a cable between a PC and a switch, they send fast link pulses to advertise their capabilities. This is <strong>Auto-Negotiation</strong>. If both support 1000 Mbps Full Duplex, they agree to use it.</p>
+            <p><em>Note: Gigabit Ethernet (1000 Mbps) fundamentally relies on Auto-Negotiation and is designed exclusively for Full Duplex operation.</em></p>
+
+            <h2>The Duplex Mismatch Scenario</h2>
+            <p>A Duplex Mismatch occurs when the two ends of a single cable operate in different duplex modes. The classic scenario happens when a network engineer manually hardcodes a switch port to "100 Mbps / Full Duplex" but leaves the connected server set to "Auto". </p>
+            
+            <p>The server attempts to auto-negotiate. Because the switch port is hardcoded, the switch stays silent. The server detects the 100 Mbps electrical signal, but because it didn't receive an auto-negotiation reply, it falls back to the Ethernet failsafe standard: <strong>Half Duplex</strong>.</p>
+            
+            <p>You now have:</p>
+            <ul>
+                <li><strong>Switch Port:</strong> 100 Mbps / Full Duplex</li>
+                <li><strong>Server Port:</strong> 100 Mbps / Half Duplex</li>
+            </ul>
+
+            <h2>The Symptoms</h2>
+            <p>A duplex mismatch is insidious because the link status shows "UP" and basic pings usually work perfectly. The network appears healthy until placed under load.</p>
+            
+            <p>When the server tries to download a large file, the switch (thinking it is in Full Duplex) blasts packets at the server while simultaneously listening for replies. The server (in Half Duplex) assumes a collision has occurred because it is receiving data while trying to transmit. The server drops the packets and backs off. </p>
+            <p>Symptoms include:</p>
+            <ul>
+                <li>Excruciatingly poor <a href="bandwidth-vs-throughput-explained.html">Throughput</a> (e.g., a 100 Mbps link transferring at 2 Mbps).</li>
+                <li>High interface error counters on the switch (specifically Late Collisions and FCS/CRC errors).</li>
+                <li>Intermittent application timeouts and massive TCP retransmissions.</li>
+            </ul>
+
+            <h2>Troubleshooting Workflow</h2>
+            <ol>
+                <li><strong>Check Link State:</strong> Verify both ends of the cable agree on speed and duplex. (e.g., <code>show interfaces</code> on a switch, or the Network Adapter properties in Windows).</li>
+                <li><strong>Check Interface Errors:</strong> A high count of Late Collisions is the hallmark of a mismatch. <em>(Note: In a healthy, modern Full Duplex switched network, collisions do not exist. Any collision counter increasing indicates a physical problem or a mismatch.)</em></li>
+                <li><strong>Check Cabling:</strong> A severely damaged cable can cause auto-negotiation to fail or negotiate at lower speeds (e.g., a Gigabit port negotiating at 100 Mbps Half).</li>
+                <li><strong>Verify Auto-Negotiation:</strong> Avoid the outdated 1990s advice of hardcoding speed and duplex. Modern best practice is to leave all ports on Auto-Negotiate unless connecting to legacy specialized equipment.</li>
+            </ol>
+        </div>
+</div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='jitter-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Jitter Explained</a>
+            <a href='unicast-vs-broadcast-vs-multicast.html' class='btn btn-secondary' style='border:none; padding: 0;'>Unicast vs Broadcast vs Multicast &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>
+
+

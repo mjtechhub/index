@@ -46,6 +46,17 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error rendering tutorial header:', err);
         });
 
+    // Auto-wrap all lesson tables to prevent mobile overflow
+    const lessonTables = document.querySelectorAll('.lesson-content table, main table');
+    lessonTables.forEach(table => {
+        if (table.parentElement && !table.parentElement.classList.contains('table-responsive')) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'table-responsive';
+            table.parentNode.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+        }
+    });
+
     function renderTutorialHeader(tut, basePath) {
         let levelColor = 'var(--success)';
         if (tut.level === 'Intermediate') levelColor = 'var(--warning)';

@@ -1,7 +1,7 @@
 import json
-import os
+from pathlib import Path
 
-path = r'c:\xampp\htdocs\index\data\topics.json'
+path = Path(__file__).resolve().parent / 'data' / 'topics.json'
 with open(path, 'r', encoding='utf-8') as f:
     data = json.load(f)
 

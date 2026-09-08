@@ -48,97 +48,171 @@
             <div class="hero-inner">
                 <div class="hero-content">
                     <div class="hero-badge">
-                        <i class="fa-solid fa-bolt text-brand-secondary"></i> Your IT Learning Partner
+                        <i class="fa-solid fa-bolt text-brand-secondary" aria-hidden="true"></i> Your IT Learning Partner
                     </div>
                     <h1 class="hero-title">
                         Learn IT. Solve Problems.<br>
                         <span class="hero-title-highlight">Grow Your Skills.</span>
                     </h1>
                     <p class="hero-desc">
-                        Practical tutorials, command guides and real-world solutions for Networking, Windows, Linux, Servers, Security, and Cloud.
+                        Practical tutorials, command guides and real-world solutions for Networking, Windows, Linux, Servers, Security, Cloud &amp; more.
                     </p>
                     <div class="hero-actions">
-                        <a href="topics.html" class="btn btn-primary">
-                            Start Learning <i class="fa-solid fa-arrow-right"></i>
+                        <a href="topics.html" class="btn btn-primary btn-hero">
+                            <i class="fa-solid fa-book-open" aria-hidden="true"></i> Start Learning
                         </a>
-                        <a href="topics.html" class="btn btn-secondary">
-                            Explore Topics
+                        <a href="topics.html" class="btn btn-secondary btn-hero">
+                            Explore Topics <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                         </a>
                     </div>
                     <p class="hero-note">
-                        <span class="status-dot"></span> New content added regularly
+                        <i class="fa-solid fa-star hero-note-star" aria-hidden="true"></i> New content added regularly
                     </p>
                 </div>
                 <div class="hero-visual">
-                    <div class="laptop-composite">
-                        <div class="floating-icon" style="top: 10%; left: 10%;"><i class="fa-brands fa-windows" style="color: var(--cat-windows);"></i></div>
-                        <div class="floating-icon" style="top: 20%; right: 5%;"><i class="fa-brands fa-linux" style="color: var(--cat-linux);"></i></div>
-                        <div class="floating-icon" style="bottom: 30%; left: 0%;"><i class="fa-solid fa-network-wired" style="color: var(--cat-networking);"></i></div>
-                        <div class="floating-icon" style="bottom: 10%; right: 15%;"><i class="fa-solid fa-shield-halved" style="color: var(--cat-cybersecurity);"></i></div>
-                    </div>
+                    <img src="./assets/hero/mj-tech-hero.png" alt="MJ Tech Hub IT learning platform on laptop surrounded by technology icons" class="hero-illustration" width="540" height="308">
                 </div>
             </div>
         </section>
 
-        <!-- Stats Section -->
-        <section class="container mb-2">
-            <div class="stats-card card">
+        <!-- Statistics Section -->
+        <section class="container stats-section" aria-label="Platform Statistics">
+            <div class="stats-card">
                 <div class="stat-item">
-                    <div class="stat-icon"><i class="fa-solid fa-book"></i></div>
+                    <div class="stat-icon" aria-hidden="true"><i class="fa-solid fa-book-open"></i></div>
                     <div class="stat-text">
-                        <h3>60+</h3>
+                        <h3 id="stat-tutorials">60+</h3>
                         <p>Tutorials</p>
                     </div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-icon text-success"><i class="fa-solid fa-terminal"></i></div>
+                    <div class="stat-icon text-success" aria-hidden="true"><i class="fa-solid fa-terminal"></i></div>
                     <div class="stat-text">
-                        <h3>6</h3>
+                        <h3 id="stat-commands">12</h3>
                         <p>Commands</p>
                     </div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-icon text-accent"><i class="fa-solid fa-layer-group"></i></div>
+                    <div class="stat-icon text-accent" aria-hidden="true"><i class="fa-solid fa-layer-group"></i></div>
                     <div class="stat-text">
-                        <h3>6</h3>
+                        <h3 id="stat-topics">6</h3>
                         <p>Core Topics</p>
                     </div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-icon text-warning"><i class="fa-solid fa-brain"></i></div>
+                    <div class="stat-icon text-warning" aria-hidden="true"><i class="fa-solid fa-brain"></i></div>
                     <div class="stat-text">
-                        <h3>2</h3>
+                        <h3 id="stat-quizzes">2</h3>
                         <p>Quizzes</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Topics Grid -->
-        <section class="container mb-2">
-            <div class="section-header">
-                <div>
-                    <div class="section-badge">|| BROWSE BY TOPIC</div>
-                    <h2>Explore IT Topics</h2>
-                    <p>Choose a topic and start learning</p>
+        <!-- Browse by Topic Section -->
+        <section class="container topics-section" aria-labelledby="heading-browse-topics">
+            <div class="section-header-bar">
+                <div class="section-title-wrap">
+                    <span class="section-accent-bar" aria-hidden="true"></span>
+                    <h2 id="heading-browse-topics" class="section-heading-title">Browse by Topic</h2>
                 </div>
-                <a href="topics.html" class="btn btn-secondary btn-sm">View All Topics &rarr;</a>
+                <a href="topics.html" class="view-all-link">View all &rarr;</a>
             </div>
 
-            <div class="topic-grid" id="home-topics-grid"></div>
+            <div class="home-topic-grid" id="home-topics-grid">
+                <!-- Dynamically populated by js/topics.js -->
+            </div>
         </section>
-        
-        <!-- Subscribe Banner -->
-        <section class="container py-2">
-            <div class="banner-card">
-                <div class="banner-content">
-                    <div class="banner-icon"><i class="fa-solid fa-rocket"></i></div>
-                    <div class="banner-text">
-                        <h3>Keep Learning. Keep Growing.</h3>
-                        <p>New tutorials and guides added every week to help you stay ahead.</p>
+
+        <!-- Learning Dashboard (3 Columns) -->
+        <section class="container dashboard-section" aria-label="Learning Dashboard">
+            <div class="dashboard-grid">
+                <!-- Column 1: Latest Tutorials -->
+                <div class="dashboard-card-box dashboard-col-tutorials">
+                    <div class="dash-col-header">
+                        <div class="dash-col-title">
+                            <i class="fa-solid fa-book-bookmark text-brand-primary" aria-hidden="true"></i>
+                            <h3>Latest Tutorials</h3>
+                        </div>
+                        <a href="topics.html" class="dash-view-all">View all &rarr;</a>
+                    </div>
+                    <div id="latest-tutorials-list" class="dash-tutorials-list">
+                        <!-- Dynamically populated from data/tutorials.json -->
                     </div>
                 </div>
-                
+
+                <!-- Column 2: Popular Commands -->
+                <div class="dashboard-card-box dashboard-col-commands">
+                    <div class="dash-col-header">
+                        <div class="dash-col-title">
+                            <i class="fa-solid fa-terminal text-success" aria-hidden="true"></i>
+                            <h3>Popular Commands</h3>
+                        </div>
+                        <a href="commands.html" class="dash-view-all">View all &rarr;</a>
+                    </div>
+                    <div class="dash-commands-container">
+                        <div id="popular-commands-list" class="dash-command-pills">
+                            <!-- Dynamically populated from data/commands.json -->
+                        </div>
+                        <div class="dash-command-tip">
+                            <i class="fa-regular fa-lightbulb" aria-hidden="true"></i>
+                            <span>Click any command to view full usage and examples.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 3: Learning & Growth -->
+                <div class="dashboard-learning-col dashboard-col-learning">
+                    <!-- Card 1: Test Your Knowledge -->
+                    <div class="quiz-cta-card">
+                        <div class="quiz-card-header">
+                            <i class="fa-solid fa-brain" aria-hidden="true"></i>
+                            <h3>Test Your Knowledge</h3>
+                        </div>
+                        <div class="quiz-card-body">
+                            <div class="quiz-visual-icon" aria-hidden="true">
+                                <i class="fa-solid fa-clipboard-question"></i>
+                            </div>
+                            <div class="quiz-content">
+                                <h4>Practice with our quizzes</h4>
+                                <p>Test your IT knowledge and track your progress.</p>
+                            </div>
+                            <a href="quiz.html" class="btn btn-quiz-cta">
+                                Start Quiz &rarr;
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Improve Every Day -->
+                    <div class="growth-card">
+                        <div class="growth-icon" aria-hidden="true">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <div class="growth-text">
+                            <div class="growth-headline">Improve Every Day</div>
+                            <p class="growth-subtext">Learn. Practice. Become better every day. Keep learning and stay ahead!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Instagram / Community CTA -->
+        <section class="container community-section" aria-label="Community">
+            <div class="instagram-banner">
+                <div class="instagram-brand-group">
+                    <div class="instagram-icon-badge" aria-hidden="true">
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+                    <h3 class="instagram-title">Stay Updated!</h3>
+                    <div class="instagram-divider" aria-hidden="true"></div>
+                    <p class="instagram-desc">
+                        Follow <a href="https://www.instagram.com/themjtechhub/" target="_blank" rel="noopener noreferrer" class="instagram-handle">@themjtechhub</a> on Instagram for daily IT tips, tutorials &amp; updates.
+                    </p>
+                </div>
+                <a href="https://www.instagram.com/themjtechhub/" target="_blank" rel="noopener noreferrer" class="btn btn-instagram">
+                    Follow on Instagram &rarr;
+                </a>
             </div>
         </section>
     </main>

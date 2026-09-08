@@ -1,9 +1,12 @@
 import json
 import os
 import re
+from pathlib import Path
 
-tut_dir = r"c:\xampp\htdocs\index\tutorials\networking"
-json_path = r"c:\xampp\htdocs\index\data\tutorials.json"
+REPO_ROOT = Path(__file__).resolve().parent.parent
+tut_dir = REPO_ROOT / "tutorials" / "networking"
+json_path = REPO_ROOT / "data" / "tutorials.json"
+
 
 with open(json_path, 'r', encoding='utf-8') as f:
     tuts = json.load(f)

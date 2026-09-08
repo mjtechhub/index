@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <!-- SEO & Metadata -->
+    <title>Enterprise Network Troubleshooting Case Studies | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn about Enterprise Network Troubleshooting Case Studies in this Networking tutorial.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/networking/enterprise-network-troubleshooting-case-studies.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Enterprise Network Troubleshooting Case Studies | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn about Enterprise Network Troubleshooting Case Studies in this Networking tutorial.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/networking/enterprise-network-troubleshooting-case-studies.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Enterprise Network Troubleshooting Case Studies | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn about Enterprise Network Troubleshooting Case Studies in this Networking tutorial.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Enterprise Network Troubleshooting Case Studies</h1>
+        </div>
+        
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>The best way to master the <a href="network-troubleshooting-workflow.html">Network Troubleshooting Workflow</a> is by studying realistic enterprise scenarios. These fictional case studies demonstrate how to apply evidence-based methodology rather than relying on guesswork.</p>
+
+            <h2>Case 1: The "Slow Internet" Saturation</h2>
+            <ul>
+                <li><strong>Symptoms:</strong> Users across the entire office complain that web browsing is extremely slow and VoIP calls are robotic every afternoon between 2:00 PM and 4:00 PM.</li>
+                <li><strong>Initial Hypothesis:</strong> The ISP is dropping traffic or the firewall is failing.</li>
+                <li><strong>Evidence Collected:</strong> The engineer checks the SNMP <a href="network-monitoring-fundamentals.html">Monitoring</a> dashboard. The 500 Mbps WAN link is sitting exactly at 100% utilization during those hours. <a href="netflow-ipfix-explained.html">NetFlow</a> data reveals that a single internal storage server is transmitting 450 Mbps of data to an offsite cloud backup provider.</li>
+                <li><strong>Root Cause:</strong> A massive backup job is saturating the WAN, leaving no <a href="bandwidth-vs-throughput-explained.html">Bandwidth</a> for users and causing extreme <a href="packet-loss-troubleshooting.html">Packet Loss</a> for VoIP.</li>
+                <li><strong>Resolution:</strong> The engineer reschedules the backup job for 2:00 AM and applies a <a href="qos-explained.html">Traffic Shaping</a> policy to cap backup traffic at 100 Mbps.</li>
+                <li><strong>Lesson Learned:</strong> Measure utilization before blaming the ISP.</li>
+            </ul>
+
+            <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+            <h2>Case 2: The Missing Trunk VLAN</h2>
+            <ul>
+                <li><strong>Symptoms:</strong> A new team moved to the 3rd floor. They plugged into the access switch and received correct IPs for VLAN 40 via DHCP, but they cannot ping the Default Gateway or access any servers.</li>
+                <li><strong>Evidence Collected:</strong> The engineer verifies the users have the correct IP config. Users in VLAN 40 on the 2nd floor are working perfectly. A ping from the 3rd-floor switch management interface to the Gateway succeeds.</li>
+                <li><strong>Tests Performed:</strong> The engineer checks the uplink trunk port connecting the 3rd-floor switch to the Core router. The configuration reads: <code>switchport trunk allowed vlan 10,20,30</code>.</li>
+                <li><strong>Root Cause:</strong> VLAN 40 was never allowed to traverse the physical uplink trunk.</li>
+                <li><strong>Resolution:</strong> The engineer adds VLAN 40 to the trunk allowed list.</li>
+            </ul>
+
+            <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+            <h2>Case 3: The Ghost VPN Tunnel</h2>
+            <ul>
+                <li><strong>Symptoms:</strong> A <a href="site-to-site-vpn-explained.html">Site-to-Site VPN</a> is established to a partner company. The firewall dashboard shows Phase 1 and Phase 2 are "UP". However, no servers can communicate across the tunnel.</li>
+                <li><strong>Evidence Collected:</strong> Routing tables show a valid route pointing traffic for the partner subnets into the VPN tunnel. </li>
+                <li><strong>Tests Performed:</strong> The engineer runs a packet capture on the firewall's WAN interface. They see traffic leaving their site destined for the partner, but the Source IP is their Public WAN IP, not the internal private IP of the server.</li>
+                <li><strong>Root Cause:</strong> A broad NAT policy was incorrectly translating the internal server traffic before it entered the tunnel. The partner firewall dropped the unrecognized public IP.</li>
+                <li><strong>Resolution:</strong> The engineer creates a NAT Exemption (No-NAT) rule for traffic destined to the VPN zone.</li>
+            </ul>
+
+            <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+            <h2>Case 4: The Wi-Fi Video Glitch</h2>
+            <ul>
+                <li><strong>Symptoms:</strong> Executives report that video conferencing (Zoom/Teams) is constantly freezing and dropping audio while in the boardroom.</li>
+                <li><strong>Initial Hypothesis:</strong> The network is dropping packets.</li>
+                <li><strong>Evidence Collected:</strong> The engineer tests from a hardwired desktop in the boardroom; video works flawlessly. They test on a laptop via Wi-Fi; video freezes. </li>
+                <li><strong>Tests Performed:</strong> Using an RF scanner, the engineer discovers the boardroom Access Point is operating on a 2.4GHz channel heavily congested by neighboring office networks and Bluetooth devices, causing massive <a href="jitter-explained.html">Jitter</a>.</li>
+                <li><strong>Root Cause:</strong> Wireless RF interference and half-duplex contention.</li>
+                <li><strong>Resolution:</strong> The engineer disables the 2.4GHz radio in the boardroom and forces all corporate laptops to use the cleaner 5GHz band.</li>
+            </ul>
+
+            <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+            <h2>Case 5: The "Network" Is Slow</h2>
+            <ul>
+                <li><strong>Symptoms:</strong> Developers complain that a new database query is taking 30 seconds to return results, claiming "network latency is terrible today."</li>
+                <li><strong>Evidence Collected:</strong> The network engineer reviews monitoring. The links are at 5% utilization. A continuous ping from the developer's PC to the database server shows a flawless 1ms <a href="network-latency-troubleshooting.html">Latency</a> with 0% packet loss.</li>
+                <li><strong>Tests Performed:</strong> A packet capture shows the developer's PC sending the SQL request, the network delivering it instantly, and the database server silently churning for 29.9 seconds before finally sending the reply packet back.</li>
+                <li><strong>Root Cause:</strong> A poorly optimized SQL query missing a database index. The network is perfectly healthy.</li>
+                <li><strong>Lesson Learned:</strong> Never accept the blame for a "slow network" without evidence. Application response time is not network latency.</li>
+            </ul>
+        </div>
+</div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='vpn-troubleshooting-workflow.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; VPN Troubleshooting Workflow</a>
+            <a href='network-troubleshooting-workflow.html' class='btn btn-secondary' style='border:none; padding: 0;'>Network Troubleshooting Workflow &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>
+
+

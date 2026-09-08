@@ -24,8 +24,9 @@
         <div class="search-modal-backdrop" id="search-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
             <div class="search-modal">
                 <div class="search-modal-header">
+                    <h2 id="search-modal-title" class="sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;">Search MJ Tech Hub</h2>
                     <i class="fas fa-search" aria-hidden="true"></i>
-                    <input type="text" id="search-modal-input" class="search-modal-input" placeholder="Search tutorials, topics, commands..." aria-label="Search">
+                    <input type="text" id="search-modal-input" class="search-modal-input" placeholder="Search tutorials, topics, commands, resources..." aria-label="Search">
                     <button class="search-modal-close" id="search-modal-close" aria-label="Close search">ESC</button>
                 </div>
                 <div class="search-results-container" id="search-results-container">
@@ -56,52 +57,91 @@
         
         let data = [];
         try {
-            const [topicsRes, tutsRes] = await Promise.all([
+            const [topicsRes, tutsRes, cmdsRes, resRes] = await Promise.all([
                 fetch(`${basePath}/data/topics.json`).catch(()=>null),
-                fetch(`${basePath}/data/tutorials.json`).catch(()=>null)
+                fetch(`${basePath}/data/tutorials.json`).catch(()=>null),
+                fetch(`${basePath}/data/commands.json`).catch(()=>null),
+                fetch(`${basePath}/data/resources.json`).catch(()=>null)
             ]);
             
             if (topicsRes && topicsRes.ok) {
                 const topics = await topicsRes.json();
-                const allTopics = Array.isArray(topics) ? topics : ((topics.coreTopics || []).concat(topics.moreTopics || []));
-                allTopics.forEach(t => {
+                const categories = Array.isArray(topics) ? topics : (topics.categories || (topics.coreTopics || []).concat(topics.moreTopics || []));
+                categories.forEach(t => {
                     data.push({
                         type: 'Topic',
                         title: t.name || t.id || 'Topic',
                         desc: t.description || '',
-                        tags: t.id ? t.id.toLowerCase() : '',
+                        tags: `${t.keywords || ''} ${t.id ? t.id.toLowerCase() : ''}`,
                         url: t.url || `topics.html#${t.id}`
                     });
+
+                    // Index subtopics if present
+                    if (Array.isArray(t.sections)) {
+                        t.sections.forEach(sec => {
+                            const secName = sec.name || sec.title || '';
+                            const catName = t.name || t.id || 'Topic';
+                            if (Array.isArray(sec.subtopics)) {
+                                sec.subtopics.forEach(sub => {
+                                    const subName = sub.name || sub.title || sub.id || 'Lesson';
+                                    const subId = sub.id ? String(sub.id).toLowerCase() : '';
+                                    data.push({
+                                        type: 'Topic',
+                                        title: subName,
+                                        desc: `${secName ? secName + ' in ' : ''}${catName} (${sub.level || 'Tutorial'})`,
+                                        tags: `${catName.toLowerCase()} ${secName.toLowerCase()} ${subId}`,
+                                        url: sub.url
+                                    });
+                                });
+                            }
+                        });
+                    }
                 });
             }
             
             if (tutsRes && tutsRes.ok) {
                 const tuts = await tutsRes.json();
-                const allTuts = Array.isArray(tuts) ? tuts : [];
+                const allTuts = Array.isArray(tuts) ? tuts : (tuts.tutorials || []);
                 allTuts.forEach(t => {
                     const tutUrl = t.url ? t.url.replace('./', '') : '';
                     data.push({
                         type: 'Tutorial',
                         title: t.title || 'Tutorial',
                         desc: t.description || '',
-                        tags: (t.keywords || '') + ' ' + (t.category || '').toLowerCase(),
+                        tags: `${t.keywords || ''} ${(t.category || '').toLowerCase()}`,
                         url: tutUrl
                     });
                 });
             }
             
-            const cmdsRes = await fetch(`${basePath}/data/commands.json`).catch(()=>null);
             if (cmdsRes && cmdsRes.ok) {
                 const cmds = await cmdsRes.json();
-                cmds.forEach(c => {
-                    data.push({
-                        type: 'Command',
-                        title: c.command,
-                        desc: c.purpose,
-                        tags: (c.platform || '').toLowerCase(),
-                        url: 'commands.html'
+                if (Array.isArray(cmds)) {
+                    cmds.forEach(c => {
+                        data.push({
+                            type: 'Command',
+                            title: c.command,
+                            desc: c.purpose,
+                            tags: `${(c.platform || '').toLowerCase()} ${(c.category || '').toLowerCase()} ${c.useCase || ''}`,
+                            url: 'commands.html'
+                        });
                     });
-                });
+                }
+            }
+
+            if (resRes && resRes.ok) {
+                const resources = await resRes.json();
+                if (Array.isArray(resources)) {
+                    resources.forEach(r => {
+                        data.push({
+                            type: 'Resource',
+                            title: r.title,
+                            desc: r.description,
+                            tags: `${r.tags || ''} ${(r.category || '').toLowerCase()} ${(r.type || '').toLowerCase()}`,
+                            url: r.url
+                        });
+                    });
+                }
             }
             
             searchDataCache = data;
@@ -183,7 +223,9 @@
             metaEl.className = 'search-result-meta';
             const icon = document.createElement('i');
             icon.className = res.type === 'Command' ? 'fas fa-terminal' : 
-                             res.type === 'Topic' ? 'fas fa-layer-group' : 'fas fa-book-open';
+                             res.type === 'Topic' ? 'fas fa-layer-group' : 
+                             res.type === 'Resource' ? 'fas fa-folder-open' : 'fas fa-book-open';
+            icon.setAttribute('aria-hidden', 'true');
             metaEl.appendChild(icon);
             metaEl.appendChild(document.createTextNode(' ' + res.type));
             

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <!-- SEO & Metadata -->
+    <title>DHCP Relay / IP Helper Explained | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn about DHCP Relay / IP Helper Explained in this Networking tutorial.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/networking/dhcp-relay-ip-helper-explained.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="DHCP Relay / IP Helper Explained | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn about DHCP Relay / IP Helper Explained in this Networking tutorial.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/networking/dhcp-relay-ip-helper-explained.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="DHCP Relay / IP Helper Explained | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn about DHCP Relay / IP Helper Explained in this Networking tutorial.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">DHCP Relay / IP Helper Explained</h1>
+        </div>
+        
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>To understand a <strong>DHCP Relay</strong> (often referred to as an <strong>IP Helper</strong> in Cisco terminology), you must first understand a fundamental rule of network <a href="what-is-routing.html">Routing</a>: <strong>Routers do not forward broadcast traffic.</strong></p>
+            
+            <p>When a PC boots up and needs an <a href="what-is-an-ip-address.html">IP Address</a>, it sends out a DHCP Discover message. Because the PC doesn't yet have an IP, it sends this message as a Layer 2 Broadcast (address <code>FF:FF:FF:FF:FF:FF</code>). This broadcast hits every device on the local <a href="what-is-vlan.html">VLAN</a>. If a DHCP server is sitting on that same VLAN, it replies. But in enterprise networks, placing a dedicated DHCP server on every single VLAN is completely unscalable.</p>
+            
+            <h2>The Role of the DHCP Relay Agent</h2>
+            <p>Instead of 50 DHCP servers for 50 VLANs, enterprises use one centralized DHCP server. But how does the broadcast from VLAN 10 reach the server in VLAN 20?</p>
+            
+            <p>The network administrator configures a <strong>DHCP Relay Agent</strong> on the router (or Layer 3 Switch) that acts as the Default Gateway for the client VLAN. The relay agent listens for DHCP broadcasts on the local subnet, grabs them, converts them into directed Unicast packets, and forwards them directly to the centralized DHCP server's IP address.</p>
+
+            <h2>The Traffic Flow</h2>
+            <p>Imagine a PC on VLAN 10 (Users), and a Windows DHCP server on VLAN 20 (Servers) at IP <code>10.0.20.100</code>. The gateway for VLAN 10 is <code>10.0.10.1</code>.</p>
+            
+            <ol>
+                <li><strong>The Broadcast:</strong> The PC boots and broadcasts a DHCP Discover on VLAN 10.</li>
+                <li><strong>The Interception:</strong> The Layer 3 Gateway (<code>10.0.10.1</code>) receives the broadcast. It has a DHCP Relay / IP Helper configured pointing to <code>10.0.20.100</code>.</li>
+                <li><strong>The Unicast Forward:</strong> The Gateway wraps the request in a unicast IP packet destined for <code>10.0.20.100</code>. Crucially, it stamps the packet with its own interface IP address (the Gateway IP Address, or <strong>GIADDR</strong>).</li>
+                <li><strong>Scope Selection:</strong> The centralized DHCP server receives the packet. It looks at the GIADDR (<code>10.0.10.1</code>). It realizes, <em>"Ah, this request came from the 10.0.10.0/24 subnet. I will assign an IP from the VLAN 10 scope."</em></li>
+                <li><strong>The Reply:</strong> The DHCP server sends the IP offer back to the relay agent, which finally passes it down to the PC on VLAN 10.</li>
+            </ol>
+
+            <h2>Common DHCP Relay Troubleshooting</h2>
+            
+            <h3>1. PC Receives the APIPA Address (169.254.x.x)</h3>
+            <p>If a Windows PC fails to reach a DHCP server, it assigns itself a <code>169.254</code> link-local address. If an entire VLAN has this issue, you must check:</p>
+            <ul>
+                <li><strong>Is the Relay Configured?</strong> Ensure the IP Helper command is actually applied to the SVI (Switch Virtual Interface) or Gateway router port for that specific VLAN.</li>
+                <li><strong>Is the Server IP Correct?</strong> Ensure the relay is pointing to the correct, current IP of the centralized DHCP server.</li>
+                <li><strong>Is UDP Port 67/68 Blocked?</strong> DHCP uses UDP Ports 67 and 68. Ensure there are no <a href="stateful-firewall-explained.html">Firewall</a> policies or <a href="access-control-lists-explained.html">ACLs</a> blocking this traffic between the Gateway and the Server VLAN.</li>
+            </ul>
+
+            <h3>2. Missing or Exhausted DHCP Scope</h3>
+            <p>The relay agent might be working perfectly, forwarding the packet to the server. But if the DHCP Server does not have a scope created for that specific GIADDR subnet, or if the scope is 100% full (exhausted), the server will ignore the request. The client will eventually time out. Verify the scope health on the Windows DHCP console.</p>
+
+            <h3>3. Routing Issues</h3>
+            <p>Remember that the relay turns the broadcast into a standard unicast packet. That means the packet must follow standard routing rules. If the Gateway does not have a route to reach the DHCP server, or if the DHCP server does not have a return route back to the client subnet, the process will fail.</p>
+
+            <h2>Verification Methods</h2>
+            <p>To definitively prove where the failure is occurring, use a Packet Capture (like Wireshark). </p>
+            <ul>
+                <li>Run a capture on the DHCP server. If you see the Discover packet arrive, the Relay is working perfectly. The problem is on the server.</li>
+                <li>If the Discover packet never reaches the server, the problem is on the network Gateway, a firewall in transit, or the physical cable connecting the PC.</li>
+            </ul>
+        </div>
+</div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='remote-access-vpn-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Remote Access VPN Explained</a>
+            <a href='dns-record-types-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>DNS Record Types Explained &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>
+
+

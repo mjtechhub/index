@@ -64,5 +64,71 @@
         "useCase": "Fixing corrupted Windows system files causing crashes or strange behavior.",
         "category": "System",
         "warnings": "Must be run as Administrator."
+    },
+    {
+        "command": "systeminfo",
+        "platform": "Windows",
+        "purpose": "Displays detailed configuration information about a computer and its operating system.",
+        "syntax": "systeminfo",
+        "example": "systeminfo",
+        "expectedResult": "Outputs OS version, system manufacturer, BIOS version, memory stats, hotfixes, and network card info.",
+        "useCase": "Quickly auditing computer specs, uptime, OS installation date, and installed Windows updates.",
+        "category": "System",
+        "warnings": null
+    },
+    {
+        "command": "tasklist",
+        "platform": "Windows",
+        "purpose": "Displays a list of currently running processes on either a local or remote machine.",
+        "syntax": "tasklist",
+        "example": "tasklist /v",
+        "expectedResult": "Shows Image Name, PID, Session Name, Session Number, and Memory Usage for every running process.",
+        "useCase": "Identifying runaway processes, finding specific service PIDs, or scripting health checks.",
+        "category": "System",
+        "warnings": null
+    },
+    {
+        "command": "chkdsk",
+        "platform": "Windows",
+        "purpose": "Checks the file system and volume metadata for logical and physical errors.",
+        "syntax": "chkdsk [volume:] [/f] [/r]",
+        "example": "chkdsk C: /f",
+        "expectedResult": "Scans filesystem sectors, repairs directory corruption, and locates bad sectors.",
+        "useCase": "Troubleshooting corrupted disk partitions, file access errors, or failing drives.",
+        "category": "System",
+        "warnings": "Must be run as Administrator. May require a system restart to dismount volume."
+    },
+    {
+        "command": "gpupdate /force",
+        "platform": "Windows",
+        "purpose": "Forces immediate background reapplication of all Active Directory Group Policy settings.",
+        "syntax": "gpupdate /force",
+        "example": "gpupdate /force",
+        "expectedResult": "Outputs: Updating policy... Computer Policy update has completed successfully. User Policy update has completed successfully.",
+        "useCase": "Applying newly configured GPO security policies or mapped drives without waiting for the default 90-minute refresh.",
+        "category": "System",
+        "warnings": null
+    },
+    {
+        "command": "driverquery",
+        "platform": "Windows",
+        "purpose": "Enables an administrator to display a comprehensive list of installed device drivers.",
+        "syntax": "driverquery [/v]",
+        "example": "driverquery /v",
+        "expectedResult": "Displays table of module name, display name, driver type, and link date.",
+        "useCase": "Troubleshooting BSOD crashes and hardware device driver incompatibility.",
+        "category": "System",
+        "warnings": null
+    },
+    {
+        "command": "wmic",
+        "platform": "Windows",
+        "purpose": "Windows Management Instrumentation command-line utility for advanced system queries.",
+        "syntax": "wmic <alias> [options]",
+        "example": "wmic bios get serialnumber",
+        "expectedResult": "Returns specific hardware metadata such as device serial number, CPU model, or disk health.",
+        "useCase": "Automated IT asset inventory, retrieving motherboard and BIOS serial numbers remotely.",
+        "category": "System",
+        "warnings": "WMIC is deprecated in newer Windows 11 builds in favor of CIM/WMI PowerShell cmdlets."
     }
 ]

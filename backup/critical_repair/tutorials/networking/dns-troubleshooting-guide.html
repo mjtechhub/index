@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <!-- SEO & Metadata -->
+    <title>DNS Troubleshooting Guide | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="A practical step-by-step guide to troubleshooting DNS name resolution issues.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/networking/dns-troubleshooting-guide.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="DNS Troubleshooting Guide | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="A practical step-by-step guide to troubleshooting DNS name resolution issues.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/networking/dns-troubleshooting-guide.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="DNS Troubleshooting Guide | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="A practical step-by-step guide to troubleshooting DNS name resolution issues.">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+    <script src="../../js/theme.js"></script>
+    <script src="../../js/main.js" defer></script>
+</head>
+
+<body>
+    <div id="site-header"></div>
+    <!-- Header -->
+    
+    <main class="lesson-container py-4">
+        <!-- Breadcrumb -->
+        <div id="tutorial-header">
+            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">DNS Troubleshooting Guide</h1>
+        </div>
+        
+                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
+            <p>When a user reports they "cannot access the internet," the issue is frequently not a network connectivity failure, but a <a href="what-is-dns.html">DNS</a> failure. A solid DNS troubleshooting methodology prevents engineers from wasting time investigating routers and firewalls when the network is completely healthy.</p>
+
+            <h2>DNS Failure vs Connectivity Failure</h2>
+            <p>The most critical first step is isolation. If a user cannot open <code>example.com</code>, ask them to ping a known public IP address, such as <code>8.8.8.8</code>.</p>
+            <ul>
+                <li><strong>If the IP ping fails:</strong> The computer has no internet access. Check the physical link, <a href="dhcp-troubleshooting-guide.html">DHCP</a>, default gateway, and <a href="stateful-firewall-explained.html">Firewall</a>. Do <em>not</em> troubleshoot DNS.</li>
+                <li><strong>If the IP ping succeeds, but the hostname fails:</strong> The network is delivering packets perfectly. The computer simply cannot translate the human-readable name into an IP address. You have a DNS failure.</li>
+            </ul>
+
+            <h2>Common DNS Symptoms</h2>
+            <ul>
+                <li><strong>One User Affected:</strong> Often points to a local PC issue, a static IP misconfiguration, or a corrupted local DNS cache.</li>
+                <li><strong>Whole VLAN Affected:</strong> Often points to a DHCP server handing out the wrong DNS server addresses to that specific subnet.</li>
+                <li><strong>Internal Name Fails, Public Name Works:</strong> The client is likely using an external DNS server (like 8.8.8.8) instead of the internal corporate Domain Controller, breaking <strong>Split DNS</strong> resolution.</li>
+                <li><strong>Intermittent Resolution:</strong> Often caused by having two DNS servers configured (Primary and Secondary) where one is healthy and the other is dead. The PC alternates between them, causing random timeouts.</li>
+            </ul>
+
+            <h2>Practical Troubleshooting Sequence</h2>
+            <ol>
+                <li><strong>Verify IP Connectivity:</strong> Confirm the PC can ping the internet (e.g., <code>ping 8.8.8.8</code>).</li>
+                <li><strong>Check DNS Configuration:</strong> Verify which DNS servers the client is actually using. Are they the correct internal servers? Is the DNS Suffix/Search Domain correct?</li>
+                <li><strong>Resolve Known Hostname:</strong> Attempt to resolve a standard name. Does it fail completely, or does it resolve to the wrong IP?</li>
+                <li><strong>Query Specific Resolver:</strong> Bypass the local OS cache and force a query to a specific DNS server (e.g., query the internal server directly).</li>
+                <li><strong>Check Returned Record:</strong> If the resolution succeeds, is it an A Record? A CNAME? (<a href="dns-record-types-explained.html">DNS Record Types</a>).</li>
+                <li><strong>Check Cache:</strong> The authoritative server might be updated, but the local PC or the intermediate recursive resolver might be holding onto a stale cached record.</li>
+                <li><strong>Check Firewall / Network Path:</strong> Standard DNS uses <strong>UDP Port 53</strong>. Large responses (like DNSSEC or massive zone transfers) use <strong>TCP Port 53</strong>. Ensure the firewall permits both.</li>
+                <li><strong>Check Authoritative Side:</strong> If you manage the domain, verify the records exist on the authoritative nameserver. </li>
+                <li><strong>Verify After Change:</strong> Clear the local cache and test again.</li>
+            </ol>
+
+            <div style="padding: 1rem; background-color: var(--bg-secondary); border-left: 4px solid var(--accent-color); margin: 1.5rem 0;">
+                <strong>Propagation vs Caching:</strong> Engineers often say "DNS takes 24 hours to propagate." This is technically inaccurate. DNS does not "push" or propagate changes across the internet. Instead, recursive servers <em>cache</em> records based on the Time-To-Live (TTL). If a record had a 24-hour TTL, a recursive server will refuse to look up the new IP until that 24-hour timer expires.
+            </div>
+
+            <h2>Useful Diagnostic Commands</h2>
+            
+            <h3>Windows</h3>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                ipconfig /all              # View configured DNS servers and suffix<br>
+                ipconfig /displaydns       # View the local DNS cache<br>
+                ipconfig /flushdns         # Clear the local DNS cache<br>
+                nslookup example.com       # Basic resolution test<br>
+                nslookup example.com 8.8.8.8 # Force query to a specific server (8.8.8.8)<br>
+                Resolve-DnsName example.com  # PowerShell (bypasses some legacy nslookup quirks)
+            </div>
+
+            <h3>Linux</h3>
+            <p><em>Note: Linux DNS resolution depends heavily on the distribution (systemd-resolved, NetworkManager, etc.). Do not assume one tool works everywhere.</em></p>
+            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+                resolvectl status          # Check configured DNS servers (systemd)<br>
+                dig example.com            # Standard DNS querying tool<br>
+                dig @8.8.8.8 example.com   # Query a specific server<br>
+                nslookup example.com       # Widely available basic tool<br>
+                getent hosts example.com   # Tests how the OS itself resolves the name (checks /etc/hosts + DNS)
+            </div>
+        </div>
+</div>
+        
+        <!-- Navigation -->
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
+            <a href='spanning-tree-protocol-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Spanning Tree Protocol (STP) Explained</a>
+            <a href='dhcp-troubleshooting-guide.html' class='btn btn-secondary' style='border:none; padding: 0;'>DHCP Troubleshooting Guide &rarr;</a>
+        </div>
+    </main>
+    <!-- Footer -->
+    
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>\n    <script src="../../js/tutorial.js"></script>
+</body>
+</html>
+
+

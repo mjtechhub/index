@@ -1,6 +1,6 @@
 // js/components.js
 
-document.addEventListener('DOMContentLoaded', () => {
+function initComponents() {
     const headerContainer = document.getElementById('site-header');
     const footerContainer = document.getElementById('site-footer');
 
@@ -16,6 +16,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function highlightActiveNav(headerEl) {
+        if (!headerEl) return;
+        const currentPath = window.location.pathname.toLowerCase();
+        const navLinks = headerEl.querySelectorAll('.nav-links a');
+        
+        // Category paths that map to Topics navigation item
+        const categoryKeywords = ['topics', 'tutorial', 'networking', 'windows', 'linux', 'servers', 'cybersecurity', 'cloud'];
+        
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href) return;
+            const target = href.split('/').pop().toLowerCase();
+            const targetSlug = target.replace('.html', '');
+            
+            let isActive = false;
+            if (target === 'index.html') {
+                const isHome = currentPath.endsWith('/') || currentPath.endsWith('/index.html') || currentPath.endsWith('/index') || currentPath === '';
+                isActive = isHome;
+            } else if (targetSlug === 'topics') {
+                isActive = categoryKeywords.some(cat => currentPath.includes(cat));
+            } else if (targetSlug) {
+                isActive = currentPath.includes(targetSlug);
+            }
+            
+            if (isActive) {
+                link.classList.add('active');
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.classList.remove('active');
+                link.removeAttribute('aria-current');
+            }
+        });
+    }
+
     async function loadComponent(container, path, componentName) {
         if (!container) return;
         try {
@@ -28,12 +62,24 @@ document.addEventListener('DOMContentLoaded', () => {
             html = html.replace(/\{\{BASE\}\}/g, basePath);
             
             container.innerHTML = html;
+
+            if (componentName === 'header') {
+                highlightActiveNav(container);
+                
+                // Ensure main container has id="main-content" for accessibility skip link
+                const mainEl = document.querySelector('main');
+                if (mainEl && !mainEl.id) {
+                    mainEl.id = 'main-content';
+                    if (!mainEl.hasAttribute('tabindex')) {
+                        mainEl.setAttribute('tabindex', '-1');
+                    }
+                }
+            }
         } catch (error) {
             console.error(`Failed to load ${componentName} component:`, error);
         }
     }
 
-    
     function injectFavicons(basePath) {
         // Prevent duplicate injection
         if (document.querySelector('link[rel="icon"]')) return;
@@ -61,19 +107,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     injectFavicons(basePath);
 
-    // Load header and footer
-    
-    // Dynamically load global search module
-    function injectSearch(basePath) {
-        if (document.querySelector('script[src*="search.js"]')) return;
+    // Dynamically load global search and main module safely
+    function injectScript(basePath, scriptName) {
+        if (scriptName === 'search.js' && window.mjSearchInitialized) return;
+        if (scriptName === 'main.js' && window.mjMainInitialized) return;
+        if (document.querySelector(`script[src*="${scriptName}"]`)) return;
         const script = document.createElement('script');
-        script.src = `${basePath}/js/search.js`;
+        script.src = `${basePath}/js/${scriptName}`;
         script.defer = true;
         document.head.appendChild(script);
     }
     
-    injectSearch(basePath);
+    injectScript(basePath, 'search.js');
+    injectScript(basePath, 'main.js');
 
     loadComponent(headerContainer, '/components/header.html', 'header');
     loadComponent(footerContainer, '/components/footer.html', 'footer');
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initComponents);
+} else {
+    initComponents();
+}
+

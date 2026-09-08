@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Tutorials",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "title", "description", "category", "level", "readTime", "url"],
+    "properties": {
+      "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+      "title": { "type": "string", "minLength": 3 },
+      "description": { "type": "string", "minLength": 10 },
+      "category": { "type": "string" },
+      "level": { "type": "string", "enum": ["Beginner", "Intermediate", "Advanced"] },
+      "readTime": { "type": "string" },
+      "keywords": { "type": "string" },
+      "url": { "type": "string" },
+      "publishedAt": { "type": "string" },
+      "updatedAt": { "type": "string" }
+    }
+  }
+}

@@ -1,0 +1,82 @@
+[
+    {
+        "id": "command-library",
+        "title": "IT Command Library",
+        "description": "Essential commands for daily IT operations, automation, and troubleshooting across Windows, Linux, and Networking.",
+        "category": "Commands",
+        "type": "Interactive Reference",
+        "url": "commands.html",
+        "tags": "cli, terminal, bash, powershell, cmd, ping, ipconfig, netstat",
+        "status": "available"
+    },
+    {
+        "id": "networking-tutorials",
+        "title": "Networking Tutorial Library",
+        "description": "In-depth tutorials covering TCP/IP, OSI model, IP addressing, DNS, DHCP, VLANs, routing, switching, and diagnostics.",
+        "category": "Networking",
+        "type": "Curriculum",
+        "url": "networking.html",
+        "tags": "networking, ip, dns, dhcp, vlan, bgp, ospf, routing, switching",
+        "status": "available"
+    },
+    {
+        "id": "it-topics",
+        "title": "IT Knowledge Topics",
+        "description": "Comprehensive knowledge base across Networking, Windows, Linux, Servers, Cybersecurity, and Cloud.",
+        "category": "General IT",
+        "type": "Topic Directory",
+        "url": "topics.html",
+        "tags": "topics, windows, linux, servers, security, cloud",
+        "status": "available"
+    },
+    {
+        "id": "practice-quizzes",
+        "title": "IT Practice Quizzes",
+        "description": "Interactive quizzes to test and validate your knowledge in networking and systems administration.",
+        "category": "Assessment",
+        "type": "Interactive Quiz",
+        "url": "quiz.html",
+        "tags": "quiz, test, certification, exam, prep, questions",
+        "status": "available"
+    },
+    {
+        "id": "networking-cheat-sheet",
+        "title": "Networking Cheat Sheet",
+        "description": "Quick-reference guide for subnet masks, CIDR notations, common port numbers, and protocol numbers.",
+        "category": "Networking",
+        "type": "Cheat Sheet",
+        "url": "resources.html#cheat-sheets",
+        "tags": "subnetting, cidr, ports, protocol, reference, pdf",
+        "status": "coming-soon"
+    },
+    {
+        "id": "windows-command-reference",
+        "title": "Windows Command Reference",
+        "description": "Comprehensive reference covering essential CMD, PowerShell, and Sysinternals utility syntax and examples.",
+        "category": "Windows",
+        "type": "Cheat Sheet",
+        "url": "resources.html#cheat-sheets",
+        "tags": "windows, cmd, powershell, sysinternals, admin, reference",
+        "status": "coming-soon"
+    },
+    {
+        "id": "linux-command-reference",
+        "title": "Linux Command Reference",
+        "description": "Quick reference for Linux filesystem navigation, file permissions (chmod/chown), process management, and network utilities.",
+        "category": "Linux",
+        "type": "Cheat Sheet",
+        "url": "resources.html#cheat-sheets",
+        "tags": "linux, bash, shell, permissions, systemd, networking",
+        "status": "coming-soon"
+    },
+    {
+        "id": "troubleshooting-checklists",
+        "title": "Network & Systems Troubleshooting Checklists",
+        "description": "Step-by-step methodologies and diagnostic workflows for isolating network latency, packet loss, DNS failures, and host issues.",
+        "category": "Troubleshooting",
+        "type": "Checklist",
+        "url": "resources.html#cheat-sheets",
+        "tags": "troubleshooting, checklist, workflow, latency, packet loss, dns",
+        "status": "coming-soon"
+    }
+]

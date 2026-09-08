@@ -112,22 +112,48 @@ document.addEventListener('DOMContentLoaded', () => {
         container.innerHTML = '';
         topics.forEach(topic => {
             const card = document.createElement('div');
-            card.className = `topic-card`;
+            card.className = 'home-topic-card card';
             
+            const accentVar = `var(--cat-${topic.accent}, var(--brand-primary))`;
             
-            let accentVar = `var(--cat-${topic.accent}, var(--brand-primary))`;
-            card.style.borderTop = `3px solid ${accentVar}`;
+            // Header row with icon and title
+            const headerRow = document.createElement('div');
+            headerRow.className = 'topic-header-row';
             
-            card.innerHTML = `
-                <div class="topic-icon-wrap">
-                    <img src="${basePath}/${topic.icon.replace('./', '')}" alt="${topic.name}" width="40" height="40" style="object-fit: contain;">
-                </div>
-                <h3 class="topic-title">${topic.name}</h3>
-                <p class="topic-desc">${topic.description}</p>
-                <a href="${basePath}/${topic.url}" class="topic-cta" style="color: ${accentVar};">
-                    Explore <i class="fa-solid fa-arrow-right" style="font-size: 0.8rem;"></i>
-                </a>
-            `;
+            const iconWrap = document.createElement('div');
+            iconWrap.className = 'topic-icon-wrap';
+            
+            const iconImg = document.createElement('img');
+            iconImg.src = `${basePath}/${topic.icon.replace('./', '')}`;
+            iconImg.alt = '';
+            iconImg.width = 28;
+            iconImg.height = 28;
+            iconImg.style.objectFit = 'contain';
+            iconWrap.appendChild(iconImg);
+            
+            const title = document.createElement('h3');
+            title.className = 'topic-title';
+            title.style.color = accentVar;
+            title.textContent = topic.name;
+            
+            headerRow.appendChild(iconWrap);
+            headerRow.appendChild(title);
+            card.appendChild(headerRow);
+            
+            // Description
+            const desc = document.createElement('p');
+            desc.className = 'topic-desc';
+            desc.textContent = topic.description;
+            card.appendChild(desc);
+            
+            // CTA Link
+            const cta = document.createElement('a');
+            cta.href = `${basePath}/${topic.url}`;
+            cta.className = 'topic-cta';
+            cta.style.color = accentVar;
+            cta.innerHTML = `Explore <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>`;
+            card.appendChild(cta);
+            
             container.appendChild(card);
         });
     }

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Commands",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["command", "platform", "purpose", "syntax", "example", "expectedResult", "useCase", "category"],
+    "properties": {
+      "command": { "type": "string" },
+      "platform": { "type": "string" },
+      "purpose": { "type": "string" },
+      "syntax": { "type": "string" },
+      "example": { "type": "string" },
+      "expectedResult": { "type": "string" },
+      "useCase": { "type": "string" },
+      "category": { "type": "string" },
+      "warnings": { "type": ["string", "null"] }
+    }
+  }
+}
