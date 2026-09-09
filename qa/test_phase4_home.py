@@ -56,7 +56,7 @@ async def run_phase4_tests():
         await page.wait_for_selector("#popular-commands-list .command-pill", timeout=5000)
         await page.wait_for_selector("#home-topics-grid .home-topic-card", timeout=5000)
 
-        # A. Statistics check
+        # A. Statistics check (exact dynamic count 61, no +)
         stats = await page.evaluate("""() => {
             return {
                 tutorials: document.getElementById('stat-tutorials')?.textContent.trim(),
@@ -66,14 +66,26 @@ async def run_phase4_tests():
             };
         }""")
         test_results["stats_dynamic"] = (
-            bool(stats["tutorials"]) and "6" in stats["tutorials"] and
+            stats["tutorials"] == "61" and
             stats["commands"] == "12" and
             stats["topics"] == "6" and
             stats["quizzes"] == "2"
         )
-        print(f"[{'PASS' if test_results['stats_dynamic'] else 'FAIL'}] Dynamic Statistics (Tutorials: {stats['tutorials']}, Commands: {stats['commands']}, Topics: {stats['topics']}, Quizzes: {stats['quizzes']})")
+        print(f"[{'PASS' if test_results['stats_dynamic'] else 'FAIL'}] Dynamic Statistics (Exact Tutorials: {stats['tutorials']}, Commands: {stats['commands']}, Topics: {stats['topics']}, Quizzes: {stats['quizzes']})")
 
-        # B. Latest Tutorials check
+        # Hero Assets Check (Light & Dark theme assets)
+        hero_assets = await page.evaluate("""() => {
+            const light = document.querySelector('.hero-illustration-light');
+            const dark = document.querySelector('.hero-illustration-dark');
+            return {
+                hasLight: !!light && light.getAttribute('src').includes('mj-tech-hero.png'),
+                hasDark: !!dark && dark.getAttribute('src').includes('mj-tech-hero-dark.png')
+            };
+        }""")
+        test_results["hero_assets"] = hero_assets["hasLight"] and hero_assets["hasDark"]
+        print(f"[{'PASS' if test_results['hero_assets'] else 'FAIL'}] Dual Hero Assets Present (Light: {hero_assets['hasLight']}, Dark: {hero_assets['hasDark']})")
+
+        # B. Latest Tutorials check (multi-line title support, card height consistency)
         tut_data = await page.evaluate("""() => {
             const cards = document.querySelectorAll('#latest-tutorials-list .dash-tut-card');
             return Array.from(cards).map(c => ({
@@ -92,19 +104,25 @@ async def run_phase4_tests():
         for idx, t in enumerate(tut_data, 1):
             print(f"       {idx}. {t['title']} [{t['badge']}] -> {t['href']}")
 
-        # C. Popular Commands check
-        cmd_data = await page.evaluate("""() => {
+        # C. Essential Commands Section check
+        cmd_section = await page.evaluate("""() => {
+            const title = document.querySelector('.dashboard-col-commands .dash-col-title h3')?.textContent.trim();
             const pills = document.querySelectorAll('#popular-commands-list .command-pill');
-            return Array.from(pills).map(p => ({
-                cmd: p.querySelector('code')?.textContent.trim(),
-                href: p.getAttribute('href')
-            }));
+            return {
+                title: title,
+                pills: Array.from(pills).map(p => ({
+                    cmd: p.querySelector('code')?.textContent.trim(),
+                    href: p.getAttribute('href')
+                }))
+            };
         }""")
+        test_results["commands_title"] = (cmd_section["title"] == "Essential Commands")
         test_results["popular_commands"] = (
-            len(cmd_data) == 12 and
-            all(c["cmd"] and c["href"] == "commands.html" for c in cmd_data)
+            len(cmd_section["pills"]) == 12 and
+            all(c["cmd"] and c["href"] == "commands.html" for c in cmd_section["pills"])
         )
-        print(f"[{'PASS' if test_results['popular_commands'] else 'FAIL'}] Popular Commands (Rendered: {len(cmd_data)} pills, all link to commands.html)")
+        print(f"[{'PASS' if test_results['commands_title'] else 'FAIL'}] Command Section Title ('{cmd_section['title']}' == 'Essential Commands')")
+        print(f"[{'PASS' if test_results['popular_commands'] else 'FAIL'}] Essential Commands Pills (Rendered: {len(cmd_section['pills'])} pills, all link to commands.html)")
 
         # D. Browse by Topic check
         topic_cards = await page.evaluate("""() => {

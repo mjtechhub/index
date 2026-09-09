@@ -3,150 +3,103 @@
 <head>
     <script src="js/theme-init.js"></script>
     <!-- SEO & Metadata -->
-    <title>Command Library | MJ Tech Hub</title>
-    <meta name="description" content="A curated library of essential CLI commands for Windows, Linux, and Networking.">
+    <title>Essential Commands Library | MJ Tech Hub</title>
+    <meta name="description" content="A curated library of essential CLI commands for Windows, Linux, and network troubleshooting with practical examples and copy shortcuts.">
     <link rel="canonical" href="https://themjtechhub.site/commands.html">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Command Library | MJ Tech Hub">
-    <meta property="og:description" content="A curated library of essential CLI commands for Windows, Linux, and Networking.">
+    <meta property="og:title" content="Essential Commands Library | MJ Tech Hub">
+    <meta property="og:description" content="A curated library of essential CLI commands for Windows, Linux, and network troubleshooting with practical examples and copy shortcuts.">
     <meta property="og:url" content="https://themjtechhub.site/commands.html">
     <meta property="og:site_name" content="MJ Tech Hub">
     <meta property="og:type" content="website">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Command Library | MJ Tech Hub">
-    <meta name="twitter:description" content="A curated library of essential CLI commands for Windows, Linux, and Networking.">
+    <meta name="twitter:title" content="Essential Commands Library | MJ Tech Hub">
+    <meta name="twitter:description" content="A curated library of essential CLI commands for Windows, Linux, and network troubleshooting with practical examples and copy shortcuts.">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/themes.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/responsive.css">
-    <style>
-        .command-card {
-            margin-bottom: 2rem;
-            background: var(--bg-secondary);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--card-shadow);
-        }
-        .command-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1rem;
-        }
-        .command-platform {
-            font-size: 0.8rem;
-            background: var(--brand-subtle);
-            padding: 0.25rem 0.75rem;
-            border-radius: var(--radius-full);
-            color: var(--brand-secondary);
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        .command-code-block {
-            background-color: var(--code-bg);
-            color: var(--code-text);
-            padding: 1.25rem;
-            border-radius: var(--radius-md);
-            font-family: 'Fira Code', monospace;
-            position: relative;
-            margin: 1.5rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            overflow-x: auto;
-            border: 1px solid var(--border-subtle);
-        }
-        .copy-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--code-text);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-            font-weight: 600;
-        }
-        .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        .copy-btn.copied {
-            background: var(--success);
-            border-color: var(--success);
-        }
-        .command-details p {
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-        }
-        .command-label {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        .warning-box {
-            background-color: rgba(239, 68, 68, 0.1);
-            border-left: 4px solid var(--danger);
-            padding: 1.25rem;
-            margin-top: 1.5rem;
-            border-radius: 0 var(--radius-md) var(--radius-md) 0;
-            color: var(--text-primary);
-        }
-        .loading {
-            text-align: center;
-            padding: 4rem;
-            color: var(--text-muted);
-        }
-    </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="site-header"></div>
-    <main class="container py-4">
-        <!-- Category Header -->
-        <div class="category-header" style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color);">
-            <div class="category-icon" style="background: rgba(16, 185, 129, 0.1); width: 80px; height: 80px; border-radius: 20px; display: grid; place-items: center; color: var(--success); font-size: 2.5rem;">
-                <i class="fa-solid fa-terminal"></i>
+
+    <main id="main-content" class="container py-4">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb" aria-label="Breadcrumb" style="margin-bottom: var(--space-4);">
+            <a href="index.html">Home</a>
+            <span class="breadcrumb-separator" aria-hidden="true">/</span>
+            <span aria-current="page">Essential Commands</span>
+        </nav>
+
+        <!-- Commands Hero -->
+        <section class="page-hero" aria-labelledby="commands-page-title">
+            <div class="page-hero-header">
+                <div class="page-hero-icon" aria-hidden="true">
+                    <i class="fa-solid fa-terminal text-success"></i>
+                </div>
+                <div class="page-hero-body">
+                    <h1 id="commands-page-title" class="page-hero-title">Essential Commands</h1>
+                    <p class="page-hero-desc">
+                        Curated CLI commands for network diagnostics, system troubleshooting, and daily IT operations across Windows and Linux with practical syntax and instant copy actions.
+                    </p>
+                    <div class="page-hero-meta">
+                        <span class="meta-pill meta-pill-brand">
+                            <i class="fa-solid fa-terminal" aria-hidden="true"></i> 12 Essential Commands
+                        </span>
+                        <span class="meta-pill">
+                            <i class="fa-solid fa-desktop" aria-hidden="true"></i> Windows & Linux
+                        </span>
+                        <span class="meta-pill">
+                            <i class="fa-regular fa-copy" aria-hidden="true"></i> 1-Click Clipboard Copy
+                        </span>
+                    </div>
+                </div>
             </div>
-            <div>
-                <h1 style="font-size: 2.5rem; margin: 0 0 0.5rem 0;">Command Library</h1>
-                <p style="color: var(--text-secondary); font-size: 1.1rem; margin: 0; max-width: 600px;">
-                    Essential commands for daily IT operations, automation, and troubleshooting across major platforms.
-                </p>
+        </section>
+
+        <!-- Command Controls Toolbar -->
+        <section class="commands-toolbar" aria-label="Command Filter and Search Controls">
+            <div class="commands-filter-tabs" id="command-category-filters" role="tablist" aria-label="Filter by category">
+                <!-- Dynamically populated from commands.json -->
             </div>
-        </div>
-        
-        <div class="section-header">
-            <div>
-                <div class="section-badge">|| CHEAT SHEETS</div>
-                <h2>Search Commands</h2>
+
+            <div class="commands-search-box">
+                <i class="fa-solid fa-search commands-search-icon" aria-hidden="true"></i>
+                <input type="search" id="commands-search-input" class="commands-search-input" placeholder="Search commands, flags, or purpose..." aria-label="Search commands">
             </div>
-            <div class="filter-controls" style="display: flex; gap: 0.5rem;">
-                <button class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; border-radius: 20px;">All</button>
-                <button class="btn btn-ghost btn-sm" style="padding: 0.5rem 1rem; border-radius: 20px;">Windows</button>
-                <button class="btn btn-ghost btn-sm" style="padding: 0.5rem 1rem; border-radius: 20px;">Linux</button>
-                <button class="btn btn-ghost btn-sm" style="padding: 0.5rem 1rem; border-radius: 20px;">Networking</button>
+
+            <div id="commands-counter" class="commands-counter" aria-live="polite">
+                Showing 12 commands
             </div>
-        </div>
-        
-        <div style="max-width: 900px;">
-            <div id="commands-container">
-                <div class="loading"><i class="fas fa-circle-notch fa-spin"></i> Loading commands...</div>
+        </section>
+
+        <!-- Command List Mount -->
+        <section id="commands-container" class="commands-list" aria-label="Command Library">
+            <div style="padding: 3rem; text-align: center; color: var(--text-muted);">
+                <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block;"></i>
+                <p>Loading essential commands...</p>
             </div>
-        </div>
+        </section>
     </main>
+
+    <!-- Accessible Toast for Clipboard Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Command copied to clipboard!</span>
+    </div>
+
     <div id="site-footer"></div>
     <script src="./js/components.js"></script>
     <script src="./js/commands.js" defer></script>
+    <script src="./js/main.js"></script>
     <script src="./js/theme.js"></script>
 </body>
 </html>
-
-

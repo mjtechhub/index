@@ -1,12 +1,13 @@
 /**
  * MJ Tech Hub - Topics Architecture
- * Dynamically renders core and more IT topics from JSON.
+ * Dynamically renders core and specialized IT topics from JSON with dynamic tutorial counts.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     const coreGrid = document.getElementById('core-topics-grid');
     const moreGrid = document.getElementById('more-topics-grid');
     const homeGrid = document.getElementById('home-topics-grid');
+    const totalTutBadge = document.getElementById('topics-total-tut-badge');
     
     if (!coreGrid && !moreGrid && !homeGrid) return;
     
@@ -22,43 +23,88 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    fetch(`${basePath}/data/topics.json`)
-        .then(res => {
-            if (!res.ok) throw new Error('Failed to load topics data');
-            return res.json();
-        })
-        .then(data => {
-            const categories = data.categories || [];
-            const coreTopics = categories.filter(c => c.type === 'core');
-            const moreTopics = categories.filter(c => c.type === 'more');
-            
-            if (coreGrid) renderCoreTopics(coreTopics, coreGrid, basePath);
-            if (moreGrid) renderMoreTopics(moreTopics, moreGrid, basePath);
-            if (homeGrid) renderHomeTopics(coreTopics, homeGrid, basePath);
-        })
-        .catch(err => {
-            console.error('Error rendering topics:', err);
-        });
+    Promise.all([
+        fetch(`${basePath}/data/topics.json`).then(r => r.ok ? r.json() : { categories: [] }).catch(() => ({ categories: [] })),
+        fetch(`${basePath}/data/tutorials.json`).then(r => r.ok ? r.json() : []).catch(() => [])
+    ]).then(([topicsData, tutsData]) => {
+        const categories = topicsData.categories || [];
+        const tutorials = Array.isArray(tutsData) ? tutsData : [];
         
-    function renderCoreTopics(topics, container, basePath) {
+        // Count tutorials per category
+        const tutCounts = {};
+        tutorials.forEach(tut => {
+            const cat = (tut.category || '').toLowerCase().trim();
+            tutCounts[cat] = (tutCounts[cat] || 0) + 1;
+        });
+
+        // Update total badge if on topics.html
+        if (totalTutBadge) {
+            totalTutBadge.innerHTML = `<i class="fa-solid fa-book-open" aria-hidden="true"></i> ${tutorials.length} Published Tutorials`;
+        }
+
+        const coreTopics = categories.filter(c => c.type === 'core');
+        const moreTopics = categories.filter(c => c.type === 'more');
+        
+        if (coreGrid) renderCoreTopics(coreTopics, tutCounts, coreGrid, basePath);
+        if (moreGrid) renderMoreTopics(moreTopics, moreGrid, basePath);
+        if (homeGrid) renderHomeTopics(coreTopics, homeGrid, basePath);
+    }).catch(err => {
+        console.error('Error rendering topics:', err);
+    });
+        
+    function renderCoreTopics(topics, tutCounts, container, basePath) {
         container.innerHTML = '';
         topics.forEach(topic => {
-            const card = document.createElement('div');
-            card.className = `topic-card`;
+            const card = document.createElement('a');
+            card.href = `${basePath}/${topic.url}`;
+            card.className = 'topic-domain-card';
             
-            // Map accent from css variables
-            let accentVar = `var(--cat-${topic.accent}, var(--brand-primary))`;
+            const accentVar = `var(--cat-${topic.accent}, var(--brand-primary))`;
+            card.style.borderTop = `3px solid ${accentVar}`;
             
-            card.style.borderTop = `4px solid ${accentVar}`;
+            const count = tutCounts[topic.id.toLowerCase()] || tutCounts[topic.name.toLowerCase()] || 0;
+            const hasContent = count > 0;
             
-            card.innerHTML = `
-                <div class="topic-icon-wrap" style="border-radius: 50%; width: 72px; height: 72px; border: 1px solid rgba(255,255,255,0.05);">
-                    <img src="${basePath}/${topic.icon.replace('./', '')}" alt="${topic.name}" style="width: 40px; height: 40px; object-fit: contain;">
-                </div>
-                <h3 class="topic-title">${topic.name}</h3>
-                <p class="topic-desc">${topic.description}</p>
-                <a href="${basePath}/${topic.url}" class="btn btn-primary topic-cta">Explore ${topic.name}</a>
-            `;
+            // Top Row (Icon & Count Badge)
+            const topRow = document.createElement('div');
+            topRow.className = 'topic-domain-top';
+            
+            const iconWrap = document.createElement('div');
+            iconWrap.className = 'topic-domain-icon';
+            const iconImg = document.createElement('img');
+            iconImg.src = `${basePath}/${topic.icon.replace('./', '')}`;
+            iconImg.alt = '';
+            iconImg.width = 28;
+            iconImg.height = 28;
+            iconWrap.appendChild(iconImg);
+            
+            const countBadge = document.createElement('span');
+            countBadge.className = `topic-tut-count-badge ${hasContent ? 'has-content' : ''}`;
+            countBadge.textContent = hasContent ? `${count} Tutorials` : 'In preparation';
+            
+            topRow.appendChild(iconWrap);
+            topRow.appendChild(countBadge);
+            card.appendChild(topRow);
+            
+            // Title
+            const title = document.createElement('h3');
+            title.className = 'topic-domain-title';
+            title.textContent = topic.name;
+            card.appendChild(title);
+            
+            // Description
+            const desc = document.createElement('p');
+            desc.className = 'topic-domain-desc';
+            desc.textContent = topic.description;
+            card.appendChild(desc);
+            
+            // Footer CTA
+            const footer = document.createElement('div');
+            footer.className = 'topic-domain-footer';
+            footer.style.color = accentVar;
+            footer.innerHTML = `<span>Explore ${topic.name}</span> <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>`;
+            card.appendChild(footer);
+            
             container.appendChild(card);
         });
     }
@@ -72,42 +118,31 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isComingSoon) {
                 card.href = `${basePath}/${topic.url}`;
                 card.style.cursor = 'pointer';
-            } else {
-                card.style.cursor = 'default';
             }
             
-            card.className = `card`;
-            card.style.textDecoration = 'none';
-            card.style.display = 'block';
-            card.style.padding = '1.5rem';
-            card.style.position = 'relative';
+            card.className = 'specialized-topic-card';
             
-            let accentVar = `var(--cat-${topic.accent}, var(--brand-primary))`;
-            card.style.borderLeft = `3px solid ${accentVar}`;
+            const accentVar = `var(--cat-${topic.accent}, var(--brand-primary))`;
+            card.style.borderLeftColor = accentVar;
             
-            let comingSoonBadge = isComingSoon ? `<span style="position: absolute; top: 1rem; right: 1rem; font-size: 0.7rem; background: var(--bg-secondary); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--text-secondary); border: 1px solid var(--border-color);">Coming Soon</span>` : '';
-
-            card.innerHTML = `
-                ${comingSoonBadge}
-                <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-primary); transition: color 0.2s;">${topic.name}</h3>
-                <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0; line-height: 1.4;">${topic.description}</p>
-            `;
+            const statusBadge = document.createElement('span');
+            statusBadge.className = 'specialized-status';
+            statusBadge.textContent = 'Coming Soon';
+            card.appendChild(statusBadge);
             
-            if (!isComingSoon) {
-                card.addEventListener('mouseenter', () => {
-                    card.querySelector('h3').style.color = accentVar;
-                });
-                card.addEventListener('mouseleave', () => {
-                    card.querySelector('h3').style.color = 'var(--text-primary)';
-                });
-            } else {
-                card.querySelector('h3').style.color = 'var(--text-secondary)';
-            }
+            const title = document.createElement('h4');
+            title.textContent = topic.name;
+            card.appendChild(title);
+            
+            const desc = document.createElement('p');
+            desc.textContent = topic.description;
+            card.appendChild(desc);
             
             container.appendChild(card);
         });
     }
 
+    // Unmodified Homepage Topic Renderer - Preserves Phase 4 Homepage Stability
     function renderHomeTopics(topics, container, basePath) {
         container.innerHTML = '';
         topics.forEach(topic => {

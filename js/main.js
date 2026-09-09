@@ -76,7 +76,7 @@ if (window.mjMainInitialized) {
             .then(res => res.ok ? res.json() : [])
             .then(data => {
                 if (statTutorials && Array.isArray(data)) {
-                    statTutorials.textContent = data.length + '+';
+                    statTutorials.textContent = data.length;
                 }
             })
             .catch(() => {});

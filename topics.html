@@ -4,12 +4,12 @@
     <script src="js/theme-init.js"></script>
     <!-- SEO & Metadata -->
     <title>Explore IT Topics | MJ Tech Hub</title>
-    <meta name="description" content="Browse our comprehensive library of tutorials covering Networking, Windows, Linux, Servers, and Cybersecurity.">
+    <meta name="description" content="Browse our comprehensive library of tutorials covering Networking, Windows, Linux, Servers, Cybersecurity, and Cloud & AI.">
     <link rel="canonical" href="https://themjtechhub.site/topics.html">
     
     <!-- Open Graph -->
     <meta property="og:title" content="Explore IT Topics | MJ Tech Hub">
-    <meta property="og:description" content="Browse our comprehensive library of tutorials covering Networking, Windows, Linux, Servers, and Cybersecurity.">
+    <meta property="og:description" content="Browse our comprehensive library of tutorials covering Networking, Windows, Linux, Servers, Cybersecurity, and Cloud & AI.">
     <meta property="og:url" content="https://themjtechhub.site/topics.html">
     <meta property="og:site_name" content="MJ Tech Hub">
     <meta property="og:type" content="website">
@@ -17,7 +17,7 @@
     <!-- Twitter -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Explore IT Topics | MJ Tech Hub">
-    <meta name="twitter:description" content="Browse our comprehensive library of tutorials covering Networking, Windows, Linux, Servers, and Cybersecurity.">
+    <meta name="twitter:description" content="Browse our comprehensive library of tutorials covering Networking, Windows, Linux, Servers, Cybersecurity, and Cloud & AI.">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,26 +28,74 @@
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-    <!-- Header -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="site-header"></div>
-    <main class="container py-4">
-        <div class="text-center mb-2">
-            <h1 class="hero-title">Explore Topics</h1>
-            <p class="hero-desc" style="margin-inline: auto;">Master the fundamentals and advanced concepts across core IT domains.</p>
-        </div>
 
-        <div id="core-topics-grid" class="topic-grid topic-grid-3x2 mb-2"></div>
-        
-        <div class="section-header mt-2">
-            <div>
-                <div class="section-badge">|| MORE TOPICS</div>
-                <h2>Specialized Guides</h2>
+    <main id="main-content" class="container py-4">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb" aria-label="Breadcrumb" style="margin-bottom: var(--space-4);">
+            <a href="index.html">Home</a>
+            <span class="breadcrumb-separator" aria-hidden="true">/</span>
+            <span aria-current="page">Topics</span>
+        </nav>
+
+        <!-- Topics Page Hero -->
+        <section class="page-hero" aria-labelledby="topics-page-title">
+            <div class="page-hero-header">
+                <div class="page-hero-icon" aria-hidden="true">
+                    <i class="fa-solid fa-layer-group text-accent"></i>
+                </div>
+                <div class="page-hero-body">
+                    <h1 id="topics-page-title" class="page-hero-title">Explore IT Topics</h1>
+                    <p class="page-hero-desc">
+                        Structured learning paths, comprehensive guides, and operational references across core enterprise IT domains and specialized engineering disciplines.
+                    </p>
+                    <div class="page-hero-meta">
+                        <span class="meta-pill meta-pill-brand">
+                            <i class="fa-solid fa-layer-group" aria-hidden="true"></i> 6 Core Domains
+                        </span>
+                        <span class="meta-pill">
+                            <i class="fa-solid fa-compass" aria-hidden="true"></i> 10 Specialized Areas
+                        </span>
+                        <span class="meta-pill" id="topics-total-tut-badge">
+                            <i class="fa-solid fa-book-open" aria-hidden="true"></i> 61 Published Tutorials
+                        </span>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div id="more-topics-grid" class="dashboard-grid"></div>
+        </section>
 
+        <!-- Core Domains Section (6 Categories) -->
+        <section class="topics-section" aria-labelledby="heading-core-topics">
+            <div class="section-header-bar mb-2">
+                <div class="section-title-wrap">
+                    <span class="section-accent-bar" aria-hidden="true"></span>
+                    <h2 id="heading-core-topics" class="section-heading-title">Core Learning Tracks</h2>
+                </div>
+                <span class="text-xs text-muted" style="font-weight: 600;">6 Foundational Domains</span>
+            </div>
+
+            <div id="core-topics-grid" class="topics-core-grid">
+                <!-- Dynamically populated from data/topics.json by js/topics.js -->
+            </div>
+        </section>
+
+        <!-- Specialized Topics Section -->
+        <section class="topics-section mt-2" aria-labelledby="heading-specialized-topics">
+            <div class="section-header-bar mb-2">
+                <div class="section-title-wrap">
+                    <span class="section-accent-bar" aria-hidden="true" style="background: var(--brand-secondary);"></span>
+                    <h2 id="heading-specialized-topics" class="section-heading-title">Specialized Guides & References</h2>
+                </div>
+                <span class="text-xs text-muted" style="font-weight: 600;">10 Focus Areas</span>
+            </div>
+
+            <div id="more-topics-grid" class="topics-specialized-grid">
+                <!-- Dynamically populated from data/topics.json by js/topics.js -->
+            </div>
+        </section>
     </main>
-    <!-- Footer -->
+
     <div id="site-footer"></div>
     <script src="./js/components.js"></script>
     <script src="./js/topics.js"></script>
@@ -55,5 +103,3 @@
     <script src="./js/theme.js"></script>
 </body>
 </html>
-
-

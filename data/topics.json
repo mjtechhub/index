@@ -489,7 +489,7 @@
             "sections": []
         },
         {
-            "id": "cloud-ai",
+            "id": "cloud",
             "name": "Cloud & AI",
             "type": "core",
             "description": "AWS, Azure, cloud services, AI tools, automation, and modern IT concepts.",

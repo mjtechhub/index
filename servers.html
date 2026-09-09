@@ -3,58 +3,60 @@
 <head>
     <script src="js/theme-init.js"></script>
     <!-- SEO & Metadata -->
-    <title>Servers | MJ Tech Hub</title>
-    <meta name="description" content="Servers on MJ Tech Hub.">
+    <title>Server Administration & Virtualization | MJ Tech Hub</title>
+    <meta name="description" content="Guides and tutorials on Windows Server, Linux Server, Active Directory, virtualization, Proxmox, and VMware.">
     <link rel="canonical" href="https://themjtechhub.site/servers.html">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Servers | MJ Tech Hub">
-    <meta property="og:description" content="Servers on MJ Tech Hub.">
+    <meta property="og:title" content="Server Administration & Virtualization | MJ Tech Hub">
+    <meta property="og:description" content="Guides and tutorials on Windows Server, Linux Server, Active Directory, virtualization, Proxmox, and VMware.">
     <meta property="og:url" content="https://themjtechhub.site/servers.html">
     <meta property="og:site_name" content="MJ Tech Hub">
     <meta property="og:type" content="website">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Servers | MJ Tech Hub">
-    <meta name="twitter:description" content="Servers on MJ Tech Hub.">
+    <meta name="twitter:title" content="Server Administration & Virtualization | MJ Tech Hub">
+    <meta name="twitter:description" content="Guides and tutorials on Windows Server, Linux Server, Active Directory, virtualization, Proxmox, and VMware.">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/themes.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <script src="js/theme.js"></script>
-    <script src="js/main.js" defer></script>
+    <link rel="stylesheet" href="./css/themes.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/responsive.css">
 </head>
 <body>
-    <!-- Header -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="site-header"></div>
-    <main class="container py-4">
-        <div style="margin-bottom: 2rem;">
-            <a href="topics.html" style="color: var(--text-secondary); font-size: 0.85rem;"><i class="fas fa-arrow-left"></i> Back to Topics</a>
-        </div>
-        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-            <i class="fas fa-server" style="font-size: 2.5rem; color: var(--brand-primary);"></i>
-            <h1 style="font-size: 2.5rem; margin: 0; color: var(--text-primary);">Servers</h1>
-        </div>
-        <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 800px; margin-bottom: 3rem;">
-            Windows Server, Linux Server, Active Directory & Virtualization.
-        </p>
-        
-        <h2 class="section-title">| LEARNING PATH</h2>
-        <div class="card" style="padding: 2rem; text-align: center; color: var(--text-muted);">
-            <i class="fas fa-tools" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-            <h3>Curriculum coming soon</h3>
-            <p>We are currently structuring the tutorials and content paths for this topic. Check back soon!</p>
-        </div>
+
+    <main id="main-content" class="container py-4" data-category="servers">
+        <!-- Breadcrumb Navigation Mount -->
+        <nav class="breadcrumb" id="category-breadcrumb" aria-label="Breadcrumb" style="margin-bottom: var(--space-4);"></nav>
+
+        <!-- Category Hero Mount -->
+        <section class="page-hero" id="category-hero" aria-label="Category Overview"></section>
+
+        <!-- Main Content Mount (Tutorials Grid or Empty State) -->
+        <section id="category-content" aria-label="Category Content"></section>
+
+        <!-- Related Categories Section -->
+        <section class="related-categories-section" aria-labelledby="heading-related-categories">
+            <div class="section-header-bar mb-2">
+                <div class="section-title-wrap">
+                    <span class="section-accent-bar" aria-hidden="true"></span>
+                    <h2 id="heading-related-categories" class="section-heading-title">Explore Other Domains</h2>
+                </div>
+            </div>
+            <div id="related-categories" class="related-grid"></div>
+        </section>
     </main>
-    <!-- Footer -->
+
     <div id="site-footer"></div>
     <script src="./js/components.js"></script>
-    <script src="./js/topics.js"></script>
-        </body>
+    <script src="./js/category.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/theme.js"></script>
+</body>
 </html>
-
-
