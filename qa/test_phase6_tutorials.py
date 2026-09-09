@@ -130,21 +130,21 @@ def audit_raw_static_seo():
         tuts_meta = json.load(f)
 
     meta_by_name = {Path(t["url"]).name: t for t in tuts_meta}
-    tut_files = sorted(list(TUTS_DIR.glob("*.html")))
+    tut_files = [ROOT_DIR / t["url"] for t in tuts_meta]
 
-    networking_meta = [t for t in tuts_meta if t.get("category") == "Networking"]
-    assert len(tut_files) == 61, f"Expected 61 tutorial files, found {len(tut_files)}"
-    assert len(networking_meta) == 61, f"Expected 61 networking entries in tutorials.json, found {len(networking_meta)}"
+    print(f"Total tutorials in tutorials.json: {len(tuts_meta)}")
+    print(f"Auditing all {len(tut_files)} published tutorial files across all categories...")
+    assert len(tut_files) == len(tuts_meta), f"Mismatch in count: {len(tut_files)} vs {len(tuts_meta)}"
 
     seo_failures = []
     h1_failures = []
     json_ld_failures = []
 
-    for fpath in tut_files:
+    for meta in tuts_meta:
+        fpath = ROOT_DIR / meta["url"]
         fname = fpath.name
-        meta = meta_by_name.get(fname)
-        if not meta:
-            seo_failures.append(f"{fname}: Missing entry in tutorials.json")
+        if not fpath.exists():
+            seo_failures.append(f"{fname}: Physical file does not exist: {fpath}")
             continue
 
         raw_html = fpath.read_text(encoding="utf-8")
@@ -162,7 +162,7 @@ def audit_raw_static_seo():
             seo_failures.append(f"{fname}: Meta description mismatch")
 
         # 3. Canonical URL
-        expected_canonical = f"{CANONICAL_DOMAIN}/tutorials/networking/{fname}"
+        expected_canonical = f"{CANONICAL_DOMAIN}/{meta['url']}"
         if parser.canonical != expected_canonical:
             seo_failures.append(f"{fname}: Canonical URL mismatch: '{parser.canonical}' != '{expected_canonical}'")
 
@@ -220,7 +220,7 @@ def audit_raw_static_seo():
     assert len(json_ld_failures) == 0, f"JSON-LD Failures encountered:\n" + "\n".join(json_ld_failures[:10])
     assert len(h1_failures) == 0, f"H1 Failures encountered:\n" + "\n".join(h1_failures[:10])
 
-    print("[PASS] All 61 tutorials contain valid, complete static SEO metadata and exactly one H1.")
+    print(f"[PASS] All {len(tut_files)} tutorials contain valid, complete static SEO metadata and exactly one H1.")
 
 async def run_phase6_browser_tests():
     print("\n" + "=" * 68)

@@ -18,7 +18,41 @@
           "accent": { "type": "string" },
           "icon": { "type": "string" },
           "keywords": { "type": "string" },
-          "sections": { "type": "array" }
+          "sections": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "subtopics"],
+              "properties": {
+                "name": { "type": "string" },
+                "title": { "type": "string" },
+                "subtopics": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["id", "name", "level", "status"],
+                    "properties": {
+                      "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+                      "name": { "type": "string", "minLength": 3 },
+                      "level": { "type": "string", "enum": ["Beginner", "Intermediate", "Advanced"] },
+                      "status": { "type": "string", "enum": ["published", "planned"] },
+                      "url": { "type": "string" }
+                    },
+                    "allOf": [
+                      {
+                        "if": {
+                          "properties": { "status": { "const": "published" } }
+                        },
+                        "then": {
+                          "required": ["url"]
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

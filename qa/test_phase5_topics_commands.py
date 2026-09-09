@@ -49,6 +49,18 @@ async def run_phase5_tests():
     with open(ROOT_DIR / "data" / "topics.json", "r", encoding="utf-8") as f:
         topics_data = json.load(f)
 
+    with open(ROOT_DIR / "data" / "tutorials.json", "r", encoding="utf-8") as f:
+        tuts_data = json.load(f)
+
+    net_tuts = [t for t in tuts_data if t["category"] == "Networking"]
+    net_total = len(net_tuts)
+    net_inter = sum(1 for t in net_tuts if t["level"] == "Intermediate")
+    net_beg = sum(1 for t in net_tuts if t["level"] == "Beginner")
+    net_adv = sum(1 for t in net_tuts if t["level"] == "Advanced")
+
+    win_tuts = [t for t in tuts_data if t["category"] == "Windows"]
+    win_total = len(win_tuts)
+
     empty_cats = ["windows", "linux", "servers", "cybersecurity", "cloud"]
     print("\n--- AUDIT: topics.json Empty Category Curriculum Audit ---")
     for cat_id in empty_cats:
@@ -92,11 +104,11 @@ async def run_phase5_tests():
         print(f"[{'PASS' if test_results['topics_core_count'] else 'FAIL'}] Core Topics (Rendered: {len(core_cards)} cards, Expected: 6)")
 
         net_card = next((c for c in core_cards if c["title"] == "Networking"), None)
-        test_results["networking_count_badge"] = net_card is not None and "61 Tutorials" in net_card["countBadge"]
-        print(f"[{'PASS' if test_results['networking_count_badge'] else 'FAIL'}] Networking Tutorial Count Badge ('{net_card['countBadge'] if net_card else 'None'}' == '61 Tutorials')")
+        test_results["networking_count_badge"] = net_card is not None and f"{net_total} Tutorials" in net_card["countBadge"]
+        print(f"[{'PASS' if test_results['networking_count_badge'] else 'FAIL'}] Networking Tutorial Count Badge ('{net_card['countBadge'] if net_card else 'None'}' == '{net_total} Tutorials')")
 
         other_core_cards = [c for c in core_cards if c["title"] != "Networking"]
-        test_results["empty_category_badges"] = all(("3 Tutorials" in c["countBadge"] or "In preparation" in c["countBadge"]) for c in other_core_cards)
+        test_results["empty_category_badges"] = all((f"{len([t for t in tuts_data if t['category'] == c['title']])} Tutorials" in c["countBadge"] or "In preparation" in c["countBadge"]) for c in other_core_cards)
         print(f"[{'PASS' if test_results['empty_category_badges'] else 'FAIL'}] Core Categories Badges: {[c['countBadge'] for c in other_core_cards]}")
 
         spec_count = await page.evaluate("() => document.querySelectorAll('#more-topics-grid .specialized-topic-card').length")
@@ -116,7 +128,7 @@ async def run_phase5_tests():
         load_more_visible = await page.evaluate("() => { const el = document.querySelector('.category-load-more-wrap'); return el && getComputedStyle(el).display !== 'none'; }")
 
         test_results["net_initial_18"] = (init_count == 18)
-        test_results["net_initial_counter"] = ("Showing 18 of 61 tutorials" in init_counter_text)
+        test_results["net_initial_counter"] = (f"Showing 18 of {net_total} tutorials" in init_counter_text)
         test_results["net_load_more_visible"] = bool(load_more_visible)
 
         print(f"[{'PASS' if test_results['net_initial_18'] else 'FAIL'}] Initial Visible Count (Rendered: {init_count}, Expected: 18)")
@@ -134,7 +146,7 @@ async def run_phase5_tests():
         await page.wait_for_timeout(200)
         batch2_count = await page.evaluate("() => document.querySelectorAll('.category-tut-grid .cat-tut-card').length")
         batch2_counter = await page.evaluate("() => document.querySelector('.text-xs.text-muted.mb-2')?.textContent.trim()")
-        test_results["net_batch_36"] = (batch2_count == 36 and "Showing 36 of 61 tutorials" in batch2_counter)
+        test_results["net_batch_36"] = (batch2_count == 36 and f"Showing 36 of {net_total} tutorials" in batch2_counter)
         print(f"[{'PASS' if test_results['net_batch_36'] else 'FAIL'}] Load More Batch 2 (Count: {batch2_count}, Counter: '{batch2_counter}')")
 
         # Click 2: 36 -> 54
@@ -142,54 +154,64 @@ async def run_phase5_tests():
         await page.wait_for_timeout(200)
         batch3_count = await page.evaluate("() => document.querySelectorAll('.category-tut-grid .cat-tut-card').length")
         batch3_counter = await page.evaluate("() => document.querySelector('.text-xs.text-muted.mb-2')?.textContent.trim()")
-        test_results["net_batch_54"] = (batch3_count == 54 and "Showing 54 of 61 tutorials" in batch3_counter)
+        test_results["net_batch_54"] = (batch3_count == 54 and f"Showing 54 of {net_total} tutorials" in batch3_counter)
         print(f"[{'PASS' if test_results['net_batch_54'] else 'FAIL'}] Load More Batch 3 (Count: {batch3_count}, Counter: '{batch3_counter}')")
 
-        # Click 3: 54 -> 61 (Final batch)
-        await page.click("#load-more-btn")
-        await page.wait_for_timeout(200)
+        # Click 3+: until all revealed
+        while True:
+            is_visible = await page.evaluate("() => { const el = document.querySelector('.category-load-more-wrap'); return el && getComputedStyle(el).display !== 'none'; }")
+            if not is_visible:
+                break
+            await page.click("#load-more-btn")
+            await page.wait_for_timeout(200)
+
         final_count = await page.evaluate("() => document.querySelectorAll('.category-tut-grid .cat-tut-card').length")
         final_counter = await page.evaluate("() => document.querySelector('.text-xs.text-muted.mb-2')?.textContent.trim()")
         load_more_hidden_final = await page.evaluate("() => { const el = document.querySelector('.category-load-more-wrap'); return !el || getComputedStyle(el).display === 'none'; }")
 
-        test_results["net_final_61"] = (final_count == 61 and "Showing 61 of 61 tutorials" in final_counter)
+        test_results["net_final_61"] = (final_count == net_total and f"Showing {net_total} of {net_total} tutorials" in final_counter)
         test_results["net_load_more_hidden_on_complete"] = bool(load_more_hidden_final)
-        print(f"[{'PASS' if test_results['net_final_61'] else 'FAIL'}] Final Load Exposes All 61 (Count: {final_count}, Counter: '{final_counter}')")
-        print(f"[{'PASS' if test_results['net_load_more_hidden_on_complete'] else 'FAIL'}] Load More Hidden After All 61 Revealed")
+        print(f"[{'PASS' if test_results['net_final_61'] else 'FAIL'}] Final Load Exposes All {net_total} (Count: {final_count}, Counter: '{final_counter}')")
+        print(f"[{'PASS' if test_results['net_load_more_hidden_on_complete'] else 'FAIL'}] Load More Hidden After All {net_total} Revealed")
 
         # C. Difficulty Filters Operate Across Complete Dataset & Reset Count
-        # Intermediate Filter (Total: 35)
+        # Intermediate Filter
         await page.click("button.filter-btn:has-text('Intermediate')")
         await page.wait_for_timeout(200)
         inter_init_count = await page.evaluate("() => document.querySelectorAll('.category-tut-grid .cat-tut-card').length")
         inter_counter = await page.evaluate("() => document.querySelector('.text-xs.text-muted.mb-2')?.textContent.trim()")
-        test_results["filter_inter_reset"] = (inter_init_count == 18 and "Showing 18 of 35 Intermediate tutorials" in inter_counter)
+        test_results["filter_inter_reset"] = (inter_init_count == min(18, net_inter) and f"of {net_inter} Intermediate tutorials" in inter_counter)
         print(f"[{'PASS' if test_results['filter_inter_reset'] else 'FAIL'}] Intermediate Filter Initial Slice (Count: {inter_init_count}, Counter: '{inter_counter}')")
 
-        # Intermediate Load More -> 35
-        await page.click("#load-more-btn")
-        await page.wait_for_timeout(200)
+        # Intermediate Load More -> all net_inter
+        while True:
+            is_visible = await page.evaluate("() => { const el = document.querySelector('.category-load-more-wrap'); return el && getComputedStyle(el).display !== 'none'; }")
+            if not is_visible:
+                break
+            await page.click("#load-more-btn")
+            await page.wait_for_timeout(200)
+
         inter_full_count = await page.evaluate("() => document.querySelectorAll('.category-tut-grid .cat-tut-card').length")
         inter_full_counter = await page.evaluate("() => document.querySelector('.text-xs.text-muted.mb-2')?.textContent.trim()")
         inter_hidden = await page.evaluate("() => { const el = document.querySelector('.category-load-more-wrap'); return !el || getComputedStyle(el).display === 'none'; }")
-        test_results["filter_inter_full"] = (inter_full_count == 35 and "Showing 35 of 35 Intermediate tutorials" in inter_full_counter and inter_hidden)
+        test_results["filter_inter_full"] = (inter_full_count == net_inter and f"Showing {net_inter} of {net_inter} Intermediate tutorials" in inter_full_counter and inter_hidden)
         print(f"[{'PASS' if test_results['filter_inter_full'] else 'FAIL'}] Intermediate Filter Complete (Count: {inter_full_count}, Counter: '{inter_full_counter}', Hidden: {inter_hidden})")
 
-        # Advanced Filter (Total: 4)
+        # Advanced Filter
         await page.click("button.filter-btn:has-text('Advanced')")
         await page.wait_for_timeout(200)
         adv_count = await page.evaluate("() => document.querySelectorAll('.category-tut-grid .cat-tut-card').length")
         adv_counter = await page.evaluate("() => document.querySelector('.text-xs.text-muted.mb-2')?.textContent.trim()")
         adv_hidden = await page.evaluate("() => { const el = document.querySelector('.category-load-more-wrap'); return !el || getComputedStyle(el).display === 'none'; }")
-        test_results["filter_adv"] = (adv_count == 4 and "Showing 4 of 4 Advanced tutorials" in adv_counter and adv_hidden)
+        test_results["filter_adv"] = (adv_count == net_adv and f"Showing {net_adv} of {net_adv} Advanced tutorials" in adv_counter and adv_hidden)
         print(f"[{'PASS' if test_results['filter_adv'] else 'FAIL'}] Advanced Filter (Count: {adv_count}, Counter: '{adv_counter}', Hidden: {adv_hidden})")
 
-        # Beginner Filter (Total: 22)
+        # Beginner Filter
         await page.click("button.filter-btn:has-text('Beginner')")
         await page.wait_for_timeout(200)
         beg_count = await page.evaluate("() => document.querySelectorAll('.category-tut-grid .cat-tut-card').length")
         beg_counter = await page.evaluate("() => document.querySelector('.text-xs.text-muted.mb-2')?.textContent.trim()")
-        test_results["filter_beg"] = (beg_count == 18 and "Showing 18 of 22 Beginner tutorials" in beg_counter)
+        test_results["filter_beg"] = (beg_count == min(18, net_beg) and f"of {net_beg} Beginner tutorials" in beg_counter)
         print(f"[{'PASS' if test_results['filter_beg'] else 'FAIL'}] Beginner Filter Initial (Count: {beg_count}, Counter: '{beg_counter}')")
 
         # D. Reset to All & In-Category Search Across Complete Dataset
@@ -215,7 +237,7 @@ async def run_phase5_tests():
         has_tut_cards = await page.evaluate("() => document.querySelectorAll('.category-tut-grid .cat-tut-card').length > 0")
         if has_tut_cards:
             tut_count = await page.evaluate("() => document.querySelectorAll('.category-tut-grid .cat-tut-card').length")
-            test_results["empty_state_verified"] = (tut_count == 3)
+            test_results["empty_state_verified"] = (tut_count == win_total)
             print(f"[{'PASS' if test_results['empty_state_verified'] else 'FAIL'}] Windows Category Page (Rendered: {tut_count} published tutorials)")
         else:
             await page.wait_for_selector(".category-empty-state", timeout=5000)

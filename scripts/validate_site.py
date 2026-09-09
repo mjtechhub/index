@@ -83,10 +83,29 @@ class SiteValidator:
                     self.error("JSON Schema", jf, "topics.json must be an object with 'categories' key")
                 else:
                     required_fields = ["id", "name", "type", "description", "url"]
+                    subtopic_ids = set()
                     for idx, cat in enumerate(data.get("categories", [])):
                         for rf in required_fields:
                             if rf not in cat:
                                 self.error("JSON Schema", jf, f"Category #{idx} missing required field '{rf}'")
+                        # Validate sections and subtopics if present
+                        for sec in cat.get("sections", []):
+                            for sub in sec.get("subtopics", []):
+                                for srf in ["id", "name", "level", "status"]:
+                                    if srf not in sub:
+                                        self.error("JSON Schema", jf, f"Subtopic missing required field '{srf}': {sub}")
+                                sid = sub.get("id")
+                                if sid in subtopic_ids:
+                                    self.error("Duplicate Subtopic ID", jf, f"Duplicate global subtopic id: '{sid}'")
+                                subtopic_ids.add(sid)
+                                if sub.get("status") == "published":
+                                    s_url = sub.get("url")
+                                    if not s_url:
+                                        self.error("JSON Schema", jf, f"Published subtopic '{sid}' missing url")
+                                    else:
+                                        target_file = self.root / s_url.replace("./", "")
+                                        if not target_file.exists():
+                                            self.error("Broken File Ref", jf, f"Published subtopic file not found: {s_url}")
 
             elif jf.name == "commands.json":
                 if not isinstance(data, list):

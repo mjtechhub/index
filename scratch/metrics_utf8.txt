@@ -1,0 +1,110 @@
+
+### Networking (`networking`)
+- **Networking Fundamentals & Core Models**: 9 topics (7 Published, 2 Planned) — Beginner: 7, Intermediate: 2, Advanced: 0
+- **IP Addressing, Subnetting & Next-Gen IP**: 9 topics (5 Published, 4 Planned) — Beginner: 2, Intermediate: 6, Advanced: 1
+- **Ethernet, Switching & VLAN Architecture**: 9 topics (5 Published, 4 Planned) — Beginner: 1, Intermediate: 6, Advanced: 2
+- **Routing Protocols, NAT & Gateway Redundancy**: 10 topics (9 Published, 1 Planned) — Beginner: 3, Intermediate: 7, Advanced: 0
+- **Transport Protocols, Handshakes & Ports**: 7 topics (4 Published, 3 Planned) — Beginner: 2, Intermediate: 4, Advanced: 1
+- **DNS, DHCP & Core Network Services**: 8 topics (4 Published, 4 Planned) — Beginner: 3, Intermediate: 5, Advanced: 0
+- **Wireless Networking (Wi-Fi)**: 6 topics (1 Published, 5 Planned) — Beginner: 2, Intermediate: 3, Advanced: 1
+- **Network Security, Firewalls & VPN Connectivity**: 8 topics (5 Published, 3 Planned) — Beginner: 0, Intermediate: 7, Advanced: 1
+- **Network Monitoring, Telemetry & Observability**: 9 topics (6 Published, 3 Planned) — Beginner: 1, Intermediate: 7, Advanced: 1
+- **Network Performance & Diagnostic Troubleshooting**: 15 topics (15 Published, 0 Planned) — Beginner: 4, Intermediate: 8, Advanced: 3
+**Category Total**: 10 sections, 90 topics (61 Published, 29 Planned) [Beginner: 25, Intermediate: 55, Advanced: 10]
+
+### Windows (`windows`)
+- **Windows Architecture & Operating System Fundamentals**: 8 topics (1 Published, 7 Planned) — Beginner: 2, Intermediate: 5, Advanced: 1
+- **Command Prompt & Administrative Utilities**: 8 topics (1 Published, 7 Planned) — Beginner: 4, Intermediate: 4, Advanced: 0
+- **PowerShell Administration & Automation**: 9 topics (1 Published, 8 Planned) — Beginner: 0, Intermediate: 8, Advanced: 1
+- **Identity, Local Security & NTFS Permissions**: 8 topics (0 Published, 8 Planned) — Beginner: 2, Intermediate: 6, Advanced: 0
+- **Processes, Services & Task Scheduling**: 7 topics (0 Published, 7 Planned) — Beginner: 2, Intermediate: 4, Advanced: 1
+- **Windows Networking & Remote Access**: 8 topics (0 Published, 8 Planned) — Beginner: 4, Intermediate: 3, Advanced: 1
+- **Endpoint Security, Defender & BitLocker**: 8 topics (0 Published, 8 Planned) — Beginner: 0, Intermediate: 5, Advanced: 3
+- **Active Directory Domain Join & Group Policy**: 7 topics (0 Published, 7 Planned) — Beginner: 1, Intermediate: 5, Advanced: 1
+- **Enterprise Updates, Deployment & Management**: 7 topics (0 Published, 7 Planned) — Beginner: 1, Intermediate: 5, Advanced: 1
+- **Diagnostics, Event Logs & System Troubleshooting**: 8 topics (0 Published, 8 Planned) — Beginner: 3, Intermediate: 4, Advanced: 1
+**Category Total**: 10 sections, 78 topics (3 Published, 75 Planned) [Beginner: 19, Intermediate: 49, Advanced: 10]
+
+### Linux (`linux`)
+- **Linux Architecture & System Fundamentals**: 8 topics (1 Published, 7 Planned) — Beginner: 2, Intermediate: 5, Advanced: 1
+- **Filesystem, Storage & Volume Management**: 9 topics (1 Published, 8 Planned) — Beginner: 3, Intermediate: 6, Advanced: 0
+- **Bash Shell Scripting & Command-Line Utilities**: 9 topics (1 Published, 8 Planned) — Beginner: 4, Intermediate: 5, Advanced: 0
+- **Users, Groups & Linux Access Controls**: 7 topics (0 Published, 7 Planned) — Beginner: 2, Intermediate: 4, Advanced: 1
+- **Process Management, Systemd & Scheduling**: 7 topics (0 Published, 7 Planned) — Beginner: 3, Intermediate: 4, Advanced: 0
+- **Linux Networking, DNS & Remote Access (SSH)**: 7 topics (0 Published, 7 Planned) — Beginner: 2, Intermediate: 5, Advanced: 0
+- **Package Management & Software Repositories**: 7 topics (0 Published, 7 Planned) — Beginner: 3, Intermediate: 4, Advanced: 0
+- **System Monitoring, Logging & Performance Tuning**: 7 topics (0 Published, 7 Planned) — Beginner: 0, Intermediate: 5, Advanced: 2
+- **Linux Security, Firewalls & Hardening**: 7 topics (0 Published, 7 Planned) — Beginner: 1, Intermediate: 5, Advanced: 1
+- **Boot Process, Recovery & Advanced Troubleshooting**: 7 topics (0 Published, 7 Planned) — Beginner: 1, Intermediate: 5, Advanced: 1
+**Category Total**: 10 sections, 75 topics (3 Published, 72 Planned) [Beginner: 21, Intermediate: 48, Advanced: 6]
+
+### Servers (`servers`)
+- **Server Hardware & Enterprise Architecture**: 9 topics (1 Published, 8 Planned) — Beginner: 4, Intermediate: 4, Advanced: 1
+- **Operating System Platforms & Server Deployment**: 8 topics (2 Published, 6 Planned) — Beginner: 2, Intermediate: 6, Advanced: 0
+- **Active Directory Domain Services & Enterprise Identity**: 8 topics (0 Published, 8 Planned) — Beginner: 0, Intermediate: 7, Advanced: 1
+- **Core Infrastructure Services (DNS & DHCP)**: 7 topics (0 Published, 7 Planned) — Beginner: 1, Intermediate: 6, Advanced: 0
+- **Virtualization & Enterprise Hypervisors**: 8 topics (0 Published, 8 Planned) — Beginner: 2, Intermediate: 4, Advanced: 2
+- **Enterprise Storage, File Services & SAN/NAS**: 8 topics (0 Published, 8 Planned) — Beginner: 1, Intermediate: 5, Advanced: 2
+- **High Availability, Clustering & Disaster Recovery**: 8 topics (0 Published, 8 Planned) — Beginner: 1, Intermediate: 5, Advanced: 2
+- **Server Monitoring, Telemetry & Capacity Planning**: 7 topics (0 Published, 7 Planned) — Beginner: 0, Intermediate: 6, Advanced: 1
+- **Server Security, Hardening & Compliance**: 7 topics (0 Published, 7 Planned) — Beginner: 0, Intermediate: 5, Advanced: 2
+- **Root-Cause Diagnostics & Server Troubleshooting**: 7 topics (0 Published, 7 Planned) — Beginner: 0, Intermediate: 4, Advanced: 3
+**Category Total**: 10 sections, 77 topics (3 Published, 74 Planned) [Beginner: 11, Intermediate: 52, Advanced: 14]
+
+### Cybersecurity (`cybersecurity`)
+- **Security Principles, Risk & Governance**: 9 topics (1 Published, 8 Planned) — Beginner: 6, Intermediate: 3, Advanced: 0
+- **Enterprise Identity & Access Management (IAM)**: 8 topics (1 Published, 7 Planned) — Beginner: 3, Intermediate: 3, Advanced: 2
+- **Authentication Protocols, MFA & Credential Security**: 8 topics (1 Published, 7 Planned) — Beginner: 1, Intermediate: 6, Advanced: 1
+- **Endpoint Protection, Antivirus & EDR Architecture**: 7 topics (0 Published, 7 Planned) — Beginner: 2, Intermediate: 4, Advanced: 1
+- **Network Defense, Firewalls & Microsegmentation**: 7 topics (0 Published, 7 Planned) — Beginner: 0, Intermediate: 6, Advanced: 1
+- **Email Security & Anti-Phishing Defense**: 7 topics (0 Published, 7 Planned) — Beginner: 1, Intermediate: 6, Advanced: 0
+- **Vulnerability Management & Threat Intelligence**: 7 topics (0 Published, 7 Planned) — Beginner: 2, Intermediate: 5, Advanced: 0
+- **Centralized Logging, SIEM & Security Monitoring**: 7 topics (0 Published, 7 Planned) — Beginner: 0, Intermediate: 4, Advanced: 3
+- **Incident Response & Threat Containment**: 7 topics (0 Published, 7 Planned) — Beginner: 1, Intermediate: 6, Advanced: 0
+- **Zero Trust Architecture & Enterprise Baselines**: 7 topics (0 Published, 7 Planned) — Beginner: 2, Intermediate: 4, Advanced: 1
+**Category Total**: 10 sections, 74 topics (3 Published, 71 Planned) [Beginner: 18, Intermediate: 47, Advanced: 9]
+
+### Cloud & AI (`cloud`)
+- **Cloud Computing Architecture & Service Models**: 9 topics (2 Published, 7 Planned) — Beginner: 6, Intermediate: 3, Advanced: 0
+- **AWS Core Infrastructure & Foundational Services**: 9 topics (1 Published, 8 Planned) — Beginner: 3, Intermediate: 6, Advanced: 0
+- **Microsoft Azure Core Infrastructure & Services**: 8 topics (0 Published, 8 Planned) — Beginner: 3, Intermediate: 5, Advanced: 0
+- **Cloud Identity & Access Management (IAM)**: 7 topics (0 Published, 7 Planned) — Beginner: 0, Intermediate: 4, Advanced: 3
+- **Cloud Compute, Scaling & Container Infrastructure**: 7 topics (0 Published, 7 Planned) — Beginner: 1, Intermediate: 6, Advanced: 0
+- **Cloud Networking, Hybrid Connectivity & Traffic Routing**: 7 topics (0 Published, 7 Planned) — Beginner: 0, Intermediate: 6, Advanced: 1
+- **Cloud Storage, Data Protection & Disaster Recovery**: 7 topics (0 Published, 7 Planned) — Beginner: 1, Intermediate: 4, Advanced: 2
+- **Cloud Monitoring, Telemetry & Infrastructure as Code (IaC)**: 8 topics (0 Published, 8 Planned) — Beginner: 1, Intermediate: 7, Advanced: 0
+- **Cloud Security, Governance, Compliance & FinOps**: 7 topics (0 Published, 7 Planned) — Beginner: 2, Intermediate: 5, Advanced: 0
+- **Enterprise AI for IT Operations (AIOps) & AI Governance**: 8 topics (0 Published, 8 Planned) — Beginner: 2, Intermediate: 5, Advanced: 1
+**Category Total**: 10 sections, 77 topics (3 Published, 74 Planned) [Beginner: 19, Intermediate: 51, Advanced: 7]
+
+### IT Support (`it-support`)
+**Category Total**: 0 sections, 0 topics (0 Published, 0 Planned) [Beginner: 0, Intermediate: 0, Advanced: 0]
+
+### Hardware (`hardware`)
+**Category Total**: 0 sections, 0 topics (0 Published, 0 Planned) [Beginner: 0, Intermediate: 0, Advanced: 0]
+
+### Virtualization (`virtualization`)
+**Category Total**: 0 sections, 0 topics (0 Published, 0 Planned) [Beginner: 0, Intermediate: 0, Advanced: 0]
+
+### Monitoring (`monitoring`)
+**Category Total**: 0 sections, 0 topics (0 Published, 0 Planned) [Beginner: 0, Intermediate: 0, Advanced: 0]
+
+### Backup & Recovery (`backup-recovery`)
+**Category Total**: 0 sections, 0 topics (0 Published, 0 Planned) [Beginner: 0, Intermediate: 0, Advanced: 0]
+
+### Storage (`storage`)
+**Category Total**: 0 sections, 0 topics (0 Published, 0 Planned) [Beginner: 0, Intermediate: 0, Advanced: 0]
+
+### IT Tools (`it-tools`)
+**Category Total**: 0 sections, 0 topics (0 Published, 0 Planned) [Beginner: 0, Intermediate: 0, Advanced: 0]
+
+### Command Line (`command-line`)
+**Category Total**: 0 sections, 0 topics (0 Published, 0 Planned) [Beginner: 0, Intermediate: 0, Advanced: 0]
+
+### Troubleshooting (`troubleshooting`)
+**Category Total**: 0 sections, 0 topics (0 Published, 0 Planned) [Beginner: 0, Intermediate: 0, Advanced: 0]
+
+### Interview Questions (`interview-questions`)
+**Category Total**: 0 sections, 0 topics (0 Published, 0 Planned) [Beginner: 0, Intermediate: 0, Advanced: 0]
+
+MASTER TOTAL: 6 categories, 60 sections, 471 topics (76 published, 395 planned) [Beg: 113, Int: 302, Adv: 56]

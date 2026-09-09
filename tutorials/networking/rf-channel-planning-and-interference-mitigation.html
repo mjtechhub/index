@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RF Channel Planning, Band Steering & Co-Channel Interference | Networking Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master enterprise Wi-Fi RF channel planning across 2.4 GHz, 5 GHz, and 6 GHz bands, mitigating co-channel interference (CCI) and configuring band steering.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/networking/rf-channel-planning-and-interference-mitigation.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="RF Channel Planning, Band Steering & Co-Channel Interference | Networking Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master enterprise Wi-Fi RF channel planning across 2.4 GHz, 5 GHz, and 6 GHz bands, mitigating co-channel interference (CCI) and configuring band steering.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/networking/rf-channel-planning-and-interference-mitigation.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="RF Channel Planning, Band Steering & Co-Channel Interference | Networking Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master enterprise Wi-Fi RF channel planning across 2.4 GHz, 5 GHz, and 6 GHz bands, mitigating co-channel interference (CCI) and configuring band steering.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "RF Channel Planning, Band Steering & Co-Channel Interference",
+    "description": "Master enterprise Wi-Fi RF channel planning across 2.4 GHz, 5 GHz, and 6 GHz bands, mitigating co-channel interference (CCI) and configuring band steering.",
+    "url": "https://themjtechhub.site/tutorials/networking/rf-channel-planning-and-interference-mitigation.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/networking/rf-channel-planning-and-interference-mitigation.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../networking.html">Networking</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">RF Channel Planning, Band Steering & Co-Channel Interference</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">RF Channel Planning, Band Steering & Co-Channel Interference</h1>
+            <p class="tutorial-hero-desc">Master enterprise Wi-Fi RF channel planning across 2.4 GHz, 5 GHz, and 6 GHz bands, mitigating co-channel interference (CCI) and configuring band steering.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>Radio Frequency (RF) channel planning is the foundation of high-density enterprise wireless design. While home Wi-Fi routers frequently rely on automatic channel selection, enterprise environments with dozens or hundreds of Access Points (APs) demand deterministic channel and power layouts. Without intentional RF design, wireless networks succumb to severe performance degradation caused by <strong>Co-Channel Interference (CCI)</strong> and <strong>Adjacent Channel Interference (ACI)</strong>.</p>
+
+<h2>The Physics of Enterprise Wi-Fi Spectrum</h2>
+<p>Wi-Fi communicates over unlicensed RF bands governed by regulatory bodies (such as the FCC in the US and ETSI in Europe). Each band possesses distinct propagation characteristics and spectral constraints:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Band</th>
+                <th>Usable Spectrum</th>
+                <th>Wall Penetration</th>
+                <th>Recommended Channel Width</th>
+                <th>Primary Use Case</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>2.4 GHz</strong></td>
+                <td>~83.5 MHz (3 non-overlapping)</td>
+                <td>High (attenuates slowly)</td>
+                <td>20 MHz only</td>
+                <td>Legacy IoT, low-bandwidth telemetry, long-range coverage</td>
+            </tr>
+            <tr>
+                <td><strong>5 GHz</strong></td>
+                <td>~500 MHz (Up to 25 channels)</td>
+                <td>Moderate (attenuates rapidly)</td>
+                <td>20 MHz or 40 MHz</td>
+                <td>Enterprise corporate laptops, smartphones, VoIP handsets</td>
+            </tr>
+            <tr>
+                <td><strong>6 GHz (Wi-Fi 6E / 7)</strong></td>
+                <td>1200 MHz (Up to 59 channels)</td>
+                <td>Low (requires line-of-sight/dense APs)</td>
+                <td>40 MHz, 80 MHz, or 160 MHz</td>
+                <td>Next-gen high-throughput, latency-critical AR/VR and CAD workstations</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>The Non-Overlapping Channel Rule (2.4 GHz)</h2>
+<p>In the 2.4 GHz spectrum (2.400 GHz to 2.4835 GHz), channels are spaced 5 MHz apart, but a standard 802.11 transmission mask occupies 20 to 22 MHz of spectral width. Consequently, adjacent channels overlap heavily.</p>
+<p>In North America and international regulatory domains adhering to FCC standards, there are only <strong>three non-overlapping channels: 1, 6, and 11</strong>.</p>
+
+<div class="callout callout-warning">
+    <div class="callout-title"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Critical Design Rule: Never Use Channels 2–5 or 7–10</div>
+    <div class="callout-body">Configuring an AP on channel 3 causes Adjacent Channel Interference (ACI) to both channel 1 and channel 6 cells. Unlike Co-Channel Interference (where Wi-Fi devices politely wait for clear air via CSMA/CA), ACI manifests as raw RF noise that cannot be decoded, corrupting frames and triggering exponential backoff timers.</div>
+</div>
+
+<h2>Co-Channel Interference (CCI) vs Co-Channel Contention</h2>
+<p>Co-Channel Interference occurs when two or more APs operating on the exact same frequency channel share overlapping coverage areas. Because Wi-Fi uses <strong>Carrier Sense Multiple Access with Collision Avoidance (CSMA/CA)</strong>, it functions as a shared, half-duplex medium:</p>
+<ul>
+    <li><strong>Clear Channel Assessment (CCA):</strong> Before transmitting, a client or AP performs physical energy detection and virtual carrier sensing (decoding preamble signal headers).</li>
+    <li><strong>Channel Contention:</strong> If an AP detects a transmission from another AP on the same channel above its CCA threshold (typically -82 dBm), it must defer transmission and start a random backoff counter.</li>
+    <li><strong>The Result:</strong> The two cells do not collide in the air; rather, they form a single enlarged contention domain. Throughput drops precipitously because devices wait in line behind transmissions occurring in neighboring rooms or floors.</li>
+</ul>
+
+<h2>5 GHz Channel Architecture & Dynamic Frequency Selection (DFS)</h2>
+<p>The 5 GHz spectrum offers vastly superior capacity, divided into four primary sub-bands:</p>
+<ol>
+    <li><strong>UNII-1 (Channels 36–48):</strong> Indoor low-power, zero radar contention.</li>
+    <li><strong>UNII-2A (Channels 52–64) & UNII-2C Extended (Channels 100–144):</strong> DFS channels. These frequencies are co-allocated to military, weather, and airport radar systems.</li>
+    <li><strong>UNII-3 (Channels 149–165):</strong> Higher allowed transmit power, no radar restrictions.</li>
+</ol>
+
+<div class="callout callout-info">
+    <div class="callout-title"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> How DFS Radar Detection Operates</div>
+    <div class="callout-body">When an enterprise AP activates on a DFS channel, it must perform a 60-second Channel Availability Check (CAC) before broadcasting beacons. If the AP detects radar pulses during operation, it must immediately send a Channel Switch Announcement (CSA) and migrate clients to a non-DFS frequency within 10 seconds.</div>
+</div>
+
+<h2>Band Steering Architecture & Implementation</h2>
+<p>Modern enterprise laptops and smartphones are dual-band or tri-band capable, yet client operating systems frequently cling to 2.4 GHz signals because lower frequencies exhibit stronger Received Signal Strength Indicators (RSSI). Band steering solves this asymmetry on the Wireless LAN Controller (WLC) or cloud AP:</p>
+<ul>
+    <li><strong>Probe Suppression:</strong> When an unassociated client sends 802.11 Probe Requests on both 2.4 GHz and 5 GHz, the AP deliberately suppresses or delays probe responses on the 2.4 GHz radio. The client concludes that only a 5 GHz network is available and associates to the faster band.</li>
+    <li><strong>802.11v BSS Transition Management:</strong> For associated clients, the AP sends disassociation imminent frames containing a candidate list of 5 GHz/6 GHz neighbor BSSIDs, prompting the client roaming algorithm to steer to high-frequency channels gracefully.</li>
+</ul>
+
+<h2>Enterprise RF Channel Planning Best Practices</h2>
+<ol>
+    <li><strong>Design for 5 GHz Primary Coverage:</strong> AP density should guarantee a minimum -65 dBm RSSI and +25 dB Signal-to-Noise Ratio (SNR) across all enterprise client areas on 5 GHz.</li>
+    <li><strong>Reduce 2.4 GHz Transmit Power:</strong> Because 2.4 GHz propagates approximately twice as far through drywall as 5 GHz, operating both radios at equal power creates vast 2.4 GHz co-channel interference. Reduce 2.4 GHz Transmit Power (Tx Power) by 6 dB to 9 dB relative to 5 GHz, or disable 2.4 GHz radios on every second AP in dense office layouts.</li>
+    <li><strong>Stick to 20 MHz or 40 MHz Channel Widths:</strong> While marketing promotes 80 MHz and 160 MHz channels for multi-gigabit speeds, bonding channels cuts the number of non-overlapping channels in half for every step. In an office with 40 APs, 80 MHz bonding guarantees catastrophic CCI. Use 20 MHz channels in high-density auditoriums, and 40 MHz in standard corporate offices.</li>
+</ol>
+
+<h2>Summary</h2>
+<p>Flawless enterprise Wi-Fi is won or lost in the RF physical layer. By adhering to 20 MHz channel assignments on channels 1, 6, and 11 for 2.4 GHz, leveraging DFS channels wisely on 5 GHz, balancing radio transmit power, and enabling intelligent band steering, network engineers eliminate contention domains and deliver wired-like wireless stability.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

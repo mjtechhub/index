@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NTFS Permissions vs Share Permissions: Calculating Effective Access | Windows Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master Windows file authorization: Discretionary Access Control Lists (DACLs), NTFS vs SMB Share permissions, inheritance rules, and effective access calculation.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/windows/windows-ntfs-permissions-vs-share-permissions.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="NTFS Permissions vs Share Permissions: Calculating Effective Access | Windows Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master Windows file authorization: Discretionary Access Control Lists (DACLs), NTFS vs SMB Share permissions, inheritance rules, and effective access calculation.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/windows/windows-ntfs-permissions-vs-share-permissions.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="NTFS Permissions vs Share Permissions: Calculating Effective Access | Windows Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master Windows file authorization: Discretionary Access Control Lists (DACLs), NTFS vs SMB Share permissions, inheritance rules, and effective access calculation.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "NTFS Permissions vs Share Permissions: Calculating Effective Access",
+    "description": "Master Windows file authorization: Discretionary Access Control Lists (DACLs), NTFS vs SMB Share permissions, inheritance rules, and effective access calculation.",
+    "url": "https://themjtechhub.site/tutorials/windows/windows-ntfs-permissions-vs-share-permissions.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/windows/windows-ntfs-permissions-vs-share-permissions.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../windows.html">Windows</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">NTFS Permissions vs Share Permissions: Calculating Effective Access</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">NTFS Permissions vs Share Permissions: Calculating Effective Access</h1>
+            <p class="tutorial-hero-desc">Master Windows file authorization: Discretionary Access Control Lists (DACLs), NTFS vs SMB Share permissions, inheritance rules, and effective access calculation.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>In enterprise Windows environments, securing file repositories and departmental data shares requires an exact understanding of authorization layers. Windows evaluates two distinct security subsystems when a user accesses data across a network: <strong>SMB Share Permissions</strong> and <strong>NTFS Permissions</strong>. Misunderstanding how these layers interact is one of the most common causes of accidental data exposure or unexpected access denial in enterprise file server administration.</p>
+
+<h2>The Two Layers of Windows File Security</h2>
+<p>Whenever a file or folder is accessed over an SMB network share (e.g. <code>\\\\fileserver\\finance</code>), Windows validates the client's Security Token through two separate gates:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Attribute</th>
+                <th>SMB Share Permissions</th>
+                <th>NTFS File System Permissions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Scope of Enforcement</strong></td>
+                <td>Network access only (via SMB protocol)</td>
+                <td>Network AND local interactive console access</td>
+            </tr>
+            <tr>
+                <td><strong>Granularity</strong></td>
+                <td>Folder/Share level only (cannot secure individual files)</td>
+                <td>Every folder, subfolder, and individual file</td>
+            </tr>
+            <tr>
+                <td><strong>Underlying Storage</strong></td>
+                <td>Protocol layer (stored in Windows Registry)</td>
+                <td>Filesystem layer (stored in NTFS Master File Table / MFT)</td>
+            </tr>
+            <tr>
+                <td><strong>Available Rights</strong></td>
+                <td>Read, Change, Full Control</td>
+                <td>Read, Write, List, Read & Execute, Modify, Full Control, + Special Permissions</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>The Golden Rule: Calculating Effective Access</h2>
+<p>When access occurs over the network, Windows evaluates Share permissions and NTFS permissions independently, and then enforces the <strong>most restrictive intersection</strong> of the two security sets.</p>
+
+<div class="callout callout-warning">
+    <div class="callout-title"><i class="fa-solid fa-calculator" aria-hidden="true"></i> The Effective Access Formula</div>
+    <div class="callout-body">
+        <strong>Effective Access = Minimum(Share Permissions, NTFS Permissions)</strong><br>
+        If a user has <em>Full Control</em> on the SMB Share, but only <em>Read</em> on the NTFS folder, their effective access over the network is <strong>Read</strong>.<br>
+        Conversely, if a user has <em>Full Control</em> on NTFS, but only <em>Read</em> on the SMB Share, their effective access over the network is <strong>Read</strong>.
+    </div>
+</div>
+
+<h2>Enterprise Best Practice: The "Full Control Share" Strategy</h2>
+<p>Because managing two divergent permission matrices across thousands of folders creates immense administrative overhead, Microsoft and enterprise security frameworks recommend the following architecture:</p>
+<ol>
+    <li>Set SMB Share permissions to <strong>Authenticated Users: Change</strong> (or <strong>Everyone: Full Control</strong> in tightly locked environments).</li>
+    <li>Use <strong>NTFS permissions exclusively</strong> to enforce granular departmental isolation, write restrictions, and administrative delegation.</li>
+    <li>This ensures that security policies remain consistent whether an employee accesses data remotely over SMB or logs into an administrative terminal session locally.</li>
+</ol>
+
+<h2>NTFS Permission Inheritance & Explicit Overrides</h2>
+<p>NTFS permissions propagate through an inheritance tree from parent directory to child objects:</p>
+<ul>
+    <li><strong>Inherited Permissions:</strong> Granted at a parent folder level (e.g. <code>D:\\Corporate</code>) and automatically applied down to all subfolders and files. In Windows Explorer or command-line outputs, inherited permissions cannot be modified directly on child objects without breaking inheritance.</li>
+    <li><strong>Explicit Permissions:</strong> Assigned directly to a specific folder or file. Explicit permissions always take precedence over inherited permissions.</li>
+    <li><strong>The Explicit Deny Rule:</strong> In the Windows security model, an <strong>Explicit Deny</strong> overrides all Allow entries. If an administrator explicitly adds <em>Deny - Write</em> for a security group, group members cannot write to that directory even if another group grants them <em>Full Control</em>.</li>
+</ul>
+
+<h2>Command-Line Management with <code>icacls</code> and PowerShell</h2>
+<p>While the Windows Explorer GUI provides the "Advanced Security Settings" tab, enterprise sysadmins automate permission audits and remediation using CLI tools:</p>
+
+<h3>Auditing and Modifying Access with <code>icacls</code></h3>
+<p>To inspect current Discretionary Access Control Lists (DACLs) on an enterprise folder:</p>
+
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> CMD / PowerShell (Run as Administrator)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code>icacls "D:\Shares\Finance"</code></pre>
+</div>
+
+<div class="command-header"><span class="command-label">Example Output</span></div>
+<pre><code>D:\Shares\Finance NT AUTHORITY\SYSTEM:(I)(OI)(CI)(F)
+                  BUILTIN\Administrators:(I)(OI)(CI)(F)
+                  CONTOSO\Finance-Dept:(OI)(CI)(M)
+                  CONTOSO\Finance-Auditors:(OI)(CI)(RX)
+Successfully processed 1 files; Failed processing 0 files</code></pre>
+
+<p>Key permission mask flags:</p>
+<ul>
+    <li><code>(OI)</code> Object Inherit: Files inside this directory inherit this permission.</li>
+    <li><code>(CI)</code> Container Inherit: Subdirectories inside this folder inherit this permission.</li>
+    <li><code>(F)</code> Full Access, <code>(M)</code> Modify Access, <code>(RX)</code> Read & Execute Access.</li>
+</ul>
+
+<h3>Granting Explicit Permissions via PowerShell</h3>
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> PowerShell (Run as Administrator)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code>$Acl = Get-Acl "D:\Shares\Finance"
+$Rule = New-Object System.Security.AccessControl.FileSystemAccessRule(
+    "CONTOSO\Finance-Dept", 
+    "Modify", 
+    "ContainerInherit,ObjectInherit", 
+    "None", 
+    "Allow"
+)
+$Acl.SetAccessRule($Rule)
+Set-Acl "D:\Shares\Finance" $Acl</code></pre>
+</div>
+
+<h2>Taking Ownership of Orphaned Files</h2>
+<p>When an employee departs an organization or an external drive is attached, files may retain SIDs from deleted accounts, leading to "Access is Denied" errors even for local Administrators. Administrators must first seize ownership using <code>takeown</code>:</p>
+
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Command Prompt (Run as Administrator)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code>takeown /F "D:\Shares\OrphanedData" /R /A /D Y
+icacls "D:\Shares\OrphanedData" /grant Administrators:F /T /C</code></pre>
+</div>
+
+<h2>Summary</h2>
+<p>By relying on NTFS for granular security boundaries, keeping SMB share permissions broad and manageable, and mastering inheritance propagation via <code>icacls</code> and PowerShell, Windows systems administrators establish secure, auditable, and resilient file storage architectures.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

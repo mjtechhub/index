@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authoring Systemd Service Units: Unit Files, Dependencies & systemctl | Linux Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn to build production systemd service units, manage unit dependencies, configure process restart policies, and troubleshoot services with systemctl and journalctl.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/linux/linux-systemd-service-units-creation-and-control.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Authoring Systemd Service Units: Unit Files, Dependencies & systemctl | Linux Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn to build production systemd service units, manage unit dependencies, configure process restart policies, and troubleshoot services with systemctl and journalctl.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/linux/linux-systemd-service-units-creation-and-control.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Authoring Systemd Service Units: Unit Files, Dependencies & systemctl | Linux Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn to build production systemd service units, manage unit dependencies, configure process restart policies, and troubleshoot services with systemctl and journalctl.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Authoring Systemd Service Units: Unit Files, Dependencies & systemctl",
+    "description": "Learn to build production systemd service units, manage unit dependencies, configure process restart policies, and troubleshoot services with systemctl and journalctl.",
+    "url": "https://themjtechhub.site/tutorials/linux/linux-systemd-service-units-creation-and-control.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/linux/linux-systemd-service-units-creation-and-control.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../linux.html">Linux</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Authoring Systemd Service Units: Unit Files, Dependencies & systemctl</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Authoring Systemd Service Units: Unit Files, Dependencies & systemctl</h1>
+            <p class="tutorial-hero-desc">Learn to build production systemd service units, manage unit dependencies, configure process restart policies, and troubleshoot services with systemctl and journalctl.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>Modern Linux distributions—including Ubuntu, Debian, Red Hat Enterprise Linux (RHEL), AlmaLinux, Fedora, and openSUSE—utilize <strong>systemd</strong> as their default system and service manager. Replacing legacy SysVinit scripts, systemd provides parallelized service booting, aggressive dependency resolution, process tracking via Linux Control Groups (cgroups), and centralized logging. For systems engineers, authoring custom systemd service units is mandatory for production workload deployment.</p>
+
+<h2>Systemd Unit File Architecture</h2>
+<p>A systemd unit is a declarative configuration file ending in <code>.service</code> (or <code>.target</code>, <code>.timer</code>, <code>.socket</code>). Unit files reside in three primary locations on the filesystem, prioritized in order of precedence:</p>
+<ol>
+    <li><strong><code>/etc/systemd/system/</code> (Highest Precedence):</strong> Custom administrator-authored unit files and overrides. Always place your production service files here.</li>
+    <li><strong><code>/run/systemd/system/</code>:</strong> Transient runtime units generated dynamically by systemd generators.</li>
+    <li><strong><code>/usr/lib/systemd/system/</code> (Lowest Precedence):</strong> Default vendor-supplied unit files installed by package managers (<code>apt</code>, <code>dnf</code>, <code>yum</code>). Never edit these directly, as OS updates will overwrite changes.</li>
+</ol>
+
+<h2>The Anatomy of a Production <code>.service</code> Unit</h2>
+<p>A standard service unit is divided into three core sections: <code>[Unit]</code>, <code>[Service]</code>, and <code>[Install]</code>. Below is an enterprise-grade service definition for an internal Go/Node/Python API service:</p>
+
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-file-code" aria-hidden="true"></i> /etc/systemd/system/api-worker.service</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code>[Unit]
+Description=Enterprise API Background Worker Daemon
+Documentation=https://themjtechhub.site/docs
+After=network-online.target remote-fs.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=appuser
+Group=appuser
+WorkingDirectory=/opt/api-worker
+ExecStart=/opt/api-worker/bin/worker --config=/etc/api-worker/config.yaml
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=5s
+
+# Security Hardening & Sandboxing
+ProtectSystem=full
+ProtectHome=true
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+</div>
+
+<h2>Section Deep Dive & Key Directives</h2>
+
+<h3>1. The <code>[Unit]</code> Section: Dependencies & Ordering</h3>
+<ul>
+    <li><strong><code>After=</code> vs <code>Requires=</code>:</strong>
+        <ul>
+            <li><code>After=network-online.target</code> dictates <em>ordering only</em>. It guarantees that if both units are queued to start, systemd starts <code>network-online</code> before starting this service. It does <em>not</em> force the network to start if it wasn't requested.</li>
+            <li><code>Requires=</code> creates a strict operational dependency: if the required unit fails or terminates, this service immediately terminates as well.</li>
+            <li><code>Wants=</code> establishes a soft dependency: systemd attempts to activate the wanted unit, but failure of that unit will not abort this service.</li>
+        </ul>
+    </li>
+</ul>
+
+<h3>2. The <code>[Service]</code> Section: Process Lifecycle</h3>
+<ul>
+    <li><strong><code>Type=</code>:</strong>
+        <ul>
+            <li><code>simple</code> (Default): systemd assumes the service starts immediately upon spawning the process specified in <code>ExecStart</code>. Standard for modern web servers and background workers that do not daemonize.</li>
+            <li><code>forking</code>: Used for traditional UNIX daemons that call <code>fork()</code> and exit the parent process. Requires <code>PIDFile=</code> so systemd tracks the child daemon.</li>
+            <li><code>oneshot</code>: Used for scripts that execute tasks and exit immediately. Useful in combination with systemd timers.</li>
+            <li><code>notify</code>: The daemon sends a notification signal via <code>sd_notify()</code> to systemd when initialization is complete.</li>
+        </ul>
+    </li>
+    <li><strong><code>User=</code> & <code>Group=</code>:</strong> Drops root privileges, running the executable under a dedicated non-privileged service account.</li>
+    <li><strong><code>Restart=on-failure</code>:</strong> Automatically relaunches the daemon if the process exits with a non-zero exit code, unhandled exception, or fatal signal.</li>
+</ul>
+
+<h3>3. The <code>[Install]</code> Section: Boot Activation</h3>
+<ul>
+    <li><strong><code>WantedBy=multi-user.target</code>:</strong> Specifies that enabling this service links it to runlevel equivalent <code>multi-user.target</code> (standard non-graphical multi-user mode). When the server boots into multi-user target, this service launches automatically.</li>
+</ul>
+
+<h2>Controlling Services with <code>systemctl</code></h2>
+<p>After creating or editing any unit file, you must instruct the systemd manager daemon to reload its configuration cache:</p>
+
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Bash (Root / Sudo Required)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># 1. Reload systemd daemon to pick up new unit files
+sudo systemctl daemon-reload
+
+# 2. Enable service to start at system boot
+sudo systemctl enable api-worker.service
+
+# 3. Start the service immediately
+sudo systemctl start api-worker.service
+
+# 4. Inspect real-time status, PID, memory consumption, and recent logs
+sudo systemctl status api-worker.service</code></pre>
+</div>
+
+<div class="command-header"><span class="command-label">Example Status Output</span></div>
+<pre><code>● api-worker.service - Enterprise API Background Worker Daemon
+     Loaded: loaded (/etc/systemd/system/api-worker.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2026-09-09 10:15:30 UTC; 15min ago
+   Main PID: 48210 (worker)
+      Tasks: 8 (limit: 4915)
+     Memory: 42.4M
+        CPU: 1.250s
+     CGroup: /system.slice/api-worker.service
+             └─48210 /opt/api-worker/bin/worker --config=/etc/api-worker/config.yaml</code></pre>
+
+<h2>Troubleshooting with <code>journalctl</code></h2>
+<p>Because systemd intercepts standard output (<code>stdout</code>) and standard error (<code>stderr</code>) streams from managed processes, application logs are aggregated directly into the systemd journal:</p>
+
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Bash</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># Follow live logs in real time (-f) for a specific service unit (-u)
+sudo journalctl -u api-worker.service -f
+
+# View errors only (-p err) recorded since the last system boot (-b)
+sudo journalctl -u api-worker.service -b -p err --no-pager</code></pre>
+</div>
+
+<h2>Summary</h2>
+<p>Authoring native systemd unit files enables administrators to deploy resilient, self-healing services with granular security isolation and unified journal logging. By understanding unit file sections, choosing appropriate service types, and applying <code>daemon-reload</code> workflows, systems engineers master modern Linux application orchestration.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

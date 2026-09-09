@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Memory Management: Buffers, Page Cache & Out-Of-Memory (OOM) Killer | Linux Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Deconstruct Linux kernel memory allocation: virtual memory, Buffers vs Page Cache, swap space mechanics, and how the Out-Of-Memory (OOM) Killer scores processes.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/linux/linux-memory-management-buffers-caches-oom-killer.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Linux Memory Management: Buffers, Page Cache & Out-Of-Memory (OOM) Killer | Linux Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Deconstruct Linux kernel memory allocation: virtual memory, Buffers vs Page Cache, swap space mechanics, and how the Out-Of-Memory (OOM) Killer scores processes.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/linux/linux-memory-management-buffers-caches-oom-killer.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Linux Memory Management: Buffers, Page Cache & Out-Of-Memory (OOM) Killer | Linux Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Deconstruct Linux kernel memory allocation: virtual memory, Buffers vs Page Cache, swap space mechanics, and how the Out-Of-Memory (OOM) Killer scores processes.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Linux Memory Management: Buffers, Page Cache & Out-Of-Memory (OOM) Killer",
+    "description": "Deconstruct Linux kernel memory allocation: virtual memory, Buffers vs Page Cache, swap space mechanics, and how the Out-Of-Memory (OOM) Killer scores processes.",
+    "url": "https://themjtechhub.site/tutorials/linux/linux-memory-management-buffers-caches-oom-killer.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/linux/linux-memory-management-buffers-caches-oom-killer.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../linux.html">Linux</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Linux Memory Management: Buffers, Page Cache & Out-Of-Memory (OOM) Killer</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Linux Memory Management: Buffers, Page Cache & Out-Of-Memory (OOM) Killer</h1>
+            <p class="tutorial-hero-desc">Deconstruct Linux kernel memory allocation: virtual memory, Buffers vs Page Cache, swap space mechanics, and how the Out-Of-Memory (OOM) Killer scores processes.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>One of the most persistent misunderstandings among entry-level systems administrators and support engineers is interpreting Linux memory utilization. An administrator logging into a newly provisioned database or web server frequently panics upon discovering that 95% of physical RAM is consumed, even with minimal application load.</p>
+<p>In Linux, <strong>free memory is wasted memory</strong>. The Linux kernel proactively repurposes idle RAM for filesystem disk caching, releasing it dynamically the microsecond applications demand memory. Understanding the architecture of <strong>Buffers</strong>, the <strong>Page Cache</strong>, and the kernel's emergency <strong>Out-Of-Memory (OOM) Killer</strong> is foundational for diagnosing performance degradation and application crashes.</p>
+
+<h2>Virtual Memory Architecture & Pages</h2>
+<p>Linux utilizes a <strong>Virtual Memory</strong> subsystem that isolates user applications into virtual address spaces. The kernel maps virtual addresses to physical RAM using the CPU's Memory Management Unit (MMU) in atomic blocks called <strong>Pages</strong> (typically 4 KB on x86_64 architecture):</p>
+<ul>
+    <li><strong>Resident Set Size (RSS):</strong> The actual portion of physical RAM currently allocated and occupied by a process.</li>
+    <li><strong>Virtual Size (VSZ):</strong> The total virtual memory address space allocated to a process, including shared libraries, mapped disk files, and uncommitted allocations.</li>
+    <li><strong>Anonymous Memory:</strong> Memory allocated for process stacks, heaps, and variable data that is not backed by a physical file on disk.</li>
+</ul>
+
+<h2>Buffers vs Page Cache: The Disk Caching Engine</h2>
+<p>When you query system memory using the <code>free -m</code> or <code>free -h</code> command, the kernel breaks down physical memory into distinct categories:</p>
+
+<div class="tutorial-command">
+    <div class="command-header"><span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Bash</span></div>
+    <pre><code>free -h</code></pre>
+</div>
+
+<div class="command-header"><span class="command-label">Example Output</span></div>
+<pre><code>               total        used        free      shared  buff/cache   available
+Mem:            31Gi       8.2Gi       1.1Gi       450Mi        22Gi        22Gi
+Swap:          8.0Gi       120Mi       7.9Gi</code></pre>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Column / Metric</th>
+                <th>Kernel Definition & Operational Purpose</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>total</strong></td>
+                <td>Total physical RAM installed and recognized by the BIOS/UEFI.</td>
+            </tr>
+            <tr>
+                <td><strong>used</strong></td>
+                <td>Memory actively allocated to user-space processes, kernel data structures, and shared memory.</td>
+            </tr>
+            <tr>
+                <td><strong>free</strong></td>
+                <td>Memory with zero current assignment. In a healthy server, this should naturally be low.</td>
+            </tr>
+            <tr>
+                <td><strong>buff/cache</strong></td>
+                <td>Combined disk caching subsystem: <em>Buffers</em> (raw disk block I/O metadata) + <em>Page Cache</em> (cached file contents).</td>
+            </tr>
+            <tr>
+                <td><strong>available</strong></td>
+                <td><strong>The True Metric:</strong> Estimated memory available for starting new applications <em>without swapping</em>. Includes free RAM plus reclaimable page cache.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h3>The Critical Difference: Buffers vs Cache</h3>
+<ul>
+    <li><strong>Buffers:</strong> Temporary in-memory storage for raw disk blocks waiting to be written to or read from physical storage. Buffers track filesystem metadata (inodes, directory listings, block bitmaps) and raw block device access.</li>
+    <li><strong>Page Cache:</strong> Caches the actual data contents of files read from disk. When an application reads a file, Linux retains the read pages in RAM. Subsequent reads are fulfilled directly from memory at nanosecond speeds rather than requiring mechanical disk or NVMe lookups. If an application needs memory, the kernel immediately evicts clean page cache pages with zero penalty.</li>
+</ul>
+
+<h2>The Role of Swap & <code>swappiness</code></h2>
+<p><strong>Swap space</strong> is a designated disk partition or file utilized when physical memory demands exceed RAM capacity. Furthermore, Linux uses swap to page out stagnant, inactive memory pages (such as initialization code that ran once at boot), freeing fast physical RAM for active caching.</p>
+<p>The kernel parameter <code>vm.swappiness</code> (ranging from 0 to 100, default typically 60) controls the kernel's aggressiveness in swapping anonymous memory versus reclaiming page cache:</p>
+
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Bash</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># Check current swappiness value
+sysctl vm.swappiness
+
+# In latency-critical database servers (e.g. MySQL, Redis), reduce swappiness to 10
+sudo sysctl -w vm.swappiness=10</code></pre>
+</div>
+
+<h2>The Out-Of-Memory (OOM) Killer Mechanics</h2>
+<p>Because Linux permits memory overcommitting (promising applications more virtual memory than physically exists, assuming not all will use their full allocation simultaneously), a server can exhaust both physical RAM and swap space. When the kernel cannot allocate a single additional page to service an interrupt, it invokes the <strong>Out-Of-Memory (OOM) Killer</strong> to save the operating system from a total kernel panic.</p>
+
+<h3>How the OOM Killer Scores Processes (<code>oom_score</code>)</h3>
+<p>The kernel calculates an integer score (from 0 to 1000) for every running process, visible in <code>/proc/[PID]/oom_score</code>:</p>
+<ol>
+    <li>The primary factor is the percentage of physical RAM consumed by the process.</li>
+    <li>The kernel applies penalties for processes that consume large amounts of memory with short runtimes.</li>
+    <li>Processes running as root or critical system daemons receive minor negative adjustments.</li>
+    <li>The process with the highest overall <code>oom_score</code> is terminated with an uncatchable <code>SIGKILL</code> (signal 9).</li>
+</ol>
+
+<h3>Forensic Detection in <code>dmesg</code></h3>
+<p>When an application crashes unexpectedly due to memory exhaustion, inspect kernel logs immediately:</p>
+<div class="tutorial-command">
+    <div class="command-header"><span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Bash</span></div>
+    <pre><code>sudo dmesg -T | grep -i -E "oom|out of memory|killed process"</code></pre>
+</div>
+
+<div class="command-header"><span class="command-label">Example Output</span></div>
+<pre><code>[Wed Sep  9 11:22:15 2026] Out of memory: Killed process 14205 (mysqld) total-vm:18450124kB, anon-rss:14250100kB, file-rss:0kB, shmem-rss:0kB, UID:27 pgtables:32400kB oom_score_adj:0</code></pre>
+
+<h3>Protecting Critical Daemons with <code>oom_score_adj</code></h3>
+<p>To prevent the kernel from ever terminating a critical management daemon (such as <code>sshd</code>), an administrator can configure <code>oom_score_adj</code> to <code>-1000</code>:</p>
+
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Bash (Root / Sudo Required)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># Find PID of sshd daemon and grant complete immunity from OOM Killer
+sudo pkill -0 sshd && echo -1000 | sudo tee /proc/$(pgrep -o sshd)/oom_score_adj</code></pre>
+</div>
+
+<h2>Summary</h2>
+<p>Evaluating Linux memory health requires focusing on <strong>available memory</strong> rather than raw free memory. By recognizing the performance benefits of the Page Cache, tuning <code>swappiness</code> appropriately for database and virtualization workloads, and auditing <code>dmesg</code> for OOM Killer invocations, Linux systems engineers ensure peak server performance and workload stability.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

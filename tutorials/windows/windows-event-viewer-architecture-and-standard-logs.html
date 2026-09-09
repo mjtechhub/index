@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Event Viewer: System, Application & Security Log Architecture | Windows Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn the Windows Event Log service architecture (.evtx format), standard log categories, critical security event IDs, and automated querying with PowerShell Get-WinEvent.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/windows/windows-event-viewer-architecture-and-standard-logs.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Windows Event Viewer: System, Application & Security Log Architecture | Windows Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn the Windows Event Log service architecture (.evtx format), standard log categories, critical security event IDs, and automated querying with PowerShell Get-WinEvent.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/windows/windows-event-viewer-architecture-and-standard-logs.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Windows Event Viewer: System, Application & Security Log Architecture | Windows Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn the Windows Event Log service architecture (.evtx format), standard log categories, critical security event IDs, and automated querying with PowerShell Get-WinEvent.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Windows Event Viewer: System, Application & Security Log Architecture",
+    "description": "Learn the Windows Event Log service architecture (.evtx format), standard log categories, critical security event IDs, and automated querying with PowerShell Get-WinEvent.",
+    "url": "https://themjtechhub.site/tutorials/windows/windows-event-viewer-architecture-and-standard-logs.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Beginner",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/windows/windows-event-viewer-architecture-and-standard-logs.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../windows.html">Windows</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Windows Event Viewer: System, Application & Security Log Architecture</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge beginner">Beginner</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Windows Event Viewer: System, Application & Security Log Architecture</h1>
+            <p class="tutorial-hero-desc">Learn the Windows Event Log service architecture (.evtx format), standard log categories, critical security event IDs, and automated querying with PowerShell Get-WinEvent.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>The Windows operating system records every critical operating system transition, service state change, application crash, and authentication attempt into the <strong>Windows Event Log</strong>. For enterprise systems administrators, help desk specialists, and security analysts, Event Viewer is the primary diagnostic instrument for root-cause analysis and threat detection across Windows Server and client endpoints.</p>
+
+<h2>Windows Event Log Subsystem Architecture</h2>
+<p>Prior to Windows Vista and Windows Server 2008, event logs were stored in legacy text-based <code>.evt</code> files. Modern Windows platforms store logs in the structured, binary XML <strong><code>.evtx</code></strong> format located in <code>C:\\Windows\\System32\\winevt\\Logs\\</code>.</p>
+<ul>
+    <li><strong>The Windows Event Log Service (<code>eventlog</code>):</strong> Executes as an isolated svchost service, receiving log writes from user-mode APIs and kernel-mode ETW (Event Tracing for Windows) providers.</li>
+    <li><strong>Structured Schema:</strong> Unlike raw syslog text lines, every event record contains structured XML metadata, including Provider Name, Event ID, Version, Level, Task Category, Opcode, Keywords, Timestamp (UTC), and Execution Process ID.</li>
+    <li><strong>Ring Buffer Architecture:</strong> Logs operate as circular buffers with administrative size caps (defaulting to 20 MB for standard logs). When the log reaches capacity, Windows can overwrite oldest events, retain events until manually cleared, or archive the log automatically.</li>
+</ul>
+
+<h2>The Core Standard Windows Logs</h2>
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Log Name</th>
+                <th>Target Event Types</th>
+                <th>Typical Event Sources</th>
+                <th>Required Privilege to Read</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>System</strong></td>
+                <td>Kernel status, device driver errors, hardware faults, service startups/crashes, system shutdowns</td>
+                <td>Service Control Manager, Kernel-General, disk, NetBT, BROWSER</td>
+                <td>Standard User & Administrator</td>
+            </tr>
+            <tr>
+                <td><strong>Application</strong></td>
+                <td>Application runtime warnings, database service errors, desktop program crashes (.NET/CLR exceptions)</td>
+                <td>Application Error, Outlook, SQL Server, Exchange, Windows Error Reporting</td>
+                <td>Standard User & Administrator</td>
+            </tr>
+            <tr>
+                <td><strong>Security</strong></td>
+                <td>Audited security events: successful/failed logons, privilege escalation, object access, account modifications</td>
+                <td>Microsoft-Windows-Security-Auditing</td>
+                <td>Administrator / Audit Privilege Only</td>
+            </tr>
+            <tr>
+                <td><strong>Setup</strong></td>
+                <td>Windows OS installation, cumulative updates, servicing stack upgrades</td>
+                <td>WUSA, Servicing, TrustedInstaller</td>
+                <td>Administrator</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Event Severity Levels</h2>
+<p>Windows assigns every recorded event an integer severity level:</p>
+<ol>
+    <li><strong>Critical (Level 1):</strong> Severe failure causing immediate application termination or kernel crash (BugCheck / BSOD).</li>
+    <li><strong>Error (Level 2):</strong> Significant operational problem where a service failed to start or a network connection was severed.</li>
+    <li><strong>Warning (Level 3):</strong> A non-fatal anomaly that indicates potential impending failure (e.g. low disk space, temporary DNS timeout).</li>
+    <li><strong>Information (Level 4):</strong> Standard successful operational milestones (e.g. driver loaded, service successfully started).</li>
+    <li><strong>Verbose (Level 5):</strong> Detailed trace diagnostics intended for software development and driver debugging.</li>
+</ol>
+
+<h2>Essential Security Event IDs Every Administrator Must Know</h2>
+<p>When auditing security breaches, lateral movement, or brute-force lockouts, monitoring teams focus on specific audited Event IDs:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Event ID</th>
+                <th>Description</th>
+                <th>Forensic Significance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>4624</strong></td>
+                <td>An account was successfully logged on</td>
+                <td>Examines Logon Type (Type 2 = Interactive, Type 3 = Network/SMB, Type 10 = RDP).</td>
+            </tr>
+            <tr>
+                <td><strong>4625</strong></td>
+                <td>An account failed to log on</td>
+                <td>Primary indicator of brute-force password spraying or expired cached credentials.</td>
+            </tr>
+            <tr>
+                <td><strong>4672</strong></td>
+                <td>Special privileges assigned to new logon</td>
+                <td>Fires when an Administrator or system account logs in with <code>SeDebugPrivilege</code> or <code>SeTcbPrivilege</code>.</td>
+            </tr>
+            <tr>
+                <td><strong>4720</strong></td>
+                <td>A user account was created</td>
+                <td>Monitors unauthorized administrative persistence mechanisms.</td>
+            </tr>
+            <tr>
+                <td><strong>4740</strong></td>
+                <td>A user account was locked out</td>
+                <td>Pinpoints the caller machine generating failed authentication attempts across Active Directory.</td>
+            </tr>
+            <tr>
+                <td><strong>7045</strong></td>
+                <td>A new service was installed in the system (System Log)</td>
+                <td>Critical forensic detector for malware persistence tools and remote access implants.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Advanced Event Querying with PowerShell <code>Get-WinEvent</code></h2>
+<p>Opening Event Viewer GUI across hundreds of enterprise servers is unfeasible. Modern automation relies on <code>Get-WinEvent</code> using fast <strong>FilterHashtable</strong> queries:</p>
+
+<h3>Querying the 10 Most Recent System Errors</h3>
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> PowerShell</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code>Get-WinEvent -FilterHashtable @{
+    LogName = 'System'
+    Level   = 2 # Error
+} -MaxEvents 10 | Select-Object TimeCreated, Id, ProviderName, Message</code></pre>
+</div>
+
+<h3>Hunting for Failed Remote Desktop Logons (Event ID 4625)</h3>
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> PowerShell (Run as Administrator)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code>Get-WinEvent -FilterHashtable @{
+    LogName   = 'Security'
+    Id        = 4625
+    StartTime = (Get-Date).AddDays(-1)
+} | Select-Object TimeCreated, 
+    @{N='TargetUser';E={$_.Properties[5].Value}},
+    @{N='LogonType';E={$_.Properties[8].Value}},
+    @{N='SourceIP';E={$_.Properties[19].Value}}</code></pre>
+</div>
+
+<div class="callout callout-tip">
+    <div class="callout-title"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Performance Rule: Avoid Where-Object After Get-WinEvent</div>
+    <div class="callout-body">Always supply your query inside the <code>-FilterHashtable</code> parameter. Piping the entire Security log into <code>Where-Object { $_.Id -eq 4625 }</code> forces PowerShell to parse hundreds of thousands of events into memory before filtering, which can lock the CPU on production servers.</div>
+</div>
+
+<h2>Summary</h2>
+<p>The Windows Event Log system is an enterprise-grade forensic telemetry engine. Mastering the distinction between System, Application, and Security logs, recognizing high-value Event IDs, and leveraging PowerShell <code>Get-WinEvent</code> enables administrators to detect anomalies, resolve crashes, and respond to threats rapidly.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

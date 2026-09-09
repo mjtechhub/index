@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon VPC Architecture: Public/Private Subnets, Route Tables & Internet Gateways | Cloud & AI Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Architect resilient enterprise cloud networks: Amazon Virtual Private Cloud (VPC) CIDR design, multi-AZ public and private subnets, Route Tables, Internet Gateways, and NAT Gateways.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/cloud/aws-vpc-architecture-subnets-route-tables-and-internet-gateways.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Amazon VPC Architecture: Public/Private Subnets, Route Tables & Internet Gateways | Cloud & AI Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Architect resilient enterprise cloud networks: Amazon Virtual Private Cloud (VPC) CIDR design, multi-AZ public and private subnets, Route Tables, Internet Gateways, and NAT Gateways.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/cloud/aws-vpc-architecture-subnets-route-tables-and-internet-gateways.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Amazon VPC Architecture: Public/Private Subnets, Route Tables & Internet Gateways | Cloud & AI Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Architect resilient enterprise cloud networks: Amazon Virtual Private Cloud (VPC) CIDR design, multi-AZ public and private subnets, Route Tables, Internet Gateways, and NAT Gateways.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Amazon VPC Architecture: Public/Private Subnets, Route Tables & Internet Gateways",
+    "description": "Architect resilient enterprise cloud networks: Amazon Virtual Private Cloud (VPC) CIDR design, multi-AZ public and private subnets, Route Tables, Internet Gateways, and NAT Gateways.",
+    "url": "https://themjtechhub.site/tutorials/cloud/aws-vpc-architecture-subnets-route-tables-and-internet-gateways.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/cloud/aws-vpc-architecture-subnets-route-tables-and-internet-gateways.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../cloud.html">Cloud & AI</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Amazon VPC Architecture: Public/Private Subnets, Route Tables & Internet Gateways</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Amazon VPC Architecture: Public/Private Subnets, Route Tables & Internet Gateways</h1>
+            <p class="tutorial-hero-desc">Architect resilient enterprise cloud networks: Amazon Virtual Private Cloud (VPC) CIDR design, multi-AZ public and private subnets, Route Tables, Internet Gateways, and NAT Gateways.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>A secure enterprise cloud deployment begins with network isolation. In Amazon Web Services, the <strong>Amazon Virtual Private Cloud (Amazon VPC)</strong> is the foundational software-defined network (SDN) boundary that provisions a private, isolated virtual network topology. Understanding how subnets, route tables, Internet Gateways (IGW), and NAT Gateways interact is mandatory for securing cloud applications against unauthorized public internet exposure.</p>
+
+<h2>VPC CIDR Architecture & Multi-AZ Subnet Planning</h2>
+<p>When provisioning a VPC, the architect assigns a primary IPv4 Classless Inter-Domain Routing (CIDR) block (typically an RFC 1918 private range between <code>/16</code> and <code>/28</code>, such as <code>10.0.0.0/16</code> providing 65,536 private IP addresses).</p>
+
+<div class="callout callout-warning">
+    <div class="callout-title"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> The 5 Reserved IPs in Every AWS Subnet</div>
+    <div class="callout-body">
+        In standard networking, an IPv4 subnet loses 2 addresses (network address and broadcast address). <strong>In AWS, every subnet reserves 5 IP addresses</strong> that cannot be assigned to customer resources:<br>
+        1. <code>10.0.1.0</code>: Network address.<br>
+        2. <code>10.0.1.1</code>: Reserved by AWS for the VPC default router.<br>
+        3. <code>10.0.1.2</code>: Reserved by AWS for the internal Amazon DNS (AmazonProvidedDNS).<br>
+        4. <code>10.0.1.3</code>: Reserved by AWS for future operational use.<br>
+        5. <code>10.0.1.255</code>: Network broadcast address (broadcast is not supported in VPC).<br>
+        A <code>/24</code> subnet therefore yields <strong>251 usable IP addresses</strong>, not 254.
+    </div>
+</div>
+
+<h2>The Multi-Tier Subnet Topology</h2>
+<p>Enterprise cloud architectures never deploy application servers or databases directly to public-facing networks. Modern VPCs utilize a multi-tier, multi-Availability Zone (AZ) layout:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Subnet Tier</th>
+                <th>Subnet Routing Destination</th>
+                <th>Public IP Assignment?</th>
+                <th>Hosted Workloads</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Public Subnet</strong></td>
+                <td>Route <code>0.0.0.0/0</code> pointed directly to Internet Gateway (<code>igw-xxxx</code>)</td>
+                <td>Yes (Public IPv4 / Elastic IPs)</td>
+                <td>Public Application Load Balancers (ALB), Bastion Hosts / NAT Gateways</td>
+            </tr>
+            <tr>
+                <td><strong>Private App Subnet</strong></td>
+                <td>Route <code>0.0.0.0/0</code> pointed to a NAT Gateway (<code>nat-xxxx</code>)</td>
+                <td>No (Private RFC 1918 IPs only)</td>
+                <td>Web servers, backend API microservices, container clusters (ECS/EKS)</td>
+            </tr>
+            <tr>
+                <td><strong>Isolated DB Subnet</strong></td>
+                <td>Local VPC route only (zero route to IGW or NAT)</td>
+                <td>No</td>
+                <td>Relational databases (Amazon RDS, Aurora), Redis/Memcached clusters</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Internet Gateways (IGW) vs NAT Gateways</h2>
+<p>Managing outbound and inbound connectivity requires pairing the correct gateway component with subnet Route Tables:</p>
+
+<h3>1. Internet Gateway (IGW)</h3>
+<ul>
+    <li>A horizontally scaled, redundant, highly available VPC component that imposes zero availability risks or bandwidth bottlenecks.</li>
+    <li>Performs 1-to-1 Network Address Translation (NAT) between public IPv4 addresses and private instances.</li>
+    <li>A subnet is defined as "public" <em>if and only if</em> its associated Route Table contains an explicit default route pointing to an attached Internet Gateway: <code>0.0.0.0/0 -> igw-xxxx</code>.</li>
+</ul>
+
+<h3>2. NAT Gateway</h3>
+<ul>
+    <li>Enables instances residing in private subnets to initiate outbound connections to the internet (for software package updates, OS patches, or third-party API calls) while <strong>preventing external internet clients from initiating inbound connections</strong> to those instances.</li>
+    <li>Deployed inside a <strong>public subnet</strong> and allocated a dedicated Elastic IP address.</li>
+    <li>Private subnet Route Tables direct their outbound default traffic to the NAT Gateway: <code>0.0.0.0/0 -> nat-xxxx</code>.</li>
+</ul>
+
+<div class="callout callout-info">
+    <div class="callout-title"><i class="fa-solid fa-cloud" aria-hidden="true"></i> High Availability Design: One NAT Gateway Per AZ</div>
+    <div class="callout-body">A NAT Gateway is an Availability Zone-specific resource. If Availability Zone 1 fails, instances in AZ 2 relying on AZ 1's NAT Gateway lose outbound connectivity. In production, deploy one NAT Gateway in each AZ to maintain multi-AZ fault isolation.</div>
+</div>
+
+<h2>Security Groups vs Network Access Control Lists (NACLs)</h2>
+<p>AWS enforces traffic filtering using two distinct firewall layers within the VPC:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Security Attribute</th>
+                <th>Security Groups</th>
+                <th>Network Access Control Lists (NACLs)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Level of Operation</strong></td>
+                <td>Instance / Elastic Network Interface (ENI) level</td>
+                <td>Subnet boundary level</td>
+            </tr>
+            <tr>
+                <td><strong>Statefulness</strong></td>
+                <td><strong>Stateful:</strong> Return traffic is automatically permitted regardless of inbound rules</td>
+                <td><strong>Stateless:</strong> Return traffic must be explicitly allowed via outbound ephemeral port rules</td>
+            </tr>
+            <tr>
+                <td><strong>Rule Evaluation</strong></td>
+                <td>All rules evaluated before deciding to permit traffic</td>
+                <td>Rules processed in strict numerical order (lowest number evaluated first)</td>
+            </tr>
+            <tr>
+                <td><strong>Deny Rules</strong></td>
+                <td>Only supports Allow rules (implicit deny all)</td>
+                <td>Supports explicit Allow and explicit Deny rules</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Cross-Cloud Analogy: AWS VPC vs Microsoft Azure VNet</h2>
+<p>Engineers operating in multi-cloud environments map these constructs directly to Microsoft Azure:</p>
+<ul>
+    <li>An <strong>AWS VPC</strong> equates to an <strong>Azure Virtual Network (VNet)</strong>.</li>
+    <li>An <strong>AWS Internet Gateway / Route Table</strong> maps to <strong>Azure User-Defined Routes (UDR)</strong> and Azure Virtual Network Gateways.</li>
+    <li>An <strong>AWS Security Group</strong> maps directly to an <strong>Azure Network Security Group (NSG)</strong>.</li>
+</ul>
+
+<h2>Summary</h2>
+<p>Designing an enterprise Amazon VPC demands a disciplined separation of public and private tiers. By provisioning multi-AZ subnets, deploying NAT Gateways for secure outbound egress, and isolating sensitive databases into completely air-gapped private subnets, cloud engineers construct scalable and fortified cloud network architectures.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

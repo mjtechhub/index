@@ -2990,6 +2990,24 @@ img {
     border-color: rgba(16, 185, 129, 0.2);
 }
 
+.topic-badges-group {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.topic-curriculum-count-badge {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    background: var(--surface-elevated);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+}
+
 .topic-domain-title {
     font-size: 1.15rem;
     font-weight: 700;
@@ -3396,6 +3414,179 @@ img {
 .planned-curriculum-item i {
     color: var(--brand-primary);
     font-size: 0.75rem;
+}
+
+/* --- Curriculum Roadmap Native Details Accordion (Phase 6.5A) --- */
+.curriculum-roadmap-wrap {
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-6);
+}
+
+.curriculum-roadmap-intro {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+}
+
+.curriculum-section-details {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.curriculum-section-details[open] {
+    border-color: var(--brand-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.curriculum-section-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.15rem;
+    cursor: pointer;
+    user-select: none;
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    background: var(--surface);
+    min-height: 48px;
+    list-style: none;
+    transition: background 0.15s ease;
+}
+
+.curriculum-section-summary::-webkit-details-marker {
+    display: none;
+}
+
+.curriculum-section-summary:hover {
+    background: var(--surface-hover);
+}
+
+.curriculum-section-summary:focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: -2px;
+}
+
+.curriculum-summary-title {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: var(--text-sm);
+}
+
+.curriculum-summary-title i {
+    color: var(--brand-primary);
+    font-size: 0.95rem;
+}
+
+.curriculum-summary-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+.curriculum-chevron {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.curriculum-section-details[open] .curriculum-chevron {
+    transform: rotate(180deg);
+    color: var(--brand-primary);
+}
+
+.curriculum-section-body {
+    padding: 0.75rem 1.15rem 1rem 1.15rem;
+    border-top: 1px solid var(--border-subtle);
+    background: var(--surface-elevated);
+}
+
+.curriculum-subtopic-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.curriculum-subtopic-item {
+    border-radius: var(--radius-sm);
+    transition: background 0.15s ease;
+}
+
+.curriculum-subtopic-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.45rem 0.65rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    min-height: 44px;
+    gap: 0.75rem;
+}
+
+.curriculum-subtopic-link:hover {
+    background: rgba(59, 130, 246, 0.08);
+    color: var(--brand-primary);
+}
+
+.curriculum-subtopic-static {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.45rem 0.65rem;
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    min-height: 44px;
+    gap: 0.75rem;
+}
+
+.curriculum-subtopic-name {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.curriculum-item-badges {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.curriculum-status-pill {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: inline-flex;
+    align-items: center;
+}
+
+.curriculum-status-pill.published {
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.curriculum-status-pill.planned {
+    background: rgba(148, 163, 184, 0.1);
+    color: var(--text-muted);
+    border: 1px solid var(--border-subtle);
 }
 
 /* --- Related Categories Strip --- */

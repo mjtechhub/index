@@ -76,22 +76,24 @@
                         url: t.url || `topics.html#${t.id}`
                     });
 
-                    // Index subtopics if present
+                    // Index published subtopics only (prevent planned curriculum entries from flooding search)
                     if (Array.isArray(t.sections)) {
                         t.sections.forEach(sec => {
                             const secName = sec.name || sec.title || '';
                             const catName = t.name || t.id || 'Topic';
                             if (Array.isArray(sec.subtopics)) {
                                 sec.subtopics.forEach(sub => {
-                                    const subName = sub.name || sub.title || sub.id || 'Lesson';
-                                    const subId = sub.id ? String(sub.id).toLowerCase() : '';
-                                    data.push({
-                                        type: 'Topic',
-                                        title: subName,
-                                        desc: `${secName ? secName + ' in ' : ''}${catName} (${sub.level || 'Tutorial'})`,
-                                        tags: `${catName.toLowerCase()} ${secName.toLowerCase()} ${subId}`,
-                                        url: sub.url
-                                    });
+                                    if (sub.status === 'published' && sub.url) {
+                                        const subName = sub.name || sub.title || sub.id || 'Lesson';
+                                        const subId = sub.id ? String(sub.id).toLowerCase() : '';
+                                        data.push({
+                                            type: 'Topic',
+                                            title: subName,
+                                            desc: `${secName ? secName + ' in ' : ''}${catName} (${sub.level || 'Tutorial'})`,
+                                            tags: `${catName.toLowerCase()} ${secName.toLowerCase()} ${subId}`,
+                                            url: sub.url
+                                        });
+                                    }
                                 });
                             }
                         });

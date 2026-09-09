@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Directory Domain Controller Promotion & Demotion with Server Manager and PowerShell | Servers Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn the modern deployment workflow for Windows Server Active Directory Domain Services (AD DS): Server Manager post-deployment configuration and PowerShell ADDSDeployment cmdlets.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/servers/active-directory-domain-controller-promotion-and-demotion.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Active Directory Domain Controller Promotion & Demotion with Server Manager and PowerShell | Servers Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn the modern deployment workflow for Windows Server Active Directory Domain Services (AD DS): Server Manager post-deployment configuration and PowerShell ADDSDeployment cmdlets.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/servers/active-directory-domain-controller-promotion-and-demotion.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Active Directory Domain Controller Promotion & Demotion with Server Manager and PowerShell | Servers Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn the modern deployment workflow for Windows Server Active Directory Domain Services (AD DS): Server Manager post-deployment configuration and PowerShell ADDSDeployment cmdlets.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Active Directory Domain Controller Promotion & Demotion with Server Manager and PowerShell",
+    "description": "Learn the modern deployment workflow for Windows Server Active Directory Domain Services (AD DS): Server Manager post-deployment configuration and PowerShell ADDSDeployment cmdlets.",
+    "url": "https://themjtechhub.site/tutorials/servers/active-directory-domain-controller-promotion-and-demotion.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/servers/active-directory-domain-controller-promotion-and-demotion.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../servers.html">Servers</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Active Directory Domain Controller Promotion & Demotion with Server Manager and PowerShell</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Active Directory Domain Controller Promotion & Demotion with Server Manager and PowerShell</h1>
+            <p class="tutorial-hero-desc">Learn the modern deployment workflow for Windows Server Active Directory Domain Services (AD DS): Server Manager post-deployment configuration and PowerShell ADDSDeployment cmdlets.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p><strong>Active Directory Domain Services (AD DS)</strong> is the foundational enterprise identity platform powering modern Windows Server environments. A server that hosts the AD DS directory database (<code>NTDS.dit</code>) and provides Kerberos and LDAP authentication services is designated as a <strong>Domain Controller (DC)</strong>. Promoting a member server to a Domain Controller and gracefully demoting retiring hardware are core responsibilities for enterprise infrastructure engineers.</p>
+
+<h2>The Evolution: Server Manager & PowerShell vs Legacy <code>dcpromo</code></h2>
+<p>For over a decade (from Windows 2000 through Windows Server 2008 R2), administrators provisioned domain controllers using the standalone executable <code>dcpromo.exe</code>.</p>
+
+<div class="callout callout-warning">
+    <div class="callout-title"><i class="fa-solid fa-history" aria-hidden="true"></i> Legacy Notice: dcpromo.exe is Deprecated</div>
+    <div class="callout-body">Beginning with Windows Server 2012 and continuing through Windows Server 2016, 2019, 2022, and 2025, <strong>dcpromo.exe is completely deprecated</strong> and unavailable. Modern promotion uses a two-stage deployment: installing the <em>Active Directory Domain Services</em> binary role feature, followed by configuration via Server Manager Post-Deployment Configuration or the native <code>ADDSDeployment</code> PowerShell module.</div>
+</div>
+
+<h2>Essential Pre-Promotion Prerequisites</h2>
+<p>Attempting to promote a Windows Server without satisfying strict infrastructure prerequisites will cause promotion failure or replication partition corruption:</p>
+<ol>
+    <li><strong>Static IP Addressing:</strong> A Domain Controller must possess a statically assigned IPv4/IPv6 address, subnet mask, and default gateway. Dynamic DHCP assignment is strictly prohibited.</li>
+    <li><strong>DNS Loopback Architecture:</strong> During initial forest creation, the DNS client address should point to loopback (<code>127.0.0.1</code>) or the server's own static IP. When joining a new DC to an <em>existing</em> domain, the server's primary DNS must point to existing production Domain Controllers so it can locate SRV records.</li>
+    <li><strong>Authoritative Computer Name:</strong> Rename the server before promotion (e.g. <code>DC01</code>). Renaming a Domain Controller post-promotion requires complex metadata renaming procedures.</li>
+    <li><strong>Directory Services Restore Mode (DSRM) Password:</strong> A secure offline administrative passphrase required when booting the DC into safe recovery mode if the Active Directory database becomes corrupt.</li>
+</ol>
+
+<h2>Method 1: Promotion via Modern PowerShell (<code>ADDSDeployment</code>)</h2>
+<p>Enterprise automation mandates PowerShell for rapid, reproducible deployments without GUI dependencies.</p>
+
+<h3>Stage 1: Install the AD DS Role Binaries</h3>
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> PowerShell (Run as Administrator)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># Install AD DS feature and remote server administration tools (RSAT)
+Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools</code></pre>
+</div>
+
+<h3>Stage 2A: Creating a Brand New Active Directory Forest</h3>
+<p>If establishing a new enterprise infrastructure root:</p>
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> PowerShell (Run as Administrator)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># Promote server as root DC of a new forest
+Import-Module ADDSDeployment
+Install-ADDSForest `
+    -DomainName "corp.contoso.com" `
+    -DomainNetbiosName "CORP" `
+    -ForestMode "WinThreshold" `
+    -DomainMode "WinThreshold" `
+    -InstallDns:$true `
+    -CreateDnsDelegation:$false `
+    -DatabasePath "C:\Windows\NTDS" `
+    -LogPath "C:\Windows\NTDS" `
+    -SysvolPath "C:\Windows\SYSVOL" `
+    -NoRebootOnCompletion:$false</code></pre>
+</div>
+
+<h3>Stage 2B: Adding a Redundant Domain Controller to an Existing Domain</h3>
+<p>Enterprise resilience requires a minimum of two DCs per physical site:</p>
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> PowerShell (Run as Administrator)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># Replicate directory partitions from existing DC
+Install-ADDSDomainController `
+    -DomainName "corp.contoso.com" `
+    -SiteName "Default-First-Site-Name" `
+    -InstallDns:$true `
+    -ReplicationSourceDC "DC01.corp.contoso.com" `
+    -NoRebootOnCompletion:$false</code></pre>
+</div>
+
+<h2>Method 2: Promotion via Server Manager GUI</h2>
+<ol>
+    <li>In <strong>Server Manager</strong>, select <em>Add Roles and Features</em>, check <strong>Active Directory Domain Services</strong>, and complete the installation.</li>
+    <li>Click the <strong>Notifications flag</strong> at the top right and select <strong>Promote this server to a domain controller</strong>.</li>
+    <li>Select deployment operation: <em>Add a new forest</em>, <em>Add a domain to an existing forest</em>, or <em>Add a domain controller to an existing domain</em>.</li>
+    <li>Specify the Domain Name and set the <strong>DSRM Password</strong>.</li>
+    <li>Confirm paths for <code>NTDS.dit</code> database, transaction logs, and the <code>SYSVOL</code> share.</li>
+    <li>Pass the automated prerequisite check and click <strong>Install</strong>. The server reboots automatically as a Domain Controller.</li>
+</ol>
+
+<h2>Graceful Demotion & FSMO Role Management</h2>
+<p>When decommissioning an aging server, you must never simply power off or wipe the machine. The Domain Controller must be demoted gracefully so it can replicate its final state and deregister its SRV locator records from DNS:</p>
+
+<h3>Pre-Demotion Check: Flexible Single Master Operations (FSMO) Roles</h3>
+<p>Active Directory features five specialized master roles. If the DC being demoted holds any FSMO role (Schema Master, Domain Naming Master, RID Master, PDC Emulator, or Infrastructure Master), you must transfer them to a surviving DC before demotion:</p>
+
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> PowerShell (Run as Administrator)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># Check which server holds FSMO roles
+netdom query fsmo
+
+# Transfer all 5 FSMO roles to surviving DC02
+Move-ADDirectoryServerOperationMasterRole -Identity "DC02" `
+    -OperationMasterRole SchemaMaster,DomainNamingMaster,PDCEmulator,RIDMaster,InfrastructureMaster</code></pre>
+</div>
+
+<h3>Graceful Demotion via PowerShell</h3>
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> PowerShell (Run as Administrator)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># Gracefully demote Domain Controller back to member server
+Uninstall-ADDSDomainController `
+    -DemoteOperationMasterRole:$true `
+    -RemoveApplicationPartition:$true `
+    -NoRebootOnCompletion:$false</code></pre>
+</div>
+
+<h2>Metadata Cleanup (Handling Unplanned DC Failures)</h2>
+<p>If a Domain Controller experiences catastrophic motherboard or drive failure and cannot be powered on to execute graceful demotion, it leaves "tombstoned" metadata records in Active Directory Sites and Services. Administrators perform <strong>Metadata Cleanup</strong> on a surviving DC:</p>
+<ul>
+    <li>Open <strong>Active Directory Users and Computers</strong> (RSAT).</li>
+    <li>Navigate to the <code>Domain Controllers</code> organizational unit (OU).</li>
+    <li>Right-click the dead DC computer object and select <strong>Delete</strong>.</li>
+    <li>Windows Server automatically detects that the object is a Domain Controller and initiates automated metadata cleanup, purging its NTDS Settings object, replication connections, and FSMO assignments safely.</li>
+</ul>
+
+<h2>Summary</h2>
+<p>Active Directory Domain Controller deployment has transitioned from legacy <code>dcpromo</code> to modular, scriptable architecture via Server Manager and the <code>ADDSDeployment</code> PowerShell module. By enforcing strict pre-flight networking checks, automating deployments, transferring FSMO roles prior to decommissioning, and executing clean metadata hygiene, infrastructure teams safeguard directory replication and enterprise authentication.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

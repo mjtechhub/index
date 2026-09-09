@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Linux File Permissions: Read, Write, Execute (chmod & chown) | Linux Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Understand the POSIX file permission model (rwx), symbolic vs octal notation, directory execution semantics, and ownership management with chmod and chown.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/linux/linux-standard-file-permissions-chmod-chown.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Standard Linux File Permissions: Read, Write, Execute (chmod & chown) | Linux Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Understand the POSIX file permission model (rwx), symbolic vs octal notation, directory execution semantics, and ownership management with chmod and chown.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/linux/linux-standard-file-permissions-chmod-chown.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Standard Linux File Permissions: Read, Write, Execute (chmod & chown) | Linux Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Understand the POSIX file permission model (rwx), symbolic vs octal notation, directory execution semantics, and ownership management with chmod and chown.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Standard Linux File Permissions: Read, Write, Execute (chmod & chown)",
+    "description": "Understand the POSIX file permission model (rwx), symbolic vs octal notation, directory execution semantics, and ownership management with chmod and chown.",
+    "url": "https://themjtechhub.site/tutorials/linux/linux-standard-file-permissions-chmod-chown.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Beginner",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/linux/linux-standard-file-permissions-chmod-chown.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../linux.html">Linux</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Standard Linux File Permissions: Read, Write, Execute (chmod & chown)</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge beginner">Beginner</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Standard Linux File Permissions: Read, Write, Execute (chmod & chown)</h1>
+            <p class="tutorial-hero-desc">Understand the POSIX file permission model (rwx), symbolic vs octal notation, directory execution semantics, and ownership management with chmod and chown.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>At the core of Linux multi-user security is the <strong>POSIX file permission model</strong>. Every file, directory, socket, and block device on a Linux filesystem is bound to an owner user, an owner group, and an access mode that dictates who can read, modify, or execute the resource. For systems administrators, mastering permission manipulation via <code>chmod</code> and <code>chown</code> is critical for securing web servers, containers, databases, and user home directories.</p>
+
+<h2>The POSIX Triple Security Model</h2>
+<p>When you inspect files using <code>ls -l</code> or <code>stat</code>, permissions are displayed as a 10-character string (e.g. <code>-rwxr-xr--</code>):</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Component</th>
+                <th>Position</th>
+                <th>Symbol Example</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>File Type</strong></td>
+                <td>Character 1</td>
+                <td><code>-</code>, <code>d</code>, <code>l</code>, <code>s</code></td>
+                <td>Regular file (<code>-</code>), Directory (<code>d</code>), Symlink (<code>l</code>), Socket (<code>s</code>)</td>
+            </tr>
+            <tr>
+                <td><strong>User (Owner)</strong></td>
+                <td>Characters 2–4</td>
+                <td><code>rwx</code></td>
+                <td>Permissions assigned to the specific user account that owns the file</td>
+            </tr>
+            <tr>
+                <td><strong>Group</strong></td>
+                <td>Characters 5–7</td>
+                <td><code>r-x</code></td>
+                <td>Permissions assigned to members of the file's owning group</td>
+            </tr>
+            <tr>
+                <td><strong>Other (World)</strong></td>
+                <td>Characters 8–10</td>
+                <td><code>r--</code></td>
+                <td>Permissions applied to all other local user accounts on the system</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Files vs Directories: The Critical Distinction for Execute (<code>x</code>)</h2>
+<p>The meaning of Read, Write, and Execute shifts fundamentally between files and directories:</p>
+<ul>
+    <li><strong>Regular Files:</strong>
+        <ul>
+            <li><code>Read (r)</code>: Open and view file contents (e.g. via <code>cat</code>, <code>less</code>).</li>
+            <li><code>Write (w)</code>: Modify, append to, or truncate file contents.</li>
+            <li><code>Execute (x)</code>: Execute the file as a compiled binary or interpreted script.</li>
+        </ul>
+    </li>
+    <li><strong>Directories:</strong>
+        <ul>
+            <li><code>Read (r)</code>: Read the list of filenames inside the directory (e.g. <code>ls</code>).</li>
+            <li><code>Write (w)</code>: Create, delete, or rename files inside the directory (requires <code>x</code> as well).</li>
+            <li><code>Execute (x)</code>: <strong>Traverse or "enter" the directory</strong> (e.g. <code>cd</code>, access files inside).</li>
+        </ul>
+    </li>
+</ul>
+
+<div class="callout callout-warning">
+    <div class="callout-title"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> The Directory Traversal Trap</div>
+    <div class="callout-body">If a directory has Read (<code>r</code>) permission but lacks Execute (<code>x</code>), a user can list the filenames inside using <code>ls</code>, but cannot read the contents of those files, check their file sizes, or <code>cd</code> into the folder. A directory must have execute permissions to be usable.</div>
+</div>
+
+<h2>Numeric (Octal) vs Symbolic Notation</h2>
+<p>Linux administrators modify permissions using the <code>chmod</code> utility via two distinct syntax modes:</p>
+
+<h3>1. Octal (Numeric) Representation</h3>
+<p>Each permission is assigned a base-2 binary weight: <strong>Read = 4</strong>, <strong>Write = 2</strong>, <strong>Execute = 1</strong>. Adding these values produces an octal digit (0 through 7) for each entity:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Octal Value</th>
+                <th>Binary</th>
+                <th>Permission Symbols</th>
+                <th>Security Meaning</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>7</strong></td>
+                <td>111</td>
+                <td><code>rwx</code></td>
+                <td>Full read, write, and execute</td>
+            </tr>
+            <tr>
+                <td><strong>6</strong></td>
+                <td>110</td>
+                <td><code>rw-</code></td>
+                <td>Read and write (standard for non-executable files)</td>
+            </tr>
+            <tr>
+                <td><strong>5</strong></td>
+                <td>101</td>
+                <td><code>r-x</code></td>
+                <td>Read and execute (standard for scripts & directories)</td>
+            </tr>
+            <tr>
+                <td><strong>4</strong></td>
+                <td>100</td>
+                <td><code>r--</code></td>
+                <td>Read-only</td>
+            </tr>
+            <tr>
+                <td><strong>0</strong></td>
+                <td>000</td>
+                <td><code>---</code></td>
+                <td>No permissions granted</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Common enterprise octal configurations:</p>
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Bash</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># 644: Owner rw, Group r, Other r (standard web documents, configs)
+chmod 644 /var/www/html/index.html
+
+# 755: Owner rwx, Group rx, Other rx (standard directories and binaries)
+chmod 755 /usr/local/bin/deploy.sh
+
+# 600: Owner rw, Group none, Other none (SSH private keys, DB secrets)
+chmod 600 ~/.ssh/id_ed25519</code></pre>
+</div>
+
+<h3>2. Symbolic Representation</h3>
+<p>Symbolic notation modifies specific bits without overwriting the entire permission mask:</p>
+<ul>
+    <li><strong>Targets:</strong> <code>u</code> (user/owner), <code>g</code> (group), <code>o</code> (others), <code>a</code> (all).</li>
+    <li><strong>Operators:</strong> <code>+</code> (add), <code>-</code> (remove), <code>=</code> (set explicitly).</li>
+</ul>
+
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Bash</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># Add execute permission to the owner only
+chmod u+x backup.sh
+
+# Revoke write and execute permissions from other/world
+chmod o-wx database.sqlite
+
+# Grant group read and write
+chmod g+rw /opt/app/shared.log</code></pre>
+</div>
+
+<h2>Managing Ownership with <code>chown</code> and <code>chgrp</code></h2>
+<p>Only the superuser (root or a user with <code>sudo</code> privileges) can reassign file ownership in Linux:</p>
+
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Bash (Root / Sudo Required)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># Change owner to www-data and group to www-data (Debian/Ubuntu web server)
+sudo chown www-data:www-data /var/www/html -R
+
+# On RHEL/Rocky/Fedora web servers (Apache runs as apache user)
+sudo chown -R apache:apache /var/www/html
+
+# Change owner only, preserving existing group
+sudo chown deployuser /opt/myapp/bin
+
+# Change group only
+sudo chgrp developers /opt/myapp/code</code></pre>
+</div>
+
+<div class="callout callout-info">
+    <div class="callout-title"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Distro Differences in Default Service Accounts</div>
+    <div class="callout-body">Be attentive to distribution conventions: Debian/Ubuntu distributions use <code>www-data</code> as the default web server user and group, while RHEL, AlmaLinux, and Fedora use <code>apache</code> or <code>nginx</code>. Applying Ubuntu ownership paths blindly on Red Hat environments breaks service authorization.</div>
+</div>
+
+<h2>Summary</h2>
+<p>The Linux file permission architecture enforces multi-tenant boundary integrity. By understanding the distinction between file and directory execution, selecting between octal and symbolic <code>chmod</code>, and assigning appropriate user and group ownership via <code>chown</code>, administrators build robust, defense-in-depth Linux systems.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

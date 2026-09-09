@@ -37,9 +37,19 @@ document.addEventListener('DOMContentLoaded', () => {
             tutCounts[cat] = (tutCounts[cat] || 0) + 1;
         });
 
-        // Update total badge if on topics.html
+        // Update total badges if on topics.html
         if (totalTutBadge) {
             totalTutBadge.innerHTML = `<i class="fa-solid fa-book-open" aria-hidden="true"></i> ${tutorials.length} Published Tutorials`;
+        }
+        const totalCurriculumBadge = document.getElementById('topics-total-curriculum-badge');
+        const totalCurriculumTopics = categories.reduce((sum, cat) => {
+            if (Array.isArray(cat.sections)) {
+                return sum + cat.sections.reduce((secSum, s) => secSum + (Array.isArray(s.subtopics) ? s.subtopics.length : 0), 0);
+            }
+            return sum;
+        }, 0);
+        if (totalCurriculumBadge) {
+            totalCurriculumBadge.innerHTML = `<i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> ${totalCurriculumTopics} Curriculum Topics`;
         }
 
         const coreTopics = categories.filter(c => c.type === 'core');
@@ -65,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const count = tutCounts[topic.id.toLowerCase()] || tutCounts[topic.name.toLowerCase()] || 0;
             const hasContent = count > 0;
             
-            // Top Row (Icon & Count Badge)
+            // Top Row (Icon & Badges Group)
             const topRow = document.createElement('div');
             topRow.className = 'topic-domain-top';
             
@@ -78,12 +88,24 @@ document.addEventListener('DOMContentLoaded', () => {
             iconImg.height = 28;
             iconWrap.appendChild(iconImg);
             
+            const badgesWrap = document.createElement('div');
+            badgesWrap.className = 'topic-badges-group';
+
             const countBadge = document.createElement('span');
             countBadge.className = `topic-tut-count-badge ${hasContent ? 'has-content' : ''}`;
             countBadge.textContent = hasContent ? `${count} Tutorials` : 'In preparation';
+            badgesWrap.appendChild(countBadge);
+
+            const curCount = Array.isArray(topic.sections) ? topic.sections.reduce((acc, s) => acc + (Array.isArray(s.subtopics) ? s.subtopics.length : 0), 0) : 0;
+            if (curCount > 0) {
+                const curBadge = document.createElement('span');
+                curBadge.className = 'topic-curriculum-count-badge';
+                curBadge.textContent = `${curCount} Topics`;
+                badgesWrap.appendChild(curBadge);
+            }
             
             topRow.appendChild(iconWrap);
-            topRow.appendChild(countBadge);
+            topRow.appendChild(badgesWrap);
             card.appendChild(topRow);
             
             // Title

@@ -157,8 +157,8 @@ def audit_phase6_5_metadata():
     with open(TUTS_JSON_PATH, "r", encoding="utf-8") as f:
         tutorials = json.load(f)
 
-    assert len(tutorials) == 76, f"Expected 76 tutorials, found {len(tutorials)}"
-    print(f"[PASS] Total tutorials in tutorials.json: {len(tutorials)} (61 Networking + 15 New)")
+    assert len(tutorials) >= 76, f"Expected at least 76 tutorials, found {len(tutorials)}"
+    print(f"[PASS] Total tutorials in tutorials.json: {len(tutorials)}")
 
     # 1. Duplicate checks
     ids = set()
@@ -173,10 +173,17 @@ def audit_phase6_5_metadata():
         fpath = ROOT_DIR / t["url"].replace("./", "")
         assert fpath.exists(), f"Missing tutorial file: {fpath}"
 
-    print(f"[PASS] Zero duplicate IDs, zero duplicate URLs, all 76 files exist on disk.")
+    print(f"[PASS] Zero duplicate IDs, zero duplicate URLs, all {len(tutorials)} files exist on disk.")
 
-    # 2. Check Static SEO on all 15 new tutorials
-    new_15 = tutorials[61:]
+    # 2. Check Static SEO on original 15 Phase 6.5 tutorials
+    ORIGINAL_15_IDS = [
+        "windows-operating-system-fundamentals", "windows-command-prompt-basics", "powershell-fundamentals-for-administrators",
+        "linux-operating-system-fundamentals", "linux-filesystem-hierarchy-explained", "essential-linux-terminal-commands",
+        "what-is-a-server", "windows-server-fundamentals", "linux-server-fundamentals",
+        "cybersecurity-fundamentals", "authentication-vs-authorization", "multi-factor-authentication-explained",
+        "cloud-computing-fundamentals", "iaas-vs-paas-vs-saas", "aws-vs-azure-cloud-fundamentals"
+    ]
+    new_15 = [t for t in tutorials if t["id"] in ORIGINAL_15_IDS]
     assert len(new_15) == 15
 
     for t in new_15:
@@ -216,6 +223,9 @@ async def run_phase6_5_browser_suite():
         page.on("console", lambda msg: console_errors.append(f"Console {msg.type}: {msg.text}") if msg.type == "error" else None)
         page.on("response", lambda resp: network_404s.append(resp.url) if resp.status == 404 and "localhost" in resp.url else None)
 
+        with open(TUTS_JSON_PATH, "r", encoding="utf-8") as f:
+            tutorials = json.load(f)
+
         test_results = {}
 
         # -------------------------------------------------------------
@@ -235,17 +245,17 @@ async def run_phase6_5_browser_suite():
         }""")
 
         total_badge_text = await page.evaluate("() => document.getElementById('topics-total-tut-badge')?.textContent.trim()")
-        test_results["total_badge_76"] = "76 Published Tutorials" in (total_badge_text or "")
-        print(f"[{'PASS' if test_results['total_badge_76'] else 'FAIL'}] Total Published Badge: '{total_badge_text}'")
+        test_results["total_badge_76"] = f"{len(tutorials)} Published Tutorials" in (total_badge_text or "")
+        print(f"[{'PASS' if test_results['total_badge_76'] else 'FAIL'}] Total Published Badge: '{total_badge_text}' (Expected: '{len(tutorials)} Published Tutorials')")
 
         category_badge_map = {c["title"]: c["badge"] for c in card_badges}
         expected_counts = {
-            "Networking": "61 Tutorials",
-            "Windows": "3 Tutorials",
-            "Linux": "3 Tutorials",
-            "Servers": "3 Tutorials",
-            "Cybersecurity": "3 Tutorials",
-            "Cloud & AI": "3 Tutorials"
+            "Networking": f"{sum(1 for t in tutorials if t['category'] == 'Networking')} Tutorials",
+            "Windows": f"{sum(1 for t in tutorials if t['category'] == 'Windows')} Tutorials",
+            "Linux": f"{sum(1 for t in tutorials if t['category'] == 'Linux')} Tutorials",
+            "Servers": f"{sum(1 for t in tutorials if t['category'] == 'Servers')} Tutorials",
+            "Cybersecurity": f"{sum(1 for t in tutorials if t['category'] == 'Cybersecurity')} Tutorials",
+            "Cloud & AI": f"{sum(1 for t in tutorials if t['category'] == 'Cloud & AI')} Tutorials"
         }
 
         all_badges_match = True
@@ -274,8 +284,8 @@ async def run_phase6_5_browser_suite():
             commands: document.getElementById('stat-commands')?.textContent.trim(),
             topics: document.getElementById('stat-topics')?.textContent.trim()
         })""")
-        test_results["home_stats_76"] = (home_stats["tutorials"] == "76" and home_stats["topics"] == "6")
-        print(f"[{'PASS' if test_results['home_stats_76'] else 'FAIL'}] Homepage Stats: Tutorials={home_stats['tutorials']} (Expected: 76), Topics={home_stats['topics']} (Expected: 6)")
+        test_results["home_stats_76"] = (home_stats["tutorials"] == str(len(tutorials)) and home_stats["topics"] == "6")
+        print(f"[{'PASS' if test_results['home_stats_76'] else 'FAIL'}] Homepage Stats: Tutorials={home_stats['tutorials']} (Expected: {len(tutorials)}), Topics={home_stats['topics']} (Expected: 6)")
 
         # -------------------------------------------------------------
         # 3. Validation Across All 5 New Categories (Tutorials, TOC, Back, Nav)

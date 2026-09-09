@@ -732,6 +732,42 @@
         "keywords": "network case studies, troubleshooting scenarios, enterprise troubleshooting, workflow"
     },
     {
+        "id": "rf-channel-planning-and-interference-mitigation",
+        "title": "RF Channel Planning, Band Steering & Co-Channel Interference",
+        "description": "Master enterprise Wi-Fi RF channel planning across 2.4 GHz, 5 GHz, and 6 GHz bands, mitigating co-channel interference (CCI) and configuring band steering.",
+        "category": "Networking",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "wifi, rf channel planning, co-channel interference, cci, aci, band steering, 2.4 ghz, 5 ghz, 6 ghz, dfs, snr, wlan",
+        "url": "tutorials/networking/rf-channel-planning-and-interference-mitigation.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "rapid-spanning-tree-rstp-802-1w",
+        "title": "Rapid Spanning Tree Protocol (RSTP / IEEE 802.1w) Explained",
+        "description": "Understand IEEE 802.1w Rapid Spanning Tree Protocol (RSTP), port roles, rapid convergence handshakes, Edge Ports, and topology change processing.",
+        "category": "Networking",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "rstp, 802.1w, spanning tree, stp, rapid spanning tree, portfast, bpdu, root port, designated port, alternate port, backup port",
+        "url": "tutorials/networking/rapid-spanning-tree-rstp-802-1w.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "next-generation-firewall-ngfw-deep-packet-inspection",
+        "title": "NGFW Architecture: Application Awareness & Deep Packet Inspection",
+        "description": "Examine Next-Generation Firewall (NGFW) architecture, Deep Packet Inspection (DPI), Layer 7 Application Identification (App-ID), and TLS decryption.",
+        "category": "Networking",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "ngfw, firewall, deep packet inspection, dpi, layer 7, app-id, ssl decryption, tls inspection, ips, ids, threat intelligence",
+        "url": "tutorials/networking/next-generation-firewall-ngfw-deep-packet-inspection.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
         "id": "windows-operating-system-fundamentals",
         "title": "Windows Operating System Fundamentals",
         "description": "Understand the core architecture of Microsoft Windows, including user mode, kernel mode, the NT executive, and system processes.",
@@ -764,6 +800,42 @@
         "readTime": "8 min read",
         "keywords": "powershell, posh, cmdlets, object pipeline, get-service, get-process, administration, automation, where-object",
         "url": "tutorials/windows/powershell-fundamentals-for-administrators.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "windows-ntfs-permissions-vs-share-permissions",
+        "title": "NTFS Permissions vs Share Permissions: Calculating Effective Access",
+        "description": "Master Windows file authorization: Discretionary Access Control Lists (DACLs), NTFS vs SMB Share permissions, inheritance rules, and effective access calculation.",
+        "category": "Windows",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "windows, ntfs, share permissions, dacl, icacls, file server, smb, effective access, permissions inheritance, takeown",
+        "url": "tutorials/windows/windows-ntfs-permissions-vs-share-permissions.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "windows-event-viewer-architecture-and-standard-logs",
+        "title": "Windows Event Viewer: System, Application & Security Log Architecture",
+        "description": "Learn the Windows Event Log service architecture (.evtx format), standard log categories, critical security event IDs, and automated querying with PowerShell Get-WinEvent.",
+        "category": "Windows",
+        "level": "Beginner",
+        "readTime": "5 min read",
+        "keywords": "windows, event viewer, evtx, event logs, security log, system log, application log, get-winevent, event id, xml filter, sysadmin",
+        "url": "tutorials/windows/windows-event-viewer-architecture-and-standard-logs.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "powershell-pipeline-object-manipulation-and-filtering",
+        "title": "PowerShell Pipeline Architecture & Object Filtering (Where/Select)",
+        "description": "Deep-dive into the object-oriented PowerShell pipeline: pipeline parameter binding (ByValue/ByPropertyName), object filtering with Where-Object, and shaping with Select-Object.",
+        "category": "Windows",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "powershell, pipeline, object-oriented, where-object, select-object, foreach-object, byvalue, bypropertyname, filter left, administration",
+        "url": "tutorials/windows/powershell-pipeline-object-manipulation-and-filtering.html",
         "publishedAt": "2026-09-09",
         "updatedAt": "2026-09-09"
     },
@@ -804,6 +876,42 @@
         "updatedAt": "2026-09-09"
     },
     {
+        "id": "linux-standard-file-permissions-chmod-chown",
+        "title": "Standard Linux File Permissions: Read, Write, Execute (chmod & chown)",
+        "description": "Understand the POSIX file permission model (rwx), symbolic vs octal notation, directory execution semantics, and ownership management with chmod and chown.",
+        "category": "Linux",
+        "level": "Beginner",
+        "readTime": "5 min read",
+        "keywords": "linux, permissions, chmod, chown, chgrp, posix, rwx, octal permissions, umask, sysadmin, file security",
+        "url": "tutorials/linux/linux-standard-file-permissions-chmod-chown.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "linux-systemd-service-units-creation-and-control",
+        "title": "Authoring Systemd Service Units: Unit Files, Dependencies & systemctl",
+        "description": "Learn to build production systemd service units, manage unit dependencies, configure process restart policies, and troubleshoot services with systemctl and journalctl.",
+        "category": "Linux",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "linux, systemd, systemctl, unit files, service management, journalctl, rhel, ubuntu, sysadmin, init system",
+        "url": "tutorials/linux/linux-systemd-service-units-creation-and-control.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "linux-memory-management-buffers-caches-oom-killer",
+        "title": "Linux Memory Management: Buffers, Page Cache & Out-Of-Memory (OOM) Killer",
+        "description": "Deconstruct Linux kernel memory allocation: virtual memory, Buffers vs Page Cache, swap space mechanics, and how the Out-Of-Memory (OOM) Killer scores processes.",
+        "category": "Linux",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "linux, memory management, ram, page cache, buffers, oom killer, oom_score, swap, vmstat, sysadmin, performance",
+        "url": "tutorials/linux/linux-memory-management-buffers-caches-oom-killer.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
         "id": "what-is-a-server",
         "title": "What Is a Server?",
         "description": "Discover what defines server hardware and software, client-server models, high-availability components, and enterprise roles.",
@@ -836,6 +944,42 @@
         "readTime": "8 min read",
         "keywords": "linux server, headless, ssh, systemd, ufw, firewalld, journalctl, rhel, ubuntu server, sysadmin",
         "url": "tutorials/servers/linux-server-fundamentals.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "active-directory-domain-controller-promotion-and-demotion",
+        "title": "Active Directory Domain Controller Promotion & Demotion with Server Manager and PowerShell",
+        "description": "Learn the modern deployment workflow for Windows Server Active Directory Domain Services (AD DS): Server Manager post-deployment configuration and PowerShell ADDSDeployment cmdlets.",
+        "category": "Servers",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "active directory, domain controller, ad ds, dcpromo, install-addsforest, install-addsdomaincontroller, demotion, metadata cleanup, windows server",
+        "url": "tutorials/servers/active-directory-domain-controller-promotion-and-demotion.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "enterprise-dns-server-architecture-and-zone-types",
+        "title": "Enterprise DNS Server Architecture: Forward, Reverse, Primary & Secondary Zones",
+        "description": "Understand enterprise DNS server architecture: Forward and Reverse lookup zones, Primary vs Secondary replication (AXFR/IXFR), and Active Directory-Integrated Zones.",
+        "category": "Servers",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "dns server, primary zone, secondary zone, forward lookup, reverse lookup, ptr, axfr, ixfr, ad-integrated dns, windows server, bind",
+        "url": "tutorials/servers/enterprise-dns-server-architecture-and-zone-types.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "server-raid-levels-explained-0-1-5-6-10",
+        "title": "RAID Levels Explained: 0, 1, 5, 6, 10 & Nested Arrays",
+        "description": "Examine enterprise storage architecture: Hardware vs Software RAID, RAID levels 0, 1, 5, 6, and nested RAID 10, write penalties, and rebuild risk factors.",
+        "category": "Servers",
+        "level": "Beginner",
+        "readTime": "5 min read",
+        "keywords": "raid, raid 0, raid 1, raid 5, raid 6, raid 10, storage, hardware raid, striping, mirroring, parity, sysadmin, server hardware",
+        "url": "tutorials/servers/server-raid-levels-explained-0-1-5-6-10.html",
         "publishedAt": "2026-09-09",
         "updatedAt": "2026-09-09"
     },
@@ -876,6 +1020,42 @@
         "updatedAt": "2026-09-09"
     },
     {
+        "id": "modern-password-policies-and-nist-800-63-guidelines",
+        "title": "Modern Password Security Policies: NIST SP 800-63B-4 Guidelines",
+        "description": "Align enterprise authentication with the authoritative NIST SP 800-63B-4 digital identity guidelines: length over complexity, eliminating forced rotations, and credential screening.",
+        "category": "Cybersecurity",
+        "level": "Beginner",
+        "readTime": "5 min read",
+        "keywords": "nist sp 800-63b, password security, passphrases, credential hygiene, password policy, active directory, authentication, mfa, security baseline",
+        "url": "tutorials/cybersecurity/modern-password-policies-and-nist-800-63-guidelines.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "next-generation-antivirus-ngav-vs-traditional-signatures",
+        "title": "Modern Endpoint Protection: Behavioral Detection vs Signature-Based Antivirus",
+        "description": "Compare traditional signature-based antivirus with modern behavioral endpoint protection (NGAV/EDR): static hashing, heuristic evaluation, AMSI integration, and process telemetry.",
+        "category": "Cybersecurity",
+        "level": "Beginner",
+        "readTime": "5 min read",
+        "keywords": "antivirus, ngav, edr, endpoint security, behavioral detection, signatures, amsi, malware detection, heuristics, sysadmin",
+        "url": "tutorials/cybersecurity/next-generation-antivirus-ngav-vs-traditional-signatures.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "network-microsegmentation-and-software-defined-perimeters",
+        "title": "Network Microsegmentation: Workload Isolation & East-West Traffic Policy",
+        "description": "Architect enterprise microsegmentation: dissect north-south vs east-west traffic, host-based policy enforcement, hypervisor distributed firewalls, and zero-trust workload isolation.",
+        "category": "Cybersecurity",
+        "level": "Advanced",
+        "readTime": "5 min read",
+        "keywords": "microsegmentation, zero trust, east-west traffic, perimeter security, software-defined perimeter, sdp, distributed firewall, kubernetes networkpolicy",
+        "url": "tutorials/cybersecurity/network-microsegmentation-and-software-defined-perimeters.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
         "id": "cloud-computing-fundamentals",
         "title": "Cloud Computing Fundamentals",
         "description": "Learn the core definition, essential characteristics, and business advantages of modern cloud computing architectures.",
@@ -908,6 +1088,42 @@
         "readTime": "8 min read",
         "keywords": "aws, azure, cloud comparison, ec2, azure vm, s3, blob, vpc, vnet, iam, entra id, cloud architecture",
         "url": "tutorials/cloud/aws-vs-azure-cloud-fundamentals.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "aws-ec2-instance-families-and-purchasing-models",
+        "title": "Amazon EC2 Architecture: Instance Types & Purchasing Options",
+        "description": "Architect cloud compute on Amazon EC2: instance families (General Purpose, Compute, Memory, Storage), hardware virtualization (Nitro), and modern purchasing options (Savings Plans, Spot, On-Demand).",
+        "category": "Cloud & AI",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "aws, ec2, instance types, purchasing options, savings plans, spot instances, on-demand, reserved instances, nitro system, cloud computing",
+        "url": "tutorials/cloud/aws-ec2-instance-families-and-purchasing-models.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "aws-vpc-architecture-subnets-route-tables-and-internet-gateways",
+        "title": "Amazon VPC Architecture: Public/Private Subnets, Route Tables & Internet Gateways",
+        "description": "Architect resilient enterprise cloud networks: Amazon Virtual Private Cloud (VPC) CIDR design, multi-AZ public and private subnets, Route Tables, Internet Gateways, and NAT Gateways.",
+        "category": "Cloud & AI",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "aws, vpc, subnet, route table, internet gateway, nat gateway, cidr, cloud networking, security group, nacl",
+        "url": "tutorials/cloud/aws-vpc-architecture-subnets-route-tables-and-internet-gateways.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "cloud-iam-policy-syntax-json-statements-and-least-privilege",
+        "title": "AWS IAM JSON Policies: Statements & Principle of Least Privilege",
+        "description": "Master AWS Identity and Access Management (IAM) JSON policy architecture: Effect, Action, Resource, and Condition blocks, evaluation logic, and least privilege enforcement.",
+        "category": "Cloud & AI",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "aws, iam, json policy, least privilege, polp, statement, effect, action, resource, condition, cloud security",
+        "url": "tutorials/cloud/cloud-iam-policy-syntax-json-statements-and-least-privilege.html",
         "publishedAt": "2026-09-09",
         "updatedAt": "2026-09-09"
     }

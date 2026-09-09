@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS IAM JSON Policies: Statements & Principle of Least Privilege | Cloud & AI Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master AWS Identity and Access Management (IAM) JSON policy architecture: Effect, Action, Resource, and Condition blocks, evaluation logic, and least privilege enforcement.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/cloud/cloud-iam-policy-syntax-json-statements-and-least-privilege.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="AWS IAM JSON Policies: Statements & Principle of Least Privilege | Cloud & AI Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master AWS Identity and Access Management (IAM) JSON policy architecture: Effect, Action, Resource, and Condition blocks, evaluation logic, and least privilege enforcement.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/cloud/cloud-iam-policy-syntax-json-statements-and-least-privilege.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AWS IAM JSON Policies: Statements & Principle of Least Privilege | Cloud & AI Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master AWS Identity and Access Management (IAM) JSON policy architecture: Effect, Action, Resource, and Condition blocks, evaluation logic, and least privilege enforcement.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "AWS IAM JSON Policies: Statements & Principle of Least Privilege",
+    "description": "Master AWS Identity and Access Management (IAM) JSON policy architecture: Effect, Action, Resource, and Condition blocks, evaluation logic, and least privilege enforcement.",
+    "url": "https://themjtechhub.site/tutorials/cloud/cloud-iam-policy-syntax-json-statements-and-least-privilege.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/cloud/cloud-iam-policy-syntax-json-statements-and-least-privilege.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../cloud.html">Cloud & AI</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">AWS IAM JSON Policies: Statements & Principle of Least Privilege</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">AWS IAM JSON Policies: Statements & Principle of Least Privilege</h1>
+            <p class="tutorial-hero-desc">Master AWS Identity and Access Management (IAM) JSON policy architecture: Effect, Action, Resource, and Condition blocks, evaluation logic, and least privilege enforcement.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>In Amazon Web Services (AWS), authorization is governed universally by <strong>AWS Identity and Access Management (IAM) Policy Documents</strong>. Whether an API call is made by a software developer clicking the AWS Management Console, an automated Terraform pipeline running in CI/CD, or an Amazon EC2 instance querying an Amazon S3 bucket, AWS evaluates an attached JSON policy document to permit or deny the request.</p>
+<p>Authoring secure, auditable IAM policies is the primary defense against catastrophic cloud data breaches and privilege escalation.</p>
+
+<h2>The Anatomy of an AWS IAM JSON Policy Document</h2>
+<p>An IAM policy is an explicit JSON object containing a top-level <code>Version</code> and an array of one or more <code>Statement</code> objects:</p>
+
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-file-code" aria-hidden="true"></i> Secure S3 Read-Only Policy Example</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code>{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowSpecificS3BucketRead",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject",
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::corp-financial-reports-2026",
+                "arn:aws:s3:::corp-financial-reports-2026/*"
+            ],
+            "Condition": {
+                "Bool": {
+                    "aws:SecureTransport": "true"
+                }
+            }
+        }
+    ]
+}</code></pre>
+</div>
+
+<h2>Deconstructing Policy Statement Elements</h2>
+<ul>
+    <li><strong><code>Version</code>:</strong> Defines the language syntax rules. Always declare <code>"2012-10-17"</code>. (Never omit this or use the current calendar date, as legacy versions fail to process modern policy variables).</li>
+    <li><strong><code>Sid</code> (Statement ID):</strong> An optional, human-readable identifier describing the business intent of the statement.</li>
+    <li><strong><code>Effect</code>:</strong> Explicitly states whether the policy grants or denies access. Accepts only two values: <code>"Allow"</code> or <code>"Deny"</code>.</li>
+    <li><strong><code>Action</code>:</strong> The specific AWS service API calls being controlled. Expressed as <code>service:operation</code> (e.g. <code>ec2:StartInstances</code>, <code>dynamodb:Query</code>). Wildcards (<code>*</code>) are supported but should be strictly curtailed in production.</li>
+    <li><strong><code>Resource</code>:</strong> The Amazon Resource Name (ARN) identifying the exact AWS object to which the action applies. Notice in the S3 example that bucket operations (<code>ListBucket</code>) require the bucket ARN (<code>arn:aws:s3:::bucket</code>), while object operations (<code>GetObject</code>) require the wildcard object ARN (<code>arn:aws:s3:::bucket/*</code>).</li>
+    <li><strong><code>Condition</code>:</strong> The most powerful authorization block, evaluating environmental context (e.g. source IP, TLS cipher, MFA status, current timestamp, or resource tags).</li>
+</ul>
+
+<h2>The AWS Policy Evaluation Logic: The Explicit Deny Rule</h2>
+<p>When an API call is executed, the AWS IAM evaluation engine follows a deterministic, non-negotiable decision tree:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Evaluation Step</th>
+                <th>Evaluation Logic</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>1. Default State</strong></td>
+                <td>By default, all requests are implicitly denied</td>
+                <td>Implicit Deny</td>
+            </tr>
+            <tr>
+                <td><strong>2. Explicit Deny Check</strong></td>
+                <td>Does ANY applicable policy contain <code>"Effect": "Deny"</code> matching this Action and Resource?</td>
+                <td><strong>Immediate Deny.</strong> Evaluation halts immediately. An explicit deny overrides all allows.</td>
+            </tr>
+            <tr>
+                <td><strong>3. Explicit Allow Check</strong></td>
+                <td>Does at least ONE applicable policy contain <code>"Effect": "Allow"</code>?</td>
+                <td><strong>Request Permitted.</strong></td>
+            </tr>
+            <tr>
+                <td><strong>4. Final Fallback</strong></td>
+                <td>No explicit Allow found and no explicit Deny found</td>
+                <td><strong>Implicit Deny.</strong> Request rejected.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="callout callout-warning">
+    <div class="callout-title"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> The Absolute Power of Explicit Deny</div>
+    <div class="callout-body">Even if a user belongs to the <code>AdministratorAccess</code> group granting <code>*:*</code> (Full Administrative Access), if a Service Control Policy (SCP) or boundary policy contains a statement with <code>"Effect": "Deny"</code> for <code>s3:DeleteBucket</code>, the user is permanently blocked from deleting S3 buckets.</div>
+</div>
+
+<h2>Operationalizing the Principle of Least Privilege (PoLP)</h2>
+<p>The <strong>Principle of Least Privilege</strong> mandates that identities should be granted only the minimum permissions necessary to complete their specific business function—nothing more.</p>
+
+<h3>Anti-Pattern: The Dangerous Wildcard Administrator</h3>
+<p>Novice cloud practitioners frequently write overly broad policies to eliminate permission errors quickly:</p>
+<pre><code>{
+    "Effect": "Allow",
+    "Action": "s3:*",
+    "Resource": "*"
+}</code></pre>
+<p>If an application server running under this policy is compromised via an SSRF (Server-Side Request Forgery) flaw, the attacker can list, download, overwrite, and delete every S3 bucket across the entire AWS account.</p>
+
+<h3>Best Practice: Granular Action & Resource Scoping with Conditions</h3>
+<p>Enforce contextual constraints using <code>Condition</code> blocks:</p>
+
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-file-code" aria-hidden="true"></i> Mandatory MFA & Corporate IP Restriction Policy</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code>{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "DenyAllWithoutMFAAndCorporateIP",
+            "Effect": "Deny",
+            "Action": "*",
+            "Resource": "*",
+            "Condition": {
+                "BoolIfExists": {
+                    "aws:MultiFactorAuthPresent": "false"
+                },
+                "NotIpAddressIfExists": {
+                    "aws:SourceIp": [
+                        "198.51.100.0/24",
+                        "203.0.113.50/32"
+                    ]
+                }
+            }
+        }
+    ]
+}</code></pre>
+</div>
+
+<h2>Eliminating Long-Lived Access Keys: IAM Roles for Workloads</h2>
+<p>Never hardcode static AWS Access Keys (<code>AKIA...</code>) inside application configuration files or EC2 servers. Modern cloud architecture mandates attaching an <strong>IAM Role</strong> directly to the compute resource via an Instance Profile. The instance queries the AWS Instance Metadata Service (IMDSv2) to obtain ephemeral, short-lived security tokens that automatically rotate every 6 hours.</p>
+
+<h2>Summary</h2>
+<p>AWS IAM JSON policies are the bedrock of cloud governance. By mastering the <code>Version</code>, <code>Statement</code>, <code>Effect</code>, <code>Action</code>, <code>Resource</code>, and <code>Condition</code> schema, respecting the non-negotiable priority of Explicit Deny, and applying the Principle of Least Privilege, cloud architects construct impenetrable cloud security perimeters.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

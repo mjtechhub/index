@@ -94,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (heroMount) {
             const hasTutorials = tuts.length > 0;
             const sectionsCount = Array.isArray(cat.sections) ? cat.sections.length : 0;
+            const totalCurriculumTopics = Array.isArray(cat.sections) ? cat.sections.reduce((acc, s) => acc + (Array.isArray(s.subtopics) ? s.subtopics.length : 0), 0) : 0;
             const accentVar = `var(--cat-${cat.accent || cat.id}, var(--brand-primary))`;
 
             heroMount.innerHTML = `
@@ -108,6 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="meta-pill ${hasTutorials ? 'meta-pill-brand' : ''}">
                                 <i class="fa-solid fa-book-open" aria-hidden="true"></i> ${tuts.length} Published ${tuts.length === 1 ? 'Tutorial' : 'Tutorials'}
                             </span>
+                            ${totalCurriculumTopics > 0 ? `
+                                <span class="meta-pill">
+                                    <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> ${totalCurriculumTopics} Curriculum Topics
+                                </span>
+                            ` : ''}
                             ${sectionsCount > 0 ? `
                                 <span class="meta-pill">
                                     <i class="fa-solid fa-list-check" aria-hidden="true"></i> ${sectionsCount} Curriculum Sections
@@ -148,16 +154,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const a = document.createElement('a');
                 a.href = `${basePath}/${rc.url}`;
                 a.className = 'related-cat-card';
-                
+
                 const img = document.createElement('img');
                 img.src = `${basePath}/${rc.icon.replace('./', '')}`;
                 img.alt = '';
                 img.width = 22;
                 img.height = 22;
-                
+
                 const span = document.createElement('span');
                 span.textContent = rc.name;
-                
+
                 a.appendChild(img);
                 a.appendChild(span);
                 relatedMount.appendChild(a);
@@ -196,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.className = `filter-btn ${lvl === 'All' ? 'active' : ''}`;
             btn.setAttribute('role', 'tab');
             btn.setAttribute('aria-selected', lvl === 'All' ? 'true' : 'false');
-            
+
             const count = lvl === 'All' ? allTuts.length : allTuts.filter(t => t.level === lvl).length;
             btn.textContent = `${lvl} (${count})`;
 
@@ -217,17 +223,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // Search Input
         const searchBox = document.createElement('div');
         searchBox.className = 'category-search-box';
-        
+
         const searchIcon = document.createElement('i');
         searchIcon.className = 'fa-solid fa-search category-search-icon';
         searchIcon.setAttribute('aria-hidden', 'true');
-        
+
         const searchInput = document.createElement('input');
         searchInput.type = 'search';
         searchInput.className = 'category-search-input';
         searchInput.placeholder = `Search ${cat.name} tutorials...`;
         searchInput.setAttribute('aria-label', `Search ${cat.name} tutorials`);
-        
+
         searchInput.addEventListener('input', (e) => {
             searchQuery = e.target.value.toLowerCase().trim();
             applyFilters(true);
@@ -370,9 +376,123 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Initial render
         applyFilters(true);
+
+        // Render Master Curriculum Roadmap below published tutorials
+        renderCurriculumRoadmap(cat, container, basePath);
     }
 
-    // 6. Professional Empty State (Strictly separates Published vs Planned)
+    // 6. Curriculum Roadmap Component (Native <details> Accordion)
+    function renderCurriculumRoadmap(cat, container, basePath) {
+        const sections = Array.isArray(cat.sections) ? cat.sections : [];
+        if (sections.length === 0) return;
+
+        const totalTopics = sections.reduce((acc, s) => acc + (Array.isArray(s.subtopics) ? s.subtopics.length : 0), 0);
+        const totalPublished = sections.reduce((acc, s) => {
+            const subs = Array.isArray(s.subtopics) ? s.subtopics : [];
+            return acc + subs.filter(sub => sub.status === 'published').length;
+        }, 0);
+
+        const accentVar = `var(--cat-${cat.accent || cat.id}, var(--brand-primary))`;
+
+        const roadmapWrap = document.createElement('div');
+        roadmapWrap.className = 'curriculum-roadmap-wrap';
+        roadmapWrap.id = 'curriculum-roadmap';
+
+        roadmapWrap.innerHTML = `
+            <div class="section-header-bar mb-2">
+                <div class="section-title-wrap">
+                    <span class="section-accent-bar" aria-hidden="true" style="background: ${accentVar};"></span>
+                    <h2 class="section-heading-title">Curriculum Roadmap</h2>
+                </div>
+                <span class="text-xs text-muted" style="font-weight: 600;">${totalTopics} Topics • ${totalPublished} Published</span>
+            </div>
+            <p class="curriculum-roadmap-intro">
+                Explore the structured curriculum for ${cat.name}. Published tutorials are accessible immediately, while planned topics outline upcoming additions to our technical roadmap.
+            </p>
+        `;
+
+        const accordionContainer = document.createElement('div');
+        accordionContainer.className = 'curriculum-accordion-container';
+
+        sections.forEach((sec) => {
+            const subtopics = Array.isArray(sec.subtopics) ? sec.subtopics : [];
+            const secPubCount = subtopics.filter(sub => sub.status === 'published').length;
+            const secTotal = subtopics.length;
+
+            const details = document.createElement('details');
+            details.className = 'curriculum-section-details';
+            // Default to collapsed (no 'open' attribute)
+
+            const summary = document.createElement('summary');
+            summary.className = 'curriculum-section-summary';
+
+            summary.innerHTML = `
+                <span class="curriculum-summary-title">
+                    <i class="fa-solid fa-folder" aria-hidden="true"></i>
+                    <strong>${sec.name || sec.title}</strong>
+                </span>
+                <span class="curriculum-summary-meta">
+                    <span class="meta-pill text-xs">${secTotal} ${secTotal === 1 ? 'topic' : 'topics'} • ${secPubCount} published</span>
+                    <i class="fa-solid fa-chevron-down curriculum-chevron" aria-hidden="true"></i>
+                </span>
+            `;
+            details.appendChild(summary);
+
+            const body = document.createElement('div');
+            body.className = 'curriculum-section-body';
+
+            const list = document.createElement('ul');
+            list.className = 'curriculum-subtopic-list';
+
+            subtopics.forEach(sub => {
+                const li = document.createElement('li');
+                li.className = `curriculum-subtopic-item ${sub.status || 'planned'}`;
+                const levelClass = (sub.level || 'beginner').toLowerCase();
+
+                if (sub.status === 'published' && sub.url) {
+                    const a = document.createElement('a');
+                    a.href = `${basePath}/${sub.url.replace('./', '')}`;
+                    a.className = 'curriculum-subtopic-link';
+                    a.innerHTML = `
+                        <span class="curriculum-subtopic-name">
+                            <i class="fa-solid fa-circle-check text-success" aria-hidden="true"></i>
+                            <span>${sub.name}</span>
+                        </span>
+                        <span class="curriculum-item-badges">
+                            <span class="cat-tut-badge ${levelClass}">${sub.level || 'Tutorial'}</span>
+                            <span class="curriculum-status-pill published">Published</span>
+                        </span>
+                    `;
+                    li.appendChild(a);
+                } else {
+                    const div = document.createElement('div');
+                    div.className = 'curriculum-subtopic-static';
+                    div.innerHTML = `
+                        <span class="curriculum-subtopic-name">
+                            <i class="fa-regular fa-circle text-muted" aria-hidden="true"></i>
+                            <span>${sub.name}</span>
+                        </span>
+                        <span class="curriculum-item-badges">
+                            <span class="cat-tut-badge ${levelClass}">${sub.level || 'Planned'}</span>
+                            <span class="curriculum-status-pill planned">Planned</span>
+                        </span>
+                    `;
+                    li.appendChild(div);
+                }
+
+                list.appendChild(li);
+            });
+
+            body.appendChild(list);
+            details.appendChild(body);
+            accordionContainer.appendChild(details);
+        });
+
+        roadmapWrap.appendChild(accordionContainer);
+        container.appendChild(roadmapWrap);
+    }
+
+    // 7. Professional Empty State (Strictly separates Published vs Planned)
     function renderEmptyCategoryState(cat, container, basePath) {
         const sections = Array.isArray(cat.sections) ? cat.sections : [];
 
