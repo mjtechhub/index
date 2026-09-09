@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Command Prompt Basics | Windows Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master essential Windows CMD commands for file navigation, system configuration, network diagnostics, and administrator maintenance.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/windows/windows-command-prompt-basics.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Windows Command Prompt Basics | Windows Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master essential Windows CMD commands for file navigation, system configuration, network diagnostics, and administrator maintenance.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/windows/windows-command-prompt-basics.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Windows Command Prompt Basics | Windows Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master essential Windows CMD commands for file navigation, system configuration, network diagnostics, and administrator maintenance.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Windows Command Prompt Basics",
+    "description": "Master essential Windows CMD commands for file navigation, system configuration, network diagnostics, and administrator maintenance.",
+    "url": "https://themjtechhub.site/tutorials/windows/windows-command-prompt-basics.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Beginner",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/windows/windows-command-prompt-basics.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../windows.html">Windows</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Windows Command Prompt Basics</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge beginner">Beginner</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 7 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Windows Command Prompt Basics</h1>
+            <p class="tutorial-hero-desc">Master essential Windows CMD commands for file navigation, system configuration, network diagnostics, and administrator maintenance.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>The <strong>Windows Command Prompt (cmd.exe)</strong> remains an indispensable tool for IT support engineers, system administrators, and infrastructure technicians. While PowerShell provides deep object-oriented scripting, CMD provides rapid, lightweight access to native utilities across every version of Windows without execution policy restrictions.</p>
+
+<h2>Understanding Standard vs Elevated Privileges</h2>
+<p>Windows User Account Control (UAC) runs Command Prompt sessions in standard user context by default. Commands modifying system state, repairing file system integrity, or adjusting firewall rules require an <strong>Elevated Command Prompt</strong> (Run as Administrator):</p>
+<ul>
+    <li><strong>Standard Context:</strong> Read-only operations, user profile directory navigation, basic network reachability tests (<code>ping</code>, <code>tracert</code>).</li>
+    <li><strong>Elevated Context:</strong> Disk repair (<code>chkdsk</code>), servicing repairs (<code>sfc</code>, <code>dism</code>), network stack resets (<code>netsh</code>), and service state changes (<code>net start/stop</code>).</li>
+</ul>
+
+<h2>Filesystem Navigation & Directory Control</h2>
+<p>CMD utilizes drive letters and standard pathing syntax. Unlike Unix environments, drive letter changes require entering the drive letter directly rather than using <code>cd</code>:</p>
+
+<div class="tutorial-command">
+REM Switch from C: to D: drive
+D:
+
+REM Change directory to Windows logs folder
+cd C:\Windows\System32\winevt\Logs
+
+REM List directory contents with file size and timestamp
+dir /a /o:d
+
+REM Create a new administrative maintenance directory
+mkdir C:\Support\Diagnostics
+</div>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Command</th>
+                <th>Syntax / Arguments</th>
+                <th>Primary Administrative Purpose</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>cd</code></td>
+                <td><code>cd /d D:\Logs</code></td>
+                <td>Change directory (use <code>/d</code> to change drive and directory simultaneously)</td>
+            </tr>
+            <tr>
+                <td><code>dir</code></td>
+                <td><code>dir /a:h /s</code></td>
+                <td>Display directory contents, including hidden files and subdirectories</td>
+            </tr>
+            <tr>
+                <td><code>mkdir</code> / <code>rmdir</code></td>
+                <td><code>rmdir /s /q temp_dir</code></td>
+                <td>Create or remove directories recursively in quiet mode</td>
+            </tr>
+            <tr>
+                <td><code>del</code></td>
+                <td><code>del /f /q filename</code></td>
+                <td>Delete files with force override on read-only files</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>System Information & Process Inspection</h2>
+<p>When triaging a newly assigned server or workstation, gather operating system build details, BIOS version, memory totals, and active task lists directly:</p>
+
+<div class="tutorial-command">
+REM Display comprehensive OS build, memory, hotfixes, and NIC details
+systeminfo | findstr /B /C:"OS Name" /C:"OS Version" /C:"Total Physical Memory"
+
+REM Display active processes sorted by memory usage
+tasklist /fi "memusage gt 100000"
+
+REM Terminate an unresponsive application by process name
+taskkill /im notepad.exe /f
+</div>
+
+<h2>Network Diagnostics in CMD</h2>
+<p>CMD hosts the core networking troubleshooting tools used in day-to-day help desk and NOC operations:</p>
+<ul>
+    <li><code>ipconfig /all</code>: Displays full TCP/IP configuration including DHCP lease dates, DNS servers, and MAC addresses.</li>
+    <li><code>ipconfig /flushdns</code>: Clears the local DNS resolver cache to enforce new record lookups.</li>
+    <li><code>ping -n 4 -l 1000 8.8.8.8</code>: Tests IP reachability and detects MTU fragmentation issues.</li>
+    <li><code>tracert -d 1.1.1.1</code>: Traces router hops without performing reverse DNS lookups, speeding up path discovery.</li>
+</ul>
+
+<h2>System Health & Image Repair: SFC and DISM</h2>
+<p>When Windows experiences system file corruption or application crashes following an update, administrators deploy System File Checker and Deployment Image Servicing and Management:</p>
+
+<div class="tutorial-command">
+REM 1. Check and repair the Windows Component Store image online
+DISM.exe /Online /Cleanup-image /Restorehealth
+
+REM 2. Scan and repair protected operating system files against known good cache
+sfc /scannow
+</div>
+
+<p><em>Warning: Always execute DISM prior to SFC if corruption is suspected. SFC relies on the local Windows Component Store cache (WinSxS); if the store itself is corrupted, SFC will fail to repair affected system binaries.</em></p>
+
+<h2>Summary</h2>
+<p>Command Prompt remains a core administrative utility across Windows client and server operating systems. Mastering directory navigation, process management with <code>tasklist</code> and <code>taskkill</code>, network diagnostics with <code>ipconfig</code>, and recovery routines with <code>sfc</code> and <code>dism</code> provides immediate diagnostic leverage in enterprise troubleshooting.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

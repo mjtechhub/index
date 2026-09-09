@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Fundamentals | Cybersecurity Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Understand fundamental enterprise cybersecurity principles: the CIA Triad, Defense-in-Depth, threat actors, and common attack vectors.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/cybersecurity/cybersecurity-fundamentals.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Cybersecurity Fundamentals | Cybersecurity Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Understand fundamental enterprise cybersecurity principles: the CIA Triad, Defense-in-Depth, threat actors, and common attack vectors.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/cybersecurity/cybersecurity-fundamentals.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Cybersecurity Fundamentals | Cybersecurity Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Understand fundamental enterprise cybersecurity principles: the CIA Triad, Defense-in-Depth, threat actors, and common attack vectors.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Cybersecurity Fundamentals",
+    "description": "Understand fundamental enterprise cybersecurity principles: the CIA Triad, Defense-in-Depth, threat actors, and common attack vectors.",
+    "url": "https://themjtechhub.site/tutorials/cybersecurity/cybersecurity-fundamentals.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Beginner",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/cybersecurity/cybersecurity-fundamentals.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../cybersecurity.html">Cybersecurity</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Cybersecurity Fundamentals</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge beginner">Beginner</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 6 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Cybersecurity Fundamentals</h1>
+            <p class="tutorial-hero-desc">Understand fundamental enterprise cybersecurity principles: the CIA Triad, Defense-in-Depth, threat actors, and common attack vectors.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p><strong>Cybersecurity</strong> is the practice of protecting systems, networks, programs, and data from digital attacks, unauthorized access, corruption, or destruction. In enterprise IT, security is not an isolated product or feature; it is an overarching operational discipline integrated into every architecture decision.</p>
+
+<h2>The CIA Triad: Core Security Objectives</h2>
+<p>The foundational framework of information security is the <strong>CIA Triad</strong>. Every policy, firewall rule, encryption algorithm, and backup schedule exists to support one or more of these three pillars:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Pillar</th>
+                <th>Definition</th>
+                <th>Enterprise Defensive Implementation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Confidentiality</strong></td>
+                <td>Ensuring data is accessible only to authorized personnel and protected from eavesdropping or leaks.</td>
+                <td>TLS 1.3 encryption in transit, AES-256 encryption at rest (BitLocker), Role-Based Access Control (RBAC), Multi-Factor Authentication.</td>
+            </tr>
+            <tr>
+                <td><strong>Integrity</strong></td>
+                <td>Guaranteeing that data and system configurations remain accurate, authentic, and untampered with.</td>
+                <td>Cryptographic hashing (SHA-256), digital signatures, file integrity monitoring (FIM), database transaction logging.</td>
+            </tr>
+            <tr>
+                <td><strong>Availability</strong></td>
+                <td>Ensuring authorized users have timely, uninterrupted access to critical systems and information assets.</td>
+                <td>Redundant server hardware, load balancers, DDoS mitigation, RAID storage arrays, verified 3-2-1 backup copies.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Defense-in-Depth (Layered Security)</h2>
+<p>No single security control is 100% impenetrable. Enterprise security architectures implement <strong>Defense-in-Depth</strong>—stacking multiple defensive layers so that if an adversary bypasses one barrier, subsequent controls contain and neutralize the threat:</p>
+<ul>
+    <li><strong>Perimeter Layer:</strong> Next-Generation Firewalls (NGFW), Cloudflare/AWS DDoS protection, and external DNS filtering.</li>
+    <li><strong>Network Layer:</strong> VLAN segmentation, Internal firewalls, Network Access Control (802.1X), and encrypted site-to-site VPN tunnels.</li>
+    <li><strong>Endpoint Layer:</strong> Endpoint Detection and Response (EDR) agents, host firewalls, full disk encryption, and automated patch management.</li>
+    <li><strong>Application Layer:</strong> Web Application Firewalls (WAF), secure software development lifecycles (DevSecOps), and API authentication tokens.</li>
+    <li><strong>Data Layer:</strong> Principle of Least Privilege, database encryption, Data Loss Prevention (DLP) agents, and immutable off-site backups.</li>
+</ul>
+
+<h2>Understanding Threat Actors</h2>
+<p>Security teams model defensive strategies based on adversary profiles and capabilities:</p>
+<ul>
+    <li><strong>Cybercriminal Syndicates:</strong> Motivated by financial gain. Primary weapons include Ransomware-as-a-Service (RaaS), phishing campaigns, and wire fraud schemes.</li>
+    <li><strong>Nation-State Advanced Persistent Threats (APTs):</strong> Highly funded, patient adversaries targeting intellectual property, national infrastructure, and strategic intelligence.</li>
+    <li><strong>Insider Threats:</strong> Disgruntled employees, contractors, or careless staff who leak credentials or accidentally delete critical production data.</li>
+    <li><strong>Opportunistic Attackers:</strong> Automated scanning bots scouring public IP ranges for exposed RDP ports, default passwords, and unpatched CVE vulnerabilities.</li>
+</ul>
+
+<h2>The Security Controls Taxonomy</h2>
+<p>Security safeguards fall into three operational categories:</p>
+<ul>
+    <li><strong>Preventive Controls:</strong> Stop an attack before it succeeds (e.g., MFA, firewall rules, user access revocation).</li>
+    <li><strong>Detective Controls:</strong> Identify an ongoing or attempted security event (e.g., SIEM alerts, antivirus scans, honeypots).</li>
+    <li><strong>Corrective Controls:</strong> Remediate damage and restore operations after an incident (e.g., restoring from clean backups, rebuilding infected hosts, revoking compromised API keys).</li>
+</ul>
+
+<p><em>Note: The human element remains a primary attack surface. Over 80% of enterprise security breaches involve stolen credentials, social engineering, or phishing emails. Technical controls must always be coupled with continuous employee security awareness training.</em></p>
+
+<h2>Summary</h2>
+<p>Cybersecurity balances business productivity against operational risk. By grounding administrative practices in the CIA Triad, implementing layered Defense-in-Depth controls, and modeling realistic threat actor capabilities, IT professionals protect critical organizational assets against modern cyber threats.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

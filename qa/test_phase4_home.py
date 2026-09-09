@@ -18,12 +18,14 @@ Validates:
     * qa/phase4_home_mobile_dark.png
 """
 import asyncio
+import json
 from pathlib import Path
 from playwright.async_api import async_playwright
 
 CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
 BASE_URL = "http://localhost/index"
 QA_DIR = Path(__file__).resolve().parent
+ROOT_DIR = QA_DIR.parent
 
 async def run_phase4_tests():
     print("=" * 60)
@@ -56,7 +58,10 @@ async def run_phase4_tests():
         await page.wait_for_selector("#popular-commands-list .command-pill", timeout=5000)
         await page.wait_for_selector("#home-topics-grid .home-topic-card", timeout=5000)
 
-        # A. Statistics check (exact dynamic count 61, no +)
+        # A. Statistics check (exact dynamic count from JSON)
+        with open(ROOT_DIR / "data" / "tutorials.json", "r", encoding="utf-8") as f:
+            expected_tut_count = str(len(json.load(f)))
+
         stats = await page.evaluate("""() => {
             return {
                 tutorials: document.getElementById('stat-tutorials')?.textContent.trim(),
@@ -66,12 +71,12 @@ async def run_phase4_tests():
             };
         }""")
         test_results["stats_dynamic"] = (
-            stats["tutorials"] == "61" and
+            stats["tutorials"] == expected_tut_count and
             stats["commands"] == "12" and
             stats["topics"] == "6" and
             stats["quizzes"] == "2"
         )
-        print(f"[{'PASS' if test_results['stats_dynamic'] else 'FAIL'}] Dynamic Statistics (Exact Tutorials: {stats['tutorials']}, Commands: {stats['commands']}, Topics: {stats['topics']}, Quizzes: {stats['quizzes']})")
+        print(f"[{'PASS' if test_results['stats_dynamic'] else 'FAIL'}] Dynamic Statistics (Exact Tutorials: {stats['tutorials']} == {expected_tut_count}, Commands: {stats['commands']}, Topics: {stats['topics']}, Quizzes: {stats['quizzes']})")
 
         # Hero Assets Check (Light & Dark theme assets)
         hero_assets = await page.evaluate("""() => {

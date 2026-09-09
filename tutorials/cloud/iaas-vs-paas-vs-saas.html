@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IaaS vs PaaS vs SaaS Explained | Cloud & AI Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Compare Infrastructure as a Service (IaaS), Platform as a Service (PaaS), and Software as a Service (SaaS) with real-world examples.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/cloud/iaas-vs-paas-vs-saas.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="IaaS vs PaaS vs SaaS Explained | Cloud & AI Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Compare Infrastructure as a Service (IaaS), Platform as a Service (PaaS), and Software as a Service (SaaS) with real-world examples.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/cloud/iaas-vs-paas-vs-saas.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="IaaS vs PaaS vs SaaS Explained | Cloud & AI Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Compare Infrastructure as a Service (IaaS), Platform as a Service (PaaS), and Software as a Service (SaaS) with real-world examples.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "IaaS vs PaaS vs SaaS Explained",
+    "description": "Compare Infrastructure as a Service (IaaS), Platform as a Service (PaaS), and Software as a Service (SaaS) with real-world examples.",
+    "url": "https://themjtechhub.site/tutorials/cloud/iaas-vs-paas-vs-saas.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Beginner",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/cloud/iaas-vs-paas-vs-saas.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../cloud.html">Cloud & AI</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">IaaS vs PaaS vs SaaS Explained</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge beginner">Beginner</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 7 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">IaaS vs PaaS vs SaaS Explained</h1>
+            <p class="tutorial-hero-desc">Compare Infrastructure as a Service (IaaS), Platform as a Service (PaaS), and Software as a Service (SaaS) with real-world examples.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>Cloud computing services are organized into three primary delivery tiers known as the <strong>Cloud Service Models</strong>: <strong>Infrastructure as a Service (IaaS)</strong>, <strong>Platform as a Service (PaaS)</strong>, and <strong>Software as a Service (SaaS)</strong>. Understanding these models defines where your administrative responsibility ends and where the cloud provider's automation begins.</p>
+
+<h2>The Cloud Service Model Pyramid</h2>
+<p>Each tier provides a different level of control, flexibility, and operational abstraction:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Attribute</th>
+                <th>IaaS (Infrastructure)</th>
+                <th>PaaS (Platform)</th>
+                <th>SaaS (Software)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Primary Focus</strong></td>
+                <td>Virtual hardware and networking primitives</td>
+                <td>Application code deployment and data</td>
+                <td>Consuming end-user business software</td>
+            </tr>
+            <tr>
+                <td><strong>Customer Manages</strong></td>
+                <td>OS, middleware, runtime, apps, data, networking rules</td>
+                <td>Application source code, configurations, database data</td>
+                <td>User access, data classification, tenant settings</td>
+            </tr>
+            <tr>
+                <td><strong>Provider Manages</strong></td>
+                <td>Physical servers, hypervisors, physical network, cooling</td>
+                <td>OS patching, runtime libraries, scaling, physical servers</td>
+                <td>The entire application stack, updates, security, and hardware</td>
+            </tr>
+            <tr>
+                <td><strong>Flexibility & Control</strong></td>
+                <td><strong>Maximum</strong> (Full root/administrator OS access)</td>
+                <td><strong>Moderate</strong> (Constrained to supported runtimes)</td>
+                <td><strong>Low</strong> (Configurable only within software options)</td>
+            </tr>
+            <tr>
+                <td><strong>Enterprise Examples</strong></td>
+                <td>AWS EC2, Azure Virtual Machines, Google Compute Engine</td>
+                <td>AWS Elastic Beanstalk, Azure App Service, Google App Engine</td>
+                <td>Microsoft 365, Google Workspace, Salesforce, Zoom, Slack</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>1. Infrastructure as a Service (IaaS)</h2>
+<p>IaaS provides on-demand access to fundamental computing resources: virtual machines, raw block storage, and software-defined networks. It is the cloud equivalent of leasing a blank virtual server in a remote datacenter.</p>
+<ul>
+    <li><strong>Administrative Experience:</strong> You log in via SSH (Linux) or RDP (Windows). You are responsible for installing operating system security patches, antivirus agents, and software dependencies.</li>
+    <li><strong>Ideal Use Cases:</strong> Migrating legacy enterprise applications ("lift-and-shift"), running custom kernels, or deploying software requiring specific operating system versions.</li>
+</ul>
+
+<h2>2. Platform as a Service (PaaS)</h2>
+<p>PaaS removes the need for organizations to manage underlying virtual machines and operating systems. The cloud provider delivers a managed development and execution runtime (e.g., Node.js, Python, .NET, Java, or managed SQL databases):</p>
+<ul>
+    <li><strong>Administrative Experience:</strong> You upload your compiled application code or container image via Git or CI/CD pipelines. The cloud provider automatically provisions compute capacity, handles OS security updates, and scales container instances in response to traffic spikes.</li>
+    <li><strong>Ideal Use Cases:</strong> Web applications, microservices, REST APIs, and modern cloud-native development where developers want to focus on code rather than server administration.</li>
+</ul>
+
+<h2>3. Software as a Service (SaaS)</h2>
+<p>SaaS delivers complete, fully managed web applications directly to end users over a browser or mobile app. The underlying infrastructure, runtime, operating systems, and application code are entirely maintained by the vendor:</p>
+<ul>
+    <li><strong>Administrative Experience:</strong> Administrators manage user provisioning, single sign-on (SSO) integration, multi-factor authentication, and data retention policies through an administrative dashboard.</li>
+    <li><strong>Ideal Use Cases:</strong> Corporate email (Exchange Online/Gmail), collaboration (Teams/Slack), CRM (Salesforce), and enterprise productivity suites.</li>
+</ul>
+
+<h2>Stack Responsibility Breakdown</h2>
+<p>Compare the technological stack management across all models:</p>
+<ul>
+    <li><strong>Applications:</strong> Customer (IaaS, PaaS) | Provider (SaaS)</li>
+    <li><strong>Data:</strong> Customer (IaaS, PaaS, SaaS)</li>
+    <li><strong>Runtime & Middleware:</strong> Customer (IaaS) | Provider (PaaS, SaaS)</li>
+    <li><strong>Operating System:</strong> Customer (IaaS) | Provider (PaaS, SaaS)</li>
+    <li><strong>Virtualization & Hardware:</strong> Provider (IaaS, PaaS, SaaS)</li>
+</ul>
+
+<p><em>Tip: When evaluating cloud migrations, remember that customer data remains YOUR responsibility across all three models. In SaaS environments like Microsoft 365, vendors guarantee service availability, but you are still responsible for protecting corporate data against accidental deletion, ransomware, and insider threats using third-party backup solutions.</em></p>
+
+<h2>Summary</h2>
+<p>Choosing between IaaS, PaaS, and SaaS balances operational control against administrative management overhead. IaaS offers total infrastructure control at the cost of manual patching; PaaS streamlines application deployment by abstracting servers; SaaS delivers turnkey business productivity with zero infrastructure maintenance.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

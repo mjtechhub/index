@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerShell Fundamentals for Administrators | Windows Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn how object-oriented pipelines, verb-noun cmdlet syntax, and provider drives empower modern enterprise Windows management.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/windows/powershell-fundamentals-for-administrators.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="PowerShell Fundamentals for Administrators | Windows Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn how object-oriented pipelines, verb-noun cmdlet syntax, and provider drives empower modern enterprise Windows management.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/windows/powershell-fundamentals-for-administrators.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="PowerShell Fundamentals for Administrators | Windows Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn how object-oriented pipelines, verb-noun cmdlet syntax, and provider drives empower modern enterprise Windows management.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "PowerShell Fundamentals for Administrators",
+    "description": "Learn how object-oriented pipelines, verb-noun cmdlet syntax, and provider drives empower modern enterprise Windows management.",
+    "url": "https://themjtechhub.site/tutorials/windows/powershell-fundamentals-for-administrators.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/windows/powershell-fundamentals-for-administrators.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../windows.html">Windows</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">PowerShell Fundamentals for Administrators</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 8 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">PowerShell Fundamentals for Administrators</h1>
+            <p class="tutorial-hero-desc">Learn how object-oriented pipelines, verb-noun cmdlet syntax, and provider drives empower modern enterprise Windows management.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p><strong>Windows PowerShell</strong> is a task-based command-line shell and scripting language designed specifically for system administrators. Unlike traditional text-based shells (such as CMD or Bash) where outputs are streams of raw characters that require regex parsing, PowerShell passes structured <strong>.NET objects</strong> through its execution pipeline.</p>
+
+<h2>The Object Pipeline Concept</h2>
+<p>In traditional shells, command output is plain text. To extract a specific column, administrators must manipulate text strings using tools like <code>awk</code>, <code>sed</code>, or <code>findstr</code>. In PowerShell, every command outputs rich objects containing strongly-typed properties and methods.</p>
+<p>For example, when running <code>Get-Service</code>, PowerShell does not return text columns; it returns a collection of <code>System.ServiceProcess.ServiceController</code> objects. You can directly inspect, filter, or invoke actions on these objects without string manipulation:</p>
+
+<div class="tutorial-command">
+# Filter services where Status property equals 'Running'
+Get-Service | Where-Object Status -eq 'Running' | Select-Object -Property Name, DisplayName, StartType
+</div>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Command Prompt (CMD)</th>
+                <th>Windows PowerShell</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Data Type</strong></td>
+                <td>Raw ASCII / Unicode Text strings</td>
+                <td>Rich .NET structured objects</td>
+            </tr>
+            <tr>
+                <td><strong>Syntax Pattern</strong></td>
+                <td>Inconsistent legacy parameters (<code>/a</code>, <code>-s</code>)</td>
+                <td>Standardized <code>Verb-Noun</code> pattern</td>
+            </tr>
+            <tr>
+                <td><strong>Pipeline Handling</strong></td>
+                <td>Streams characters; requires parsing</td>
+                <td>Streams objects; preserves properties and data types</td>
+            </tr>
+            <tr>
+                <td><strong>Extensibility</strong></td>
+                <td>External binaries and batch files</td>
+                <td>PowerShell modules, .NET classes, REST APIs</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>The Verb-Noun Cmdlet Structure</h2>
+<p>PowerShell commands (cmdlets) follow a strict <code>Verb-Noun</code> naming convention. Microsoft maintains an approved list of verbs to ensure semantic consistency across modules:</p>
+<ul>
+    <li><code>Get</code>: Retrieves an object or data without modifying state (e.g., <code>Get-Process</code>, <code>Get-LocalUser</code>).</li>
+    <li><code>Set</code>: Modifies an existing configuration or resource (e.g., <code>Set-Service -Name Spooler -StartupType Disabled</code>).</li>
+    <li><code>New</code>: Creates a new resource (e.g., <code>New-Item -ItemType Directory -Path "C:\Scripts"</code>).</li>
+    <li><code>Remove</code>: Deletes a resource (e.g., <code>Remove-Item -Path "C:\Temp\old.log"</code>).</li>
+    <li><code>Start / Stop / Restart</code>: Controls operational lifecycle (e.g., <code>Restart-Service -Name W32Time</code>).</li>
+</ul>
+
+<h2>Self-Discovery: Get-Help, Get-Command, and Get-Member</h2>
+<p>PowerShell is designed to be self-documenting. Three core cmdlets allow administrators to discover syntax, discover available tools, and inspect object properties without external documentation:</p>
+
+<div class="tutorial-command">
+# 1. Find all cmdlets managing IP configuration
+Get-Command -Noun *IPConfiguration*
+
+# 2. View documentation and usage examples for a cmdlet
+Get-Help Test-NetConnection -Examples
+
+# 3. Inspect all properties and callable methods on an object
+Get-Process -Name explorer | Get-Member
+</div>
+
+<h2>Working with PowerShell Providers and PSDrives</h2>
+<p>PowerShell treats diverse hierarchical data stores like traditional filesystem drives. Using <strong>PSProviders</strong>, administrators navigate the Windows Registry, certificate stores, and environment variables using familiar commands like <code>cd</code> (Set-Location) and <code>dir</code> (Get-ChildItem):</p>
+
+<div class="tutorial-command">
+# View all active PowerShell drives
+Get-PSDrive
+
+# Navigate into the HKEY_LOCAL_MACHINE registry hive
+Set-Location -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion
+
+# List registry keys and values in this location
+Get-ItemProperty -Path .
+</div>
+
+<h2>Essential Administrator Workflows</h2>
+<p>Here are high-frequency enterprise administration commands executed during system provisioning and troubleshooting:</p>
+
+<div class="tutorial-command">
+# Test remote port connectivity (modern alternative to telnet)
+Test-NetConnection -ComputerName "dc01.corp.local" -Port 389
+
+# Identify the top 5 memory-consuming processes
+Get-Process | Sort-Object -Property WorkingSet64 -Descending | Select-Object -First 5 -Property Name, Id, @{{Name="Memory(MB)";Expression={{[math]::Round($_.WorkingSet64 / 1MB, 2)}}}}
+
+# Query system event log for recent disk errors
+Get-WinEvent -FilterHashtable @{{LogName="System"; Level=2; ProviderName="disk"}} -MaxEvents 10
+</div>
+
+<p><em>Note: Windows 10/11 and Windows Server include Windows PowerShell 5.1 built-in. Modern enterprise environments increasingly adopt PowerShell 7 (pwsh), which runs cross-platform on .NET Core, offering enhanced performance and parallel pipeline processing via ForEach-Object -Parallel.</em></p>
+
+<h2>Summary</h2>
+<p>PowerShell transforms Windows system administration from repetitive GUI interactions into repeatable, automated pipelines. By mastering Verb-Noun cmdlet discovery, object filtering with <code>Where-Object</code>, and provider-based navigation, engineers gain complete programmatic control over enterprise environments.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

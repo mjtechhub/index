@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Operating System Fundamentals | Linux Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Explore the open-source Linux operating system architecture, the monolithic kernel, system libraries, shells, and enterprise distributions.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/linux/linux-operating-system-fundamentals.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Linux Operating System Fundamentals | Linux Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Explore the open-source Linux operating system architecture, the monolithic kernel, system libraries, shells, and enterprise distributions.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/linux/linux-operating-system-fundamentals.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Linux Operating System Fundamentals | Linux Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Explore the open-source Linux operating system architecture, the monolithic kernel, system libraries, shells, and enterprise distributions.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Linux Operating System Fundamentals",
+    "description": "Explore the open-source Linux operating system architecture, the monolithic kernel, system libraries, shells, and enterprise distributions.",
+    "url": "https://themjtechhub.site/tutorials/linux/linux-operating-system-fundamentals.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Beginner",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/linux/linux-operating-system-fundamentals.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../linux.html">Linux</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Linux Operating System Fundamentals</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge beginner">Beginner</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 6 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Linux Operating System Fundamentals</h1>
+            <p class="tutorial-hero-desc">Explore the open-source Linux operating system architecture, the monolithic kernel, system libraries, shells, and enterprise distributions.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p><strong>Linux</strong> is a family of open-source Unix-like operating systems based on the Linux kernel, first released by Linus Torvalds in 1991. Today, Linux powers the overwhelming majority of public cloud infrastructure, enterprise servers, supercomputers, and containerized microservices worldwide.</p>
+
+<h2>The Anatomy of a Linux Distribution</h2>
+<p>When people refer to "Linux," they are usually referring to a <strong>GNU/Linux Distribution (distro)</strong>. A complete operating system combines several independent layers:</p>
+<ul>
+    <li><strong>The Linux Kernel:</strong> The core program that directly controls physical CPU scheduling, virtual memory management, device drivers, and network socket operations.</li>
+    <li><strong>GNU System Utilities:</strong> Foundational command-line tools (such as <code>ls</code>, <code>cat</code>, <code>cp</code>, <code>grep</code>) and the standard C library (<code>glibc</code>) providing system call wrappers.</li>
+    <li><strong>Init System & Service Manager:</strong> The parent process (PID 1), predominantly <code>systemd</code> in modern distros, responsible for bootstrapping the userspace and supervising daemons.</li>
+    <li><strong>Shell Interface:</strong> Command interpreter (typically <code>bash</code>, <code>zsh</code>, or <code>sh</code>) allowing users to interact with the system via terminal or automated scripts.</li>
+    <li><strong>Package Manager:</strong> Software installation and dependency resolution tools (e.g., <code>apt</code>, <code>dnf</code>, <code>pacman</code>).</li>
+</ul>
+
+<h2>Monolithic Kernel vs User Space</h2>
+<p>The Linux kernel follows a <strong>monolithic architecture</strong>. In contrast to microkernels where drivers and filesystems run as isolated user processes, core Linux subsystems run inside a single privileged address space for maximum execution speed:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Component</th>
+                <th>Execution Domain</th>
+                <th>Primary Function</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Hardware</strong></td>
+                <td>Physical Layer</td>
+                <td>CPU, RAM, Storage Controllers, NICs</td>
+            </tr>
+            <tr>
+                <td><strong>Linux Kernel</strong></td>
+                <td>Kernel Space (Ring 0)</td>
+                <td>Process scheduler, memory manager, VFS, network stack</td>
+            </tr>
+            <tr>
+                <td><strong>Loadable Kernel Modules (LKM)</strong></td>
+                <td>Kernel Space (Ring 0)</td>
+                <td>Dynamically inserted hardware drivers and network filters (iptables/nftables)</td>
+            </tr>
+            <tr>
+                <td><strong>System Calls (syscalls)</strong></td>
+                <td>Boundary Interface</td>
+                <td>Controlled gateway (read, write, open, fork) bridging User to Kernel space</td>
+            </tr>
+            <tr>
+                <td><strong>User Applications & Daemons</strong></td>
+                <td>User Space (Ring 3)</td>
+                <td>Web servers (nginx), databases (PostgreSQL), SSH daemon (sshd), shells</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Major Enterprise Distribution Families</h2>
+<p>Enterprise Linux deployments predominantly cluster around two primary packaging and release paradigms:</p>
+<ul>
+    <li><strong>Debian Family (Debian, Ubuntu LTS):</strong> Utilizes the <code>.deb</code> package format and the <code>apt</code> package manager. Renowned for massive package repositories and predictable Long-Term Support (LTS) release cadence.</li>
+    <li><strong>Red Hat Family (RHEL, Rocky Linux, AlmaLinux, Fedora):</strong> Utilizes the <code>.rpm</code> format and <code>dnf</code> / <code>yum</code> package managers. Favored in corporate datacenters requiring strict enterprise compliance, SELinux security policies, and vendor support contracts.</li>
+    <li><strong>SUSE Family (SLES, openSUSE):</strong> Enterprise distribution widely used in mission-critical SAP infrastructure, leveraging <code>zypper</code> and YaST.</li>
+</ul>
+
+<h2>Basic System Identification Commands</h2>
+<p>To inspect your running kernel version, hardware architecture, and distribution details, run the following commands:</p>
+
+<div class="tutorial-command">
+# Inspect the Linux kernel release and architecture
+uname -r -m
+
+# Inspect distribution identity, release version, and codename
+cat /etc/os-release
+
+# Inspect currently loaded dynamic kernel modules
+lsmod | head -n 10
+</div>
+
+<p><em>Note: Linux kernel versions follow a Major.Minor.Patch convention (e.g., 6.8.0-40-generic). Enterprise distributions often backport security patches into older, proven kernel versions to guarantee binary compatibility across years of deployment.</em></p>
+
+<h2>Summary</h2>
+<p>Linux combines a modular monolithic kernel with open-source GNU userland utilities and systemd process supervision. Whether managing Ubuntu servers in AWS or RHEL hypervisors in an on-premises datacenter, understanding how system calls connect user programs to kernel hardware controls is foundational to Linux system administration.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

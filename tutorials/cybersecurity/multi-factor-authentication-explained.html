@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Factor Authentication (MFA) Explained | Cybersecurity Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Explore how Multi-Factor Authentication works, factor types, OTP vs push notifications, FIDO2/WebAuthn, and MFA bypass prevention.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/cybersecurity/multi-factor-authentication-explained.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Multi-Factor Authentication (MFA) Explained | Cybersecurity Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Explore how Multi-Factor Authentication works, factor types, OTP vs push notifications, FIDO2/WebAuthn, and MFA bypass prevention.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/cybersecurity/multi-factor-authentication-explained.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Multi-Factor Authentication (MFA) Explained | Cybersecurity Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Explore how Multi-Factor Authentication works, factor types, OTP vs push notifications, FIDO2/WebAuthn, and MFA bypass prevention.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Multi-Factor Authentication (MFA) Explained",
+    "description": "Explore how Multi-Factor Authentication works, factor types, OTP vs push notifications, FIDO2/WebAuthn, and MFA bypass prevention.",
+    "url": "https://themjtechhub.site/tutorials/cybersecurity/multi-factor-authentication-explained.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/cybersecurity/multi-factor-authentication-explained.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../cybersecurity.html">Cybersecurity</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Multi-Factor Authentication (MFA) Explained</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 7 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Multi-Factor Authentication (MFA) Explained</h1>
+            <p class="tutorial-hero-desc">Explore how Multi-Factor Authentication works, factor types, OTP vs push notifications, FIDO2/WebAuthn, and MFA bypass prevention.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p><strong>Multi-Factor Authentication (MFA)</strong> is a security mechanism that requires a user to provide two or more independent authentication factors before being granted access to an application, account, or network resource. Enforcing MFA is single-handedly the most effective control for neutralizing credential theft and automated account takeover attacks.</p>
+
+<h2>Why Passwords Alone Are Obsolete</h2>
+<p>Traditional single-factor authentication (passwords) fails against modern adversary capabilities:</p>
+<ul>
+    <li><strong>Credential Stuffing:</strong> Automated bots test billions of leaked username/password pairs stolen from third-party breaches across corporate portals.</li>
+    <li><strong>Phishing Campaigns:</strong> Sophisticated adversary-in-the-middle (AiTM) reverse proxies trick users into entering passwords on deceptive spoofed login pages.</li>
+    <li><strong>Keylogging & Infostealers:</strong> Endpoint malware intercepts keystrokes and extracts browser-cached credentials silently.</li>
+</ul>
+<p>By requiring a second factor from a physically separate channel, stolen passwords become useless to an attacker without concurrent physical access to the secondary authenticator.</p>
+
+<h2>MFA Methods Ranked by Security Strength</h2>
+<p>Not all MFA implementations offer equal protection. Security architectures must understand the resistance of each method to phishing and interception:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>MFA Method</th>
+                <th>Underlying Technology</th>
+                <th>Phishing Resistance</th>
+                <th>Enterprise Evaluation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>SMS / Voice OTP</strong></td>
+                <td>Cellular SMS delivery of 6-digit numeric codes</td>
+                <td><strong>Vulnerable</strong> (Low)</td>
+                <td>Vulnerable to SIM swapping attacks, SS7 cellular interception, and plain text relaying. Minimum acceptable fallback only.</td>
+            </tr>
+            <tr>
+                <td><strong>Time-Based OTP (TOTP)</strong></td>
+                <td>RFC 6238 shared secret HMAC algorithm (Google / Microsoft Authenticator)</td>
+                <td><strong>Moderate</strong></td>
+                <td>Generates dynamic 6-digit codes refreshing every 30 seconds. Stronger than SMS, but still vulnerable to real-time AiTM phishing proxies.</td>
+            </tr>
+            <tr>
+                <td><strong>Push Notification with Number Matching</strong></td>
+                <td>Encrypted mobile push notification requiring matching a 2-digit number shown on screen</td>
+                <td><strong>High</strong></td>
+                <td>Neutralizes accidental approvals and MFA fatigue attacks by requiring the user to physically read and enter matching numbers.</td>
+            </tr>
+            <tr>
+                <td><strong>FIDO2 / WebAuthn Hardware Keys</strong></td>
+                <td>Public-key cryptography tied to origin domain (YubiKey, Windows Hello)</td>
+                <td><strong>Phishing-Resistant</strong> (Maximum)</td>
+                <td>Cryptographically signs challenge using private key stored inside tamper-resistant hardware. Immune to phishing because the browser verifies domain identity.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>How TOTP Algorithms Work (RFC 6238)</h2>
+<p>Time-based One-Time Password (TOTP) applications do not require an active internet connection on your phone to generate codes. Here is the mathematical process:</p>
+<ol>
+    <li>During setup, the server generates a random cryptographic secret key (encoded in a QR code) and shares it with the authenticator app.</li>
+    <li>Both the server and the app take the current Unix epoch time divided into 30-second windows (Time Step: <code>T = floor(Epoch / 30)</code>).</li>
+    <li>Both calculate an HMAC-SHA1 hash combining the secret key and the time step.</li>
+    <li>The resulting hash is truncated to generate an identical 6-digit code on both devices simultaneously.</li>
+</ol>
+
+<h2>Combating Modern MFA Attacks</h2>
+<p>As organizations mandate MFA, attackers have evolved techniques to bypass secondary factors:</p>
+<ul>
+    <li><strong>MFA Prompt Bombing (Push Fatigue):</strong> Attackers send dozens of login push notifications at 2:00 AM until an exasperated employee taps "Approve" simply to silence their phone. <em>Defense: Enforce Number Matching and disable simple binary approve/deny prompts.</em></li>
+    <li><strong>Adversary-in-the-Middle (AiTM) Phishing:</strong> Reverse-proxy phishing kits (e.g., Evilginx) intercept both the user's password and the valid TOTP code in real time, capturing the final authenticated session cookie. <em>Defense: Mandate FIDO2/WebAuthn phishing-resistant credentials.</em></li>
+    <li><strong>Session Cookie Hijacking:</strong> Stealing valid session tokens directly from local browser storage via infostealer malware. <em>Defense: Enforce Conditional Access policies checking device compliance and continuous token binding.</em></li>
+</ul>
+
+<p><em>Warning: Avoid using SMS as your primary MFA method for administrative or financial accounts. Mobile carriers remain vulnerable to SIM-swap social engineering, allowing attackers to redirect text messages to adversary-controlled phones within minutes.</em></p>
+
+<h2>Summary</h2>
+<p>Multi-Factor Authentication is an essential defensive control that renders stolen passwords ineffective. By transitioning away from insecure SMS verification toward mobile push notifications with number matching and hardware-backed FIDO2 security keys, organizations build resilient, phishing-resistant identity architectures.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

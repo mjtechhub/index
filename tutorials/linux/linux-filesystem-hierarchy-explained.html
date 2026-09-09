@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Filesystem Hierarchy Explained | Linux Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Demystify the Linux Filesystem Hierarchy Standard (FHS), covering /, /etc, /var, /home, /dev, /proc, and virtual filesystems.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/linux/linux-filesystem-hierarchy-explained.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Linux Filesystem Hierarchy Explained | Linux Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Demystify the Linux Filesystem Hierarchy Standard (FHS), covering /, /etc, /var, /home, /dev, /proc, and virtual filesystems.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/linux/linux-filesystem-hierarchy-explained.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Linux Filesystem Hierarchy Explained | Linux Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Demystify the Linux Filesystem Hierarchy Standard (FHS), covering /, /etc, /var, /home, /dev, /proc, and virtual filesystems.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Linux Filesystem Hierarchy Explained",
+    "description": "Demystify the Linux Filesystem Hierarchy Standard (FHS), covering /, /etc, /var, /home, /dev, /proc, and virtual filesystems.",
+    "url": "https://themjtechhub.site/tutorials/linux/linux-filesystem-hierarchy-explained.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Beginner",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/linux/linux-filesystem-hierarchy-explained.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../linux.html">Linux</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Linux Filesystem Hierarchy Explained</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge beginner">Beginner</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 7 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Linux Filesystem Hierarchy Explained</h1>
+            <p class="tutorial-hero-desc">Demystify the Linux Filesystem Hierarchy Standard (FHS), covering /, /etc, /var, /home, /dev, /proc, and virtual filesystems.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>Unlike Windows, which assigns separate drive letters (such as <code>C:</code> or <code>D:</code>) to physical partitions, Linux organizes all files and storage devices into a single unified inverted tree structure starting from the root directory: <code>/</code>. This standardized structure is codified by the <strong>Filesystem Hierarchy Standard (FHS)</strong>.</p>
+
+<h2>The "Everything Is a File" Philosophy</h2>
+<p>A central design tenet of Unix and Linux is that system resources are presented as files. Physical hard drives, terminal connections, network sockets, process memory tables, and hardware sensors are all accessible through standard filesystem paths using standard I/O system calls (<code>open</code>, <code>read</code>, <code>write</code>, <code>close</code>).</p>
+
+<h2>Key Directory Breakdown</h2>
+<p>Every standard Linux installation arranges core files into dedicated top-level directories according to their lifecycle, mutability, and sharing capabilities:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Directory</th>
+                <th>Primary Purpose</th>
+                <th>Administrator Examples</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>/</code></td>
+                <td>Root directory; the anchor of the entire filesystem tree</td>
+                <td>All paths originate here</td>
+            </tr>
+            <tr>
+                <td><code>/bin</code>, <code>/sbin</code></td>
+                <td>Essential binary executables (often symlinked to <code>/usr/bin</code>)</td>
+                <td><code>/bin/ls</code>, <code>/sbin/ip</code>, <code>/sbin/fdisk</code></td>
+            </tr>
+            <tr>
+                <td><code>/etc</code></td>
+                <td>Host-specific system configuration files</td>
+                <td><code>/etc/ssh/sshd_config</code>, <code>/etc/hosts</code>, <code>/etc/fstab</code></td>
+            </tr>
+            <tr>
+                <td><code>/var</code></td>
+                <td>Variable data that changes continuously during runtime</td>
+                <td><code>/var/log/syslog</code>, <code>/var/spool/cron</code>, <code>/var/lib/docker</code></td>
+            </tr>
+            <tr>
+                <td><code>/home</code></td>
+                <td>User personal directories and environment configurations</td>
+                <td><code>/home/john/.ssh/authorized_keys</code></td>
+            </tr>
+            <tr>
+                <td><code>/root</code></td>
+                <td>Home directory for the root superuser account</td>
+                <td>Isolated from <code>/home</code> so root can log in even if <code>/home</code> is unmounted</td>
+            </tr>
+            <tr>
+                <td><code>/dev</code></td>
+                <td>Device nodes representing hardware peripherals</td>
+                <td><code>/dev/sda</code> (disk), <code>/dev/nvme0n1</code> (NVMe drive), <code>/dev/urandom</code></td>
+            </tr>
+            <tr>
+                <td><code>/proc</code></td>
+                <td>Pseudo-filesystem reflecting kernel state and running processes</td>
+                <td><code>/proc/cpuinfo</code>, <code>/proc/meminfo</code>, <code>/proc/[PID]/cmdline</code></td>
+            </tr>
+            <tr>
+                <td><code>/sys</code></td>
+                <td>Kernel pseudo-filesystem exposing hardware device parameters</td>
+                <td><code>/sys/class/net/eth0/operstate</code></td>
+            </tr>
+            <tr>
+                <td><code>/tmp</code></td>
+                <td>Temporary storage cleared on system reboot</td>
+                <td>Scratch files, temporary installation archives</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Virtual Filesystems: /proc and /sys</h2>
+<p>Directories such as <code>/proc</code> and <code>/sys</code> do not occupy space on your hard drive. They are <strong>virtual filesystems</strong> dynamically generated in RAM by the Linux kernel. When you read a file inside <code>/proc</code>, the kernel intercepts the read request and generates formatted real-time telemetry:</p>
+
+<div class="tutorial-command">
+# View real-time CPU specifications directly from the kernel
+cat /proc/cpuinfo | grep "model name" | head -n 1
+
+# View system RAM utilization
+cat /proc/meminfo | head -n 5
+
+# Inspect the command line arguments of process PID 1 (systemd)
+cat /proc/1/cmdline
+</div>
+
+<h2>Storage Mounting and the /etc/fstab File</h2>
+<p>In Linux, storage devices are made accessible by attaching them to an empty directory known as a <strong>Mount Point</strong>. The <code>/etc/fstab</code> (File Systems Table) file defines which partitions automatically mount at boot time:</p>
+
+<div class="tutorial-command">
+# View all active disk partitions and mount points
+lsblk -f
+
+# Check filesystem disk space utilization in human-readable format
+df -h
+</div>
+
+<p><em>Warning: Never edit /etc/fstab without testing syntax using mount -a beforehand. A syntax error or missing UUID in /etc/fstab can cause the system to drop into an emergency maintenance shell during reboot.</em></p>
+
+<h2>Summary</h2>
+<p>The Linux filesystem hierarchy organizes static executables, dynamic system configurations in <code>/etc</code>, variable log telemetry in <code>/var</code>, and kernel virtual structures in <code>/proc</code> into a clean, predictable structure. Understanding the FHS ensures administrators can locate configuration files, diagnose mounting failures, and safely manage enterprise storage.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

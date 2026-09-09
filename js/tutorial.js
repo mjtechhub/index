@@ -452,7 +452,7 @@
 
         // B. Canonical "Back to Category" Action
         const catSlug = (tut.category || 'networking').toLowerCase().trim();
-        const catUrl = catSlug === 'cloud' || catSlug === 'cloud-ai' ? 'cloud.html' : `${catSlug}.html`;
+        const catUrl = catSlug.includes('cloud') ? 'cloud.html' : `${catSlug}.html`;
 
         const backWrap = document.createElement('div');
         backWrap.className = 'tutorial-back-category';

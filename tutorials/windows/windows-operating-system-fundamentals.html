@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Operating System Fundamentals | Windows Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Understand the core architecture of Microsoft Windows, including user mode, kernel mode, the NT executive, and system processes.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/windows/windows-operating-system-fundamentals.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Windows Operating System Fundamentals | Windows Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Understand the core architecture of Microsoft Windows, including user mode, kernel mode, the NT executive, and system processes.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/windows/windows-operating-system-fundamentals.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Windows Operating System Fundamentals | Windows Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Understand the core architecture of Microsoft Windows, including user mode, kernel mode, the NT executive, and system processes.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Windows Operating System Fundamentals",
+    "description": "Understand the core architecture of Microsoft Windows, including user mode, kernel mode, the NT executive, and system processes.",
+    "url": "https://themjtechhub.site/tutorials/windows/windows-operating-system-fundamentals.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Beginner",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/windows/windows-operating-system-fundamentals.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../windows.html">Windows</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Windows Operating System Fundamentals</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge beginner">Beginner</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 6 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Windows Operating System Fundamentals</h1>
+            <p class="tutorial-hero-desc">Understand the core architecture of Microsoft Windows, including user mode, kernel mode, the NT executive, and system processes.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>The <strong>Microsoft Windows</strong> operating system is built on a preemptive, reentrant, modular architecture developed from the Windows NT kernel. For system administrators, understanding the boundary between user applications and low-level kernel routines is critical when troubleshooting performance bottlenecks, blue screens (BSODs), and driver failures.</p>
+
+<h2>User Mode vs Kernel Mode Architecture</h2>
+<p>Windows enforces a hardware-backed security boundary separating unprivileged application execution from direct hardware access. The CPU operates in two distinct privilege states:</p>
+<ul>
+    <li><strong>User Mode (Ring 3):</strong> User applications, background services, and graphical shells run in isolated virtual address spaces. If an application crashes or generates an unhandled exception, it cannot corrupt memory belonging to other processes or the operating system kernel.</li>
+    <li><strong>Kernel Mode (Ring 0):</strong> The core operating system code, Device Drivers, Hardware Abstraction Layer (HAL), and the Windows NT Executive execute in a single shared address space with complete access to physical memory and CPU instruction sets. A fatal crash in kernel mode results in a system halt (BugCheck).</li>
+</ul>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Attribute</th>
+                <th>User Mode (Ring 3)</th>
+                <th>Kernel Mode (Ring 0)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Direct Hardware Access</strong></td>
+                <td>Restricted via system call APIs</td>
+                <td>Direct, unrestricted hardware access</td>
+            </tr>
+            <tr>
+                <td><strong>Memory Space</strong></td>
+                <td>Private 2GB/8TB virtual address space per process</td>
+                <td>Shared single system virtual address space</td>
+            </tr>
+            <tr>
+                <td><strong>Failure Impact</strong></td>
+                <td>Process termination only; OS remains stable</td>
+                <td>System crash (Blue Screen of Death / BSOD)</td>
+            </tr>
+            <tr>
+                <td><strong>Key Components</strong></td>
+                <td>Explorer.exe, Win32 apps, Windows services</td>
+                <td>ntoskrnl.exe, HAL.dll, hardware drivers</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>The Windows NT Executive & HAL</h2>
+<p>Kernel mode is divided into several foundational subsystems:</p>
+<ul>
+    <li><strong>Hardware Abstraction Layer (HAL):</strong> A low-level dynamic-link library (<code>hal.dll</code>) that isolates the kernel from differences in motherboard chipsets, CPU instruction extensions, and bus implementations.</li>
+    <li><strong>The Kernel:</strong> Manages thread scheduling, CPU dispatching, multi-core synchronization, and hardware interrupt handling.</li>
+    <li><strong>The NT Executive:</strong> Contains core subsystem managers including the Memory Manager (virtual paging), Object Manager (handles and securable objects), Process Manager, and I/O Manager (managing file and storage drivers).</li>
+</ul>
+
+<h2>Critical Core System Processes</h2>
+<p>When Windows boots, a deterministic chain of native system processes initializes before user logons are permitted:</p>
+<ul>
+    <li><strong>System Idle Process:</strong> Represents unused CPU cycles; when running, it instructs the processor to enter power-saving C-states.</li>
+    <li><strong>System (PID 4):</strong> The container for kernel-mode worker threads executing asynchronous background routines.</li>
+    <li><strong>smss.exe (Session Manager Subsystem):</strong> The first user-mode process created. It configures virtual memory paging files, launches the graphical subsystem (<code>win32k.sys</code>), and spawns <code>csrss.exe</code> and <code>wininit.exe</code>.</li>
+    <li><strong>csrss.exe (Client/Server Runtime Subsystem):</strong> Manages Win32 console windows and process creation/deletion.</li>
+    <li><strong>wininit.exe:</strong> Initializes the secure Windows security infrastructure, spawning the Service Control Manager and Local Security Authority.</li>
+    <li><strong>services.exe:</strong> The Service Control Manager (SCM), responsible for starting, stopping, and monitoring automatic background services.</li>
+    <li><strong>lsass.exe:</strong> The Local Security Authority Subsystem Service, enforcing local security policy, password verification, and authentication token generation (Kerberos/NTLM).</li>
+</ul>
+
+<p><em>Important: The lsass.exe process is frequently targeted by credential dumping tools like Mimikatz. Enterprise Windows configurations must enforce LSA Protection (RunAsPPL) and Credential Guard to prevent unprivileged memory injection.</em></p>
+
+<h2>Administrator Inspection Tools</h2>
+<p>Administrators should leverage built-in and Sysinternals utilities to inspect process parentage, memory allocation, and thread stacks:</p>
+
+<div class="tutorial-command">
+REM Query running system processes with PID and session ID in CMD
+tasklist /fo table /v | findstr /i "smss csrss lsass services"
+</div>
+
+<p>For deeper thread analysis, Microsoft Sysinternals <strong>Process Explorer</strong> displays a visual process tree showing exact child-parent relationships, verifying that <code>csrss.exe</code> and <code>lsass.exe</code> originate only from authentic parent processes.</p>
+
+<h2>Summary</h2>
+<p>Windows achieves enterprise reliability by strictly segregating User Mode applications from Kernel Mode hardware execution. Understanding the role of the HAL, the NT Executive, and foundational system processes like <code>lsass.exe</code> and <code>services.exe</code> enables IT professionals to diagnose application hangs, detect malicious process masquerading, and analyze system stability with confidence.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

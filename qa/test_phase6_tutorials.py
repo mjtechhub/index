@@ -132,8 +132,9 @@ def audit_raw_static_seo():
     meta_by_name = {Path(t["url"]).name: t for t in tuts_meta}
     tut_files = sorted(list(TUTS_DIR.glob("*.html")))
 
+    networking_meta = [t for t in tuts_meta if t.get("category") == "Networking"]
     assert len(tut_files) == 61, f"Expected 61 tutorial files, found {len(tut_files)}"
-    assert len(tuts_meta) == 61, f"Expected 61 entries in tutorials.json, found {len(tuts_meta)}"
+    assert len(networking_meta) == 61, f"Expected 61 networking entries in tutorials.json, found {len(networking_meta)}"
 
     seo_failures = []
     h1_failures = []
@@ -354,10 +355,14 @@ async def run_phase6_browser_tests():
         print(f"[{'PASS' if test_results['mid_prev_next'] else 'FAIL'}] Middle Tutorial: Prev='{mid_nav['prevTitle']}', Next='{mid_nav['nextTitle']}'")
 
         # -------------------------------------------------------------
-        # Test 3: Last Tutorial in Canonical Order (enterprise-network-troubleshooting-case-studies.html)
+        # Test 3: Last Tutorial in Canonical Order
         # -------------------------------------------------------------
-        print("\n--- Test 3: Last Tutorial in Canonical Order (enterprise-network-troubleshooting-case-studies.html) ---")
-        await page.goto(f"{BASE_URL}/tutorials/networking/enterprise-network-troubleshooting-case-studies.html", wait_until="networkidle")
+        with open(TUTS_JSON_PATH, "r", encoding="utf-8") as f:
+            all_tuts = json.load(f)
+        last_tut = all_tuts[-1]
+        last_tut_url = f"{BASE_URL}/{last_tut['url'].replace('./', '')}"
+        print(f"\n--- Test 3: Last Tutorial in Canonical Order ({last_tut['id']}) ---")
+        await page.goto(last_tut_url, wait_until="networkidle")
         await page.wait_for_selector(".tutorial-footer-section", timeout=5000)
 
         last_nav = await page.evaluate("""() => {

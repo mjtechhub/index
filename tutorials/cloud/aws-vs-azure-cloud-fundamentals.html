@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS vs Azure Cloud Fundamentals | Cloud & AI Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="A comprehensive architectural comparison between Amazon Web Services (AWS) and Microsoft Azure for enterprise IT professionals.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/cloud/aws-vs-azure-cloud-fundamentals.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="AWS vs Azure Cloud Fundamentals | Cloud & AI Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="A comprehensive architectural comparison between Amazon Web Services (AWS) and Microsoft Azure for enterprise IT professionals.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/cloud/aws-vs-azure-cloud-fundamentals.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AWS vs Azure Cloud Fundamentals | Cloud & AI Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="A comprehensive architectural comparison between Amazon Web Services (AWS) and Microsoft Azure for enterprise IT professionals.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "AWS vs Azure Cloud Fundamentals",
+    "description": "A comprehensive architectural comparison between Amazon Web Services (AWS) and Microsoft Azure for enterprise IT professionals.",
+    "url": "https://themjtechhub.site/tutorials/cloud/aws-vs-azure-cloud-fundamentals.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/cloud/aws-vs-azure-cloud-fundamentals.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../cloud.html">Cloud & AI</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">AWS vs Azure Cloud Fundamentals</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 8 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">AWS vs Azure Cloud Fundamentals</h1>
+            <p class="tutorial-hero-desc">A comprehensive architectural comparison between Amazon Web Services (AWS) and Microsoft Azure for enterprise IT professionals.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p><strong>Amazon Web Services (AWS)</strong> and <strong>Microsoft Azure</strong> are the two dominant public cloud hyperscalers powering global enterprise infrastructure. While both platforms offer comparable compute, storage, networking, and identity capabilities, understanding their naming conventions, architecture patterns, and enterprise strengths is essential for modern IT professionals.</p>
+
+<h2>Market Positioning and Enterprise Focus</h2>
+<ul>
+    <li><strong>Amazon Web Services (AWS):</strong> The pioneer of modern public cloud infrastructure, launched in 2006. Known for high developer adoption, massive service breadth, modular Unix-friendly primitives, and extensive open-source community support.</li>
+    <li><strong>Microsoft Azure:</strong> Launched in 2010. Deeply entrenched in corporate enterprise environments due to seamless native integration with Active Directory (Microsoft Entra ID), Windows Server licensing, Microsoft 365, and hybrid on-premises tooling (Azure Arc).</li>
+</ul>
+
+<h2>Global Infrastructure Architecture</h2>
+<p>Both platforms deploy infrastructure across global geographic footprints using identical architectural concepts:</p>
+<ul>
+    <li><strong>Regions:</strong> Distinct physical geographic locations around the world (e.g., <code>us-east-1</code> in Virginia or <code>East US</code>) containing multiple physically isolated datacenters.</li>
+    <li><strong>Availability Zones (AZs):</strong> Isolated datacenters within a Region with independent power, cooling, and low-latency fiber connectivity. Architecting across multiple AZs guarantees high availability against physical datacenter outages.</li>
+    <li><strong>Edge Locations:</strong> Global Points of Presence (PoP) delivering low-latency cached content via Content Delivery Networks (AWS CloudFront / Azure Front Door).</li>
+</ul>
+
+<h2>Direct Core Service Mapping</h2>
+<p>Engineers moving between AWS and Azure can cross-reference equivalent services across foundational IT disciplines:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Discipline</th>
+                <th>AWS Service</th>
+                <th>Microsoft Azure Service</th>
+                <th>Functional Overview</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Virtual Compute</strong></td>
+                <td>Amazon EC2 (Elastic Compute Cloud)</td>
+                <td>Azure Virtual Machines (VMs)</td>
+                <td>On-demand virtual server instances (Windows / Linux)</td>
+            </tr>
+            <tr>
+                <td><strong>Object Storage</strong></td>
+                <td>Amazon S3 (Simple Storage Service)</td>
+                <td>Azure Blob Storage</td>
+                <td>Highly durable, scalable unstructured object storage accessed via HTTP APIs</td>
+            </tr>
+            <tr>
+                <td><strong>Virtual Networking</strong></td>
+                <td>Amazon VPC (Virtual Private Cloud)</td>
+                <td>Azure VNet (Virtual Network)</td>
+                <td>Isolated private network topology with subnets, route tables, and gateways</td>
+            </tr>
+            <tr>
+                <td><strong>Host Firewalling</strong></td>
+                <td>AWS Security Groups</td>
+                <td>Azure Network Security Groups (NSGs)</td>
+                <td>Stateful virtual firewalls filtering inbound and outbound port traffic</td>
+            </tr>
+            <tr>
+                <td><strong>Identity & Access</strong></td>
+                <td>AWS IAM (Identity and Access Management)</td>
+                <td>Microsoft Entra ID (formerly Azure AD)</td>
+                <td>User identities, service principals, RBAC roles, and access policies</td>
+            </tr>
+            <tr>
+                <td><strong>Relational Database</strong></td>
+                <td>Amazon RDS</td>
+                <td>Azure SQL Database / Azure Database for PostgreSQL</td>
+                <td>Fully managed SQL database engines with automated backups and failover</td>
+            </tr>
+            <tr>
+                <td><strong>Serverless Compute</strong></td>
+                <td>AWS Lambda</td>
+                <td>Azure Functions</td>
+                <td>Event-driven serverless code execution billed per millisecond</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Key Architectural Differences</h2>
+<p>Despite surface similarities, structural differences impact administrative operations:</p>
+<ul>
+    <li><strong>Identity Architecture:</strong> AWS IAM is tenant-local to individual AWS accounts, relying heavily on IAM Roles and cross-account assumption. Azure utilizes a centralized tenant-wide <strong>Microsoft Entra ID</strong> directory that can manage multiple Azure Subscriptions and integrate natively with on-premises Active Directory via Entra Connect.</li>
+    <li><strong>Account and Governance Hierarchy:</strong> AWS uses AWS Organizations and Organizational Units (OUs) with Service Control Policies (SCPs). Azure organizes resources hierarchically into Management Groups -> Subscriptions -> Resource Groups -> Resources, applying Azure Policy at any level.</li>
+    <li><strong>Network Address Space:</strong> In AWS VPC, subnets are strictly bound to a single Availability Zone. In Azure VNet, subnets can span across the entire region, allowing VMs in different AZs to share the same subnet IP range.</li>
+</ul>
+
+<p><em>Note: For organizations heavily invested in Microsoft enterprise licensing (Windows Server, SQL Server, Microsoft 365), Azure Hybrid Benefit offers substantial cost reductions by allowing on-premises software licenses with Software Assurance to be applied directly to Azure virtual machines.</em></p>
+
+<h2>Summary</h2>
+<p>AWS and Azure provide equivalent enterprise cloud capabilities using different terminology and identity models. Mastering the direct service mappings between EC2 and Azure VMs, S3 and Blob Storage, and VPC and VNet equips systems engineers to design and troubleshoot multi-cloud enterprise architectures effectively.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

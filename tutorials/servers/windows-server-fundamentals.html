@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Server Fundamentals | Servers Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="An introductory guide to Microsoft Windows Server editions, roles and features, Server Manager, Windows Admin Center, and Server Core.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/servers/windows-server-fundamentals.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Windows Server Fundamentals | Servers Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="An introductory guide to Microsoft Windows Server editions, roles and features, Server Manager, Windows Admin Center, and Server Core.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/servers/windows-server-fundamentals.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Windows Server Fundamentals | Servers Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="An introductory guide to Microsoft Windows Server editions, roles and features, Server Manager, Windows Admin Center, and Server Core.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Windows Server Fundamentals",
+    "description": "An introductory guide to Microsoft Windows Server editions, roles and features, Server Manager, Windows Admin Center, and Server Core.",
+    "url": "https://themjtechhub.site/tutorials/servers/windows-server-fundamentals.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/servers/windows-server-fundamentals.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../servers.html">Servers</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Windows Server Fundamentals</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 8 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Windows Server Fundamentals</h1>
+            <p class="tutorial-hero-desc">An introductory guide to Microsoft Windows Server editions, roles and features, Server Manager, Windows Admin Center, and Server Core.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p><strong>Microsoft Windows Server</strong> is the foundation of enterprise on-premises directory services, file storage, and hybrid infrastructure. Sharing the core Windows NT kernel with client versions of Windows, it includes specialized administrative tools, hardened network protocols, and multi-tenant enterprise server roles.</p>
+
+<h2>Windows Server Editions & Licensing</h2>
+<p>Modern releases (Windows Server 2019, 2022, 2025) are licensed per physical CPU core and categorized into two primary enterprise editions:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Edition</th>
+                <th>Virtualization Rights</th>
+                <th>Target Deployment Scenario</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Windows Server Standard</strong></td>
+                <td>Includes licensing for <strong>2 Virtual Machines</strong> (or Hyper-V containers) per licensed host</td>
+                <td>Physical branch office servers or lightly virtualized environments</td>
+            </tr>
+            <tr>
+                <td><strong>Windows Server Datacenter</strong></td>
+                <td>Includes <strong>Unlimited Virtual Machines</strong> on the licensed physical host</td>
+                <td>Enterprise private clouds, high-density Hyper-V clusters, and Software-Defined Storage (Storage Spaces Direct)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Server Core vs Desktop Experience</h2>
+<p>During installation, administrators choose between two operating environments:</p>
+<ul>
+    <li><strong>Server Core (Recommended):</strong> Installs a stripped-down headless operating system without graphical desktop shells (Windows Explorer). Server Core consumes significantly less RAM (often under 1.5GB), requires approximately 40% fewer security patches, reboots faster, and dramatically minimizes the attack surface.</li>
+    <li><strong>Server with Desktop Experience:</strong> Installs the full graphical user interface (GUI). Useful for legacy management tools, remote desktop session hosts, or specialized application prerequisites.</li>
+</ul>
+
+<h2>The Roles & Features Architecture</h2>
+<p>Windows Server functionality is modularized into two distinct categories:</p>
+<ul>
+    <li><strong>Server Roles:</strong> Major software programs that define what the server does across the network (e.g., Active Directory Domain Services, DNS Server, DHCP Server, Hyper-V, Web Server IIS).</li>
+    <li><strong>Features:</strong> Auxiliary utility programs that support or enhance server capabilities (e.g., Failover Clustering, BitLocker Drive Encryption, Windows Server Backup, Group Policy Management).</li>
+</ul>
+
+<h2>Central Management: Server Manager & Windows Admin Center</h2>
+<p>Administrators manage server fleets using modern centralized orchestration platforms:</p>
+<ul>
+    <li><strong>Server Manager:</strong> The classic MMC-based console allowing administrators to provision roles, monitor event logs, and review service statuses across multiple servers from a single dashboard.</li>
+    <li><strong>Windows Admin Center (WAC):</strong> A modern, browser-based management tool connecting over secure WinRM/PowerShell remoting. WAC consolidates certificate management, performance graphs, firewall rules, and hybrid Azure integrations into a lightweight HTML5 console.</li>
+</ul>
+
+<h2>PowerShell Administration for Windows Server</h2>
+<p>Administrative workflows on Server Core are performed programmatically using PowerShell. The <code>ServerManager</code> module provides cmdlets to audit and install capabilities:</p>
+
+<div class="tutorial-command">
+# 1. Query all available roles and features matching 'DNS' or 'DHCP'
+Get-WindowsFeature -Name *DNS*, *DHCP*
+
+# 2. Install the DNS Server role including management command line tools
+Install-WindowsFeature -Name DNS -IncludeManagementTools
+
+# 3. View operational health and restart the DHCP Server service
+Get-Service -Name DHCPServer | Restart-Service
+</div>
+
+<p><em>Warning: When deploying Server Core in enterprise environments, verify that Windows Defender Firewall permits remote administration traffic (specifically WinRM, RPC, and WMI) before disconnecting physical monitor access.</em></p>
+
+<h2>Summary</h2>
+<p>Windows Server delivers core infrastructure services through modular Roles and Features. By deploying Server Core to reduce attack surface and leveraging Windows Admin Center and PowerShell for centralized fleet administration, infrastructure teams establish a secure, reliable on-premises server foundation.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

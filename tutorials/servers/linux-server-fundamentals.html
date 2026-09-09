@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Server Fundamentals | Servers Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Learn how to deploy, configure, and maintain headless enterprise Linux servers with SSH, systemd services, firewalls, and logging.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/servers/linux-server-fundamentals.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Linux Server Fundamentals | Servers Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Learn how to deploy, configure, and maintain headless enterprise Linux servers with SSH, systemd services, firewalls, and logging.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/servers/linux-server-fundamentals.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Linux Server Fundamentals | Servers Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Learn how to deploy, configure, and maintain headless enterprise Linux servers with SSH, systemd services, firewalls, and logging.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Linux Server Fundamentals",
+    "description": "Learn how to deploy, configure, and maintain headless enterprise Linux servers with SSH, systemd services, firewalls, and logging.",
+    "url": "https://themjtechhub.site/tutorials/servers/linux-server-fundamentals.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/servers/linux-server-fundamentals.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../servers.html">Servers</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Linux Server Fundamentals</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 8 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Linux Server Fundamentals</h1>
+            <p class="tutorial-hero-desc">Learn how to deploy, configure, and maintain headless enterprise Linux servers with SSH, systemd services, firewalls, and logging.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>An enterprise <strong>Linux Server</strong> is an operating system installation optimized for background service hosting, high network throughput, and continuous uptime without a graphical desktop interface. Deploying and maintaining headless Linux servers requires disciplined configuration of remote access, firewall policies, service daemons, and system telemetry.</p>
+
+<h2>The Headless Server Architecture</h2>
+<p>Production Linux servers operate in <strong>headless mode</strong> (Runlevel 3 / <code>multi-user.target</code>). By eliminating GUI display managers (like X11 or Wayland) and desktop environments (like GNOME):</p>
+<ul>
+    <li><strong>System Resources are Maximized:</strong> A base headless Linux server uses as little as 250MB to 500MB of RAM, reserving almost 100% of physical memory and CPU cycles for application workloads.</li>
+    <li><strong>Attack Surface is Minimized:</strong> Eliminating graphical rendering libraries, browsers, and desktop packages removes thousands of potential software vulnerabilities.</li>
+    <li><strong>Automation is Enforced:</strong> Configuration must be executed through command-line scripts, configuration files, and Infrastructure-as-Code tooling (Ansible, Terraform).</li>
+</ul>
+
+<h2>Hardening Secure Shell (SSH) Access</h2>
+<p>Remote administration is conducted almost exclusively via the <strong>Secure Shell (SSH)</strong> protocol on TCP Port 22. Standard hardening best practices should be applied immediately upon provisioning in <code>/etc/ssh/sshd_config</code>:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Configuration Directive</th>
+                <th>Recommended Setting</th>
+                <th>Security Rationale</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>PermitRootLogin</code></td>
+                <td><code>no</code> or <code>prohibit-password</code></td>
+                <td>Prevents brute-force dictionary attacks against the primary root account</td>
+            </tr>
+            <tr>
+                <td><code>PasswordAuthentication</code></td>
+                <td><code>no</code></td>
+                <td>Enforces asymmetric SSH public/private key authentication, neutralizing password theft</td>
+            </tr>
+            <tr>
+                <td><code>MaxAuthTries</code></td>
+                <td><code>3</code></td>
+                <td>Disconnects sessions after repeated failed authentication attempts</td>
+            </tr>
+            <tr>
+                <td><code>X11Forwarding</code></td>
+                <td><code>no</code></td>
+                <td>Disables graphical display forwarding across SSH tunnels</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="tutorial-command">
+# Test SSH configuration file syntax before restarting the daemon
+sshd -t
+
+# Apply configuration changes safely
+systemctl reload sshd
+</div>
+
+<h2>Host Firewall Implementation: UFW and Firewalld</h2>
+<p>Every Linux server must enforce a host-based firewall to drop unauthorized ingress traffic:</p>
+
+<div class="tutorial-command">
+# --- On Ubuntu / Debian Servers (UFW) ---
+# Default policy: drop all incoming, allow all outgoing
+ufw default deny incoming
+ufw default allow outgoing
+
+# Explicitly permit SSH and HTTPS traffic
+ufw allow 22/tcp
+ufw allow 443/tcp
+ufw enable
+
+# --- On RHEL / Rocky Linux Servers (firewalld) ---
+firewall-cmd --permanent --add-service=ssh
+firewall-cmd --permanent --add-service=https
+firewall-cmd --reload
+</div>
+
+<h2>Service Lifecycle Management with systemd</h2>
+<p>Server applications (such as databases, web servers, and monitoring agents) run as systemd background service units:</p>
+
+<div class="tutorial-command">
+# Inspect whether a service is active and view recent log lines
+systemctl status postgresql
+
+# Ensure the service starts automatically on system boot
+systemctl enable postgresql
+
+# Reload service configuration without terminating active client sessions
+systemctl reload nginx
+</div>
+
+<h2>Centralized Telemetry & Log Auditing</h2>
+<p>The systemd journal captures stdout, stderr, kernel messages, and syslog events centrally:</p>
+
+<div class="tutorial-command">
+# View real-time log output for a specific service
+journalctl -u sshd -f
+
+# View system boot logs from the previous failed boot session
+journalctl -b -1 -p err
+</div>
+
+<p><em>Tip: Always configure out-of-band management (such as cloud serial consoles, Proxmox VNC consoles, or server IPMI) before making network or firewall changes. If an administrative error locks you out of SSH, console access provides an emergency rescue path.</em></p>
+
+<h2>Summary</h2>
+<p>Operating enterprise Linux servers requires a strict defense-in-depth posture: running headless installations to conserve resources, enforcing SSH key authentication, locking down network ports with host firewalls, and monitoring service health with systemd and journalctl.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

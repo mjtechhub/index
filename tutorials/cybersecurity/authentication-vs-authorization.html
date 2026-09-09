@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication vs Authorization | Cybersecurity Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Differentiate between proving identity (Authentication) and granting permissions (Authorization) in enterprise identity systems.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/cybersecurity/authentication-vs-authorization.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Authentication vs Authorization | Cybersecurity Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Differentiate between proving identity (Authentication) and granting permissions (Authorization) in enterprise identity systems.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/cybersecurity/authentication-vs-authorization.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Authentication vs Authorization | Cybersecurity Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Differentiate between proving identity (Authentication) and granting permissions (Authorization) in enterprise identity systems.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Authentication vs Authorization",
+    "description": "Differentiate between proving identity (Authentication) and granting permissions (Authorization) in enterprise identity systems.",
+    "url": "https://themjtechhub.site/tutorials/cybersecurity/authentication-vs-authorization.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Beginner",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/cybersecurity/authentication-vs-authorization.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../cybersecurity.html">Cybersecurity</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Authentication vs Authorization</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge beginner">Beginner</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 6 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Authentication vs Authorization</h1>
+            <p class="tutorial-hero-desc">Differentiate between proving identity (Authentication) and granting permissions (Authorization) in enterprise identity systems.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>While often grouped together under Identity and Access Management (IAM), <strong>Authentication (AuthN)</strong> and <strong>Authorization (AuthZ)</strong> represent two completely distinct security operations. Conflating the two is a primary cause of broken access control vulnerabilities in enterprise environments.</p>
+
+<h2>Core Definitions</h2>
+<ul>
+    <li><strong>Authentication (AuthN) — "Who are you?":</strong> The process of verifying the claimed identity of a user, service account, or device. Authentication proves that you are who you claim to be.</li>
+    <li><strong>Authorization (AuthZ) — "What are you allowed to do?":</strong> The process of determining the specific access rights, permissions, and privileges granted to an already authenticated identity.</li>
+</ul>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Comparison Factor</th>
+                <th>Authentication (AuthN)</th>
+                <th>Authorization (AuthZ)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Primary Question</strong></td>
+                <td>"Who are you? Prove your identity."</td>
+                <td>"What resources are you permitted to touch?"</td>
+            </tr>
+            <tr>
+                <td><strong>Execution Order</strong></td>
+                <td>Must occur <strong>first</strong></td>
+                <td>Occurs <strong>second</strong> (after identity is proven)</td>
+            </tr>
+            <tr>
+                <td><strong>Data Exchanged</strong></td>
+                <td>Usernames, passwords, MFA tokens, biometrics</td>
+                <td>Access control lists (ACLs), role assignments, scopes</td>
+            </tr>
+            <tr>
+                <td><strong>Enterprise Protocols</strong></td>
+                <td>Kerberos, NTLM, OpenID Connect (OIDC), SAML 2.0</td>
+                <td>OAuth 2.0 (scopes), LDAP groups, NTFS ACLs, AWS IAM policies</td>
+            </tr>
+            <tr>
+                <td><strong>Failure Result</strong></td>
+                <td>401 Unauthorized (Identity verification failed)</td>
+                <td>403 Forbidden (Identity verified, but access denied)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>The Enterprise AAA Framework</h2>
+<p>Enterprise identity management expands AuthN and AuthZ into the industry-standard <strong>AAA Framework</strong>:</p>
+<ol>
+    <li><strong>Authentication:</strong> Verifying credentials via Active Directory Kerberos, cloud identity providers, or RADIUS.</li>
+    <li><strong>Authorization:</strong> Checking group memberships (e.g., verifying if the user belongs to the <code>Finance-Read-Only</code> security group).</li>
+    <li><strong>Accounting (Auditing):</strong> Tracking what the user actually did, logging timestamps, source IP addresses, file access events, and privilege escalation attempts for compliance.</li>
+</ol>
+
+<h2>The Three Classic Authentication Factors</h2>
+<p>Authentication mechanisms rely on one or more verifiable factors:</p>
+<ul>
+    <li><strong>Something You Know:</strong> Passwords, PINs, passphrases (vulnerable to phishing and credential stuffing).</li>
+    <li><strong>Something You Have:</strong> Hardware security keys (YubiKey), smartphone authenticator apps (TOTP), smart cards.</li>
+    <li><strong>Something You Are:</strong> Biometrics such as fingerprint scans, facial recognition (Windows Hello), or retina scans.</li>
+</ul>
+
+<h2>Common Authorization Models</h2>
+<p>Once identity is established, systems evaluate authorization policies using structured models:</p>
+<ul>
+    <li><strong>Role-Based Access Control (RBAC):</strong> The enterprise standard. Permissions are assigned to business roles (e.g., "Network Engineer" or "Help Desk"), and users are added to groups reflecting those roles.</li>
+    <li><strong>Attribute-Based Access Control (ABAC):</strong> Granular policies evaluated at runtime based on user attributes, resource classification, time of day, and device security compliance.</li>
+    <li><strong>Discretionary Access Control (DAC):</strong> The file owner dictates access rights (e.g., standard Unix file permissions managed by individual users).</li>
+</ul>
+
+<h2>A Real-World Enterprise Scenario</h2>
+<p>Consider an engineer logging onto their corporate laptop to access a payroll spreadsheet on an internal file share:</p>
+<ol>
+    <li><strong>Authentication:</strong> The engineer enters their username, password, and approves a push notification on their phone. Microsoft Entra ID verifies the credentials and issues an authentication ticket. <em>(AuthN Complete)</em></li>
+    <li><strong>Authorization:</strong> The engineer attempts to open <code>\\fileserver\payroll\salaries.xlsx</code>. The file server inspects the engineer's security token and checks the NTFS access control list on the file. Because the engineer is in the "IT Support" group and not the "HR Leadership" group, access is blocked with a <em>Permission Denied</em> prompt. <em>(AuthZ Enforced)</em></li>
+</ol>
+
+<p><em>Important: Broken Access Control represents the #1 web application security vulnerability according to OWASP. An application that successfully verifies identity but fails to rigorously evaluate authorization boundaries on every API request allows authenticated users to view or tamper with unauthorized customer records.</em></p>
+
+<h2>Summary</h2>
+<p>Authentication verifies identity; authorization enforces permissions. Designing secure enterprise systems requires treating both as independent checkpoints, ensuring that robust multi-factor authentication is paired with strict role-based authorization adhering to the Principle of Least Privilege.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>
