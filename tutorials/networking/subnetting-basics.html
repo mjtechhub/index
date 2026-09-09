@@ -2,45 +2,93 @@
 <html lang="en">
 <head>
     <script src="../../js/theme-init.js"></script>
-    <!-- SEO & Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subnetting Basics | Networking Tutorial | MJ Tech Hub</title>
     <meta name="description" content="Learn how to divide a single network into multiple smaller subnets.">
     <link rel="canonical" href="https://themjtechhub.site/tutorials/networking/subnetting-basics.html">
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="Subnetting Basics | Networking Tutorial | MJ Tech Hub">
     <meta property="og:description" content="Learn how to divide a single network into multiple smaller subnets.">
     <meta property="og:url" content="https://themjtechhub.site/tutorials/networking/subnetting-basics.html">
     <meta property="og:site_name" content="MJ Tech Hub">
-    <meta property="og:type" content="website">
-    
-    <!-- Twitter -->
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Subnetting Basics | Networking Tutorial | MJ Tech Hub">
     <meta name="twitter:description" content="Learn how to divide a single network into multiple smaller subnets.">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Subnetting Basics",
+    "description": "Learn how to divide a single network into multiple smaller subnets.",
+    "url": "https://themjtechhub.site/tutorials/networking/subnetting-basics.html",
+    "datePublished": "2026-08-25",
+    "dateModified": "2026-08-25",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/networking/subnetting-basics.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../css/themes.css">
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/responsive.css">
-    <script src="../../js/theme.js"></script>
-    <script src="../../js/main.js" defer></script>
 </head>
-
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="site-header"></div>
-    <!-- Header -->
-    
-    <main class="lesson-container py-4">
-        <!-- Breadcrumb -->
-        <div id="tutorial-header">
-            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Subnetting Basics</h1>
-        </div>
-        
-                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p>To scale the internet, a single massive network is broken down into smaller, manageable networks called subnets. <a href="what-is-an-ip-address.html">IP Addresses</a> and <a href="what-is-a-subnet-mask.html">Subnet Masks</a> work together to define exactly where a network begins and ends. Understanding subnetting is a mandatory foundational skill for any IT professional configuring <a href="what-is-routing.html">Routing</a> or <a href="what-is-vlan.html">VLANs</a>.</p>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../networking.html">Networking</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Subnetting Basics</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 10 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Aug 25, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Subnetting Basics</h1>
+            <p class="tutorial-hero-desc">Learn how to divide a single network into multiple smaller subnets.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>To scale the internet, a single massive network is broken down into smaller, manageable networks called subnets. <a href="what-is-an-ip-address.html">IP Addresses</a> and <a href="what-is-a-subnet-mask.html">Subnet Masks</a> work together to define exactly where a network begins and ends. Understanding subnetting is a mandatory foundational skill for any IT professional configuring <a href="what-is-routing.html">Routing</a> or <a href="what-is-vlan.html">VLANs</a>.</p>
 
             <h2>The Network Portion and Host Portion</h2>
             <p>Every IP address is split into two parts:</p>
@@ -142,20 +190,30 @@
                 <li><strong>Same Subnet:</strong> <code>192.0.2.10/24</code> wants to talk to <code>192.0.2.50/24</code>. The PC sees they are in the same network, finds the destination MAC address, and sends the packet directly over the LAN.</li>
                 <li><strong>Different Subnet:</strong> <code>192.0.2.10/24</code> wants to talk to <code>198.51.100.10/24</code>. The PC sees the destination is outside its subnet mask boundary. It immediately forwards the packet to its Default Gateway (the router), asking the router to deliver it.</li>
             </ul>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
         </div>
-</div>
-        
-        <!-- Navigation -->
-        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
-            <span></span>
-            <span></span>
-        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
     </main>
-    <!-- Footer -->
-    
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
     <div id="site-footer"></div>
-        <script src="../../js/components.js"></script>
-    <script src="../../js/tutorial.js"></script>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
 </body>
 </html>
-

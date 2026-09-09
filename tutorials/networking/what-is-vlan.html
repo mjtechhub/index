@@ -2,45 +2,93 @@
 <html lang="en">
 <head>
     <script src="../../js/theme-init.js"></script>
-    <!-- SEO & Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What Is VLAN? | Networking Tutorial | MJ Tech Hub</title>
     <meta name="description" content="Learn VLAN concepts, types, benefits and practical use cases.">
     <link rel="canonical" href="https://themjtechhub.site/tutorials/networking/what-is-vlan.html">
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="What Is VLAN? | Networking Tutorial | MJ Tech Hub">
     <meta property="og:description" content="Learn VLAN concepts, types, benefits and practical use cases.">
     <meta property="og:url" content="https://themjtechhub.site/tutorials/networking/what-is-vlan.html">
     <meta property="og:site_name" content="MJ Tech Hub">
-    <meta property="og:type" content="website">
-    
-    <!-- Twitter -->
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="What Is VLAN? | Networking Tutorial | MJ Tech Hub">
     <meta name="twitter:description" content="Learn VLAN concepts, types, benefits and practical use cases.">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "What Is VLAN?",
+    "description": "Learn VLAN concepts, types, benefits and practical use cases.",
+    "url": "https://themjtechhub.site/tutorials/networking/what-is-vlan.html",
+    "datePublished": "2026-05-16",
+    "dateModified": "2026-05-16",
+    "proficiencyLevel": "Beginner",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/networking/what-is-vlan.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../css/themes.css">
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/responsive.css">
-    <script src="../../js/theme.js"></script>
-    <script src="../../js/main.js" defer></script>
 </head>
-
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="site-header"></div>
-    <!-- Header -->
-    
-    <main class="lesson-container py-4">
-        <!-- Breadcrumb -->
-        <div id="tutorial-header">
-            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">What Is VLAN?</h1>
-        </div>
-        
-                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p>A <strong>VLAN (Virtual Local Area Network)</strong> is a custom network created from one or more existing physical local area networks. It enables groups of devices from multiple networks (both wired and wireless) to be combined into one logical network, regardless of their physical location on a network switch.</p>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../networking.html">Networking</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">What Is VLAN?</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge beginner">Beginner</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 9 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: May 16, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">What Is VLAN?</h1>
+            <p class="tutorial-hero-desc">Learn VLAN concepts, types, benefits and practical use cases.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>A <strong>VLAN (Virtual Local Area Network)</strong> is a custom network created from one or more existing physical local area networks. It enables groups of devices from multiple networks (both wired and wireless) to be combined into one logical network, regardless of their physical location on a network switch.</p>
             <p>By default, all ports on a standard, unconfigured network switch belong to the same broadcast domain (VLAN 1). This means if one device sends a broadcast message, every other device on the switch receives it. VLANs allow network administrators to logically segment this switch into multiple, isolated broadcast domains.</p>
             
             <h2>Why Are VLANs Used?</h2>
@@ -99,21 +147,30 @@
                 <li><strong>Trunk ports</strong> carry multiple VLANs between switches using 802.1Q tags.</li>
                 <li>A Layer 3 router is required for different VLANs to talk to each other.</li>
             </ul>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
         </div>
-</div>
-        
-        <!-- Navigation -->
-        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
-            <a href='what-is-dhcp.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; What Is DHCP?</a>
-            <a href='what-is-a-default-gateway.html' class='btn btn-secondary' style='border:none; padding: 0;'>What Is a Default Gateway? &rarr;</a>
-        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
     </main>
-    <!-- Footer -->
-    
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
     <div id="site-footer"></div>
-        <script src="../../js/components.js"></script>
-    <script src="../../js/tutorial.js"></script>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
 </body>
 </html>
-
-

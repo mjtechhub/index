@@ -2,45 +2,93 @@
 <html lang="en">
 <head>
     <script src="../../js/theme-init.js"></script>
-    <!-- SEO & Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DHCP Relay / IP Helper Explained | Networking Tutorial | MJ Tech Hub</title>
     <meta name="description" content="Learn about DHCP Relay / IP Helper Explained in this Networking tutorial.">
     <link rel="canonical" href="https://themjtechhub.site/tutorials/networking/dhcp-relay-ip-helper-explained.html">
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="DHCP Relay / IP Helper Explained | Networking Tutorial | MJ Tech Hub">
     <meta property="og:description" content="Learn about DHCP Relay / IP Helper Explained in this Networking tutorial.">
     <meta property="og:url" content="https://themjtechhub.site/tutorials/networking/dhcp-relay-ip-helper-explained.html">
     <meta property="og:site_name" content="MJ Tech Hub">
-    <meta property="og:type" content="website">
-    
-    <!-- Twitter -->
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="DHCP Relay / IP Helper Explained | Networking Tutorial | MJ Tech Hub">
     <meta name="twitter:description" content="Learn about DHCP Relay / IP Helper Explained in this Networking tutorial.">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "DHCP Relay / IP Helper Explained",
+    "description": "Learn about DHCP Relay / IP Helper Explained in this Networking tutorial.",
+    "url": "https://themjtechhub.site/tutorials/networking/dhcp-relay-ip-helper-explained.html",
+    "datePublished": "2026-08-25T07:20:17Z",
+    "dateModified": "2026-08-25T07:20:17Z",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/networking/dhcp-relay-ip-helper-explained.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../css/themes.css">
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/responsive.css">
-    <script src="../../js/theme.js"></script>
-    <script src="../../js/main.js" defer></script>
 </head>
-
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="site-header"></div>
-    <!-- Header -->
-    
-    <main class="lesson-container py-4">
-        <!-- Breadcrumb -->
-        <div id="tutorial-header">
-            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">DHCP Relay / IP Helper Explained</h1>
-        </div>
-        
-                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p>To understand a <strong>DHCP Relay</strong> (often referred to as an <strong>IP Helper</strong> in Cisco terminology), you must first understand a fundamental rule of network <a href="what-is-routing.html">Routing</a>: <strong>Routers do not forward broadcast traffic.</strong></p>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../networking.html">Networking</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">DHCP Relay / IP Helper Explained</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 6 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: 2026-08-25T07:20:17Z</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">DHCP Relay / IP Helper Explained</h1>
+            <p class="tutorial-hero-desc">Learn about DHCP Relay / IP Helper Explained in this Networking tutorial.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>To understand a <strong>DHCP Relay</strong> (often referred to as an <strong>IP Helper</strong> in Cisco terminology), you must first understand a fundamental rule of network <a href="what-is-routing.html">Routing</a>: <strong>Routers do not forward broadcast traffic.</strong></p>
             
             <p>When a PC boots up and needs an <a href="what-is-an-ip-address.html">IP Address</a>, it sends out a DHCP Discover message. Because the PC doesn't yet have an IP, it sends this message as a Layer 2 Broadcast (address <code>FF:FF:FF:FF:FF:FF</code>). This broadcast hits every device on the local <a href="what-is-vlan.html">VLAN</a>. If a DHCP server is sitting on that same VLAN, it replies. But in enterprise networks, placing a dedicated DHCP server on every single VLAN is completely unscalable.</p>
             
@@ -82,21 +130,30 @@
                 <li>Run a capture on the DHCP server. If you see the Discover packet arrive, the Relay is working perfectly. The problem is on the server.</li>
                 <li>If the Discover packet never reaches the server, the problem is on the network Gateway, a firewall in transit, or the physical cable connecting the PC.</li>
             </ul>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
         </div>
-</div>
-        
-        <!-- Navigation -->
-        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
-            <a href='remote-access-vpn-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Remote Access VPN Explained</a>
-            <a href='dns-record-types-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>DNS Record Types Explained &rarr;</a>
-        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
     </main>
-    <!-- Footer -->
-    
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
     <div id="site-footer"></div>
-        <script src="../../js/components.js"></script>
-    <script src="../../js/tutorial.js"></script>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
 </body>
 </html>
-
-

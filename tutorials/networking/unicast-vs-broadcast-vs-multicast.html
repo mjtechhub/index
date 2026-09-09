@@ -2,46 +2,93 @@
 <html lang="en">
 <head>
     <script src="../../js/theme-init.js"></script>
-    <!-- SEO & Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unicast vs Broadcast vs Multicast | Networking Tutorial | MJ Tech Hub</title>
     <meta name="description" content="Learn about Unicast vs Broadcast vs Multicast in this Networking tutorial.">
     <link rel="canonical" href="https://themjtechhub.site/tutorials/networking/unicast-vs-broadcast-vs-multicast.html">
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="Unicast vs Broadcast vs Multicast | Networking Tutorial | MJ Tech Hub">
     <meta property="og:description" content="Learn about Unicast vs Broadcast vs Multicast in this Networking tutorial.">
     <meta property="og:url" content="https://themjtechhub.site/tutorials/networking/unicast-vs-broadcast-vs-multicast.html">
     <meta property="og:site_name" content="MJ Tech Hub">
-    <meta property="og:type" content="website">
-    
-    <!-- Twitter -->
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Unicast vs Broadcast vs Multicast | Networking Tutorial | MJ Tech Hub">
     <meta name="twitter:description" content="Learn about Unicast vs Broadcast vs Multicast in this Networking tutorial.">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Unicast vs Broadcast vs Multicast",
+    "description": "Learn about Unicast vs Broadcast vs Multicast in this Networking tutorial.",
+    "url": "https://themjtechhub.site/tutorials/networking/unicast-vs-broadcast-vs-multicast.html",
+    "datePublished": "2026-08-25T08:30:43Z",
+    "dateModified": "2026-08-25T08:30:43Z",
+    "proficiencyLevel": "Beginner",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/networking/unicast-vs-broadcast-vs-multicast.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../css/themes.css">
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/responsive.css">
-    <script src="../../js/theme.js"></script>
-    <script src="../../js/main.js" defer></script>
 </head>
-
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="site-header"></div>
-    <!-- Header -->
-    
-    <main class="lesson-container py-4">
-        <!-- Breadcrumb -->
-        <div id="tutorial-header">
-            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Unicast vs Broadcast vs Multicast</h1>
-        </div>
-        
-        <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
 
-            <p>Traffic on a network fundamentally flows in one of three ways depending on the destination intent.</p>
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../networking.html">Networking</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Unicast vs Broadcast vs Multicast</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge beginner">Beginner</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 6 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: 2026-08-25T08:30:43Z</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Unicast vs Broadcast vs Multicast</h1>
+            <p class="tutorial-hero-desc">Learn about Unicast vs Broadcast vs Multicast in this Networking tutorial.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>Traffic on a network fundamentally flows in one of three ways depending on the destination intent.</p>
             
             <h3>1. Unicast</h3>
             <p><strong>Unicast</strong> is one-to-one communication. A single sender transmits data to a single specific destination.</p>
@@ -62,21 +109,30 @@
                 <li><em>Example:</em> A live video stream being sent to hundreds of employees. Sending unicast would overwhelm the server; sending broadcast would overwhelm the entire network. Multicast efficiently sends one stream that is duplicated at the edge switches.</li>
                 <li><em>Management:</em> IPv4 relies conceptually on IGMP (Internet Group Management Protocol) for clients to join a multicast group. IPv6 relies on MLD (Multicast Listener Discovery).</li>
             </ul>
-        
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
         </div>
-        
-        <!-- Navigation -->
-        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
-            <a href='duplex-mismatch-and-speed-negotiation.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Duplex Mismatch & Speed Negotiation</a>
-            <a href='network-baseline-and-capacity-planning.html' class='btn btn-secondary' style='border:none; padding: 0;'>Network Baseline & Capacity Planning &rarr;</a>
-        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
     </main>
-    <!-- Footer -->
-    
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
     <div id="site-footer"></div>
-        <script src="../../js/components.js"></script>
-    <script src="../../js/tutorial.js"></script>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
 </body>
 </html>
-
-

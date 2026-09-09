@@ -2,45 +2,93 @@
 <html lang="en">
 <head>
     <script src="../../js/theme-init.js"></script>
-    <!-- SEO & Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Traceroute Explained | Networking Tutorial | MJ Tech Hub</title>
     <meta name="description" content="Traceroute is a utility that records the route (the specific gateway computers at each hop) through the internet between your computer and a specified...">
     <link rel="canonical" href="https://themjtechhub.site/tutorials/networking/traceroute-explained.html">
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="Traceroute Explained | Networking Tutorial | MJ Tech Hub">
     <meta property="og:description" content="Traceroute is a utility that records the route (the specific gateway computers at each hop) through the internet between your computer and a specified...">
     <meta property="og:url" content="https://themjtechhub.site/tutorials/networking/traceroute-explained.html">
     <meta property="og:site_name" content="MJ Tech Hub">
-    <meta property="og:type" content="website">
-    
-    <!-- Twitter -->
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Traceroute Explained | Networking Tutorial | MJ Tech Hub">
     <meta name="twitter:description" content="Traceroute is a utility that records the route (the specific gateway computers at each hop) through the internet between your computer and a specified...">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Traceroute Explained",
+    "description": "Traceroute is a utility that records the route (the specific gateway computers at each hop) through the internet between your computer and a specified...",
+    "url": "https://themjtechhub.site/tutorials/networking/traceroute-explained.html",
+    "datePublished": "UNKNOWN",
+    "dateModified": "UNKNOWN",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/networking/traceroute-explained.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../css/themes.css">
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/responsive.css">
-    <script src="../../js/theme.js"></script>
-    <script src="../../js/main.js" defer></script>
 </head>
-
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="site-header"></div>
-    <!-- Header -->
-    
-    <main class="lesson-container py-4">
-        <!-- Breadcrumb -->
-        <div id="tutorial-header">
-            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">Traceroute Explained</h1>
-        </div>
-        
-                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p><strong>Traceroute</strong> (known as <code>tracert</code> on Windows) is a network diagnostic tool used to track the exact pathway a packet takes from your computer to a destination server. While <a href="ping-explained.html">ping</a> tells you <em>if</em> a destination is reachable, traceroute tells you <em>how</em> the packet gets there, documenting every router (hop) along the path.</p>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../networking.html">Networking</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Traceroute Explained</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Traceroute Explained</h1>
+            <p class="tutorial-hero-desc">Traceroute is a utility that records the route (the specific gateway computers at each hop) through the internet between your computer and a specified...</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p><strong>Traceroute</strong> (known as <code>tracert</code> on Windows) is a network diagnostic tool used to track the exact pathway a packet takes from your computer to a destination server. While <a href="ping-explained.html">ping</a> tells you <em>if</em> a destination is reachable, traceroute tells you <em>how</em> the packet gets there, documenting every router (hop) along the path.</p>
             <p>If your connection to a website is slow or failing, traceroute is the ultimate tool for pinpointing exactly which router or ISP in the chain is causing the problem.</p>
 
             <h2>How Does Traceroute Work?</h2>
@@ -59,7 +107,7 @@
             <h2>Understanding Traceroute Output</h2>
             <p>Here is an example of a typical Windows tracert output:</p>
 
-            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto; white-space: pre;">
+            <div class="tutorial-command">
 > tracert google.com
 
 Tracing route to google.com [142.250.190.46]
@@ -117,21 +165,30 @@ Trace complete.
                 <li>Asterisks in the middle of a trace are normal and just mean a router is hiding from ICMP traffic.</li>
                 <li>Asterisks at the end of a trace indicate exactly where the connection is failing.</li>
             </ul>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
         </div>
-</div>
-        
-        <!-- Navigation -->
-        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
-            <a href='ping-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Ping Explained</a>
-            <span></span>
-        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
     </main>
-    <!-- Footer -->
-    
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
     <div id="site-footer"></div>
-        <script src="../../js/components.js"></script>
-    <script src="../../js/tutorial.js"></script>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
 </body>
 </html>
-
-

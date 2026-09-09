@@ -2,45 +2,93 @@
 <html lang="en">
 <head>
     <script src="../../js/theme-init.js"></script>
-    <!-- SEO & Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DNS Troubleshooting Guide | Networking Tutorial | MJ Tech Hub</title>
     <meta name="description" content="A practical step-by-step guide to troubleshooting DNS name resolution issues.">
     <link rel="canonical" href="https://themjtechhub.site/tutorials/networking/dns-troubleshooting-guide.html">
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="DNS Troubleshooting Guide | Networking Tutorial | MJ Tech Hub">
     <meta property="og:description" content="A practical step-by-step guide to troubleshooting DNS name resolution issues.">
     <meta property="og:url" content="https://themjtechhub.site/tutorials/networking/dns-troubleshooting-guide.html">
     <meta property="og:site_name" content="MJ Tech Hub">
-    <meta property="og:type" content="website">
-    
-    <!-- Twitter -->
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="DNS Troubleshooting Guide | Networking Tutorial | MJ Tech Hub">
     <meta name="twitter:description" content="A practical step-by-step guide to troubleshooting DNS name resolution issues.">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "DNS Troubleshooting Guide",
+    "description": "A practical step-by-step guide to troubleshooting DNS name resolution issues.",
+    "url": "https://themjtechhub.site/tutorials/networking/dns-troubleshooting-guide.html",
+    "datePublished": "2026-08-25",
+    "dateModified": "2026-08-25",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/networking/dns-troubleshooting-guide.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../css/themes.css">
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/responsive.css">
-    <script src="../../js/theme.js"></script>
-    <script src="../../js/main.js" defer></script>
 </head>
-
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="site-header"></div>
-    <!-- Header -->
-    
-    <main class="lesson-container py-4">
-        <!-- Breadcrumb -->
-        <div id="tutorial-header">
-            <h1 class="static-h1" style="font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 1rem; color: var(--text-primary); font-weight: 800;">DNS Troubleshooting Guide</h1>
-        </div>
-        
-                <div class="content lesson-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-secondary);">
-            <p>When a user reports they "cannot access the internet," the issue is frequently not a network connectivity failure, but a <a href="what-is-dns.html">DNS</a> failure. A solid DNS troubleshooting methodology prevents engineers from wasting time investigating routers and firewalls when the network is completely healthy.</p>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../networking.html">Networking</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">DNS Troubleshooting Guide</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 8 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Aug 25, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">DNS Troubleshooting Guide</h1>
+            <p class="tutorial-hero-desc">A practical step-by-step guide to troubleshooting DNS name resolution issues.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>When a user reports they "cannot access the internet," the issue is frequently not a network connectivity failure, but a <a href="what-is-dns.html">DNS</a> failure. A solid DNS troubleshooting methodology prevents engineers from wasting time investigating routers and firewalls when the network is completely healthy.</p>
 
             <h2>DNS Failure vs Connectivity Failure</h2>
             <p>The most critical first step is isolation. If a user cannot open <code>example.com</code>, ask them to ping a known public IP address, such as <code>8.8.8.8</code>.</p>
@@ -77,7 +125,7 @@
             <h2>Useful Diagnostic Commands</h2>
             
             <h3>Windows</h3>
-            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+            <div class="tutorial-command">
                 ipconfig /all              # View configured DNS servers and suffix<br>
                 ipconfig /displaydns       # View the local DNS cache<br>
                 ipconfig /flushdns         # Clear the local DNS cache<br>
@@ -88,28 +136,37 @@
 
             <h3>Linux</h3>
             <p><em>Note: Linux DNS resolution depends heavily on the distribution (systemd-resolved, NetworkManager, etc.). Do not assume one tool works everywhere.</em></p>
-            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; overflow-x: auto;">
+            <div class="tutorial-command">
                 resolvectl status          # Check configured DNS servers (systemd)<br>
                 dig example.com            # Standard DNS querying tool<br>
                 dig @8.8.8.8 example.com   # Query a specific server<br>
                 nslookup example.com       # Widely available basic tool<br>
                 getent hosts example.com   # Tests how the OS itself resolves the name (checks /etc/hosts + DNS)
             </div>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
         </div>
-</div>
-        
-        <!-- Navigation -->
-        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 3rem;">
-            <a href='spanning-tree-protocol-explained.html' class='btn btn-secondary' style='border:none; padding: 0;'>&larr; Spanning Tree Protocol (STP) Explained</a>
-            <a href='dhcp-troubleshooting-guide.html' class='btn btn-secondary' style='border:none; padding: 0;'>DHCP Troubleshooting Guide &rarr;</a>
-        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
     </main>
-    <!-- Footer -->
-    
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
     <div id="site-footer"></div>
-        <script src="../../js/components.js"></script>
-    <script src="../../js/tutorial.js"></script>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
 </body>
 </html>
-
-

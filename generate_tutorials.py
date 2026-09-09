@@ -6,33 +6,140 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent
 
-def generate_lesson(slug, title, category, level, readTime, html_content):
+CANONICAL_DOMAIN = "https://themjtechhub.site"
+
+def parse_date(date_str):
+    if not date_str or date_str == "UNKNOWN":
+        return datetime.today().strftime("%b %d, %Y")
+    try:
+        dt = datetime.strptime(date_str, "%Y-%m-%d")
+        return dt.strftime("%b %d, %Y")
+    except Exception:
+        return date_str
+
+def generate_lesson(slug, title, category, level, readTime, html_content, description="", pub_date="2026-08-25", upd_date="2026-08-25"):
+    canonical_url = f"{CANONICAL_DOMAIN}/tutorials/networking/{slug}.html"
+    level_class = level.lower()
+    formatted_date = parse_date(upd_date)
+
+    json_ld = {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": title,
+        "description": description,
+        "url": canonical_url,
+        "datePublished": pub_date,
+        "dateModified": upd_date,
+        "proficiencyLevel": level,
+        "author": {
+            "@type": "Organization",
+            "name": "MJ Tech Hub",
+            "url": CANONICAL_DOMAIN
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "MJ Tech Hub",
+            "url": CANONICAL_DOMAIN,
+            "logo": {
+                "@type": "ImageObject",
+                "url": f"{CANONICAL_DOMAIN}/assets/logo/mj-tech-hub-logo.png"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": canonical_url
+        }
+    }
+    json_ld_str = json.dumps(json_ld, indent=4)
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <script src="../../js/theme-init.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{title} | {category} | MJ Tech Hub</title>
+    <title>{title} | {category} Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="{description}">
+    <link rel="canonical" href="{canonical_url}">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{title} | {category} Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="{description}">
+    <meta property="og:url" content="{canonical_url}">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{title} | {category} Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="{description}">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{json_ld_str}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../../css/themes.css">
     <link rel="stylesheet" href="../../css/main.css">
     <link rel="stylesheet" href="../../css/responsive.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="site-header"></div>
-    <main class="lesson-container py-4">
-        <div id="tutorial-header">
-            <h1 class="static-h1">{title}</h1>
-        </div>
-        
-        <div class="content lesson-content">
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../networking.html">{category}</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">{title}</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge {level_class}">{level}</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> {readTime}</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: {formatted_date}</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">{title}</h1>
+            <p class="tutorial-hero-desc">{description}</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
 {html_content}
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
         </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
     </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
     <div id="site-footer"></div>
     <script src="../../js/components.js"></script>
-    <script src="../../js/tutorial.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
     <script src="../../js/theme.js"></script>
 </body>
 </html>"""
