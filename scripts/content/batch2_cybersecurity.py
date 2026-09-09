@@ -34,22 +34,22 @@ CYBERSECURITY_TUTORIALS = [
             <tr>
                 <td><strong>Periodic Expiration</strong></td>
                 <td>Mandatory change every 60–90 days</td>
-                <td><strong>Do NOT expire passwords arbitrarily</strong>; change only upon evidence of compromise</td>
+                <td><strong>No periodic password changes</strong> unless there is evidence of compromise</td>
             </tr>
             <tr>
                 <td><strong>Composition Rules</strong></td>
                 <td>Require uppercase, lowercase, numbers, and symbols</td>
-                <td><strong>Do NOT require specific character sets</strong>; allow all printable ASCII and Unicode</td>
+                <td><strong>No arbitrary character-class composition requirements</strong>; allow all printable ASCII and Unicode</td>
             </tr>
             <tr>
                 <td><strong>Minimum Length</strong></td>
-                <td>Typically 8 characters</td>
-                <td><strong>Minimum 8 characters</strong> (for user-chosen); strongly recommend <strong>15+ characters</strong> or passphrases</td>
+                <td>Typically 8 characters with forced character mixing</td>
+                <td><strong>Minimum 15 characters</strong> for single-factor passwords; <strong>minimum 8 characters</strong> permitted when used as part of MFA</td>
             </tr>
             <tr>
                 <td><strong>Credential Screening</strong></td>
                 <td>Basic dictionary checks</td>
-                <td><strong>Mandatory check against known compromised password corpuses</strong> (e.g. breach dumps)</td>
+                <td><strong>Mandatory verifier screening</strong> against commonly used, expected, or compromised values</td>
             </tr>
             <tr>
                 <td><strong>Password Hints & Security Questions</strong></td>
@@ -67,26 +67,33 @@ CYBERSECURITY_TUTORIALS = [
 
 <h2>The Core Tenets of NIST SP 800-63B-4</h2>
 
-<h3>1. Length Over Complexity: The Power of Passphrases</h3>
-<p>Entropy in password authentication scales exponentially with length, not arbitrary character substitution. An 8-character password with complex symbols (such as <code>P@$$w0rd</code>) contains far less mathematical entropy and is cracked in minutes via GPU-accelerated hash tables compared to a 24-character multi-word passphrase (such as <code>correct horse battery staple</code> or <code>sunset-tractor-coffee-mountain</code>).</p>
+<h3>1. Length Over Complexity: Single-Factor vs Multi-Factor Workflows</h3>
+<p>Under NIST SP 800-63B-4, minimum password length is directly determined by the surrounding authentication architecture:</p>
 <ul>
-    <li>Systems should support passwords up to at least <strong>64 characters</strong> in length.</li>
-    <li>Spaces and Unicode characters (including emojis) should be permitted to facilitate intuitive passphrases.</li>
+    <li><strong>Single-Factor Passwords (15-Character Minimum):</strong> When a memorized secret is used as the sole authentication mechanism without a second factor, verifiers <strong>must require a minimum length of 15 characters</strong>.</li>
+    <li><strong>Multi-Factor Passwords (8-Character Minimum):</strong> When the password is used strictly as one component of a Multi-Factor Authentication (MFA) workflow alongside a second factor (such as a hardware authenticator), verifiers <strong>may permit a minimum length of 8 characters</strong>.</li>
+    <li><strong>No Composition Rules:</strong> Verifiers <strong>must not impose arbitrary character-class rules</strong> (e.g. requiring a mix of uppercase, lowercase, numbers, and special symbols). Mathematical entropy scales with string length, not predictable symbol substitutions (e.g. <code>P@$$w0rd</code>).</li>
+    <li><strong>Passphrase Support:</strong> Verifiers must support passwords up to at least <strong>64 characters</strong> in length and allow spaces and all printable ASCII and Unicode characters (including emojis) to facilitate intuitive, high-entropy passphrases (e.g. <code>correct horse battery staple</code> or <code>sunset-tractor-coffee-mountain</code>).</li>
 </ul>
 
-<h3>2. The Elimination of Forced Periodic Password Rotation</h3>
+<h3>2. Elimination of Forced Periodic Password Rotation</h3>
 <div class="callout callout-warning">
     <div class="callout-title"><i class="fa-solid fa-ban" aria-hidden="true"></i> Why Arbitrary Rotation Weakens Security</div>
-    <div class="callout-body">When forced to change passwords every 90 days without experiencing a security event, users predictably increment a trailing number or swap a single symbol (e.g., <code>Company1!</code> to <code>Company2!</code>). Attackers who obtain one historical password hash instantly predict all subsequent iterations. NIST explicitly directs organizations to require password resets <strong>only when an account shows evidence of compromise</strong>.</div>
+    <div class="callout-body">When forced to change passwords every 60 or 90 days without experiencing a security incident, users predictably increment a trailing number or swap a single symbol (e.g. <code>Company1!</code> to <code>Company2!</code>). Attackers who obtain one historical password hash instantly predict all subsequent iterations. NIST explicitly directs verifiers to require password changes <strong>only when there is evidence of compromise</strong> of the authenticator.</div>
 </div>
 
-<h3>3. Mandatory Compromised Credential Screening</h3>
-<p>The single most effective software control mandated by NIST is testing proposed passwords at creation against a dynamically updated database of breached credentials:</p>
+<h3>3. Verifier Screening Against Compromised & Expected Values</h3>
+<p>NIST SP 800-63B-4 requires verifiers to compare proposed passwords at creation or reset against a blacklist of disallowed values, rejecting candidate passwords that match:</p>
 <ul>
-    <li>Compare candidate passwords against known compromised passwords exposed in public breach corpuses (such as the billions of records indexed in <em>Have I Been Pwned</em> or commercial threat intelligence feeds).</li>
-    <li>Screen against contextual dictionary words: organization name, usernames, derivatives of the service name, and repetitive strings (e.g. <code>aaaaaaaa</code>, <code>12345678</code>).</li>
-    <li>In Windows Server Active Directory, native fine-grained password policies or enterprise software (such as <em>Microsoft Entra Password Protection</em>) can enforce this filtering at the Domain Controller level during <code>SetPassword</code> RPC calls.</li>
+    <li><strong>Known Compromised Passwords:</strong> Passwords harvested from past security breaches and credential dump corpuses.</li>
+    <li><strong>Dictionary & Contextual Words:</strong> Common dictionary terms, derivatives of the service or organization name, and the user's account name.</li>
+    <li><strong>Repetitive or Sequential Characters:</strong> Trivial patterns such as <code>aaaaaaaa</code>, <code>12345678</code>, or sequential keyboard walks (e.g. <code>qwertyuiop</code>).</li>
 </ul>
+
+<div class="callout callout-tip">
+    <div class="callout-title"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Implementation Techniques: Privacy-Preserving Lookups</div>
+    <div class="callout-body">NIST establishes the requirement to screen against compromised values, but does not mandate any single proprietary technology. One widely adopted, privacy-preserving implementation technique is <strong>k-anonymity</strong> (utilized by services like <em>Have I Been Pwned</em>). Under a k-anonymity model, the verifier computes a SHA-1 hash of the candidate password and sends only the first 5 characters (the prefix) to the screening API. The service returns all hash suffixes matching that prefix, allowing the verifier to check for a match locally without ever exposing the full hash or cleartext password over the network. In enterprise Active Directory environments, solutions like <em>Microsoft Entra Password Protection</em> provide native, on-premises Domain Controller screening against dynamic global and custom banned lists.</div>
+</div>
 
 <h2>Rate Limiting & Credential Stuffing Defense</h2>
 <p>Modern authentication endpoints face relentless automated attacks, specifically <strong>Credential Stuffing</strong> (replaying usernames and passwords stolen from other services) and <strong>Password Spraying</strong> (testing a single common password across thousands of accounts to bypass lockout thresholds).</p>
@@ -98,7 +105,7 @@ CYBERSECURITY_TUTORIALS = [
 </ol>
 
 <h2>Summary</h2>
-<p>NIST SP 800-63B-4 aligns enterprise policy with real-world security mathematics and human psychology. By abandoning arbitrary 90-day rotations, removing frustrating complexity rules, prioritizing long multi-word passphrases, and actively screening against breached password databases, organizations dramatically raise the barrier against credential-based cyberattacks.</p>"""
+<p>NIST SP 800-63B-4 aligns enterprise policy with real-world security mathematics and human psychology. By abandoning arbitrary 90-day rotations, removing frustrating complexity rules, enforcing a 15-character minimum for single-factor secrets (or 8 characters for MFA), and actively screening against breached password databases, organizations dramatically raise the barrier against credential-based cyberattacks.</p>"""
     },
     {
         "id": "next-generation-antivirus-ngav-vs-traditional-signatures",

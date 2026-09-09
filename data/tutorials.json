@@ -768,6 +768,42 @@
         "updatedAt": "2026-09-09"
     },
     {
+        "id": "wireless-access-points-and-controllers-wlc",
+        "title": "Wireless Access Points, CAPWAP & WLC Architecture",
+        "description": "Understand enterprise Wi-Fi: Autonomous vs Lightweight APs (LAP), CAPWAP control and data tunneling, and centralized Wireless LAN Controller (WLC) deployments.",
+        "category": "Networking",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "wireless, wlc, capwap, access point, lap, autonomous ap, split-mac, 802.11, enterprise wifi, networking",
+        "url": "tutorials/networking/wireless-access-points-and-controllers-wlc.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "ipv6-addressing-and-slaac",
+        "title": "IPv6 Addressing, SLAAC & Global Unicast Architecture",
+        "description": "Master enterprise IPv6 fundamentals: 128-bit address representation, address scopes, Stateless Address Autoconfiguration (SLAAC), and ICMPv6 Neighbor Discovery.",
+        "category": "Networking",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "ipv6, slaac, icmpv6, global unicast, link local, ndp, dual stack, networking, subnetting, eui-64",
+        "url": "tutorials/networking/ipv6-addressing-and-slaac.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "snmp-v2c-vs-v3-security-and-usm",
+        "title": "SNMPv2c vs SNMPv3: Cryptographic Authentication & Privacy (USM)",
+        "description": "Examine the evolution of Simple Network Management Protocol (SNMP): MIBs, OIDs, plaintext community string vulnerabilities in SNMPv2c, and SNMPv3 USM encryption.",
+        "category": "Networking",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "snmp, snmpv2c, snmpv3, usm, vacm, mib, oid, network monitoring, authentication, sha, aes encryption, sysadmin",
+        "url": "tutorials/networking/snmp-v2c-vs-v3-security-and-usm.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
         "id": "windows-operating-system-fundamentals",
         "title": "Windows Operating System Fundamentals",
         "description": "Understand the core architecture of Microsoft Windows, including user mode, kernel mode, the NT executive, and system processes.",
@@ -836,6 +872,42 @@
         "readTime": "5 min read",
         "keywords": "powershell, pipeline, object-oriented, where-object, select-object, foreach-object, byvalue, bypropertyname, filter left, administration",
         "url": "tutorials/windows/powershell-pipeline-object-manipulation-and-filtering.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "windows-services-architecture-and-sc-utility",
+        "title": "Windows Services Architecture & Service Controller (sc.exe)",
+        "description": "Master Windows services architecture: Service Control Manager (SCM), svchost grouping, registry hives, and command-line lifecycle management with sc.exe and PowerShell.",
+        "category": "Windows",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "windows services, sc.exe, scm, service control manager, svchost, powershell, get-service, services.msc, windows administration, sysadmin",
+        "url": "tutorials/windows/windows-services-architecture-and-sc-utility.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "windows-bitlocker-drive-encryption-and-tpm-architecture",
+        "title": "BitLocker Drive Encryption Architecture & TPM 2.0 Integration",
+        "description": "Examine Microsoft BitLocker full-volume drive encryption: TPM 2.0 PCR integrity measurements, key hierarchies (FVEK/VMK), recovery key backup, and manage-bde administration.",
+        "category": "Windows",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "bitlocker, tpm 2.0, drive encryption, full volume encryption, fvek, vmk, manage-bde, pcr, active directory, entra id, windows security",
+        "url": "tutorials/windows/windows-bitlocker-drive-encryption-and-tpm-architecture.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "windows-group-policy-processing-order-lsdou",
+        "title": "Group Policy Processing Order: Local, Site, Domain & OU (LSDOU)",
+        "description": "Master enterprise Active Directory Group Policy precedence: the LSDOU processing model, Block Inheritance, Enforced overrides, Security Filtering, and gpresult troubleshooting.",
+        "category": "Windows",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "group policy, gpo, lsdou, active directory, block inheritance, enforced, security filtering, gpresult, gpupdate, wmi filtering, sysadmin",
+        "url": "tutorials/windows/windows-group-policy-processing-order-lsdou.html",
         "publishedAt": "2026-09-09",
         "updatedAt": "2026-09-09"
     },
@@ -912,6 +984,42 @@
         "updatedAt": "2026-09-09"
     },
     {
+        "id": "linux-openssh-server-configuration-and-hardening",
+        "title": "OpenSSH Server Administration: sshd_config Hardening & Cryptographic Security",
+        "description": "Enterprise Linux SSH server administration: harden sshd_config, enforce Ed25519 public-key authentication, configure MFA, and eliminate attack vectors.",
+        "category": "Linux",
+        "level": "Intermediate",
+        "readTime": "6 min read",
+        "keywords": "linux, openssh, ssh, sshd_config, ed25519, security hardening, ssh keys, fail2ban, port hardening, sysadmin, pam",
+        "url": "tutorials/linux/linux-openssh-server-configuration-and-hardening.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "linux-debian-ubuntu-package-management-apt-dpkg",
+        "title": "Debian/Ubuntu Package Management: apt, apt-cache & dpkg Administration",
+        "description": "Master software management on Debian and Ubuntu Linux: dpkg low-level operations, apt high-level repository resolution, /etc/apt/sources.list, and cache maintenance.",
+        "category": "Linux",
+        "level": "Beginner",
+        "readTime": "4 min read",
+        "keywords": "linux, debian, ubuntu, apt, dpkg, apt-get, apt-cache, deb packages, package management, repositories, sysadmin",
+        "url": "tutorials/linux/linux-debian-ubuntu-package-management-apt-dpkg.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "linux-firewalld-zones-and-services-management",
+        "title": "Enterprise Linux Firewall Administration: firewalld Zones, Services & Rich Rules",
+        "description": "Administer dynamic host firewalls on Linux with firewalld: understand zone trust models, runtime vs permanent configurations, rich rules, and service port management.",
+        "category": "Linux",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "linux, firewalld, firewall-cmd, iptables, nftables, security, zones, rich rules, port forwarding, red hat, rocky linux",
+        "url": "tutorials/linux/linux-firewalld-zones-and-services-management.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
         "id": "what-is-a-server",
         "title": "What Is a Server?",
         "description": "Discover what defines server hardware and software, client-server models, high-availability components, and enterprise roles.",
@@ -980,6 +1088,42 @@
         "readTime": "5 min read",
         "keywords": "raid, raid 0, raid 1, raid 5, raid 6, raid 10, storage, hardware raid, striping, mirroring, parity, sysadmin, server hardware",
         "url": "tutorials/servers/server-raid-levels-explained-0-1-5-6-10.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "hypervisor-architecture-type-1-bare-metal-vs-type-2-hosted",
+        "title": "Hypervisor Architecture: Type 1 (Bare-Metal) vs Type 2 (Hosted)",
+        "description": "Understand enterprise virtualization: Type 1 bare-metal hypervisors vs Type 2 hosted hypervisors, hardware-assisted CPU virtualization (VT-x/AMD-V), and hypervisor overhead.",
+        "category": "Servers",
+        "level": "Beginner",
+        "readTime": "5 min read",
+        "keywords": "virtualization, hypervisor, type 1, type 2, bare-metal, esxi, hyper-v, kvm, proxmox, virtualbox, sysadmin",
+        "url": "tutorials/servers/hypervisor-architecture-type-1-bare-metal-vs-type-2-hosted.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "enterprise-storage-architectures-das-vs-nas-vs-san",
+        "title": "Enterprise Storage Architectures Compared: DAS vs NAS vs SAN",
+        "description": "Compare enterprise storage architectures: Direct-Attached Storage (DAS), Network-Attached Storage (NAS), and Storage Area Networks (SAN). Understand block vs file protocols, iSCSI, and Fibre Channel.",
+        "category": "Servers",
+        "level": "Beginner",
+        "readTime": "5 min read",
+        "keywords": "storage, das, nas, san, iscsi, fibre channel, lun, block storage, file storage, smb, nfs, enterprise servers",
+        "url": "tutorials/servers/enterprise-storage-architectures-das-vs-nas-vs-san.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "the-3-2-1-backup-rule-and-modern-ransomware-protection",
+        "title": "The 3-2-1 Backup Strategy & Modern Ransomware Defense Architecture",
+        "description": "Implement enterprise disaster recovery: the 3-2-1 backup rule, immutable object storage (S3 Object Lock / WORM), air-gapped repositories, RPO, and RTO metrics.",
+        "category": "Servers",
+        "level": "Beginner",
+        "readTime": "4 min read",
+        "keywords": "backups, disaster recovery, 3-2-1 rule, ransomware, immutable storage, s3 object lock, veeam, rpo, rto, air gap",
+        "url": "tutorials/servers/the-3-2-1-backup-rule-and-modern-ransomware-protection.html",
         "publishedAt": "2026-09-09",
         "updatedAt": "2026-09-09"
     },
@@ -1056,6 +1200,42 @@
         "updatedAt": "2026-09-09"
     },
     {
+        "id": "email-authentication-frameworks-spf-dkim-and-dmarc-deep-dive",
+        "title": "Email Authentication Protocols Deep Dive: SPF Syntax, DKIM Keys & DMARC Policies",
+        "description": "Master enterprise email defense against spoofing and phishing: SPF mechanism syntax, DKIM cryptographic signatures, DMARC alignment, and enforcement policies.",
+        "category": "Cybersecurity",
+        "level": "Intermediate",
+        "readTime": "6 min read",
+        "keywords": "spf, dkim, dmarc, email security, phishing, dns txt, spoofing, cybersecurity, bec, enterprise defense",
+        "url": "tutorials/cybersecurity/email-authentication-frameworks-spf-dkim-and-dmarc-deep-dive.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "cve-and-cvss-scoring-metrics-base-temporal-environmental",
+        "title": "Understanding CVE Identifiers, CVSS v3/v4 Vectors & Severity Scoring",
+        "description": "Master vulnerability management metrics: CVE identifiers, NVD enrichment, CVSS Base metric vectors (AV, AC, PR, UI, S, C, I, A), and Temporal vs Environmental score adjustments.",
+        "category": "Cybersecurity",
+        "level": "Beginner",
+        "readTime": "7 min read",
+        "keywords": "cve, cvss, cvss v3, cvss v4, nvd, vulnerability management, security metrics, base score, epss, cis benchmarks, risk assessment",
+        "url": "tutorials/cybersecurity/cve-and-cvss-scoring-metrics-base-temporal-environmental.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "zero-trust-architecture-tenets-nist-sp-800-207-principles",
+        "title": "Zero Trust Architecture Core Tenets: NIST SP 800-207 Guiding Principles",
+        "description": "Understand Zero Trust Architecture (ZTA): the collapse of perimeter castle-and-moat security, the seven core tenets of NIST SP 800-207, and the Policy Engine / Policy Enforcement Point model.",
+        "category": "Cybersecurity",
+        "level": "Beginner",
+        "readTime": "4 min read",
+        "keywords": "zero trust, nist sp 800-207, zta, microsegmentation, continuous verification, policy engine, pep, identity-aware proxy, cybersecurity",
+        "url": "tutorials/cybersecurity/zero-trust-architecture-tenets-nist-sp-800-207-principles.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
         "id": "cloud-computing-fundamentals",
         "title": "Cloud Computing Fundamentals",
         "description": "Learn the core definition, essential characteristics, and business advantages of modern cloud computing architectures.",
@@ -1124,6 +1304,42 @@
         "readTime": "5 min read",
         "keywords": "aws, iam, json policy, least privilege, polp, statement, effect, action, resource, condition, cloud security",
         "url": "tutorials/cloud/cloud-iam-policy-syntax-json-statements-and-least-privilege.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "azure-resource-manager-arm-hierarchy-management-groups-to-resources",
+        "title": "Azure Resource Hierarchy: Management Groups, Subscriptions & Resource Groups",
+        "description": "Master Microsoft Azure enterprise governance: the four-tier Azure Resource Manager (ARM) hierarchy, Management Groups, Subscriptions, Resource Groups, and RBAC inheritance.",
+        "category": "Cloud & AI",
+        "level": "Beginner",
+        "readTime": "4 min read",
+        "keywords": "azure, arm, resource groups, subscriptions, management groups, azure governance, rbac, azure policy, cloud architecture",
+        "url": "tutorials/cloud/azure-resource-manager-arm-hierarchy-management-groups-to-resources.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "cloud-storage-types-object-vs-block-vs-managed-file-shares",
+        "title": "Cloud Storage Typologies Compared: Object (S3/Blob), Block (EBS/Disk) & File (EFS/Azure Files)",
+        "description": "Examine the three fundamental cloud storage models: Object Storage (Amazon S3 / Azure Blob), Block Storage (AWS EBS / Azure Managed Disks), and Managed File Storage (AWS EFS / Azure Files).",
+        "category": "Cloud & AI",
+        "level": "Beginner",
+        "readTime": "4 min read",
+        "keywords": "cloud storage, s3, azure blob, ebs, managed disks, efs, azure files, object storage, block storage, file storage, cloud architecture",
+        "url": "tutorials/cloud/cloud-storage-types-object-vs-block-vs-managed-file-shares.html",
+        "publishedAt": "2026-09-09",
+        "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "infrastructure-as-code-iac-declarative-vs-imperative-principles",
+        "title": "Infrastructure as Code (IaC): Declarative vs Imperative Principles & State Management",
+        "description": "Understand Infrastructure as Code (IaC): contrast declarative and imperative methodologies, manage remote state files, prevent configuration drift, and integrate CI/CD pipelines.",
+        "category": "Cloud & AI",
+        "level": "Beginner",
+        "readTime": "4 min read",
+        "keywords": "iac, infrastructure as code, terraform, ansible, declarative, imperative, state management, cloudformation, bicep, devops",
+        "url": "tutorials/cloud/infrastructure-as-code-iac-declarative-vs-imperative-principles.html",
         "publishedAt": "2026-09-09",
         "updatedAt": "2026-09-09"
     }

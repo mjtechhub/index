@@ -1,0 +1,515 @@
+============================================================
+CATEGORY: Networking (networking)
+============================================================
+
+--- Sec 1: Networking Fundamentals & Core Models (Pub: 7, Planned: 2) ---
+    [Beginner] id: 'network-topologies-mesh-star-bus' | title: 'Network Topologies: Star, Mesh, Bus & Hybrid'
+    [Beginner] id: 'collision-vs-broadcast-domains' | title: 'Collision Domains vs Broadcast Domains'
+
+--- Sec 2: IP Addressing, Subnetting & Next-Gen IP (Pub: 5, Planned: 4) ---
+    [Intermediate] id: 'vlsm-variable-length-subnet-masking' | title: 'VLSM (Variable Length Subnet Masking) In Depth'
+    [Intermediate] id: 'classful-vs-classless-addressing' | title: 'Classful vs Classless (CIDR) Addressing Architecture'
+    [Intermediate] id: 'ipv6-addressing-and-slaac' | title: 'IPv6 Addressing, SLAAC & Global Unicast Architecture'
+    [Advanced] id: 'ipv6-transition-dual-stack-and-tunneling' | title: 'IPv6 Transition Strategies: Dual Stack, 6to4 & NAT64'
+
+--- Sec 3: Ethernet, Switching & VLAN Architecture (Pub: 6, Planned: 3) ---
+    [Intermediate] id: 'ieee-802-1q-vlan-tagging-deep-dive' | title: 'IEEE 802.1Q VLAN Tagging & Frame Encapsulation'
+    [Intermediate] id: 'switch-port-security-and-mac-filtering' | title: 'Switch Port Security & Dynamic MAC Limiting'
+    [Advanced] id: 'chassis-stacking-and-switch-virtualization' | title: 'Switch Stacking Architecture & Virtual Chassis'
+
+--- Sec 4: Routing Protocols, NAT & Gateway Redundancy (Pub: 9, Planned: 1) ---
+    [Intermediate] id: 'port-address-translation-pat-deep-dive' | title: 'PAT (Port Address Translation / NAT Overload) Deep Dive'
+
+--- Sec 5: Transport Protocols, Handshakes & Ports (Pub: 4, Planned: 3) ---
+    [Intermediate] id: 'tcp-three-way-handshake-and-teardown' | title: 'TCP Three-Way Handshake & Connection Teardown Flow'
+    [Intermediate] id: 'tcp-flow-control-sliding-window-and-buffers' | title: 'TCP Flow Control, Window Sizing & Buffer Management'
+    [Advanced] id: 'tcp-congestion-control-algorithms' | title: 'TCP Congestion Control Algorithms (Tahoe, Reno, BBR)'
+
+--- Sec 6: DNS, DHCP & Core Network Services (Pub: 4, Planned: 4) ---
+    [Intermediate] id: 'dns-resolution-iterative-vs-recursive-queries' | title: 'DNS Resolution Process: Iterative vs Recursive Queries'
+    [Intermediate] id: 'dhcp-dora-process-and-options-architecture' | title: 'DHCP DORA Process & Essential Scope Options (Option 3, 6, 66)'
+    [Intermediate] id: 'reverse-dns-and-ptr-record-architecture' | title: 'Reverse DNS Lookups, PTR Records & In-Addr.Arpa'
+    [Intermediate] id: 'network-time-protocol-ntp-synchronization' | title: 'Network Time Protocol (NTP) Hierarchy & Stratum Layers'
+
+--- Sec 7: Wireless Networking (Wi-Fi) (Pub: 2, Planned: 4) ---
+    [Beginner] id: 'wi-fi-standards-evolution-802-11ax-wi-fi-6-6e-7' | title: 'Wi-Fi Standards Evolution: 802.11ax (Wi-Fi 6/6E) to Wi-Fi 7'
+    [Intermediate] id: 'wireless-access-points-and-controllers-wlc' | title: 'Wireless Access Points, CAPWAP & WLC Architecture'
+    [Intermediate] id: 'wi-fi-security-wpa2-enterprise-vs-wpa3' | title: 'Wi-Fi Security: WPA2-Enterprise (802.1X) vs WPA3 SAE'
+    [Advanced] id: 'wireless-roaming-802-11r-k-v-standards' | title: 'Seamless Wireless Roaming Standards: 802.11r, 802.11k & 802.11v'
+
+--- Sec 8: Network Security, Firewalls & VPN Connectivity (Pub: 6, Planned: 2) ---
+    [Advanced] id: 'ipsec-protocol-suite-ah-esp-and-ikev2' | title: 'IPsec Protocol Suite: AH, ESP & IKEv2 Phase Negotiation'
+    [Intermediate] id: 'network-security-dmz-and-bastion-architecture' | title: 'DMZ Segmentation, Perimeter Security & Bastion Hosts'
+
+--- Sec 9: Network Monitoring, Telemetry & Observability (Pub: 6, Planned: 3) ---
+    [Intermediate] id: 'snmp-v2c-vs-v3-security-and-usm' | title: 'SNMPv2c vs SNMPv3: Cryptographic Authentication & Privacy (USM)'
+    [Intermediate] id: 'wireshark-tcp-packet-analysis-and-filter-syntax' | title: 'Wireshark Packet Analysis: Display Filters & TCP Stream Following'
+    [Advanced] id: 'flow-telemetry-sflow-vs-netflow-vs-ipfix' | title: 'Flow Telemetry Comparison: sFlow, NetFlow & IPFIX in Enterprise WAN'
+
+--- Sec 10: Network Performance & Diagnostic Troubleshooting (Pub: 15, Planned: 0) ---
+============================================================
+CATEGORY: Windows (windows)
+============================================================
+
+--- Sec 1: Windows Architecture & Operating System Fundamentals (Pub: 1, Planned: 7) ---
+    [Intermediate] id: 'windows-user-mode-vs-kernel-mode-architecture' | title: 'User Mode vs Kernel Mode Architecture in Windows'
+    [Advanced] id: 'windows-nt-kernel-and-executive-subsystems' | title: 'Windows NT Kernel, HAL & Executive Subsystems'
+    [Intermediate] id: 'windows-uefi-boot-process-from-post-to-login' | title: 'Windows UEFI Boot Process: From POST to Desktop Login'
+    [Intermediate] id: 'windows-registry-architecture-and-root-hives' | title: 'Windows Registry Architecture: Root Hives & System Keys'
+    [Intermediate] id: 'windows-syswow64-and-64bit-os-redirection' | title: '32-bit vs 64-bit Windows Architecture: SysWOW64 & Redirection'
+    [Beginner] id: 'windows-system-environment-variables-configuration' | title: 'Windows System & User Environment Variables Configuration'
+    [Intermediate] id: 'windows-filesystems-ntfs-vs-refs-architecture' | title: 'Windows Filesystems Architecture: NTFS vs ReFS'
+
+--- Sec 2: Command Prompt & Administrative Utilities (Pub: 1, Planned: 7) ---
+    [Beginner] id: 'windows-batch-scripting-fundamentals-for-sysadmins' | title: 'Windows Batch (.bat) Scripting Fundamentals for Sysadmins'
+    [Intermediate] id: 'windows-diskpart-command-line-disk-management' | title: 'DiskPart Command-Line Disk Management & Partitioning'
+    [Intermediate] id: 'windows-robocopy-advanced-file-replication-guide' | title: 'Robocopy Advanced File Replication, Mirroring & Multithreading'
+    [Intermediate] id: 'windows-netsh-command-line-network-administration' | title: 'Netsh Command-Line Network Interface & Firewall Administration'
+    [Beginner] id: 'windows-system-file-checker-sfc-and-dism-repair' | title: 'System File Checker (SFC) and DISM Component Store Repair'
+    [Beginner] id: 'windows-chkdsk-and-filesystem-integrity-management' | title: 'Chkdsk & Volume Dirty Bit Filesystem Integrity Diagnostics'
+    [Intermediate] id: 'windows-wmic-and-command-line-management' | title: 'Windows Management Instrumentation Command-Line (WMIC) Essentials'
+
+--- Sec 3: PowerShell Administration & Automation (Pub: 2, Planned: 7) ---
+    [Intermediate] id: 'powershell-providers-and-psdrives-management' | title: 'PowerShell Providers & PSDrives: Interfacing with Registry & Certs'
+    [Intermediate] id: 'powershell-execution-policies-and-script-signing' | title: 'PowerShell Execution Policies, Scope & Code Signing'
+    [Intermediate] id: 'powershell-remoting-winrm-and-pssession-architecture' | title: 'PowerShell Remoting: WinRM Configuration & Enter-PSSession'
+    [Intermediate] id: 'powershell-modules-and-psgallery-package-management' | title: 'PowerShell Modules, Repositories & PSGallery Package Management'
+    [Intermediate] id: 'powershell-robust-error-handling-try-catch-finally' | title: 'Robust Error Handling in PowerShell: Try/Catch/Finally & ErrorAction'
+    [Advanced] id: 'powershell-advanced-functions-and-custom-cmdlet-authoring' | title: 'Authoring Advanced Functions & Reusable Cmdlets in PowerShell'
+    [Intermediate] id: 'powershell-cim-wmi-queries-with-get-ciminstance' | title: 'Querying Windows Telemetry with Get-CimInstance & CIM Sessions'
+
+--- Sec 4: Identity, Local Security & NTFS Permissions (Pub: 1, Planned: 7) ---
+    [Beginner] id: 'windows-local-users-and-groups-sam-database' | title: 'Windows Local Accounts & Security Accounts Manager (SAM) Database'
+    [Intermediate] id: 'windows-user-account-control-uac-architecture' | title: 'User Account Control (UAC) Architecture & Token Elevation'
+    [Intermediate] id: 'windows-ntfs-inheritance-ownership-and-takeown' | title: 'NTFS Inheritance, Explicit ACLs, Ownership & Takeown Workflows'
+    [Beginner] id: 'windows-credential-manager-and-stored-vaults' | title: 'Windows Credential Manager Architecture & Stored Enterprise Vaults'
+    [Intermediate] id: 'windows-encrypting-file-system-efs-and-recovery-agent' | title: 'Encrypting File System (EFS) Architecture & Data Recovery Agents'
+    [Intermediate] id: 'windows-local-security-policy-secpol-hardening' | title: 'Windows Local Security Policy (secpol.msc) Hardening Baselines'
+    [Intermediate] id: 'windows-access-control-lists-icacls-command-line' | title: 'Managing File ACLs from the Command Line with icacls'
+
+--- Sec 5: Processes, Services & Task Scheduling (Pub: 0, Planned: 7) ---
+    [Intermediate] id: 'windows-services-architecture-and-sc-utility' | title: 'Windows Services Architecture & Service Controller (sc.exe)'
+    [Beginner] id: 'windows-task-scheduler-automation-and-triggers' | title: 'Windows Task Scheduler: Advanced Triggers, Actions & Automation'
+    [Intermediate] id: 'windows-process-threads-handles-and-lifecycle' | title: 'Windows Process Lifecycle: Threads, Handles & Memory Allocations'
+    [Beginner] id: 'windows-task-manager-advanced-analysis-for-admins' | title: 'Task Manager Advanced Metrics, Startup Impact & Resource Allocation'
+    [Advanced] id: 'windows-managed-service-accounts-and-virtual-accounts' | title: 'Virtual Accounts & Group Managed Service Accounts (gMSA)'
+    [Intermediate] id: 'windows-sysinternals-autoruns-deep-dive' | title: 'Sysinternals Autoruns: Inspecting Startup Persistence & Malware Hooks'
+    [Intermediate] id: 'windows-resource-monitor-deep-dive-for-sysadmins' | title: 'Resource Monitor Deep Dive: Disk I/O, Network & CPU Contention'
+
+--- Sec 6: Windows Networking & Remote Access (Pub: 0, Planned: 8) ---
+    [Beginner] id: 'windows-tcp-ip-stack-and-adapter-configuration' | title: 'Windows TCP/IP Stack Configuration & Adapter Binding Order'
+    [Intermediate] id: 'windows-dns-client-resolution-and-hosts-file' | title: 'Windows DNS Client Cache, Hosts File Behavior & Multi-Homing'
+    [Beginner] id: 'windows-dhcp-client-lifecycle-and-autonet-apipa' | title: 'Windows DHCP Client Lease Renewal & APIPA (169.254.x.x) Fallback'
+    [Intermediate] id: 'windows-server-message-block-smb-file-sharing' | title: 'Server Message Block (SMB 3.1.1) Architecture, Shares & Signing'
+    [Intermediate] id: 'windows-remote-desktop-protocol-rdp-configuration' | title: 'Remote Desktop Protocol (RDP) Configuration, Port & NLA Security'
+    [Beginner] id: 'windows-network-location-profiles-domain-private-public' | title: 'Windows Network Location Profiles: Domain, Private & Public Rules'
+    [Advanced] id: 'windows-remote-management-winrm-https-listener-setup' | title: 'Configuring Secure WinRM HTTPS Listeners with Certificates'
+    [Beginner] id: 'windows-remote-assistance-and-quick-assist-administration' | title: 'Enterprise Remote Assistance & Quick Assist Support Architecture'
+
+--- Sec 7: Endpoint Security, Defender & BitLocker (Pub: 0, Planned: 8) ---
+    [Intermediate] id: 'windows-defender-antivirus-enterprise-configuration' | title: 'Microsoft Defender Antivirus: Scanning Engines & Exclusions'
+    [Intermediate] id: 'windows-defender-firewall-with-advanced-security' | title: 'Windows Defender Firewall with Advanced Security: Rules & Profiles'
+    [Intermediate] id: 'windows-bitlocker-drive-encryption-and-tpm-architecture' | title: 'BitLocker Drive Encryption Architecture & TPM 2.0 Integration'
+    [Intermediate] id: 'windows-bitlocker-recovery-keys-and-ad-backup' | title: 'BitLocker Recovery Password Backup to Active Directory and Entra ID'
+    [Advanced] id: 'windows-attack-surface-reduction-asr-rules-implementation' | title: 'Attack Surface Reduction (ASR) Rules Implementation & Tuning'
+    [Advanced] id: 'windows-credential-guard-and-virtualization-based-security' | title: 'Credential Guard & Virtualization-Based Security (VBS) Architecture'
+    [Advanced] id: 'windows-applocker-and-application-control-policies' | title: 'Windows AppLocker & Windows Defender Application Control (WDAC)'
+    [Intermediate] id: 'windows-hello-for-business-and-fido2-authentication' | title: 'Windows Hello for Business Architecture & FIDO2 Enterprise Sign-in'
+
+--- Sec 8: Active Directory Domain Join & Group Policy (Pub: 0, Planned: 7) ---
+    [Intermediate] id: 'windows-active-directory-domain-join-prerequisites-workflow' | title: 'Active Directory Domain Join: Prerequisites, DNS & Troubleshooting'
+    [Intermediate] id: 'windows-group-policy-processing-order-lsdou' | title: 'Group Policy Processing Order: Local, Site, Domain & OU (LSDOU)'
+    [Intermediate] id: 'windows-group-policy-troubleshooting-gpupdate-gpresult' | title: 'Group Policy Diagnostics: gpupdate /force & gpresult /h Reports'
+    [Beginner] id: 'windows-local-group-policy-editor-gpedit-configuration' | title: 'Local Group Policy Editor (gpedit.msc) Configuration & Staging'
+    [Intermediate] id: 'windows-roaming-profiles-and-folder-redirection' | title: 'Enterprise User Profiles: Roaming Profiles & Folder Redirection'
+    [Advanced] id: 'windows-ad-domain-controller-discovery-dc-locator' | title: 'Domain Controller Locator (DC Locator) Process & SRV Records'
+    [Intermediate] id: 'windows-group-policy-preferences-vs-policies-architecture' | title: 'Group Policy Preferences (GPP) vs Traditional Administrative Policies'
+
+--- Sec 9: Enterprise Updates, Deployment & Management (Pub: 0, Planned: 7) ---
+    [Beginner] id: 'windows-update-architecture-and-servicing-channels' | title: 'Windows Update Architecture: Component-Based Servicing & Cumulative Updates'
+    [Intermediate] id: 'windows-wsus-client-configuration-and-group-policies' | title: 'WSUS Client Group Policy Configuration & Reporting Frequency'
+    [Intermediate] id: 'windows-update-for-business-wufb-deployment-rings' | title: 'Windows Update for Business (WUfB) Deployment Rings & Deferral Policies'
+    [Intermediate] id: 'windows-admin-center-installation-and-gateway-setup' | title: 'Windows Admin Center (WAC) Installation, Gateway Setup & Extensions'
+    [Intermediate] id: 'windows-sysprep-and-generalize-imaging-workflow' | title: 'Sysprep System Preparation Tool: Generalizing Images for Cloning'
+    [Advanced] id: 'windows-unattended-installation-answer-files-unattend-xml' | title: 'Automated Windows Deployment: Authoring Unattend.xml Answer Files'
+    [Intermediate] id: 'windows-print-management-and-print-spooler-architecture' | title: 'Windows Print Management: Print Spooler Architecture & Isolation'
+
+--- Sec 10: Diagnostics, Event Logs & System Troubleshooting (Pub: 1, Planned: 7) ---
+    [Intermediate] id: 'windows-event-log-custom-views-and-xml-queries' | title: 'Authoring Event Viewer Custom Views & XPath XML Filtering Queries'
+    [Beginner] id: 'windows-reliability-monitor-for-stability-trending' | title: 'Windows Reliability Monitor for Hardware & Software Stability Indexing'
+    [Intermediate] id: 'windows-performance-monitor-perfmon-data-collector-sets' | title: 'Performance Monitor (PerfMon): Counter Logs & Data Collector Sets'
+    [Intermediate] id: 'windows-bsod-analysis-and-memory-dump-configuration' | title: 'Windows BSOD Crash Dump Configuration: Small, Kernel & Complete Dumps'
+    [Advanced] id: 'windows-windbg-basics-for-analyzing-kernel-memory-dumps' | title: 'WinDbg Crash Analysis: Symbol Configuration & !analyze -v Debugging'
+    [Intermediate] id: 'windows-recovery-environment-winre-command-prompt-tools' | title: 'Windows Recovery Environment (WinRE) Diagnostics & BCD Repair'
+    [Beginner] id: 'windows-safe-mode-and-clean-boot-troubleshooting' | title: 'Safe Mode vs Clean Boot: Isolating Third-Party Driver Conflicts'
+============================================================
+CATEGORY: Linux (linux)
+============================================================
+
+--- Sec 1: Linux Architecture & System Fundamentals (Pub: 1, Planned: 7) ---
+    [Intermediate] id: 'linux-kernel-space-vs-user-space-architecture' | title: 'Kernel Space vs User Space Architecture & System Call Interface'
+    [Intermediate] id: 'linux-system-initialization-grub-to-systemd-boot-flow' | title: 'Linux Boot Process Flow: UEFI, GRUB2, Vmlinuz, Initramfs & Systemd'
+    [Intermediate] id: 'linux-proc-and-sys-virtual-filesystems-architecture' | title: 'Virtual Filesystems: Understanding /proc, /sys and Kernel Parameters'
+    [Intermediate] id: 'linux-shared-libraries-and-ldconfig-management' | title: 'Shared Libraries, Dynamic Linker (ld.so) & ldconfig Administration'
+    [Intermediate] id: 'linux-kernel-modules-management-lsmod-modprobe' | title: 'Managing Kernel Modules: lsmod, modprobe, insmod & /etc/modules-load.d'
+    [Beginner] id: 'linux-systemd-targets-and-runlevels-migration' | title: 'Systemd Targets vs Traditional SysV Runlevels (multi-user vs graphical)'
+    [Advanced] id: 'linux-sysctl-kernel-runtime-parameter-tuning' | title: 'Tuning Kernel Runtime Parameters with sysctl and /etc/sysctl.conf'
+
+--- Sec 2: Filesystem, Storage & Volume Management (Pub: 1, Planned: 8) ---
+    [Intermediate] id: 'linux-disk-partitioning-fdisk-gdisk-parted-guide' | title: 'Disk Partitioning Architecture: fdisk, gdisk (GPT) and parted'
+    [Intermediate] id: 'linux-filesystems-comparison-ext4-xfs-btrfs' | title: 'Linux Native Filesystems Compared: ext4, XFS and Btrfs Features'
+    [Beginner] id: 'linux-mounting-filesystems-and-etc-fstab-syntax' | title: 'Mounting Filesystems, UUIDs & /etc/fstab Configuration Rules'
+    [Intermediate] id: 'linux-lvm-architecture-physical-volumes-volume-groups' | title: 'Logical Volume Manager (LVM) Architecture: PV, VG and LV Provisioning'
+    [Intermediate] id: 'linux-lvm-dynamic-volume-resizing-and-snapshots' | title: 'LVM Dynamic Volume Extension, Filesystem Resizing & Snapshots'
+    [Beginner] id: 'linux-disk-usage-monitoring-df-du-and-inode-exhaustion' | title: 'Storage Space & Inode Monitoring: df, du, ncdu & Inode Exhaustion'
+    [Intermediate] id: 'linux-swap-space-creation-tuning-and-swappiness' | title: 'Linux Swap Space Provisioning, Swap Files & Swappiness Optimization'
+    [Intermediate] id: 'linux-filesystem-integrity-checking-with-fsck' | title: 'Filesystem Integrity Diagnostics & Repair with fsck and e2fsck'
+
+--- Sec 3: Bash Shell Scripting & Command-Line Utilities (Pub: 1, Planned: 8) ---
+    [Beginner] id: 'linux-standard-streams-redirection-and-pipes' | title: 'Standard Streams (stdin, stdout, stderr), Pipes & Redirection Operators'
+    [Beginner] id: 'linux-text-processing-grep-cut-sort-uniq-tr' | title: 'Core Text Processing Utilities: grep, cut, sort, uniq, and tr'
+    [Intermediate] id: 'linux-stream-editor-sed-practical-guide' | title: 'Stream Editor (sed) Fundamentals: Search, Replace & In-Place Editing'
+    [Intermediate] id: 'linux-awk-text-processing-and-data-extraction' | title: 'Pattern Scanning & Text Processing Language (awk) for Sysadmins'
+    [Beginner] id: 'bash-variables-environment-variables-and-scoping' | title: 'Bash Variables, Quoting Rules, Export & Subshell Environment Scoping'
+    [Intermediate] id: 'bash-control-structures-conditionals-loops-case' | title: 'Bash Script Control Flow: if/elif/else, for/while loops, and case statements'
+    [Intermediate] id: 'bash-script-exit-codes-and-robust-error-handling' | title: 'Exit Codes, Error Handling (set -euo pipefail) & Trap Signals in Bash'
+    [Beginner] id: 'bash-shell-environment-customization-bashrc-profile' | title: 'Customizing the Shell: Command Aliases, Functions & ~/.bashrc vs /etc/profile'
+
+--- Sec 4: Users, Groups & Linux Access Controls (Pub: 1, Planned: 6) ---
+    [Beginner] id: 'linux-user-and-group-account-administration' | title: 'User and Group Account Administration: useradd, usermod, groupadd & /etc/passwd'
+    [Intermediate] id: 'linux-default-permissions-and-umask-calculation' | title: 'Default Permission Masking: Understanding and Calculating umask Values'
+    [Intermediate] id: 'linux-special-permissions-suid-sgid-and-sticky-bit' | title: 'Special Permissions Deep Dive: SUID, SGID & the Sticky Bit on Directories'
+    [Intermediate] id: 'linux-sudo-configuration-and-visudo-administration' | title: 'Sudoers Administration: Configuring Least Privilege Rules with visudo'
+    [Intermediate] id: 'linux-posix-access-control-lists-getfacl-setfacl' | title: 'POSIX Access Control Lists (ACLs): Fine-Grained Permissions with setfacl'
+    [Advanced] id: 'linux-pluggable-authentication-modules-pam-basics' | title: 'Pluggable Authentication Modules (PAM) Architecture & Configuration Stack'
+
+--- Sec 5: Process Management, Systemd & Scheduling (Pub: 1, Planned: 6) ---
+    [Beginner] id: 'linux-process-monitoring-with-ps-top-and-htop' | title: 'Process Monitoring & Resource Inspection with ps, top, and htop'
+    [Beginner] id: 'linux-process-signaling-and-termination-kill-pkill' | title: 'Process Termination & POSIX Signals: SIGTERM, SIGKILL, SIGHUP (kill/pkill)'
+    [Beginner] id: 'linux-cron-scheduled-tasks-and-crontab-syntax' | title: 'Automating Scheduled Tasks with Cron, Crontab Syntax & /etc/cron.*'
+    [Intermediate] id: 'linux-systemd-timer-units-vs-traditional-cron' | title: 'Modern Scheduling with Systemd Timer Units vs Traditional Cron'
+    [Intermediate] id: 'linux-process-prioritization-nice-and-renice' | title: 'Process Scheduling Priority: Nice Values, Renice & Kernel Niceness'
+    [Intermediate] id: 'linux-background-job-control-nohup-screen-tmux' | title: 'Terminal Multiplexers & Persistent Background Jobs: nohup, screen & tmux'
+
+--- Sec 6: Linux Networking, DNS & Remote Access (SSH) (Pub: 0, Planned: 7) ---
+    [Intermediate] id: 'linux-iproute2-network-configuration-ip-addr-link' | title: 'Modern Network Configuration with iproute2: ip addr, ip link & ip route'
+    [Beginner] id: 'linux-socket-inspection-with-ss-and-netstat' | title: 'Network Socket Inspection & Port Listening States with ss and lsof'
+    [Intermediate] id: 'linux-dns-client-configuration-resolv-conf-systemd-resolved' | title: 'DNS Client Configuration: /etc/resolv.conf, nsswitch & systemd-resolved'
+    [Intermediate] id: 'linux-openssh-server-configuration-and-hardening' | title: 'OpenSSH Server Administration: sshd_config Configuration & Port Hardening'
+    [Intermediate] id: 'linux-ssh-key-based-authentication-and-agent-forwarding' | title: 'SSH Key-Based Authentication: Ed25519 Keys, ssh-copy-id & Agent Forwarding'
+    [Beginner] id: 'linux-secure-file-transfer-scp-sftp-rsync' | title: 'Secure Remote File Transfer: scp, sftp & High-Performance rsync Over SSH'
+    [Intermediate] id: 'linux-network-troubleshooting-tools-traceroute-mtr-nc' | title: 'Linux Network Diagnostics: mtr, traceroute, dig, and netcat (nc)'
+
+--- Sec 7: Package Management & Software Repositories (Pub: 0, Planned: 7) ---
+    [Beginner] id: 'linux-debian-ubuntu-package-management-apt-dpkg' | title: 'Debian/Ubuntu Package Management: apt, apt-cache & dpkg Administration'
+    [Beginner] id: 'linux-rhel-rocky-package-management-dnf-rpm' | title: 'RHEL/Rocky Linux Package Management: dnf, yum, and rpm Commands'
+    [Intermediate] id: 'linux-custom-software-repositories-and-gpg-keys' | title: 'Managing Custom Software Repositories, PPA Keys & Third-Party Repos'
+    [Intermediate] id: 'linux-compiling-software-from-source-make-gcc' | title: 'Compiling Software from Source: tarballs, ./configure, make, and make install'
+    [Beginner] id: 'linux-archive-utilities-tar-gzip-bzip2-xz' | title: 'Archive & Compression Utilities: Mastering tar, gzip, bzip2, and xz'
+    [Intermediate] id: 'linux-snap-and-flatpak-containerized-package-management' | title: 'Containerized Application Packages: Snap and Flatpak Administration'
+    [Intermediate] id: 'linux-kernel-upgrades-and-old-kernel-cleanup' | title: 'Enterprise Kernel Updates, DKMS Drivers & Safe Old Kernel Cleanup'
+
+--- Sec 8: System Monitoring, Logging & Performance Tuning (Pub: 1, Planned: 6) ---
+    [Intermediate] id: 'linux-systemd-journalctl-log-analysis-and-filtering' | title: 'Systemd Journal Architecture & Advanced journalctl Filtering Queries'
+    [Intermediate] id: 'linux-traditional-syslog-and-logrotate-management' | title: 'System Logging with rsyslog & Log File Rotation Policies with logrotate'
+    [Intermediate] id: 'linux-system-resource-monitoring-vmstat-iostat-sar' | title: 'System Telemetry Tools: vmstat, iostat, mpstat, and sysstat (sar)'
+    [Intermediate] id: 'linux-cpu-load-average-analysis-and-bottlenecks' | title: 'Demystifying Linux CPU Load Averages & Identifying Performance Bottlenecks'
+    [Advanced] id: 'linux-io-schedulers-and-storage-performance-tuning' | title: 'Linux Storage I/O Schedulers (mq-deadline, bfq, none) & SSD Optimization'
+    [Advanced] id: 'linux-network-performance-tuning-tcp-buffer-sizes' | title: 'Linux Network Stack Performance Tuning: TCP Window & Socket Buffer Sizes'
+
+--- Sec 9: Linux Security, Firewalls & Hardening (Pub: 0, Planned: 7) ---
+    [Beginner] id: 'linux-ufw-uncomplicated-firewall-administration' | title: 'Uncomplicated Firewall (UFW) Administration & Port Rule Management'
+    [Intermediate] id: 'linux-firewalld-zones-and-services-management' | title: 'Enterprise Firewall Management with firewalld: Zones, Services & Rich Rules'
+    [Intermediate] id: 'linux-selinux-fundamentals-modes-contexts-booleans' | title: 'SELinux Fundamentals: Enforcing Modes, Security Contexts & Booleans'
+    [Intermediate] id: 'linux-apparmor-profiles-and-enforcement-in-ubuntu' | title: 'AppArmor Security Profiles: Complain vs Enforce Modes in Debian/Ubuntu'
+    [Intermediate] id: 'linux-fail2ban-brute-force-protection-setup' | title: 'Defending SSH & Web Services from Brute-Force Attacks with Fail2ban'
+    [Intermediate] id: 'linux-securing-grub-bootloader-password-protection' | title: 'Hardening the Bootloader: Securing GRUB2 with Password Authentication'
+    [Advanced] id: 'linux-file-integrity-monitoring-with-aide' | title: 'Host-Based File Integrity Monitoring with Advanced Intrusion Detection (AIDE)'
+
+--- Sec 10: Boot Process, Recovery & Advanced Troubleshooting (Pub: 0, Planned: 7) ---
+    [Intermediate] id: 'linux-troubleshooting-boot-failures-grub-emergency-mode' | title: 'Troubleshooting Boot Failures: Navigating GRUB Rescue & Emergency Mode'
+    [Intermediate] id: 'linux-rescue-target-and-single-user-mode-boot' | title: 'Booting into Linux Rescue Target, Emergency Mode & Single-User Mode'
+    [Intermediate] id: 'linux-root-password-recovery-via-grub-init-sh' | title: 'Root Password Reset Workflow: Kernel Parameter Editing (rd.break / init=/bin/sh)'
+    [Intermediate] id: 'linux-diagnosing-read-only-filesystem-remounts' | title: 'Diagnosing and Resolving Read-Only Filesystem Remounts & Disk Errors'
+    [Beginner] id: 'linux-troubleshooting-ssh-connection-failures-verbose-mode' | title: 'Troubleshooting SSH Failures: Diagnosing Permissions & Verbose Mode (ssh -vvv)'
+    [Intermediate] id: 'linux-chroot-environment-repair-from-live-usb' | title: 'Chrooting into Broken Linux Installations from Live Rescue Media'
+    [Advanced] id: 'linux-system-crash-dump-analysis-kdump-and-crash' | title: 'Analyzing Kernel Panic Dumps with kdump and the crash Utility'
+============================================================
+CATEGORY: Servers (servers)
+============================================================
+
+--- Sec 1: Server Hardware & Enterprise Architecture (Pub: 2, Planned: 7) ---
+    [Beginner] id: 'server-form-factors-rack-blade-and-tower-systems' | title: 'Server Form Factors: 1U/2U/4U Rack Servers, Blades & Pedestals'
+    [Beginner] id: 'server-redundant-power-supplies-and-pdu-distribution' | title: 'Redundant Power Supplies (PSU, 1+1, 2+2) & Rack PDU Power Phase Balancing'
+    [Intermediate] id: 'server-ecc-memory-and-registered-rdimms-architecture' | title: 'Enterprise Memory Architecture: ECC, Registered RDIMMs & Memory Sparing'
+    [Advanced] id: 'server-numa-nodes-and-cpu-socket-memory-affinity' | title: 'Non-Uniform Memory Access (NUMA) Architecture & Socket Memory Affinity'
+    [Intermediate] id: 'server-out-of-band-management-ipmi-idrac-ilo' | title: 'Out-of-Band Remote Management: IPMI, Dell iDRAC & HPE iLO'
+    [Intermediate] id: 'server-hardware-raid-controllers-cache-and-bbu' | title: 'Hardware RAID Controllers: Write-Back Caching, Battery Backup (BBU) & Flash'
+    [Intermediate] id: 'server-bios-uefi-firmware-updates-and-secure-boot' | title: 'Server BIOS/UEFI Firmware Upgrades & Enterprise Secure Boot Policies'
+
+--- Sec 2: Operating System Platforms & Server Deployment (Pub: 2, Planned: 6) ---
+    [Beginner] id: 'windows-server-editions-datacenter-vs-standard-licensing' | title: 'Windows Server Editions: Datacenter vs Standard Licensing & CALs'
+    [Intermediate] id: 'windows-server-core-headless-deployment-and-remote-management' | title: 'Windows Server Core: Headless Installation & Remote Administration'
+    [Intermediate] id: 'bare-metal-server-provisioning-pxe-boot-and-wds' | title: 'Bare-Metal Server Provisioning via PXE Boot & Windows Deployment Services'
+    [Beginner] id: 'linux-enterprise-server-distributions-rhel-vs-ubuntu-server' | title: 'Enterprise Linux Server Platforms Compared: RHEL vs Ubuntu Server'
+    [Intermediate] id: 'automated-linux-server-deployment-with-cloud-init-and-kickstart' | title: 'Automated Linux Server Provisioning with Kickstart and Cloud-Init'
+    [Intermediate] id: 'server-storage-pools-and-direct-attached-storage-das' | title: 'Managing Direct-Attached Storage (DAS) Enclosures & Storage Pools'
+
+--- Sec 3: Active Directory Domain Services & Enterprise Identity (Pub: 1, Planned: 7) ---
+    [Intermediate] id: 'active-directory-domain-services-ad-ds-architecture' | title: 'Active Directory Domain Services (AD DS) Architectural Components'
+    [Intermediate] id: 'active-directory-fsmo-roles-and-seizure-procedures' | title: 'Flexible Single Master Operation (FSMO) Roles & Emergency Role Seizure'
+    [Intermediate] id: 'active-directory-replication-topology-sites-and-bridgehead-servers' | title: 'AD Replication Topology: Sites, Subnets, Cost & Bridgehead Servers'
+    [Advanced] id: 'active-directory-global-catalog-and-schema-partitions' | title: 'Active Directory Directory Partitions: Schema, Configuration & Global Catalog'
+    [Intermediate] id: 'active-directory-group-policy-central-store-admx-templates' | title: 'Group Policy Central Store Setup with Administrative Templates (.admx)'
+    [Intermediate] id: 'active-directory-recycle-bin-and-authoritative-restore' | title: 'Active Directory Recycle Bin & Authoritative vs Non-Authoritative Restore'
+    [Intermediate] id: 'active-directory-read-only-domain-controllers-rodc-in-branch-offices' | title: 'Read-Only Domain Controllers (RODC) & Password Replication Policies'
+
+--- Sec 4: Core Infrastructure Services (DNS & DHCP) (Pub: 1, Planned: 6) ---
+    [Intermediate] id: 'active-directory-integrated-dns-zones-and-secure-dynamic-updates' | title: 'AD-Integrated DNS Zones, Multi-Master Replication & Secure Dynamic Updates'
+    [Intermediate] id: 'dns-server-forwarders-root-hints-and-conditional-forwarding' | title: 'DNS Forwarders, Root Hints & Conditional Forwarding for Cross-Domain Resolution'
+    [Beginner] id: 'enterprise-dhcp-server-installation-and-scope-options' | title: 'Enterprise DHCP Server Installation, Scope Design & Essential Options'
+    [Intermediate] id: 'enterprise-dhcp-failover-load-balancing-and-hot-standby' | title: 'DHCP Server Failover Architecture: Load Balancing vs Hot Standby Modes'
+    [Intermediate] id: 'enterprise-dhcp-relay-agents-ip-helper-in-routed-networks' | title: 'DHCP Relay Agents & Cisco IP Helper Configuration in Routed Networks'
+    [Intermediate] id: 'ip-address-management-ipam-architecture-and-capacity' | title: 'IP Address Management (IPAM) Architecture, Discovery & Tracking'
+
+--- Sec 5: Virtualization & Enterprise Hypervisors (Pub: 0, Planned: 8) ---
+    [Beginner] id: 'hypervisor-architecture-type-1-bare-metal-vs-type-2-hosted' | title: 'Hypervisor Architecture: Type 1 (Bare-Metal) vs Type 2 (Hosted)'
+    [Intermediate] id: 'vmware-esxi-installation-initial-setup-and-dcui' | title: 'VMware ESXi Installation, DCUI Setup & Direct Web Client Management'
+    [Intermediate] id: 'vmware-vcenter-server-appliance-vcsa-architecture' | title: 'VMware vCenter Server Appliance (VCSA) Architecture & Single-Pane Management'
+    [Advanced] id: 'vmware-vsphere-clustering-drs-high-availability-and-vmotion' | title: 'VMware vSphere Clustering: vMotion, DRS Resource Balancing & High Availability'
+    [Intermediate] id: 'microsoft-hyper-v-architecture-and-virtual-switch-types' | title: 'Microsoft Hyper-V Architecture: Generation 2 VMs & Virtual Switch Types'
+    [Advanced] id: 'hyper-v-clustering-live-migration-and-csv-storage' | title: 'Hyper-V Failover Clustering, Cluster Shared Volumes (CSV) & Live Migration'
+    [Intermediate] id: 'proxmox-ve-cluster-architecture-and-kvm-lxc-management' | title: 'Proxmox VE Cluster Architecture, KVM Virtual Machines & LXC Containers'
+    [Beginner] id: 'virtual-machine-snapshots-vs-proper-enterprise-backups' | title: 'Virtual Machine Snapshots vs Enterprise Backups: Performance Pitfalls'
+
+--- Sec 6: Enterprise Storage, File Services & SAN/NAS (Pub: 0, Planned: 8) ---
+    [Beginner] id: 'enterprise-storage-architectures-das-vs-nas-vs-san' | title: 'Enterprise Storage Architectures Compared: DAS vs NAS vs SAN'
+    [Intermediate] id: 'storage-area-networks-iscsi-targets-initiators-and-iqn' | title: 'iSCSI SAN Architecture: IQN Naming, LUN Provisioning & Initiator Setup'
+    [Advanced] id: 'fibre-channel-san-architecture-hba-zoning-and-wwn' | title: 'Fibre Channel (FC) SAN: HBAs, WWN Addressing & Fabric Switch Zoning'
+    [Intermediate] id: 'windows-file-server-smb-shares-caching-and-quota-management' | title: 'Windows File Server Resource Manager (FSRM): Quotas & File Screening'
+    [Intermediate] id: 'linux-file-server-nfs-v3-v4-export-configuration' | title: 'Linux Network File System (NFS v3/v4) Exports & Client Mount Options'
+    [Intermediate] id: 'distributed-file-system-dfs-namespaces-and-dfs-replication' | title: 'Distributed File System (DFS): Unified Namespaces & Multi-Site Replication'
+    [Advanced] id: 'storage-spaces-direct-s2d-and-hyper-converged-infrastructure' | title: 'Storage Spaces Direct (S2D) & Microsoft Hyper-Converged Infrastructure (HCI)'
+    [Intermediate] id: 'multipath-io-mpio-configuration-for-redundant-storage-paths' | title: 'Multipath I/O (MPIO) Configuration for Redundant SAN Path Failover'
+
+--- Sec 7: High Availability, Clustering & Disaster Recovery (Pub: 0, Planned: 8) ---
+    [Intermediate] id: 'high-availability-clustering-principles-active-passive-vs-active-active' | title: 'High Availability Principles: Active-Passive vs Active-Active Architectures'
+    [Intermediate] id: 'windows-server-failover-clustering-wsfc-architecture' | title: 'Windows Server Failover Clustering (WSFC) Architecture & Validation Tests'
+    [Advanced] id: 'cluster-quorum-models-witness-types-cloud-disk-file-share' | title: 'Cluster Quorum Models & Witness Architecture (Disk, File Share, Cloud Witness)'
+    [Advanced] id: 'linux-high-availability-clustering-pacemaker-and-corosync' | title: 'Linux High Availability Clustering with Pacemaker, Corosync & Fencing (STONITH)'
+    [Beginner] id: 'the-3-2-1-backup-rule-and-modern-ransomware-protection' | title: 'The 3-2-1-1-0 Backup Rule & Immutable Storage for Ransomware Protection'
+    [Intermediate] id: 'enterprise-backup-solutions-veeam-commvault-and-image-backups' | title: 'Enterprise Backup Methodologies: Full, Incremental, Differential & CBT'
+    [Intermediate] id: 'disaster-recovery-planning-rto-rpo-and-business-continuity' | title: 'Disaster Recovery Planning: RTO, RPO & Business Impact Analysis (BIA)'
+    [Intermediate] id: 'backup-verification-sandbox-recovery-testing-and-dr-drills' | title: 'Automated Backup Verification, Sandbox Testing & Disaster Recovery Drills'
+
+--- Sec 8: Server Monitoring, Telemetry & Capacity Planning (Pub: 0, Planned: 7) ---
+    [Intermediate] id: 'server-hardware-health-monitoring-ipmi-snmp-traps' | title: 'Server Hardware Health Telemetry via IPMI Sensors & SNMP Traps'
+    [Intermediate] id: 'centralized-server-metrics-collection-prometheus-and-grafana' | title: 'Centralized Metrics Collection with Prometheus Exporters & Grafana Dashboards'
+    [Intermediate] id: 'windows-server-performance-baselines-perfmon-counters' | title: 'Windows Server Performance Baselines: Core Counters (CPU, Memory, Disk, Net)'
+    [Intermediate] id: 'linux-server-performance-monitoring-sysstat-and-atop' | title: 'Linux Server Historical Performance Telemetry with atop and sysstat'
+    [Intermediate] id: 'server-capacity-planning-forecasting-cpu-ram-storage-growth' | title: 'Server Capacity Planning: Modeling CPU, Memory & Storage Growth Curves'
+    [Advanced] id: 'hypervisor-resource-contention-cpu-ready-and-memory-ballooning' | title: 'Hypervisor Resource Contention: Diagnosing CPU Ready Time & Memory Ballooning'
+    [Intermediate] id: 'automated-server-alerting-incident-thresholds-and-pagerduty' | title: 'Automated Server Alerting: Threshold Configuration & On-Call Escalation'
+
+--- Sec 9: Server Security, Hardening & Compliance (Pub: 0, Planned: 7) ---
+    [Intermediate] id: 'windows-server-security-baselines-and-cis-benchmark-hardening' | title: 'Windows Server Hardening via CIS Benchmarks & Microsoft Security Baselines'
+    [Intermediate] id: 'linux-server-hardening-best-practices-and-system-bastioning' | title: 'Enterprise Linux Server Hardening: Disabling Unused Services & SUID Auditing'
+    [Advanced] id: 'group-managed-service-accounts-gmsa-architecture-and-setup' | title: 'Group Managed Service Accounts (gMSA): Passwordless Service Security'
+    [Intermediate] id: 'securing-server-remote-management-interfaces-winrm-and-ssh' | title: 'Securing Server Administrative Interfaces: TLS Listeners & Jump Boxes'
+    [Intermediate] id: 'enterprise-server-patch-management-and-maintenance-windows' | title: 'Enterprise Server Patch Management Strategies & Zero-Downtime Rolling Updates'
+    [Advanced] id: 'active-directory-certificate-services-ad-cs-and-private-pki' | title: 'Active Directory Certificate Services (AD CS): Internal Enterprise PKI Hierarchy'
+    [Intermediate] id: 'server-firmware-security-tpm-and-hardware-root-of-trust' | title: 'Hardware Root of Trust: TPM 2.0, Secure Boot & Supply Chain Security'
+
+--- Sec 10: Root-Cause Diagnostics & Server Troubleshooting (Pub: 0, Planned: 7) ---
+    [Intermediate] id: 'server-hardware-diagnostics-ecc-memory-errors-and-thermal-throttling' | title: 'Diagnosing Server Hardware Faults: Correctable ECC Errors & Thermal Throttling'
+    [Advanced] id: 'server-blue-screen-bsod-and-kernel-panic-root-cause-analysis' | title: 'Server Crash Post-Mortem: Analyzing Kernel Memory Dumps & Panic Stacks'
+    [Intermediate] id: 'troubleshooting-active-directory-replication-failures-repadmin' | title: 'Troubleshooting AD Replication Failures with repadmin & dcdiag'
+    [Intermediate] id: 'troubleshooting-domain-controller-promotion-and-kerberos-errors' | title: 'Troubleshooting Domain Controller Promotion, DNS Failures & Kerberos Tickets'
+    [Advanced] id: 'diagnosing-hypervisor-host-and-virtual-disk-latency' | title: 'Diagnosing Storage Bottlenecks: Disk Latency (davg/cmd, kavg/cmd) in Hypervisors'
+    [Advanced] id: 'resolving-cluster-split-brain-and-quorum-loss-scenarios' | title: 'Resolving Cluster Split-Brain, Fencing Loops & Quorum Loss Scenarios'
+    [Intermediate] id: 'systematic-root-cause-analysis-rca-methodology-for-server-outages' | title: 'Systematic Root Cause Analysis (RCA) Methodology & 5-Whys for System Outages'
+============================================================
+CATEGORY: Cybersecurity (cybersecurity)
+============================================================
+
+--- Sec 1: Security Principles, Risk & Governance (Pub: 1, Planned: 8) ---
+    [Beginner] id: 'cia-triad-and-parkerian-hexad-in-enterprise-security' | title: 'The CIA Triad & Parkerian Hexad in Modern Enterprise Defense'
+    [Beginner] id: 'threat-vulnerability-and-risk-mathematical-equation' | title: 'Threat, Vulnerability, and Risk: The Fundamental Calculation'
+    [Beginner] id: 'defense-in-depth-strategy-and-layered-controls' | title: 'Defense-in-Depth Architecture: Layered Perimeter, Network & Host Controls'
+    [Beginner] id: 'security-control-categories-preventative-detective-corrective' | title: 'Security Control Categories: Administrative, Technical, Physical & Compensating'
+    [Intermediate] id: 'nist-cybersecurity-framework-csf-2-0-core-functions' | title: 'NIST Cybersecurity Framework (CSF 2.0): Govern, Identify, Protect, Detect, Respond, Recover'
+    [Intermediate] id: 'iso-iec-27001-isms-standard-and-compliance-overview' | title: 'ISO/IEC 27001 Standard: Information Security Management Systems (ISMS) Overview'
+    [Intermediate] id: 'enterprise-attack-surface-management-and-discovery' | title: 'Enterprise Attack Surface Management (ASM) & Shadow IT Discovery'
+    [Beginner] id: 'data-classification-levels-and-sensitive-asset-inventory' | title: 'Data Classification Frameworks, Retention Rules & Asset Inventorying'
+
+--- Sec 2: Enterprise Identity & Access Management (IAM) (Pub: 1, Planned: 7) ---
+    [Beginner] id: 'principle-of-least-privilege-and-separation-of-duties' | title: 'Principle of Least Privilege (PoLP) and Separation of Duties in Administration'
+    [Beginner] id: 'role-based-access-control-rbac-enterprise-architecture' | title: 'Role-Based Access Control (RBAC): Role Engineering & Permission Inheritance'
+    [Intermediate] id: 'attribute-based-access-control-abac-and-dynamic-policies' | title: 'Attribute-Based Access Control (ABAC): Contextual & Dynamic Access Policies'
+    [Intermediate] id: 'privileged-access-management-pam-vaulting-and-session-recording' | title: 'Privileged Access Management (PAM): Credential Vaulting & Session Monitoring'
+    [Advanced] id: 'just-in-time-jit-privileged-access-and-ephemeral-credentials' | title: 'Just-In-Time (JIT) Administrative Elevation & Ephemeral Credential Provisioning'
+    [Advanced] id: 'active-directory-administrative-tiering-and-bastion-models' | title: 'Active Directory Administrative Tiering (Tier 0, 1, 2) & Bastion Forest Architecture'
+    [Intermediate] id: 'service-account-security-and-automated-key-rotation' | title: 'Service Account Hardening, Kerberos SPN Security & Automated Key Rotation'
+
+--- Sec 3: Authentication Protocols, MFA & Credential Security (Pub: 2, Planned: 6) ---
+    [Intermediate] id: 'mfa-vulnerabilities-totp-vs-sms-and-mfa-fatigue-attacks' | title: 'Evaluating MFA Strengths: TOTP vs Push Notifications vs SMS Interception'
+    [Intermediate] id: 'fido2-webauthn-and-passwordless-authentication-architecture' | title: 'FIDO2 & WebAuthn Architecture: Phishing-Resistant Passwordless Authentication'
+    [Intermediate] id: 'single-sign-on-sso-architecture-saml-2-0-and-oidc' | title: 'Enterprise Single Sign-On (SSO): SAML 2.0 Assertions vs OpenID Connect Tokens'
+    [Intermediate] id: 'kerberos-authentication-architecture-and-tickets-flow' | title: 'Kerberos Authentication Protocol Flow: AS-REQ, TGT, TGS-REQ & Service Tickets'
+    [Advanced] id: 'defending-against-pass-the-hash-and-kerberoasting-attacks' | title: 'Defending Active Directory: Mitigating Pass-the-Hash & Kerberoasting Attacks'
+    [Intermediate] id: 'credential-stuffing-defense-and-password-spraying-mitigation' | title: 'Detecting and Mitigating Credential Stuffing & Low-and-Slow Password Spraying'
+
+--- Sec 4: Endpoint Protection, Antivirus & EDR Architecture (Pub: 1, Planned: 6) ---
+    [Intermediate] id: 'endpoint-detection-and-response-edr-architecture-and-telemetry' | title: 'Endpoint Detection and Response (EDR): Sensor Architecture & Process Telemetry'
+    [Advanced] id: 'extended-detection-and-response-xdr-cross-domain-telemetry' | title: 'Extended Detection and Response (XDR): Correlating Identity, Cloud & Endpoint Signals'
+    [Intermediate] id: 'host-based-firewalls-and-endpoint-network-isolation' | title: 'Host-Based Firewalls & Automated Dynamic Endpoint Network Isolation'
+    [Beginner] id: 'endpoint-device-control-and-usb-removable-media-lockdown' | title: 'USB Peripheral Lockdown & Removable Media Encryption Policies'
+    [Intermediate] id: 'application-allowlisting-and-software-execution-policies' | title: 'Application Allowlisting (Default-Deny) Architecture and Software Whitelisting'
+    [Intermediate] id: 'operating-system-security-baselines-and-cis-benchmark-auditing' | title: 'Implementing CIS Security Benchmarks for Automated Endpoint Hardening'
+
+--- Sec 5: Network Defense, Firewalls & Microsegmentation (Pub: 1, Planned: 6) ---
+    [Intermediate] id: 'next-generation-firewall-ngfw-deep-packet-inspection-architecture' | title: 'Next-Generation Firewall (NGFW): Application Visibility & TLS Decryption'
+    [Intermediate] id: 'demilitarized-zones-dmz-and-secure-perimeter-architecture' | title: 'Demilitarized Zone (DMZ) Architecture: Multi-Homed Firewalls & Bastion Proxies'
+    [Intermediate] id: 'intrusion-detection-systems-ids-vs-intrusion-prevention-ips' | title: 'Intrusion Detection (IDS) vs Intrusion Prevention (IPS): Signature vs Anomaly Engines'
+    [Intermediate] id: 'web-application-firewalls-waf-architecture-and-owasp-rules' | title: 'Web Application Firewalls (WAF): ModSecurity & Defending Against OWASP Top 10'
+    [Intermediate] id: 'vpn-security-ipsec-vs-wireguard-vs-ssl-tls-tunnels' | title: 'VPN Cryptographic Security Compared: IPsec IKEv2, WireGuard, and OpenVPN'
+    [Intermediate] id: 'securing-remote-desktop-gateway-and-bastion-access' | title: 'Hardening RDP Gateways, Guacamole Jumpboxes & Privileged Access Proxies'
+
+--- Sec 6: Email Security & Anti-Phishing Defense (Pub: 0, Planned: 7) ---
+    [Intermediate] id: 'email-authentication-frameworks-spf-dkim-and-dmarc-deep-dive' | title: 'Email Authentication Protocols Deep Dive: SPF Syntax, DKIM Keys & DMARC Policies'
+    [Beginner] id: 'phishing-attack-vectors-spear-phishing-and-bec-anatomy' | title: 'Anatomy of Social Engineering: Spear Phishing, Whaling & Business Email Compromise'
+    [Intermediate] id: 'secure-email-gateways-seg-and-heuristic-filtering' | title: 'Secure Email Gateways (SEG): Behavioral Heuristics, URL Rewriting & Sandbox Inspection'
+    [Intermediate] id: 'analyzing-malicious-email-headers-and-phishing-indicators' | title: 'Analyzing Email RFC 5322 Headers, Received Paths & Spoofed Return-Paths'
+    [Intermediate] id: 'content-disarm-and-reconstruction-cdr-and-attachment-sandboxing' | title: 'Attachment Security: Dynamic Sandboxing & Content Disarm and Reconstruction (CDR)'
+    [Intermediate] id: 'enterprise-phishing-reporting-and-automated-triage-workflows' | title: 'Enterprise Phishing Reporting Pipelines & Automated SOAR Mailbox Purging'
+    [Intermediate] id: 'defending-against-lookalike-domains-and-typosquatting' | title: 'Defending Against Typosquatting, IDN Homograph Attacks & Lookalike Domains'
+
+--- Sec 7: Vulnerability Management & Threat Intelligence (Pub: 0, Planned: 7) ---
+    [Beginner] id: 'vulnerability-management-lifecycle-discovery-to-remediation' | title: 'The Vulnerability Management Lifecycle: Discovery, Prioritization, Remediation & Verification'
+    [Beginner] id: 'cve-and-cvss-scoring-metrics-base-temporal-environmental' | title: 'Understanding CVE Identifiers, CVSS v3/v4 Vectors & Severity Scoring'
+    [Intermediate] id: 'vulnerability-scanning-architecture-authenticated-vs-unauthenticated' | title: 'Vulnerability Scanning Methodologies: Agent-Based vs Authenticated Network Scans'
+    [Intermediate] id: 'vulnerability-prioritization-epss-and-known-exploited-vulnerabilities' | title: 'Prioritizing CVEs with Exploit Prediction Scoring (EPSS) & CISA KEV Catalog'
+    [Intermediate] id: 'cyber-threat-intelligence-cti-strategic-tactical-operational' | title: 'Cyber Threat Intelligence (CTI): Strategic, Operational & Tactical Indicators'
+    [Intermediate] id: 'mitre-att-ck-framework-navigating-tactics-techniques-procedures' | title: 'Navigating the MITRE ATT&CK Framework: Tactics, Techniques & Procedures (TTPs)'
+    [Intermediate] id: 'indicators-of-compromise-iocs-vs-indicators-of-attack-ioas' | title: 'Indicators of Compromise (IoCs) vs Indicators of Attack (IoAs): Hash, IP & Behavioral Rules'
+
+--- Sec 8: Centralized Logging, SIEM & Security Monitoring (Pub: 0, Planned: 7) ---
+    [Intermediate] id: 'centralized-security-logging-architecture-and-chain-of-custody' | title: 'Centralized Security Logging Architecture, WORM Storage & Integrity Sealing'
+    [Intermediate] id: 'security-information-and-event-management-siem-architecture' | title: 'Security Information and Event Management (SIEM): Log Ingestion, Parsing & Indexing'
+    [Advanced] id: 'authoring-high-fidelity-siem-detection-rules-and-correlation-logic' | title: 'Authoring High-Fidelity Detection Rules, Thresholds & Multi-Stage Correlation Logic'
+    [Advanced] id: 'user-and-entity-behavior-analytics-ueba-for-insider-threats' | title: 'User and Entity Behavior Analytics (UEBA): Baselines, Anomalies & Insider Risk'
+    [Advanced] id: 'security-orchestration-automation-and-response-soar-playbooks' | title: 'SOAR Architecture: Authoring Automated Incident Enrichment & Response Playbooks'
+    [Intermediate] id: 'windows-security-event-log-auditing-best-practices' | title: 'Windows Security Auditing: Critical Event IDs (4624, 4625, 4688, 4720, 7045)'
+    [Intermediate] id: 'linux-auditd-framework-and-syscall-auditing-architecture' | title: 'Linux Audit Daemon (auditd): System Call Monitoring & File Integrity Auditing'
+
+--- Sec 9: Incident Response & Threat Containment (Pub: 0, Planned: 7) ---
+    [Beginner] id: 'nist-sp-800-61-computer-security-incident-handling-guide' | title: 'NIST SP 800-61 Incident Handling Guide: The Four IR Lifecycle Phases'
+    [Intermediate] id: 'incident-response-phases-preparation-detection-containment-recovery' | title: 'Incident Response Playbook: Preparation, Triaging, Containment, Eradication & Recovery'
+    [Intermediate] id: 'digital-forensics-and-evidence-preservation-chain-of-custody' | title: 'Digital Forensics & Evidence Preservation: Order of Volatility & Chain of Custody'
+    [Intermediate] id: 'ransomware-incident-response-and-emergency-containment-playbook' | title: 'Emergency Ransomware Playbook: Network Isolation, Blast Radius & Recovery'
+    [Intermediate] id: 'account-compromise-incident-response-and-token-revocation' | title: 'Account Compromise Triage: Session Revocation, Password Resets & MFA Re-enrollment'
+    [Intermediate] id: 'authoring-post-incident-reports-and-lessons-learned-workshops' | title: 'Authoring Post-Incident Reports (PIR) & Conducting Blameless Post-Mortems'
+    [Intermediate] id: 'incident-communication-escalation-and-regulatory-disclosure' | title: 'Security Incident Communications, Escalation Matrices & Regulatory Disclosure Rules'
+
+--- Sec 10: Zero Trust Architecture & Enterprise Baselines (Pub: 0, Planned: 7) ---
+    [Beginner] id: 'zero-trust-architecture-tenets-nist-sp-800-207-principles' | title: 'Zero Trust Architecture Core Tenets: NIST SP 800-207 Guiding Principles'
+    [Intermediate] id: 'zero-trust-continuous-verification-and-context-aware-access' | title: 'Continuous Authentication & Dynamic Risk-Based Access Evaluation'
+    [Intermediate] id: 'zero-trust-network-access-ztna-vs-traditional-vpn' | title: 'Zero Trust Network Access (ZTNA) Architecture vs Legacy Perimeter VPNs'
+    [Advanced] id: 'secure-access-service-edge-sase-and-sse-architecture' | title: 'Secure Access Service Edge (SASE) & Security Service Edge (SSE) Explained'
+    [Intermediate] id: 'data-loss-prevention-dlp-endpoint-and-network-controls' | title: 'Data Loss Prevention (DLP): Content Inspection, Tagging & Exfiltration Blocking'
+    [Beginner] id: 'cryptography-fundamentals-symmetric-asymmetric-and-hashing' | title: 'Cryptography Fundamentals for Defenders: Symmetric, Asymmetric & Hashing Algorithms'
+    [Intermediate] id: 'public-key-infrastructure-pki-certificates-ca-and-crl' | title: 'Public Key Infrastructure (PKI): X.509 Certificates, CRL, OCSP & Trust Chains'
+============================================================
+CATEGORY: Cloud & AI (cloud)
+============================================================
+
+--- Sec 1: Cloud Computing Architecture & Service Models (Pub: 2, Planned: 7) ---
+    [Beginner] id: 'cloud-shared-responsibility-model-across-tiers' | title: 'The Cloud Shared Responsibility Model: Provider vs Customer Responsibilities'
+    [Beginner] id: 'cloud-deployment-models-public-private-hybrid-multi-cloud' | title: 'Cloud Deployment Models Compared: Public, Private, Hybrid, and Multi-Cloud'
+    [Beginner] id: 'cloud-global-infrastructure-regions-availability-zones-edge' | title: 'Cloud Global Architecture: Regions, Availability Zones & Edge Point-of-Presence'
+    [Intermediate] id: 'cloud-high-availability-fault-tolerance-and-disaster-recovery' | title: 'Designing for High Availability: Active-Active vs Active-Passive Across AZs'
+    [Beginner] id: 'cloud-total-cost-of-ownership-tco-capex-vs-opex' | title: 'Cloud Financial Economics: Capital Expenditure (CapEx) vs Operational (OpEx)'
+    [Intermediate] id: 'cloud-migration-strategies-the-6-rs-framework' | title: 'Cloud Migration Strategies: Understanding the 6 R's Migration Framework'
+    [Intermediate] id: 'serverless-computing-architecture-and-event-driven-design' | title: 'Serverless Computing Concepts: Function-as-a-Service (FaaS) & Event Triggers'
+
+--- Sec 2: AWS Core Infrastructure & Foundational Services (Pub: 3, Planned: 6) ---
+    [Beginner] id: 'aws-global-infrastructure-regions-availability-zones-local-zones' | title: 'AWS Global Infrastructure: Regions, Availability Zones & Local Zones'
+    [Beginner] id: 'aws-management-console-cli-and-sdk-architecture' | title: 'Interacting with AWS: Management Console, AWS CLI v2 & Boto3 SDKs'
+    [Intermediate] id: 'aws-iam-identities-policies-roles-and-permission-boundaries' | title: 'AWS IAM Architecture: Users, Groups, Roles, Policies & Permission Boundaries'
+    [Beginner] id: 'aws-s3-bucket-architecture-storage-tiers-and-lifecycle-rules' | title: 'Amazon S3 Storage Architecture: Classes (Standard, Glacier) & Lifecycle Rules'
+    [Intermediate] id: 'aws-elastic-load-balancing-alb-nlb-and-auto-scaling-groups' | title: 'AWS Elastic Load Balancing (ALB vs NLB) & Auto Scaling Group Policies'
+    [Intermediate] id: 'aws-rds-relational-database-service-multi-az-and-read-replicas' | title: 'Amazon RDS Architecture: Automated Backups, Multi-AZ & Read Replicas'
+
+--- Sec 3: Microsoft Azure Core Infrastructure & Services (Pub: 0, Planned: 8) ---
+    [Beginner] id: 'azure-global-infrastructure-geographies-regions-and-availability-zones' | title: 'Azure Global Infrastructure: Geographies, Paired Regions & Availability Zones'
+    [Beginner] id: 'azure-resource-manager-arm-hierarchy-management-groups-to-resources' | title: 'Azure Resource Hierarchy: Management Groups, Subscriptions & Resource Groups'
+    [Intermediate] id: 'azure-virtual-machines-sizing-disks-and-availability-sets' | title: 'Azure Virtual Machines: Compute Sizing, Managed Disks & Availability Sets'
+    [Intermediate] id: 'azure-virtual-networks-vnet-subnets-and-peering-architecture' | title: 'Azure VNet Architecture: Subnet Delegation, Peering & Service Endpoints'
+    [Intermediate] id: 'microsoft-entra-id-vs-on-premises-active-directory-architecture' | title: 'Microsoft Entra ID (Azure AD) Architecture vs On-Premises Active Directory'
+    [Beginner] id: 'azure-blob-storage-tiers-redundancy-lrs-zrs-grs' | title: 'Azure Blob Storage: Hot, Cool, Archive Tiers & Redundancy (LRS, ZRS, GRS)'
+    [Intermediate] id: 'azure-virtual-network-gateway-and-site-to-site-vpn' | title: 'Azure Virtual Network Gateways: Site-to-Site VPN & ExpressRoute Connectivity'
+    [Intermediate] id: 'azure-bastion-secure-rdp-and-ssh-without-public-ips' | title: 'Azure Bastion: Secure Browser-Based RDP/SSH Management Without Public IPs'
+
+--- Sec 4: Cloud Identity & Access Management (IAM) (Pub: 1, Planned: 6) ---
+    [Intermediate] id: 'cloud-role-based-access-control-rbac-and-custom-roles' | title: 'Cloud Role-Based Access Control (RBAC): Built-In vs Custom Role Scoping'
+    [Advanced] id: 'cloud-cross-account-and-cross-subscription-role-delegation' | title: 'Cross-Account / Cross-Subscription IAM Delegation via AssumeRole Workflows'
+    [Advanced] id: 'cloud-identity-federation-saml-oidc-and-enterprise-idps' | title: 'Enterprise Cloud Identity Federation: Integrating On-Premises IdPs with SAML/OIDC'
+    [Intermediate] id: 'cloud-managed-identities-and-service-principals' | title: 'Eliminating Static Credentials: AWS IAM Roles for EC2 & Azure Managed Identities'
+    [Advanced] id: 'cloud-privileged-identity-management-pim-and-just-in-time-access' | title: 'Privileged Identity Management (PIM): Approval Workflows & Just-In-Time Elevation'
+    [Intermediate] id: 'cloud-secrets-management-best-practices-and-key-vaulting' | title: 'Cloud Secrets Management: Automated Rotation with AWS Secrets Manager & Azure Key Vault'
+
+--- Sec 5: Cloud Compute, Scaling & Container Infrastructure (Pub: 0, Planned: 7) ---
+    [Intermediate] id: 'cloud-virtual-machine-sizing-and-performance-optimization' | title: 'Virtual Machine Sizing: Balancing vCPU, Memory, IOPS & Network Bandwidth'
+    [Intermediate] id: 'cloud-virtual-machine-storage-os-disks-data-disks-ephemeral' | title: 'Cloud VM Disk Architecture: Premium SSDs, Ultra Disks & Ephemeral Local Storage'
+    [Intermediate] id: 'cloud-golden-images-and-custom-machine-image-pipelines' | title: 'Automated Golden Image Pipelines: AWS AMI Builder, Azure Image Gallery & Packer'
+    [Intermediate] id: 'cloud-vm-auto-scaling-policies-metric-vs-schedule-triggers' | title: 'Cloud Auto Scaling Architecture: Dynamic Target Tracking vs Predictive Scaling'
+    [Intermediate] id: 'cloud-container-services-overview-ecs-aci-and-managed-k8s' | title: 'Containerized Workloads in the Cloud: Docker, Amazon ECS, Azure ACI & Managed Kubernetes'
+    [Beginner] id: 'cloud-vm-snapshot-and-backup-automation-policies' | title: 'Automating VM Snapshots & Cloud Backup Policies with AWS Backup and Azure Backup'
+    [Intermediate] id: 'cloud-spot-instances-and-preemptible-vms-for-batch-workloads' | title: 'Cost Optimization with Spot Instances & Preemptible VMs: Handling Interruptions'
+
+--- Sec 6: Cloud Networking, Hybrid Connectivity & Traffic Routing (Pub: 0, Planned: 7) ---
+    [Intermediate] id: 'cloud-routing-architecture-route-tables-and-user-defined-routes' | title: 'Cloud Routing Architecture: VPC Route Tables & Azure User-Defined Routes (UDR)'
+    [Intermediate] id: 'cloud-security-groups-vs-network-access-control-lists' | title: 'Stateful Cloud Security Groups vs Stateless Network ACLs (NACLs)'
+    [Intermediate] id: 'cloud-virtual-network-peering-intra-region-and-cross-region' | title: 'Virtual Network Peering: Inter-Region Transit, Routing & Transitive Peering Limits'
+    [Advanced] id: 'hybrid-cloud-dedicated-circuits-aws-direct-connect-and-azure-expressroute' | title: 'Dedicated Hybrid Cloud Links: AWS Direct Connect & Azure ExpressRoute Architecture'
+    [Intermediate] id: 'cloud-dns-architecture-amazon-route-53-and-azure-dns' | title: 'Enterprise Cloud DNS: Route 53 & Azure DNS (Private Hosted Zones & Split-Horizon)'
+    [Intermediate] id: 'cloud-nat-gateways-and-outbound-internet-egress' | title: 'Cloud NAT Gateways: Architecting Secure Outbound Egress for Private Subnets'
+    [Intermediate] id: 'cloud-content-delivery-networks-cloudfront-and-azure-cdn' | title: 'Content Delivery Networks (CDN): Edge Caching, TLS Termination & Origin Shielding'
+
+--- Sec 7: Cloud Storage, Data Protection & Disaster Recovery (Pub: 0, Planned: 7) ---
+    [Beginner] id: 'cloud-storage-types-object-vs-block-vs-managed-file-shares' | title: 'Cloud Storage Typologies Compared: Object (S3/Blob), Block (EBS/Disk) & File (EFS/Azure Files)'
+    [Intermediate] id: 'cloud-object-storage-versioning-immutability-and-retention-locks' | title: 'Object Storage Immutability: Versioning, S3 Object Lock & Azure Immutable Blob'
+    [Intermediate] id: 'cloud-storage-encryption-sse-s3-customer-managed-keys-and-kms' | title: 'Cloud Data Encryption at Rest: Server-Side Encryption (SSE) & Customer-Managed KMS Keys'
+    [Intermediate] id: 'cloud-cross-region-data-replication-for-business-continuity' | title: 'Cross-Region Object Replication (CRR) for High-Resilience Disaster Recovery'
+    [Advanced] id: 'cloud-disaster-recovery-architectures-pilot-light-to-multi-region' | title: 'Cloud DR Topologies: Backup/Restore, Pilot Light, Warm Standby & Multi-Region Active'
+    [Intermediate] id: 'cloud-data-ingestion-and-migration-appliances-snowball-data-box' | title: 'Large-Scale Data Migration: Offline Transfer Appliances (AWS Snowball, Azure Data Box)'
+    [Advanced] id: 'cloud-managed-file-services-amazon-fsx-and-azure-netapp-files' | title: 'Enterprise Managed File Systems: Amazon FSx for Windows & Azure NetApp Files'
+
+--- Sec 8: Cloud Monitoring, Telemetry & Infrastructure as Code (IaC) (Pub: 0, Planned: 8) ---
+    [Intermediate] id: 'aws-cloudwatch-metrics-logs-dashboards-and-composite-alarms' | title: 'AWS CloudWatch Architecture: Metric Filters, Log Groups & Composite Alarms'
+    [Intermediate] id: 'azure-monitor-and-log-analytics-kql-query-fundamentals' | title: 'Azure Monitor Architecture: Metrics, Application Insights & KQL Querying'
+    [Intermediate] id: 'cloud-audit-trail-governance-aws-cloudtrail-and-azure-activity-log' | title: 'Centralized Cloud Auditing: AWS CloudTrail Trails & Azure Activity Log Diagnostics'
+    [Beginner] id: 'infrastructure-as-code-iac-declarative-vs-imperative-principles' | title: 'Infrastructure as Code (IaC) Principles: Declarative vs Imperative Configuration'
+    [Intermediate] id: 'hashicorp-terraform-architecture-providers-state-and-hcl-syntax' | title: 'Terraform Architecture: Providers, State Management, Resource Blocks & HCL Syntax'
+    [Intermediate] id: 'terraform-variables-outputs-and-modular-code-design' | title: 'Terraform Project Structure: Input Variables, Outputs & Reusable Child Modules'
+    [Intermediate] id: 'azure-bicep-and-arm-templates-declarative-azure-iac' | title: 'Azure Bicep vs ARM Templates: Modular Declarative Deployment for Azure'
+    [Intermediate] id: 'aws-cloudformation-templates-and-stack-lifecycle-management' | title: 'AWS CloudFormation: YAML Templates, Drift Detection & Stack Lifecycle Management'
+
+--- Sec 9: Cloud Security, Governance, Compliance & FinOps (Pub: 0, Planned: 7) ---
+    [Intermediate] id: 'cloud-security-posture-management-cspm-and-misconfigurations' | title: 'Cloud Security Posture Management (CSPM): Continuous Baseline Auditing'
+    [Intermediate] id: 'cloud-compliance-frameworks-and-cis-cloud-foundations-benchmarks' | title: 'Implementing CIS Cloud Foundations Benchmarks & Regulatory Compliance in the Cloud'
+    [Beginner] id: 'finops-fundamentals-cloud-financial-management-and-cost-allocation' | title: 'FinOps Fundamentals: Cloud Financial Governance, Chargeback & Showback Models'
+    [Beginner] id: 'cloud-cost-allocation-resource-tagging-strategies-and-cost-centers' | title: 'Enterprise Resource Tagging Taxonomy & Cost Allocation Reporting'
+    [Intermediate] id: 'cloud-cost-optimization-reserved-instances-savings-plans-rightsizing' | title: 'Cloud Cost Optimization: Reserved Instances, Savings Plans & Workload Rightsizing'
+    [Intermediate] id: 'microsoft-365-tenant-administration-fundamentals-for-sysadmins' | title: 'Microsoft 365 Tenant Administration: Licensing, Admin Roles & Exchange Online Basics'
+    [Intermediate] id: 'microsoft-365-security-and-compliance-center-administration' | title: 'Microsoft Defender for Office 365, Purview Compliance & Safe Links/Attachments'
+
+--- Sec 10: Enterprise AI for IT Operations (AIOps) & AI Governance (Pub: 0, Planned: 8) ---
+    [Intermediate] id: 'aiops-architecture-applying-machine-learning-to-it-operations' | title: 'AIOps Architecture: Machine Learning for Event Correlation & Root Cause Analysis'
+    [Intermediate] id: 'ai-powered-anomaly-detection-in-metrics-and-log-streams' | title: 'Real-Time Anomaly Detection in System Metrics & Telemetry Log Streams Using AI'
+    [Intermediate] id: 'ai-assisted-it-incident-triage-and-automated-remediation' | title: 'AI-Assisted Incident Triage, Ticket Classification & Automated Remediation'
+    [Beginner] id: 'natural-language-system-administration-and-cli-copilots' | title: 'Natural Language Querying & AI Copilots in Systems Administration'
+    [Beginner] id: 'responsible-enterprise-ai-security-privacy-and-intellectual-property' | title: 'Responsible Enterprise AI: Data Privacy, Model Confidentiality & Intellectual Property'
+    [Intermediate] id: 'data-governance-and-sanitization-for-enterprise-ai-workloads' | title: 'Data Governance for Enterprise AI: RAG Pipeline Data Hygiene & Redaction'
+    [Intermediate] id: 'security-risks-of-generative-ai-prompt-injection-and-data-poisoning' | title: 'Defending Enterprise AI: Mitigating Prompt Injection, Jailbreaks & Data Poisoning'
+    [Advanced] id: 'infrastructure-readiness-and-compute-requirements-for-enterprise-ai' | title: 'Infrastructure Architecture for AI: GPU Virtualization, Compute Clusters & Storage Throughput'

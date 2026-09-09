@@ -215,12 +215,19 @@ sudo chgrp developers /opt/myapp/code</code></pre>
         "keywords": "linux, systemd, systemctl, unit files, service management, journalctl, rhel, ubuntu, sysadmin, init system",
         "html": r"""<p>Modern Linux distributions—including Ubuntu, Debian, Red Hat Enterprise Linux (RHEL), AlmaLinux, Fedora, and openSUSE—utilize <strong>systemd</strong> as their default system and service manager. Replacing legacy SysVinit scripts, systemd provides parallelized service booting, aggressive dependency resolution, process tracking via Linux Control Groups (cgroups), and centralized logging. For systems engineers, authoring custom systemd service units is mandatory for production workload deployment.</p>
 
-<h2>Systemd Unit File Architecture</h2>
-<p>A systemd unit is a declarative configuration file ending in <code>.service</code> (or <code>.target</code>, <code>.timer</code>, <code>.socket</code>). Unit files reside in three primary locations on the filesystem, prioritized in order of precedence:</p>
+<h2>Systemd Unit File Architecture & Filesystem Hierarchy</h2>
+<p>A systemd unit is a declarative configuration file ending in <code>.service</code> (or <code>.target</code>, <code>.timer</code>, <code>.socket</code>). Understanding where unit files reside and how systemd resolves conflicting definitions is fundamental to system administration.</p>
+<p>Unit file locations are structured by administrative authority and evaluated in strict order of precedence:</p>
 <ol>
-    <li><strong><code>/etc/systemd/system/</code> (Highest Precedence):</strong> Custom administrator-authored unit files and overrides. Always place your production service files here.</li>
-    <li><strong><code>/run/systemd/system/</code>:</strong> Transient runtime units generated dynamically by systemd generators.</li>
-    <li><strong><code>/usr/lib/systemd/system/</code> (Lowest Precedence):</strong> Default vendor-supplied unit files installed by package managers (<code>apt</code>, <code>dnf</code>, <code>yum</code>). Never edit these directly, as OS updates will overwrite changes.</li>
+    <li><strong><code>/etc/systemd/system/</code> (Highest Precedence):</strong> Reserved for system administrators. Administrator-created units, local custom services, and unit drop-in configuration overrides (e.g. <code>service.d/*.conf</code>) should normally be placed here. Files located here supersede unit files of the same name in all other directories, ensuring local customizations are never overwritten during operating system upgrades.</li>
+    <li><strong><code>/run/systemd/system/</code> (Runtime Precedence):</strong> Transient runtime units generated dynamically during execution by systemd generators (e.g. mount units or session slices). These exist purely in volatile memory and do not survive system reboots.</li>
+    <li><strong>Vendor and Distribution Package Directories (Lowest Precedence):</strong> Default units supplied by upstream software packages and distribution maintainers (installed via <code>apt</code>, <code>dnf</code>, <code>pacman</code>, or <code>zypper</code>). Importantly, the exact filesystem path varies across Linux distributions:
+        <ul>
+            <li><strong><code>/usr/lib/systemd/system/</code>:</strong> The primary location for packaged units in modern distributions that utilize a merged-<code>/usr</code> layout (such as RHEL 8/9, Fedora, Arch Linux, and modern Debian/Ubuntu releases).</li>
+            <li><strong><code>/lib/systemd/system/</code>:</strong> Commonly used in traditional Debian/Ubuntu systems (or present as a compatibility symlink pointing to <code>/usr/lib/systemd/system/</code> in merged-<code>/usr</code> systems).</li>
+        </ul>
+        Administrators should never directly edit vendor units in <code>/usr/lib/systemd/system/</code> or <code>/lib/systemd/system/</code>, as package manager updates will overwrite any modifications.
+    </li>
 </ol>
 
 <h2>The Anatomy of a Production <code>.service</code> Unit</h2>

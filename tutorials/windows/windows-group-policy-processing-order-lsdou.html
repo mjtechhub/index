@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Policy Processing Order: Local, Site, Domain & OU (LSDOU) | Windows Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master enterprise Active Directory Group Policy precedence: the LSDOU processing model, Block Inheritance, Enforced overrides, Security Filtering, and gpresult troubleshooting.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/windows/windows-group-policy-processing-order-lsdou.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Group Policy Processing Order: Local, Site, Domain & OU (LSDOU) | Windows Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master enterprise Active Directory Group Policy precedence: the LSDOU processing model, Block Inheritance, Enforced overrides, Security Filtering, and gpresult troubleshooting.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/windows/windows-group-policy-processing-order-lsdou.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Group Policy Processing Order: Local, Site, Domain & OU (LSDOU) | Windows Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master enterprise Active Directory Group Policy precedence: the LSDOU processing model, Block Inheritance, Enforced overrides, Security Filtering, and gpresult troubleshooting.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Group Policy Processing Order: Local, Site, Domain & OU (LSDOU)",
+    "description": "Master enterprise Active Directory Group Policy precedence: the LSDOU processing model, Block Inheritance, Enforced overrides, Security Filtering, and gpresult troubleshooting.",
+    "url": "https://themjtechhub.site/tutorials/windows/windows-group-policy-processing-order-lsdou.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/windows/windows-group-policy-processing-order-lsdou.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../windows.html">Windows</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Group Policy Processing Order: Local, Site, Domain & OU (LSDOU)</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 4 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Group Policy Processing Order: Local, Site, Domain & OU (LSDOU)</h1>
+            <p class="tutorial-hero-desc">Master enterprise Active Directory Group Policy precedence: the LSDOU processing model, Block Inheritance, Enforced overrides, Security Filtering, and gpresult troubleshooting.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>In an enterprise Active Directory environment, <strong>Group Policy</strong> is the primary configuration management engine used by systems administrators to centrally enforce security baselines, deploy software, configure registry keys, map network shares, and restrict user privileges across thousands of Windows endpoints. However, when multiple Group Policy Objects (GPOs) apply to the same computer or user account, determining which policy setting wins requires an exact understanding of Group Policy precedence rules.</p>
+<p>The universal precedence framework that governs all Group Policy evaluation is known as <strong>LSDOU</strong> (Local, Site, Domain, Organizational Unit).</p>
+
+<h2>The LSDOU Precedence Hierarchy</h2>
+<p>Group Policy applies cumulatively in a strict sequential order. <strong>The setting that is processed last overwrites any conflicting settings applied earlier in the processing sequence.</strong></p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Processing Order</th>
+                <th>Policy Scope</th>
+                <th>Storage Location & Precedence Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>1. First (Lowest Precedence)</strong></td>
+                <td><strong>Local Group Policy</strong></td>
+                <td>Stored locally on the endpoint in <code>C:\Windows\System32\GroupPolicy</code>. Evaluated first. Any domain-level policy setting will completely overwrite conflicting local settings.</td>
+            </tr>
+            <tr>
+                <td><strong>2. Second</strong></td>
+                <td><strong>Site-Level GPOs</strong></td>
+                <td>Linked to the Active Directory Site object in <em>Active Directory Sites and Services</em>. Affects all computers and users situated within the physical subnet boundary of that AD site.</td>
+            </tr>
+            <tr>
+                <td><strong>3. Third</strong></td>
+                <td><strong>Domain-Level GPOs</strong></td>
+                <td>Linked at the root of the Active Directory domain (e.g. <em>Default Domain Policy</em>). Applies globally to all user and computer accounts within the domain boundaries.</td>
+            </tr>
+            <tr>
+                <td><strong>4. Fourth (Highest Precedence)</strong></td>
+                <td><strong>Organizational Unit (OU) GPOs</strong></td>
+                <td>Linked to specific OUs. If OUs are nested, <strong>child OUs are evaluated after parent OUs</strong>, meaning settings linked to the deepest child OU overwrite conflicting settings from parent OUs.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="callout callout-note">
+    <div class="callout-title"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> The "Last Writer Wins" Rule</div>
+    <div class="callout-body">Because policies apply sequentially from Local &rarr; Site &rarr; Domain &rarr; Parent OU &rarr; Child OU, the <strong>Child OU GPO possesses the highest precedence</strong> and wins all conflicts by default.</div>
+</div>
+
+<h2>Multiple GPOs at the Same Level: Link Order</h2>
+<p>When multiple GPOs are linked to the exact same container (such as the same OU), conflict resolution is determined by the <strong>Link Order</strong> integer:</p>
+<ul>
+    <li>Link Order starts at <code>1</code> and counts upwards (1, 2, 3, etc.).</li>
+    <li>GPOs are processed in reverse link order: Link Order 3 processes first, followed by Link Order 2, and finally Link Order 1.</li>
+    <li>Therefore, <strong>Link Order 1 has the highest priority</strong> and overwrites any conflicting settings from higher link order numbers on the same container.</li>
+</ul>
+
+<h2>Overriding Precedence: Block Inheritance vs Enforced</h2>
+<p>Administrators can alter default LSDOU processing behavior using two powerful mechanisms:</p>
+
+<h3>1. Block Inheritance</h3>
+<p>Applied to an entire Organizational Unit container. When an administrator selects "Block Inheritance" on an OU, all incoming policy settings from parent OUs, the Domain level, and the Site level are stopped at the container boundary. Only GPOs linked directly to that specific OU (or child OUs beneath it) are processed.</p>
+
+<h3>2. Enforced (Formerly "No Override")</h3>
+<p>Applied to an individual GPO link (typically at the Domain or Site level). When a GPO link is marked <strong>Enforced</strong>:</p>
+<ul>
+    <li>Its settings cannot be blocked by downstream "Block Inheritance" flags on child OUs.</li>
+    <li>Its settings take ultimate precedence over all conflicting policies, even those applied at child OUs.</li>
+    <li>If multiple Enforced GPOs conflict, the Enforced GPO at the highest container level (Site before Domain, Domain before OU) wins.</li>
+</ul>
+
+<div class="callout callout-warning">
+    <div class="callout-title"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Enterprise Anti-Pattern: Overusing Enforced</div>
+    <div class="callout-body">Marking GPOs as "Enforced" breaks natural OU hierarchy and makes troubleshooting policy conflicts extremely difficult. Enterprise architects restrict Enforced status strictly to non-negotiable global baselines (such as the Default Domain Password Policy or critical security auditing).</div>
+</div>
+
+<h2>Targeting Controls: Security Filtering & WMI Filters</h2>
+<p>GPOs do not have to apply uniformly to every object in an OU:</p>
+<ol>
+    <li><strong>Security Filtering:</strong> By default, every GPO grants "Read" and "Apply Group Policy" permissions to <code>Authenticated Users</code>. By removing Authenticated Users and adding a specific Security Group (e.g. <code>SEC-Finance-Workstations</code>), the GPO will only evaluate on machines that are members of that group.</li>
+    <li><strong>WMI Filtering:</strong> Evaluates a WQL query on the client machine before applying settings. For example, a GPO can be restricted to execute only if the client machine is running Windows Server 2025 or is a battery-powered mobile laptop:
+    <code>SELECT * FROM Win32_OperatingSystem WHERE Version LIKE '10.0.26%' AND ProductType = '3'</code>.</li>
+</ol>
+
+<h2>Troubleshooting Policy Processing with <code>gpresult</code></h2>
+<p>When settings fail to apply, systems administrators use <strong><code>gpresult</code></strong> to generate an exact diagnostic report showing applied GPOs, denied GPOs, and winning settings:</p>
+
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Command Prompt / PowerShell (Run as Administrator)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># Force immediate re-evaluation of Group Policy without waiting for the 90-minute refresh interval
+gpupdate /force
+
+# Generate a detailed HTML diagnostic report of applied policies
+gpresult /h "C:\Temp\GPO_Report.html"</code></pre>
+</div>
+
+<h2>Summary</h2>
+<p>Group Policy is the backbone of Windows enterprise configuration. By mastering the Local &rarr; Site &rarr; Domain &rarr; OU processing sequence, respecting Link Order precedence, utilizing Block Inheritance and Enforced flags prudently, and inspecting runtime execution with <code>gpresult</code>, systems engineers maintain predictable, compliant, and rock-solid directory infrastructure.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

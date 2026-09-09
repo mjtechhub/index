@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Resource Hierarchy: Management Groups, Subscriptions & Resource Groups | Cloud & AI Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master Microsoft Azure enterprise governance: the four-tier Azure Resource Manager (ARM) hierarchy, Management Groups, Subscriptions, Resource Groups, and RBAC inheritance.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/cloud/azure-resource-manager-arm-hierarchy-management-groups-to-resources.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Azure Resource Hierarchy: Management Groups, Subscriptions & Resource Groups | Cloud & AI Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master Microsoft Azure enterprise governance: the four-tier Azure Resource Manager (ARM) hierarchy, Management Groups, Subscriptions, Resource Groups, and RBAC inheritance.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/cloud/azure-resource-manager-arm-hierarchy-management-groups-to-resources.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Azure Resource Hierarchy: Management Groups, Subscriptions & Resource Groups | Cloud & AI Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master Microsoft Azure enterprise governance: the four-tier Azure Resource Manager (ARM) hierarchy, Management Groups, Subscriptions, Resource Groups, and RBAC inheritance.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Azure Resource Hierarchy: Management Groups, Subscriptions & Resource Groups",
+    "description": "Master Microsoft Azure enterprise governance: the four-tier Azure Resource Manager (ARM) hierarchy, Management Groups, Subscriptions, Resource Groups, and RBAC inheritance.",
+    "url": "https://themjtechhub.site/tutorials/cloud/azure-resource-manager-arm-hierarchy-management-groups-to-resources.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Beginner",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/cloud/azure-resource-manager-arm-hierarchy-management-groups-to-resources.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../cloud.html">Cloud & AI</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Azure Resource Hierarchy: Management Groups, Subscriptions & Resource Groups</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge beginner">Beginner</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 4 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Azure Resource Hierarchy: Management Groups, Subscriptions & Resource Groups</h1>
+            <p class="tutorial-hero-desc">Master Microsoft Azure enterprise governance: the four-tier Azure Resource Manager (ARM) hierarchy, Management Groups, Subscriptions, Resource Groups, and RBAC inheritance.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>When organizations migrate workloads to <strong>Microsoft Azure</strong>, provisioning resources haphazardly across unmanaged subscriptions creates security chaos, financial sprawl, and compliance failures. Without a structured management architecture, cloud administrators struggle to answer basic questions: <em>Which department owns this virtual machine? Who is authorized to access this storage account? Why did this month's cloud invoice spike unexpectedly?</em></p>
+<p>To establish enterprise governance, cost accounting, and access control at scale, Azure structures all cloud assets through the <strong>Azure Resource Manager (ARM) Hierarchy</strong>.</p>
+
+<h2>The Four Scopes of the Azure Resource Hierarchy</h2>
+<p>Azure organizes all infrastructure components into a strict four-level top-down governance tree. <strong>Settings, permissions, and policies applied at a higher scope are automatically inherited by all child scopes beneath it.</strong></p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Hierarchy Level</th>
+                <th>Scope Entity</th>
+                <th>Governance & Operational Purpose</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Level 1 (Top)</strong></td>
+                <td><strong>Management Groups</strong></td>
+                <td>Containers that group multiple Azure subscriptions together. Enables enterprise-wide policy enforcement (Azure Policy) and access management (RBAC) across multiple subscriptions simultaneously.</td>
+            </tr>
+            <tr>
+                <td><strong>Level 2</strong></td>
+                <td><strong>Subscriptions</strong></td>
+                <td>The fundamental billing and quota boundary in Azure. Links resource usage directly to an Azure billing account and establishes default regional compute/network capacity quotas.</td>
+            </tr>
+            <tr>
+                <td><strong>Level 3</strong></td>
+                <td><strong>Resource Groups (RGs)</strong></td>
+                <td>Logical containers that group related Azure resources that share the same lifecycle (e.g. deployed together, monitored together, and deleted together).</td>
+            </tr>
+            <tr>
+                <td><strong>Level 4 (Bottom)</strong></td>
+                <td><strong>Resources</strong></td>
+                <td>Individual deployable service instances: Virtual Machines, Storage Accounts, Virtual Networks, SQL Databases, Key Vaults, and Network Security Groups.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Level 1: Management Groups & Enterprise Root</h2>
+<p>Every Azure tenant features an automatic <strong>Tenant Root Management Group</strong> at the very top of the hierarchy. Organizations can build a management group tree up to six levels deep to mirror their corporate business structure:</p>
+<ul>
+    <li><strong>Core Architecture:</strong> An enterprise might create a <code>Production</code> Management Group and a <code>Non-Production</code> Management Group beneath the Root.</li>
+    <li><strong>Policy Inheritance:</strong> If an administrator assigns an Azure Policy requiring all storage accounts to enforce TLS 1.2 at the <code>Production</code> Management Group level, <strong>every current and future subscription</strong> inside that group automatically enforces that compliance rule without manual intervention.</li>
+</ul>
+
+<h2>Level 2: Subscriptions (Billing & Security Boundaries)</h2>
+<p>A single enterprise Azure deployment should almost never rely on just one subscription. Subscriptions serve two critical architectural functions:</p>
+<ol>
+    <li><strong>Billing Separation:</strong> Each subscription generates distinct invoice line items. Organizations assign distinct subscriptions to business units (e.g. <code>Sub-Finance-Prod</code>, <code>Sub-Marketing-Dev</code>) to facilitate FinOps chargeback and showback.</li>
+    <li><strong>Scale Limits & Isolation:</strong> Azure enforces subscription-level resource limits (e.g. maximum vCPU counts per region). Splitting production, development, and testing into separate subscriptions prevents a runaway dev script from exhausting production compute quotas.</li>
+</ol>
+
+<h2>Level 3: Resource Groups (Lifecycle Management)</h2>
+<p>A Resource Group is not just an administrative folder; it is a lifecycle boundary:</p>
+<ul>
+    <li><strong>The Core Golden Rule:</strong> Place resources that share a common lifecycle in the same Resource Group. For example, a three-tier web application (Web VM, App VM, SQL DB, Virtual Network) that is deployed and decommissioned together belongs in a single Resource Group.</li>
+    <li><strong>Regional Independence:</strong> A Resource Group has a metadata location (e.g. <code>East US</code>), but the resources inside that group can physically reside in completely different Azure regions.</li>
+    <li><strong>Cascading Deletion:</strong> Deleting a Resource Group automatically deletes every single resource contained inside it, preventing orphaned storage disks and unused public IPs from accumulating hidden cloud costs.</li>
+</ul>
+
+<div class="callout callout-important">
+    <div class="callout-title"><i class="fa-solid fa-lock" aria-hidden="true"></i> Resource Locks: Preventing Accidental Deletion</div>
+    <div class="callout-body">Because deleting a Resource Group instantly destroys all child assets, enterprise production environments apply <strong>Azure Resource Locks</strong> (<code>CanNotDelete</code> or <code>ReadOnly</code>) at the Resource Group scope. A <code>CanNotDelete</code> lock prevents even a Subscription Owner from deleting the group until the lock is explicitly removed.</div>
+</div>
+
+<h2>Inheritance of Role-Based Access Control (RBAC)</h2>
+<p>Azure Role-Based Access Control (Azure RBAC) governs user authorization across the hierarchy:</p>
+<ul>
+    <li>If a DevOps engineer is granted the <code>Contributor</code> role at a <strong>Resource Group</strong> scope, their permissions are strictly confined to managing resources inside that specific Resource Group. They cannot view or modify resources in adjacent Resource Groups.</li>
+    <li>If an identity is granted <code>Reader</code> at the <strong>Management Group</strong> scope, that identity inherits read-only visibility across every subscription, resource group, and resource governed by that management group.</li>
+</ul>
+
+<h2>Managing Resource Groups via Azure CLI</h2>
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Azure CLI (Bash / PowerShell)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># 1. Create a production Resource Group in East US with enterprise governance tags
+az group create \
+    --name "rg-ecommerce-prod-eastus" \
+    --location "eastus" \
+    --tags Environment="Production" Department="Engineering" CostCenter="CC-4050"
+
+# 2. Apply a CanNotDelete lock to protect all child assets from accidental deletion
+az lock create \
+    --name "lock-prevent-deletion" \
+    --resource-group "rg-ecommerce-prod-eastus" \
+    --lock-type CanNotDelete
+
+# 3. List all resources contained within the Resource Group
+az resource list --resource-group "rg-ecommerce-prod-eastus" --output table</code></pre>
+</div>
+
+<h2>Summary</h2>
+<p>The Azure Resource Manager hierarchy provides the architectural scaffolding for enterprise cloud governance. By structuring cloud assets through Management Groups for global compliance, Subscriptions for billing and quota boundaries, Resource Groups for lifecycle cohesion, and enforcing RBAC inheritance with Resource Locks, cloud architects establish a secure, organized, and cost-controlled Azure enterprise foundation.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

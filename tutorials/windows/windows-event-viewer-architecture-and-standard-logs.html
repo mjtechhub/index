@@ -93,7 +93,7 @@
 <h2>Windows Event Log Subsystem Architecture</h2>
 <p>Prior to Windows Vista and Windows Server 2008, event logs were stored in legacy text-based <code>.evt</code> files. Modern Windows platforms store logs in the structured, binary XML <strong><code>.evtx</code></strong> format located in <code>C:\\Windows\\System32\\winevt\\Logs\\</code>.</p>
 <ul>
-    <li><strong>The Windows Event Log Service (<code>eventlog</code>):</strong> Executes as an isolated svchost service, receiving log writes from user-mode APIs and kernel-mode ETW (Event Tracing for Windows) providers.</li>
+    <li><strong>The Windows Event Log Service (<code>EventLog</code>):</strong> The actual Windows service name is <code>EventLog</code> (display name: <em>Windows Event Log</em>). It runs inside a <code>svchost.exe</code> host process powered by the service DLL <code>wevtsvc.dll</code> (which implements the service functionality, distinguished from the service name itself). The service receives log writes from user-mode APIs and kernel-mode ETW (Event Tracing for Windows) providers.</li>
     <li><strong>Structured Schema:</strong> Unlike raw syslog text lines, every event record contains structured XML metadata, including Provider Name, Event ID, Version, Level, Task Category, Opcode, Keywords, Timestamp (UTC), and Execution Process ID.</li>
     <li><strong>Ring Buffer Architecture:</strong> Logs operate as circular buffers with administrative size caps (defaulting to 20 MB for standard logs). When the log reaches capacity, Windows can overwrite oldest events, retain events until manually cleared, or archive the log automatically.</li>
 </ul>

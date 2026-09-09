@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Services Architecture & Service Controller (sc.exe) | Windows Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master Windows services architecture: Service Control Manager (SCM), svchost grouping, registry hives, and command-line lifecycle management with sc.exe and PowerShell.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/windows/windows-services-architecture-and-sc-utility.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Windows Services Architecture & Service Controller (sc.exe) | Windows Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master Windows services architecture: Service Control Manager (SCM), svchost grouping, registry hives, and command-line lifecycle management with sc.exe and PowerShell.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/windows/windows-services-architecture-and-sc-utility.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Windows Services Architecture & Service Controller (sc.exe) | Windows Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master Windows services architecture: Service Control Manager (SCM), svchost grouping, registry hives, and command-line lifecycle management with sc.exe and PowerShell.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Windows Services Architecture & Service Controller (sc.exe)",
+    "description": "Master Windows services architecture: Service Control Manager (SCM), svchost grouping, registry hives, and command-line lifecycle management with sc.exe and PowerShell.",
+    "url": "https://themjtechhub.site/tutorials/windows/windows-services-architecture-and-sc-utility.html",
+    "datePublished": "2026-09-09",
+    "dateModified": "2026-09-09",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/windows/windows-services-architecture-and-sc-utility.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../windows.html">Windows</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Windows Services Architecture & Service Controller (sc.exe)</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 4 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 09, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Windows Services Architecture & Service Controller (sc.exe)</h1>
+            <p class="tutorial-hero-desc">Master Windows services architecture: Service Control Manager (SCM), svchost grouping, registry hives, and command-line lifecycle management with sc.exe and PowerShell.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>In Microsoft Windows, a <strong>Service</strong> is a specialized background process that operates without user intervention, does not require an active graphical desktop session, and initiates automatically during system startup before any user logs in. Windows services power essential operating system components—including networking, domain authentication, security auditing, and print spooling—as well as third-party enterprise workloads like database daemons, backup agents, and hypervisor management tools.</p>
+<p>Understanding how the <strong>Service Control Manager (SCM)</strong> orchestrates services and mastering command-line administration via <strong><code>sc.exe</code></strong> and PowerShell is foundational for enterprise Windows systems engineering.</p>
+
+<h2>The Service Control Manager (SCM) Architecture</h2>
+<p>The core subsystem responsible for managing service execution is the <strong>Service Control Manager</strong>, hosted within the critical system process <code>C:\Windows\System32\services.exe</code> (PID started directly by Wininit during system boot).</p>
+<ul>
+    <li><strong>RPC Interface:</strong> SCM exposes a set of Named Pipe RPC interfaces allowing administrative utilities (such as <code>services.msc</code>, <code>sc.exe</code>, and PowerShell's <code>Get-Service</code>) to query, start, stop, pause, and reconfigure service states.</li>
+    <li><strong>Service Database:</strong> The static configuration for every registered service is stored within the Windows Registry under the hive key:
+    <code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\&lt;ServiceName&gt;</code>.</li>
+    <li><strong>Security Contexts:</strong> Services run under dedicated Windows security principals, commonly:
+        <ul>
+            <li><code>NT AUTHORITY\SYSTEM</code> (LocalSystem): Complete administrative control over the local operating system, but no domain network credentials beyond the computer account.</li>
+            <li><code>NT AUTHORITY\NetworkService</code>: Minimal local privileges, but authenticates to remote network shares as the domain computer account (<code>DOMAIN\COMPUTER$</code>).</li>
+            <li><code>NT AUTHORITY\LocalService</code>: Minimal local privileges, authenticates anonymously to remote network resources.</li>
+            <li><strong>Managed Service Accounts (gMSA):</strong> Enterprise Active Directory accounts with automated password rotation for domain application clusters.</li>
+        </ul>
+    </li>
+</ul>
+
+<h2>Shared Process Hosting: The <code>svchost.exe</code> Model</h2>
+<p>Running dozens of separate processes for lightweight operating system services creates memory overhead. Windows utilizes <strong>Service Host (<code>svchost.exe</code>)</strong> processes to host multiple services implemented as Dynamic Link Libraries (DLLs) within a single memory space.</p>
+<p>Under the service's registry key, a subkey named <code>Parameters\ServiceDll</code> points to the actual binary (e.g. <code>wevtsvc.dll</code> for the EventLog service). In modern Windows 10/11 and Windows Server editions on machines with more than 3.5 GB of RAM, Windows automatically splits services into isolated individual <code>svchost.exe</code> processes to prevent a crash in one service from crashing other unrelated background services.</p>
+
+<h2>Windows Service Startup Types</h2>
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Startup Type</th>
+                <th>Registry <code>Start</code> Value</th>
+                <th>Behavioral Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Boot</strong></td>
+                <td><code>0</code></td>
+                <td>Loaded by the kernel bootloader before OS initialization (critical storage and disk filter drivers).</td>
+            </tr>
+            <tr>
+                <td><strong>System</strong></td>
+                <td><code>1</code></td>
+                <td>Loaded during kernel initialization by <code>ntoskrnl.exe</code>.</td>
+            </tr>
+            <tr>
+                <td><strong>Automatic</strong></td>
+                <td><code>2</code></td>
+                <td>Started automatically by the SCM during system boot after winlogon/wininit.</td>
+            </tr>
+            <tr>
+                <td><strong>Automatic (Delayed)</strong></td>
+                <td><code>2</code> (with <code>DelayedAutostart=1</code>)</td>
+                <td>Starts shortly after boot to prioritize interactive user logon performance and reduce initial disk contention.</td>
+            </tr>
+            <tr>
+                <td><strong>Manual (Demand)</strong></td>
+                <td><code>3</code></td>
+                <td>Starts only when explicitly triggered by a user, script, API call, or dependency request.</td>
+            </tr>
+            <tr>
+                <td><strong>Disabled</strong></td>
+                <td><code>4</code></td>
+                <td>Cannot be started by any user or dependency until its startup type is altered.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Command-Line Management with <code>sc.exe</code></h2>
+<p>The <strong>Service Controller (<code>sc.exe</code>)</strong> is the native low-level administrative tool for interfacing with SCM. Unlike graphical tools, <code>sc.exe</code> works reliably in headless environments (Windows Server Core) and supports remote targets.</p>
+
+<div class="callout callout-important">
+    <div class="callout-title"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Critical sc.exe Syntax Rule</div>
+    <div class="callout-body">In <code>sc.exe</code> configuration commands, <strong>a space is strictly required after every equals sign</strong> (e.g. <code>start= auto</code>, NOT <code>start=auto</code>). Omitting the space causes the command to fail with an invalid parameter syntax error.</div>
+</div>
+
+<h3>1. Querying Service State</h3>
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Command Prompt / PowerShell (Run as Administrator)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code>sc.exe query "Spooler"</code></pre>
+</div>
+
+<div class="command-header"><span class="command-label">Example Output</span></div>
+<pre><code>SERVICE_NAME: Spooler 
+        TYPE               : 110  WIN32_OWN_PROCESS  (interactive)
+        STATE              : 4  RUNNING 
+                                 (STOPPABLE, NOT_PAUSABLE, ACCEPTS_SHUTDOWN)
+        WIN32_EXIT_CODE    : 0  (0x0)
+        SERVICE_EXIT_CODE  : 0  (0x0)
+        CHECKPOINT         : 0x0
+        WAIT_HINT          : 0x0</code></pre>
+
+<h3>2. Creating a Custom Service</h3>
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Command Prompt (Run as Administrator)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code>sc.exe create "AppDaemon" binPath= "C:\EnterpriseApps\Daemon\daemon.exe" start= auto obj= "NT AUTHORITY\NetworkService" displayName= "Enterprise App Daemon"</code></pre>
+</div>
+
+<h3>3. Configuring Service Failure Actions (Self-Healing)</h3>
+<p>Production services should automatically restart if unhandled exceptions cause unexpected process termination:</p>
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> Command Prompt (Run as Administrator)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># Configure service to restart after 60 seconds on first and second failure
+sc.exe failure "AppDaemon" reset= 86400 actions= restart/60000/restart/60000/none/0</code></pre>
+</div>
+
+<h2>Modern PowerShell Administration</h2>
+<p>While <code>sc.exe</code> interacts directly with the SCM RPC interface, PowerShell cmdlets provide pipeline-friendly object manipulation:</p>
+
+<div class="tutorial-command">
+    <div class="command-header">
+        <span class="command-label"><i class="fa-solid fa-terminal" aria-hidden="true"></i> PowerShell (Run as Administrator)</span>
+        <button class="btn-copy-code" type="button" aria-label="Copy code snippet"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button>
+    </div>
+    <pre><code># Find all services configured for Automatic start that are currently Stopped
+Get-CimInstance Win32_Service | 
+    Where-Object { $_.StartMode -eq 'Auto' -and $_.State -ne 'Running' } | 
+    Select-Object Name, DisplayName, State, StartMode
+
+# Restart a critical service gracefully with forced termination of hung threads
+Restart-Service -Name "Spooler" -Force -Verbose</code></pre>
+</div>
+
+<h2>Summary</h2>
+<p>The Windows Services subsystem provides a resilient, managed execution framework for background operating system and application daemons. By understanding the role of the Service Control Manager, <code>svchost.exe</code> isolation, and master-level command-line control using <code>sc.exe</code> and PowerShell, administrators can reliably provision, automate, and recover mission-critical Windows infrastructure.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

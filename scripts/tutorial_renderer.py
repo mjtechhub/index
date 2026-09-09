@@ -14,6 +14,7 @@ Ensures 100% adherence to:
 """
 
 import json
+import math
 import re
 from datetime import datetime
 from pathlib import Path
@@ -27,9 +28,9 @@ def calculate_word_count(html_content: str) -> int:
     return len(words)
 
 def calculate_read_time(html_content: str, words_per_minute: int = 200) -> str:
-    """Calculates read time in minutes based on word count (minimum 5 min read)."""
+    """Calculates read time in minutes based on word count: max(1, ceil(words / words_per_minute))."""
     words = calculate_word_count(html_content)
-    minutes = max(5, round(words / words_per_minute))
+    minutes = max(1, math.ceil(words / words_per_minute))
     return f"{minutes} min read"
 
 def build_tutorial_html(tut: dict, cat_dir: str, cat_page: str, publish_date: str = "2026-09-09", update_date: str = None) -> str:

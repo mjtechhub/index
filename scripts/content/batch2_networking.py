@@ -278,6 +278,15 @@ NETWORKING_TUTORIALS = [
     <li><strong>Signature & Heuristic Matching:</strong> The normalized stream is evaluated against hardware-accelerated signature engines searching for known exploit patterns, command-and-control (C2) beaconing, and malicious file hashes.</li>
 </ol>
 
+<h2>Vendor Processing Architectures & Hardware Acceleration</h2>
+<p>Performing deep Layer 7 inspection, TLS decryption, and multi-engine threat analysis without introducing severe network latency requires sophisticated internal processing architectures. There is no single universal industry standard; different NGFW vendors implement distinct internal inspection pipelines and custom hardware acceleration:</p>
+<ul>
+    <li><strong>Single-Pass Parallel Processing (SP3):</strong> An architecture developed and implemented specifically by <strong>Palo Alto Networks</strong> as an implementation example. In this proprietary architecture, networking operations, policy lookup, Application Identification (App-ID), user mapping, and threat decoding are executed in a unified single-pass software pipeline, eliminating redundant packet parsing across separate inspection engines.</li>
+    <li><strong>Custom Hardware ASICs (e.g. Fortinet):</strong> Other vendors rely heavily on specialized custom silicon. Fortinet, for example, pairs general-purpose CPUs with dedicated Network Processors (NP) for line-rate Layer 4 stateful offload and Content Processors (CP) for hardware-accelerated encryption decryption and signature pattern matching.</li>
+    <li><strong>Multi-Threaded Inspection Engines (e.g. Cisco & Check Point):</strong> Cisco utilizes multi-threaded Snort3 inspection engines optimized for modern multi-core architectures and cryptographic offload cards, while Check Point employs unified security engines operating across segregated inspection and acceleration worker threads.</li>
+</ul>
+<p>While marketing terminology and underlying silicon vary, all enterprise NGFW platforms share the engineering goal of pipelining deep inspection to sustain multi-gigabit enterprise throughput without bottlenecking user traffic.</p>
+
 <h2>Application Identification (App-ID) & Protocol Evasion Defense</h2>
 <p>Malicious software and non-compliant enterprise applications routinely disguise their traffic by borrowing standard ports. For instance, an employee or remote access trojan might tunnel unencrypted SSH or peer-to-peer file sharing over TCP port 443 to bypass basic firewall rules.</p>
 <p>NGFWs utilize proprietary application identification engines (such as Palo Alto Networks App-ID, Fortinet FortiOS Application Control, and Cisco Snort3):</p>

@@ -141,11 +141,14 @@ CLOUD_TUTORIALS = [
 <h3>Savings Plans vs Legacy Reserved Instances (RIs)</h3>
 <p>While AWS still supports legacy Reserved Instances, <strong>AWS Savings Plans</strong> represent modern enterprise FinOps standard practice. Unlike standard RIs (which tied organizations to an exact operating system and instance size), Compute Savings Plans automatically apply discounts regardless of instance family, size, OS, availability zone, or even whether the workload migrates from EC2 to Fargate serverless containers.</p>
 
-<h3>The Spot Instance 2-Minute Interruption Rule</h3>
-<div class="callout callout-warning">
-    <div class="callout-title"><i class="fa-solid fa-clock" aria-hidden="true"></i> Operating with Spot Interruptions</div>
-    <div class="callout-body">AWS can reclaim Spot Instances whenever capacity is needed by On-Demand customers. AWS emits an Amazon EventBridge event and an EC2 Instance Metadata Service warning exactly <strong>two minutes prior to instance termination</strong>. Spot workloads must be completely stateless and architected with automated graceful shutdown hooks.</div>
-</div>
+<h3>Operating with Spot Instance Interruption Notices</h3>
+<p>AWS can reclaim Spot capacity when demand spikes or when the Spot price exceeds your configured maximum. Understanding the exact mechanics of Spot interruption handling is critical for workload stability:</p>
+<ul>
+    <li><strong>Two-Minute Interruption Notice:</strong> When AWS reclaims a Spot instance for a <em>stop</em> or <em>terminate</em> action, it generally provides an interruption notice two minutes before the action occurs. This warning is emitted via an Amazon EventBridge event and locally via the EC2 Instance Metadata Service (IMDS) at <code>latest/meta-data/spot/instance-action</code>.</li>
+    <li><strong>Best-Effort Delivery:</strong> Interruption notices are delivered on a best-effort basis. AWS does not guarantee that a full two minutes will always be available in every interruption scenario; systems must be resilient to abrupt disconnections.</li>
+    <li><strong>Hibernation Behavior:</strong> When an instance is configured to <em>hibernate</em> on interruption, AWS does not provide the normal two-minute lead time because the operating system hibernation sequence (flushing memory state to the EBS root volume) begins immediately upon notice generation.</li>
+    <li><strong>Fault-Tolerant Architecture:</strong> Because interruptions are inherent to the Spot pricing model, workloads placed on Spot instances must be stateless, horizontally scaled, or capable of frequent state checkpointing to durable storage (such as Amazon S3 or Amazon DynamoDB).</li>
+</ul>
 
 <h2>Summary</h2>
 <p>Mastering Amazon EC2 requires aligning workload performance requirements with hardware architecture and leveraging modern purchasing models. By deploying Graviton-powered ARM instances for superior price-performance, pairing steady-state production nodes with Savings Plans, and bursting batch workloads onto Spot Instances, cloud architects achieve maximum scalability with rigorous cost optimization.</p>"""

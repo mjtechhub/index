@@ -130,7 +130,8 @@
                             "id": "ipv6-addressing-and-slaac",
                             "name": "IPv6 Addressing, SLAAC & Global Unicast Architecture",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/networking/ipv6-addressing-and-slaac.html"
                         },
                         {
                             "id": "ipv6-transition-dual-stack-and-tunneling",
@@ -407,7 +408,8 @@
                             "id": "wireless-access-points-and-controllers-wlc",
                             "name": "Wireless Access Points, CAPWAP & WLC Architecture",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/networking/wireless-access-points-and-controllers-wlc.html"
                         },
                         {
                             "id": "wi-fi-security-wpa2-enterprise-vs-wpa3",
@@ -538,7 +540,8 @@
                             "id": "snmp-v2c-vs-v3-security-and-usm",
                             "name": "SNMPv2c vs SNMPv3: Cryptographic Authentication & Privacy (USM)",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/networking/snmp-v2c-vs-v3-security-and-usm.html"
                         },
                         {
                             "id": "wireshark-tcp-packet-analysis-and-filter-syntax",
@@ -906,7 +909,8 @@
                             "id": "windows-services-architecture-and-sc-utility",
                             "name": "Windows Services Architecture & Service Controller (sc.exe)",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/windows/windows-services-architecture-and-sc-utility.html"
                         },
                         {
                             "id": "windows-task-scheduler-automation-and-triggers",
@@ -1018,7 +1022,8 @@
                             "id": "windows-bitlocker-drive-encryption-and-tpm-architecture",
                             "name": "BitLocker Drive Encryption Architecture & TPM 2.0 Integration",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/windows/windows-bitlocker-drive-encryption-and-tpm-architecture.html"
                         },
                         {
                             "id": "windows-bitlocker-recovery-keys-and-ad-backup",
@@ -1065,7 +1070,8 @@
                             "id": "windows-group-policy-processing-order-lsdou",
                             "name": "Group Policy Processing Order: Local, Site, Domain & OU (LSDOU)",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/windows/windows-group-policy-processing-order-lsdou.html"
                         },
                         {
                             "id": "windows-group-policy-troubleshooting-gpupdate-gpresult",
@@ -1505,9 +1511,10 @@
                         },
                         {
                             "id": "linux-openssh-server-configuration-and-hardening",
-                            "name": "OpenSSH Server Administration: sshd_config Configuration & Port Hardening",
+                            "name": "OpenSSH Server Administration: sshd_config Hardening & Cryptographic Security",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/linux/linux-openssh-server-configuration-and-hardening.html"
                         },
                         {
                             "id": "linux-ssh-key-based-authentication-and-agent-forwarding",
@@ -1536,7 +1543,8 @@
                             "id": "linux-debian-ubuntu-package-management-apt-dpkg",
                             "name": "Debian/Ubuntu Package Management: apt, apt-cache & dpkg Administration",
                             "level": "Beginner",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/linux/linux-debian-ubuntu-package-management-apt-dpkg.html"
                         },
                         {
                             "id": "linux-rhel-rocky-package-management-dnf-rpm",
@@ -1635,9 +1643,10 @@
                         },
                         {
                             "id": "linux-firewalld-zones-and-services-management",
-                            "name": "Enterprise Firewall Management with firewalld: Zones, Services & Rich Rules",
+                            "name": "Enterprise Linux Firewall Administration: firewalld Zones, Services & Rich Rules",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/linux/linux-firewalld-zones-and-services-management.html"
                         },
                         {
                             "id": "linux-selinux-fundamentals-modes-contexts-booleans",
@@ -1955,7 +1964,8 @@
                             "id": "hypervisor-architecture-type-1-bare-metal-vs-type-2-hosted",
                             "name": "Hypervisor Architecture: Type 1 (Bare-Metal) vs Type 2 (Hosted)",
                             "level": "Beginner",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/servers/hypervisor-architecture-type-1-bare-metal-vs-type-2-hosted.html"
                         },
                         {
                             "id": "vmware-esxi-installation-initial-setup-and-dcui",
@@ -2008,7 +2018,8 @@
                             "id": "enterprise-storage-architectures-das-vs-nas-vs-san",
                             "name": "Enterprise Storage Architectures Compared: DAS vs NAS vs SAN",
                             "level": "Beginner",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/servers/enterprise-storage-architectures-das-vs-nas-vs-san.html"
                         },
                         {
                             "id": "storage-area-networks-iscsi-targets-initiators-and-iqn",
@@ -2083,9 +2094,10 @@
                         },
                         {
                             "id": "the-3-2-1-backup-rule-and-modern-ransomware-protection",
-                            "name": "The 3-2-1-1-0 Backup Rule & Immutable Storage for Ransomware Protection",
+                            "name": "The 3-2-1 Backup Strategy & Modern Ransomware Defense Architecture",
                             "level": "Beginner",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/servers/the-3-2-1-backup-rule-and-modern-ransomware-protection.html"
                         },
                         {
                             "id": "enterprise-backup-solutions-veeam-commvault-and-image-backups",
@@ -2532,7 +2544,8 @@
                             "id": "email-authentication-frameworks-spf-dkim-and-dmarc-deep-dive",
                             "name": "Email Authentication Protocols Deep Dive: SPF Syntax, DKIM Keys & DMARC Policies",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cybersecurity/email-authentication-frameworks-spf-dkim-and-dmarc-deep-dive.html"
                         },
                         {
                             "id": "phishing-attack-vectors-spear-phishing-and-bec-anatomy",
@@ -2585,7 +2598,8 @@
                             "id": "cve-and-cvss-scoring-metrics-base-temporal-environmental",
                             "name": "Understanding CVE Identifiers, CVSS v3/v4 Vectors & Severity Scoring",
                             "level": "Beginner",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cybersecurity/cve-and-cvss-scoring-metrics-base-temporal-environmental.html"
                         },
                         {
                             "id": "vulnerability-scanning-architecture-authenticated-vs-unauthenticated",
@@ -2720,7 +2734,8 @@
                             "id": "zero-trust-architecture-tenets-nist-sp-800-207-principles",
                             "name": "Zero Trust Architecture Core Tenets: NIST SP 800-207 Guiding Principles",
                             "level": "Beginner",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cybersecurity/zero-trust-architecture-tenets-nist-sp-800-207-principles.html"
                         },
                         {
                             "id": "zero-trust-continuous-verification-and-context-aware-access",
@@ -2908,7 +2923,8 @@
                             "id": "azure-resource-manager-arm-hierarchy-management-groups-to-resources",
                             "name": "Azure Resource Hierarchy: Management Groups, Subscriptions & Resource Groups",
                             "level": "Beginner",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cloud/azure-resource-manager-arm-hierarchy-management-groups-to-resources.html"
                         },
                         {
                             "id": "azure-virtual-machines-sizing-disks-and-availability-sets",
@@ -3097,7 +3113,8 @@
                             "id": "cloud-storage-types-object-vs-block-vs-managed-file-shares",
                             "name": "Cloud Storage Typologies Compared: Object (S3/Blob), Block (EBS/Disk) & File (EFS/Azure Files)",
                             "level": "Beginner",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cloud/cloud-storage-types-object-vs-block-vs-managed-file-shares.html"
                         },
                         {
                             "id": "cloud-object-storage-versioning-immutability-and-retention-locks",
@@ -3160,9 +3177,10 @@
                         },
                         {
                             "id": "infrastructure-as-code-iac-declarative-vs-imperative-principles",
-                            "name": "Infrastructure as Code (IaC) Principles: Declarative vs Imperative Configuration",
+                            "name": "Infrastructure as Code (IaC): Declarative vs Imperative Principles & State Management",
                             "level": "Beginner",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cloud/infrastructure-as-code-iac-declarative-vs-imperative-principles.html"
                         },
                         {
                             "id": "hashicorp-terraform-architecture-providers-state-and-hcl-syntax",

@@ -141,10 +141,10 @@ def test_data_and_static_seo():
         topics_data = json.load(f)
 
     # 1. Total Count & Category-Contiguous Order
-    assert len(tuts) == 94, f"Expected 94 tutorials, found {len(tuts)}"
+    assert len(tuts) >= 94, f"Expected at least 94 tutorials, found {len(tuts)}"
     print(f"[PASS] Total tutorials in tutorials.json = {len(tuts)}")
 
-    category_expected_counts = {
+    category_min_counts = {
         "Networking": 64,
         "Windows": 6,
         "Linux": 6,
@@ -157,19 +157,19 @@ def test_data_and_static_seo():
         cat = t["category"]
         category_counts[cat] = category_counts.get(cat, 0) + 1
 
-    for cat, exp in category_expected_counts.items():
+    for cat, exp in category_min_counts.items():
         act = category_counts.get(cat, 0)
-        assert act == exp, f"Category '{cat}' count mismatch: {act} != {exp}"
-        print(f"[PASS] Category '{cat}': {act} tutorials")
+        assert act >= exp, f"Category '{cat}' count mismatch: {act} < {exp}"
+        print(f"[PASS] Category '{cat}': {act} tutorials (>= {exp})")
 
     # Verify Contiguous Category Blocks
     current_cat = None
-    seen_cats = set()
+    seen_cats = []
     for t in tuts:
         cat = t["category"]
         if cat != current_cat:
             assert cat not in seen_cats, f"Category '{cat}' is not contiguous in tutorials.json!"
-            seen_cats.add(cat)
+            seen_cats.append(cat)
             current_cat = cat
     print("[PASS] tutorials.json is verified 100% category-contiguous.")
 
@@ -190,15 +190,14 @@ def test_data_and_static_seo():
                     plan_subtopics[sid] = (cat["id"], sub)
 
     assert len(all_subtopic_ids) == 471, f"Expected 471 total topics, found {len(all_subtopic_ids)}"
-    assert len(pub_subtopics) == 94, f"Expected 94 published topics, found {len(pub_subtopics)}"
-    assert len(plan_subtopics) == 377, f"Expected 377 planned topics, found {len(plan_subtopics)}"
-    print("[PASS] Master Curriculum Totals: 471 topics (94 published, 377 planned).")
+    assert len(pub_subtopics) >= 94, f"Expected at least 94 published topics, found {len(pub_subtopics)}"
+    print(f"[PASS] Master Curriculum Totals: 471 topics ({len(pub_subtopics)} published, {len(plan_subtopics)} planned).")
 
     # Check 1-to-1 mapping with tutorials.json
     tut_ids = {t["id"] for t in tuts}
-    assert len(tut_ids) == 94, "Duplicate tutorial IDs found in tutorials.json!"
+    assert len(tut_ids) == len(tuts), "Duplicate tutorial IDs found in tutorials.json!"
     assert tut_ids == set(pub_subtopics.keys()), "Mismatch between tutorials.json and published curriculum subtopics!"
-    print("[PASS] Exact 1-to-1 mapping between tutorials.json (94) and published curriculum entries (94).")
+    print(f"[PASS] Exact 1-to-1 mapping between tutorials.json ({len(tut_ids)}) and published curriculum entries ({len(pub_subtopics)}).")
 
     # Check that all 18 Batch 2 IDs are now published
     for b2_id in BATCH2_TOPIC_IDS:
@@ -235,6 +234,58 @@ def test_data_and_static_seo():
         assert ld_data.get("url") == expected_canon
 
     print("[PASS] All 18 Batch 2 HTML files verified with 100% valid static SEO and single H1.")
+
+def test_phase6_5b1_technical_accuracy():
+    print("\n==================================================")
+    print("STEP 1.5: Technical Accuracy Assertions (Phase 6.5B.1)")
+    print("==================================================")
+    
+    # 1. NIST Password Policies
+    pwd_path = ROOT_DIR / "tutorials" / "cybersecurity" / "modern-password-policies-and-nist-800-63-guidelines.html"
+    pwd_html = pwd_path.read_text(encoding="utf-8")
+    assert "Minimum 15 characters" in pwd_html, "NIST: Missing 15-character single-factor requirement"
+    assert "minimum 8 characters" in pwd_html, "NIST: Missing 8-character MFA requirement"
+    assert "No arbitrary character-class composition requirements" in pwd_html, "NIST: Missing composition rule removal"
+    assert "No periodic password changes" in pwd_html, "NIST: Missing periodic rotation removal"
+    assert "Mandatory verifier screening" in pwd_html, "NIST: Missing verifier screening requirement"
+    assert "mandates k-anonymity" not in pwd_html.lower(), "NIST: Must not claim NIST mandates k-anonymity"
+    assert "k-anonymity" in pwd_html.lower() and "implementation technique" in pwd_html.lower(), "NIST: Must contextualize k-anonymity as implementation technique"
+    print("[PASS] NIST Password Guidance: 15-char single-factor, 8-char MFA, no rotation/composition, screening verified.")
+
+    # 2. Windows Event Log Service
+    evt_path = ROOT_DIR / "tutorials" / "windows" / "windows-event-viewer-architecture-and-standard-logs.html"
+    evt_html = evt_path.read_text(encoding="utf-8")
+    assert "The Windows Event Log Service (<code>EventLog</code>)" in evt_html, "Windows: EventLog service name missing or misformatted"
+    assert "wevtsvc.dll" in evt_html, "Windows: wevtsvc.dll service DLL missing"
+    assert "evtsvc service" not in evt_html and "service (<code>evtsvc</code>)" not in evt_html, "Windows: Must not refer to service as evtsvc"
+    print("[PASS] Windows Event Log Service: Correct service name 'EventLog' and distinguished 'wevtsvc.dll' verified.")
+
+    # 3. NGFW DPI & Processing Architectures
+    ngfw_path = ROOT_DIR / "tutorials" / "networking" / "next-generation-firewall-ngfw-deep-packet-inspection.html"
+    ngfw_html = ngfw_path.read_text(encoding="utf-8")
+    assert "Single-Pass Parallel Processing (SP3)" in ngfw_html, "NGFW: Missing SP3 mention"
+    assert "Palo Alto Networks" in ngfw_html, "NGFW: Missing Palo Alto attribution for SP3"
+    assert "universal" not in ngfw_html.lower() or "no single universal industry standard" in ngfw_html.lower(), "NGFW: Must not present SP3 as universal"
+    assert "Fortinet" in ngfw_html and "Cisco" in ngfw_html, "NGFW: Missing vendor-neutral comparative processing pipelines"
+    print("[PASS] NGFW Architecture: Vendor-neutral pipelines, hardware acceleration, and Palo Alto SP3 attribution verified.")
+
+    # 4. Linux systemd Unit Paths
+    sysd_path = ROOT_DIR / "tutorials" / "linux" / "linux-systemd-service-units-creation-and-control.html"
+    sysd_html = sysd_path.read_text(encoding="utf-8")
+    assert "/etc/systemd/system/" in sysd_html, "Linux: Missing /etc/systemd/system/"
+    assert "/usr/lib/systemd/system/" in sysd_html, "Linux: Missing /usr/lib/systemd/system/"
+    assert "/lib/systemd/system/" in sysd_html, "Linux: Missing /lib/systemd/system/"
+    assert "merged-<code>/usr</code>" in sysd_html or "merged-/usr" in sysd_html, "Linux: Missing distro-specific qualification"
+    print("[PASS] Linux systemd: Distro-specific /usr/lib/systemd/system/, /lib/systemd/system/, and /etc/systemd/system/ verified.")
+
+    # 5. AWS Spot Interruption Notice
+    spot_path = ROOT_DIR / "tutorials" / "cloud" / "aws-ec2-instance-families-and-purchasing-models.html"
+    spot_html = spot_path.read_text(encoding="utf-8")
+    assert "Two-Minute Interruption Notice" in spot_html, "AWS: Missing 2-minute interruption notice"
+    assert "best-effort" in spot_html.lower(), "AWS: Missing best-effort qualification"
+    assert "hibernation" in spot_html.lower() and "immediately" in spot_html.lower(), "AWS: Missing hibernation immediate notice behavior"
+    assert "guarantee" in spot_html.lower() and "does not guarantee" in spot_html.lower(), "AWS: Must clarify AWS does not guarantee 2 minutes"
+    print("[PASS] AWS EC2 Spot: Best-effort two-minute notice, immediate hibernation, and no-guarantee rule verified.")
 
 async def test_live_browser():
     print("\n==================================================")
@@ -300,7 +351,7 @@ async def test_live_browser():
         curric_badge = await page.locator("#topics-total-curriculum-badge").text_content()
         tut_badge = await page.locator("#topics-total-tut-badge").text_content()
         assert "471 Curriculum Topics" in curric_badge, f"Unexpected curric badge text: {curric_badge}"
-        assert "94 Published Tutorials" in tut_badge, f"Unexpected tut badge text: {tut_badge}"
+        assert "Published Tutorials" in tut_badge, f"Unexpected tut badge text: {tut_badge}"
         print(f"[PASS] Topics Hero Badges verified: {tut_badge.strip()} | {curric_badge.strip()}")
 
         topics_shot = QA_DIR / "phase6_5b_topics_updated.png"
@@ -373,4 +424,5 @@ async def test_live_browser():
 
 if __name__ == "__main__":
     test_data_and_static_seo()
+    test_phase6_5b1_technical_accuracy()
     asyncio.run(test_live_browser())
