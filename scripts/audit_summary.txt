@@ -1,0 +1,145 @@
+Total published in tutorials.json: 112
+
+================================================================================
+CATEGORY: Networking (networking) | Total: 90 | Published: 67 | Planned: 23
+Levels: Beginner: 25, Intermediate: 55, Advanced: 10
+================================================================================
+  Sec  1: Networking Fundamentals & Core Models                   | Pub:  7/ 9 ( 77.8%) | Planned:  2
+  Sec  2: IP Addressing, Subnetting & Next-Gen IP                 | Pub:  6/ 9 ( 66.7%) | Planned:  3
+  Sec  3: Ethernet, Switching & VLAN Architecture                 | Pub:  6/ 9 ( 66.7%) | Planned:  3
+  Sec  4: Routing Protocols, NAT & Gateway Redundancy             | Pub:  9/10 ( 90.0%) | Planned:  1
+  Sec  5: Transport Protocols, Handshakes & Ports                 | Pub:  4/ 7 ( 57.1%) | Planned:  3
+  Sec  6: DNS, DHCP & Core Network Services                       | Pub:  4/ 8 ( 50.0%) | Planned:  4
+  Sec  7: Wireless Networking (Wi-Fi)                             | Pub:  3/ 6 ( 50.0%) | Planned:  3
+  Sec  8: Network Security, Firewalls & VPN Connectivity          | Pub:  6/ 8 ( 75.0%) | Planned:  2
+  Sec  9: Network Monitoring, Telemetry & Observability           | Pub:  7/ 9 ( 77.8%) | Planned:  2
+  Sec 10: Network Performance & Diagnostic Troubleshooting        | Pub: 15/15 (100.0%) | Planned:  0
+
+  Sections with 0 published (0): []
+  Sections with 1 published (0): []
+  Weakest coverage sections:
+    - DNS, DHCP & Core Network Services: 4/8 (50.0%) [planned: 4]
+    - Wireless Networking (Wi-Fi): 3/6 (50.0%) [planned: 3]
+    - Transport Protocols, Handshakes & Ports: 4/7 (57.1%) [planned: 3]
+    - IP Addressing, Subnetting & Next-Gen IP: 6/9 (66.7%) [planned: 3]
+    - Ethernet, Switching & VLAN Architecture: 6/9 (66.7%) [planned: 3]
+
+================================================================================
+CATEGORY: Windows (windows) | Total: 78 | Published: 9 | Planned: 69
+Levels: Beginner: 19, Intermediate: 49, Advanced: 10
+================================================================================
+  Sec  1: Windows Architecture & Operating System Fundamentals    | Pub:  1/ 8 ( 12.5%) | Planned:  7
+  Sec  2: Command Prompt & Administrative Utilities               | Pub:  1/ 8 ( 12.5%) | Planned:  7
+  Sec  3: PowerShell Administration & Automation                  | Pub:  2/ 9 ( 22.2%) | Planned:  7
+  Sec  4: Identity, Local Security & NTFS Permissions             | Pub:  1/ 8 ( 12.5%) | Planned:  7
+  Sec  5: Processes, Services & Task Scheduling                   | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec  6: Windows Networking & Remote Access                      | Pub:  0/ 8 (  0.0%) | Planned:  8
+  Sec  7: Endpoint Security, Defender & BitLocker                 | Pub:  1/ 8 ( 12.5%) | Planned:  7
+  Sec  8: Active Directory Domain Join & Group Policy             | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec  9: Enterprise Updates, Deployment & Management             | Pub:  0/ 7 (  0.0%) | Planned:  7
+  Sec 10: Diagnostics, Event Logs & System Troubleshooting        | Pub:  1/ 8 ( 12.5%) | Planned:  7
+
+  Sections with 0 published (2): ['Windows Networking & Remote Access', 'Enterprise Updates, Deployment & Management']
+  Sections with 1 published (7): ['Windows Architecture & Operating System Fundamentals', 'Command Prompt & Administrative Utilities', 'Identity, Local Security & NTFS Permissions', 'Processes, Services & Task Scheduling', 'Endpoint Security, Defender & BitLocker', 'Active Directory Domain Join & Group Policy', 'Diagnostics, Event Logs & System Troubleshooting']
+  Weakest coverage sections:
+    - Windows Networking & Remote Access: 0/8 (0.0%) [planned: 8]
+    - Enterprise Updates, Deployment & Management: 0/7 (0.0%) [planned: 7]
+    - Windows Architecture & Operating System Fundamentals: 1/8 (12.5%) [planned: 7]
+    - Command Prompt & Administrative Utilities: 1/8 (12.5%) [planned: 7]
+    - Identity, Local Security & NTFS Permissions: 1/8 (12.5%) [planned: 7]
+
+================================================================================
+CATEGORY: Linux (linux) | Total: 75 | Published: 9 | Planned: 66
+Levels: Beginner: 21, Intermediate: 48, Advanced: 6
+================================================================================
+  Sec  1: Linux Architecture & System Fundamentals                | Pub:  1/ 8 ( 12.5%) | Planned:  7
+  Sec  2: Filesystem, Storage & Volume Management                 | Pub:  1/ 9 ( 11.1%) | Planned:  8
+  Sec  3: Bash Shell Scripting & Command-Line Utilities           | Pub:  1/ 9 ( 11.1%) | Planned:  8
+  Sec  4: Users, Groups & Linux Access Controls                   | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec  5: Process Management, Systemd & Scheduling                | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec  6: Linux Networking, DNS & Remote Access (SSH)             | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec  7: Package Management & Software Repositories              | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec  8: System Monitoring, Logging & Performance Tuning         | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec  9: Linux Security, Firewalls & Hardening                   | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec 10: Boot Process, Recovery & Advanced Troubleshooting       | Pub:  0/ 7 (  0.0%) | Planned:  7
+
+  Sections with 0 published (1): ['Boot Process, Recovery & Advanced Troubleshooting']
+  Sections with 1 published (9): ['Linux Architecture & System Fundamentals', 'Filesystem, Storage & Volume Management', 'Bash Shell Scripting & Command-Line Utilities', 'Users, Groups & Linux Access Controls', 'Process Management, Systemd & Scheduling', 'Linux Networking, DNS & Remote Access (SSH)', 'Package Management & Software Repositories', 'System Monitoring, Logging & Performance Tuning', 'Linux Security, Firewalls & Hardening']
+  Weakest coverage sections:
+    - Boot Process, Recovery & Advanced Troubleshooting: 0/7 (0.0%) [planned: 7]
+    - Filesystem, Storage & Volume Management: 1/9 (11.1%) [planned: 8]
+    - Bash Shell Scripting & Command-Line Utilities: 1/9 (11.1%) [planned: 8]
+    - Linux Architecture & System Fundamentals: 1/8 (12.5%) [planned: 7]
+    - Users, Groups & Linux Access Controls: 1/7 (14.3%) [planned: 6]
+
+================================================================================
+CATEGORY: Servers (servers) | Total: 77 | Published: 9 | Planned: 68
+Levels: Beginner: 11, Intermediate: 52, Advanced: 14
+================================================================================
+  Sec  1: Server Hardware & Enterprise Architecture               | Pub:  2/ 9 ( 22.2%) | Planned:  7
+  Sec  2: Operating System Platforms & Server Deployment          | Pub:  2/ 8 ( 25.0%) | Planned:  6
+  Sec  3: Active Directory Domain Services & Enterprise Identity  | Pub:  1/ 8 ( 12.5%) | Planned:  7
+  Sec  4: Core Infrastructure Services (DNS & DHCP)               | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec  5: Virtualization & Enterprise Hypervisors                 | Pub:  1/ 8 ( 12.5%) | Planned:  7
+  Sec  6: Enterprise Storage, File Services & SAN/NAS             | Pub:  1/ 8 ( 12.5%) | Planned:  7
+  Sec  7: High Availability, Clustering & Disaster Recovery       | Pub:  1/ 8 ( 12.5%) | Planned:  7
+  Sec  8: Server Monitoring, Telemetry & Capacity Planning        | Pub:  0/ 7 (  0.0%) | Planned:  7
+  Sec  9: Server Security, Hardening & Compliance                 | Pub:  0/ 7 (  0.0%) | Planned:  7
+  Sec 10: Root-Cause Diagnostics & Server Troubleshooting         | Pub:  0/ 7 (  0.0%) | Planned:  7
+
+  Sections with 0 published (3): ['Server Monitoring, Telemetry & Capacity Planning', 'Server Security, Hardening & Compliance', 'Root-Cause Diagnostics & Server Troubleshooting']
+  Sections with 1 published (5): ['Active Directory Domain Services & Enterprise Identity', 'Core Infrastructure Services (DNS & DHCP)', 'Virtualization & Enterprise Hypervisors', 'Enterprise Storage, File Services & SAN/NAS', 'High Availability, Clustering & Disaster Recovery']
+  Weakest coverage sections:
+    - Server Monitoring, Telemetry & Capacity Planning: 0/7 (0.0%) [planned: 7]
+    - Server Security, Hardening & Compliance: 0/7 (0.0%) [planned: 7]
+    - Root-Cause Diagnostics & Server Troubleshooting: 0/7 (0.0%) [planned: 7]
+    - Active Directory Domain Services & Enterprise Identity: 1/8 (12.5%) [planned: 7]
+    - Virtualization & Enterprise Hypervisors: 1/8 (12.5%) [planned: 7]
+
+================================================================================
+CATEGORY: Cybersecurity (cybersecurity) | Total: 74 | Published: 9 | Planned: 65
+Levels: Beginner: 18, Intermediate: 47, Advanced: 9
+================================================================================
+  Sec  1: Security Principles, Risk & Governance                  | Pub:  1/ 9 ( 11.1%) | Planned:  8
+  Sec  2: Enterprise Identity & Access Management (IAM)           | Pub:  1/ 8 ( 12.5%) | Planned:  7
+  Sec  3: Authentication Protocols, MFA & Credential Security     | Pub:  2/ 8 ( 25.0%) | Planned:  6
+  Sec  4: Endpoint Protection, Antivirus & EDR Architecture       | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec  5: Network Defense, Firewalls & Microsegmentation          | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec  6: Email Security & Anti-Phishing Defense                  | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec  7: Vulnerability Management & Threat Intelligence          | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec  8: Centralized Logging, SIEM & Security Monitoring         | Pub:  0/ 7 (  0.0%) | Planned:  7
+  Sec  9: Incident Response & Threat Containment                  | Pub:  0/ 7 (  0.0%) | Planned:  7
+  Sec 10: Zero Trust Architecture & Enterprise Baselines          | Pub:  1/ 7 ( 14.3%) | Planned:  6
+
+  Sections with 0 published (2): ['Centralized Logging, SIEM & Security Monitoring', 'Incident Response & Threat Containment']
+  Sections with 1 published (7): ['Security Principles, Risk & Governance', 'Enterprise Identity & Access Management (IAM)', 'Endpoint Protection, Antivirus & EDR Architecture', 'Network Defense, Firewalls & Microsegmentation', 'Email Security & Anti-Phishing Defense', 'Vulnerability Management & Threat Intelligence', 'Zero Trust Architecture & Enterprise Baselines']
+  Weakest coverage sections:
+    - Centralized Logging, SIEM & Security Monitoring: 0/7 (0.0%) [planned: 7]
+    - Incident Response & Threat Containment: 0/7 (0.0%) [planned: 7]
+    - Security Principles, Risk & Governance: 1/9 (11.1%) [planned: 8]
+    - Enterprise Identity & Access Management (IAM): 1/8 (12.5%) [planned: 7]
+    - Endpoint Protection, Antivirus & EDR Architecture: 1/7 (14.3%) [planned: 6]
+
+================================================================================
+CATEGORY: Cloud & AI (cloud) | Total: 77 | Published: 9 | Planned: 68
+Levels: Beginner: 19, Intermediate: 51, Advanced: 7
+================================================================================
+  Sec  1: Cloud Computing Architecture & Service Models           | Pub:  2/ 9 ( 22.2%) | Planned:  7
+  Sec  2: AWS Core Infrastructure & Foundational Services         | Pub:  3/ 9 ( 33.3%) | Planned:  6
+  Sec  3: Microsoft Azure Core Infrastructure & Services          | Pub:  1/ 8 ( 12.5%) | Planned:  7
+  Sec  4: Cloud Identity & Access Management (IAM)                | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec  5: Cloud Compute, Scaling & Container Infrastructure       | Pub:  0/ 7 (  0.0%) | Planned:  7
+  Sec  6: Cloud Networking, Hybrid Connectivity & Traffic Routing | Pub:  0/ 7 (  0.0%) | Planned:  7
+  Sec  7: Cloud Storage, Data Protection & Disaster Recovery      | Pub:  1/ 7 ( 14.3%) | Planned:  6
+  Sec  8: Cloud Monitoring, Telemetry & Infrastructure as Code (IaC) | Pub:  1/ 8 ( 12.5%) | Planned:  7
+  Sec  9: Cloud Security, Governance, Compliance & FinOps         | Pub:  0/ 7 (  0.0%) | Planned:  7
+  Sec 10: Enterprise AI for IT Operations (AIOps) & AI Governance | Pub:  0/ 8 (  0.0%) | Planned:  8
+
+  Sections with 0 published (4): ['Cloud Compute, Scaling & Container Infrastructure', 'Cloud Networking, Hybrid Connectivity & Traffic Routing', 'Cloud Security, Governance, Compliance & FinOps', 'Enterprise AI for IT Operations (AIOps) & AI Governance']
+  Sections with 1 published (4): ['Microsoft Azure Core Infrastructure & Services', 'Cloud Identity & Access Management (IAM)', 'Cloud Storage, Data Protection & Disaster Recovery', 'Cloud Monitoring, Telemetry & Infrastructure as Code (IaC)']
+  Weakest coverage sections:
+    - Enterprise AI for IT Operations (AIOps) & AI Governance: 0/8 (0.0%) [planned: 8]
+    - Cloud Compute, Scaling & Container Infrastructure: 0/7 (0.0%) [planned: 7]
+    - Cloud Networking, Hybrid Connectivity & Traffic Routing: 0/7 (0.0%) [planned: 7]
+    - Cloud Security, Governance, Compliance & FinOps: 0/7 (0.0%) [planned: 7]
+    - Microsoft Azure Core Infrastructure & Services: 1/8 (12.5%) [planned: 7]

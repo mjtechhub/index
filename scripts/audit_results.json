@@ -1,0 +1,566 @@
+{
+  "networking": {
+    "name": "Networking",
+    "total": 90,
+    "published": 67,
+    "planned": 23,
+    "levels": {
+      "Beginner": 25,
+      "Intermediate": 55,
+      "Advanced": 10
+    },
+    "sections": [
+      {
+        "name": "Networking Fundamentals & Core Models",
+        "total": 9,
+        "published": 7,
+        "planned": 2,
+        "ratio": 0.7777777777777778
+      },
+      {
+        "name": "IP Addressing, Subnetting & Next-Gen IP",
+        "total": 9,
+        "published": 6,
+        "planned": 3,
+        "ratio": 0.6666666666666666
+      },
+      {
+        "name": "Ethernet, Switching & VLAN Architecture",
+        "total": 9,
+        "published": 6,
+        "planned": 3,
+        "ratio": 0.6666666666666666
+      },
+      {
+        "name": "Routing Protocols, NAT & Gateway Redundancy",
+        "total": 10,
+        "published": 9,
+        "planned": 1,
+        "ratio": 0.9
+      },
+      {
+        "name": "Transport Protocols, Handshakes & Ports",
+        "total": 7,
+        "published": 4,
+        "planned": 3,
+        "ratio": 0.5714285714285714
+      },
+      {
+        "name": "DNS, DHCP & Core Network Services",
+        "total": 8,
+        "published": 4,
+        "planned": 4,
+        "ratio": 0.5
+      },
+      {
+        "name": "Wireless Networking (Wi-Fi)",
+        "total": 6,
+        "published": 3,
+        "planned": 3,
+        "ratio": 0.5
+      },
+      {
+        "name": "Network Security, Firewalls & VPN Connectivity",
+        "total": 8,
+        "published": 6,
+        "planned": 2,
+        "ratio": 0.75
+      },
+      {
+        "name": "Network Monitoring, Telemetry & Observability",
+        "total": 9,
+        "published": 7,
+        "planned": 2,
+        "ratio": 0.7777777777777778
+      },
+      {
+        "name": "Network Performance & Diagnostic Troubleshooting",
+        "total": 15,
+        "published": 15,
+        "planned": 0,
+        "ratio": 1.0
+      }
+    ],
+    "zero_published": [],
+    "one_published": []
+  },
+  "windows": {
+    "name": "Windows",
+    "total": 78,
+    "published": 9,
+    "planned": 69,
+    "levels": {
+      "Beginner": 19,
+      "Intermediate": 49,
+      "Advanced": 10
+    },
+    "sections": [
+      {
+        "name": "Windows Architecture & Operating System Fundamentals",
+        "total": 8,
+        "published": 1,
+        "planned": 7,
+        "ratio": 0.125
+      },
+      {
+        "name": "Command Prompt & Administrative Utilities",
+        "total": 8,
+        "published": 1,
+        "planned": 7,
+        "ratio": 0.125
+      },
+      {
+        "name": "PowerShell Administration & Automation",
+        "total": 9,
+        "published": 2,
+        "planned": 7,
+        "ratio": 0.2222222222222222
+      },
+      {
+        "name": "Identity, Local Security & NTFS Permissions",
+        "total": 8,
+        "published": 1,
+        "planned": 7,
+        "ratio": 0.125
+      },
+      {
+        "name": "Processes, Services & Task Scheduling",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "Windows Networking & Remote Access",
+        "total": 8,
+        "published": 0,
+        "planned": 8,
+        "ratio": 0.0
+      },
+      {
+        "name": "Endpoint Security, Defender & BitLocker",
+        "total": 8,
+        "published": 1,
+        "planned": 7,
+        "ratio": 0.125
+      },
+      {
+        "name": "Active Directory Domain Join & Group Policy",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "Enterprise Updates, Deployment & Management",
+        "total": 7,
+        "published": 0,
+        "planned": 7,
+        "ratio": 0.0
+      },
+      {
+        "name": "Diagnostics, Event Logs & System Troubleshooting",
+        "total": 8,
+        "published": 1,
+        "planned": 7,
+        "ratio": 0.125
+      }
+    ],
+    "zero_published": [
+      "Windows Networking & Remote Access",
+      "Enterprise Updates, Deployment & Management"
+    ],
+    "one_published": [
+      "Windows Architecture & Operating System Fundamentals",
+      "Command Prompt & Administrative Utilities",
+      "Identity, Local Security & NTFS Permissions",
+      "Processes, Services & Task Scheduling",
+      "Endpoint Security, Defender & BitLocker",
+      "Active Directory Domain Join & Group Policy",
+      "Diagnostics, Event Logs & System Troubleshooting"
+    ]
+  },
+  "linux": {
+    "name": "Linux",
+    "total": 75,
+    "published": 9,
+    "planned": 66,
+    "levels": {
+      "Beginner": 21,
+      "Intermediate": 48,
+      "Advanced": 6
+    },
+    "sections": [
+      {
+        "name": "Linux Architecture & System Fundamentals",
+        "total": 8,
+        "published": 1,
+        "planned": 7,
+        "ratio": 0.125
+      },
+      {
+        "name": "Filesystem, Storage & Volume Management",
+        "total": 9,
+        "published": 1,
+        "planned": 8,
+        "ratio": 0.1111111111111111
+      },
+      {
+        "name": "Bash Shell Scripting & Command-Line Utilities",
+        "total": 9,
+        "published": 1,
+        "planned": 8,
+        "ratio": 0.1111111111111111
+      },
+      {
+        "name": "Users, Groups & Linux Access Controls",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "Process Management, Systemd & Scheduling",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "Linux Networking, DNS & Remote Access (SSH)",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "Package Management & Software Repositories",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "System Monitoring, Logging & Performance Tuning",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "Linux Security, Firewalls & Hardening",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "Boot Process, Recovery & Advanced Troubleshooting",
+        "total": 7,
+        "published": 0,
+        "planned": 7,
+        "ratio": 0.0
+      }
+    ],
+    "zero_published": [
+      "Boot Process, Recovery & Advanced Troubleshooting"
+    ],
+    "one_published": [
+      "Linux Architecture & System Fundamentals",
+      "Filesystem, Storage & Volume Management",
+      "Bash Shell Scripting & Command-Line Utilities",
+      "Users, Groups & Linux Access Controls",
+      "Process Management, Systemd & Scheduling",
+      "Linux Networking, DNS & Remote Access (SSH)",
+      "Package Management & Software Repositories",
+      "System Monitoring, Logging & Performance Tuning",
+      "Linux Security, Firewalls & Hardening"
+    ]
+  },
+  "servers": {
+    "name": "Servers",
+    "total": 77,
+    "published": 9,
+    "planned": 68,
+    "levels": {
+      "Beginner": 11,
+      "Intermediate": 52,
+      "Advanced": 14
+    },
+    "sections": [
+      {
+        "name": "Server Hardware & Enterprise Architecture",
+        "total": 9,
+        "published": 2,
+        "planned": 7,
+        "ratio": 0.2222222222222222
+      },
+      {
+        "name": "Operating System Platforms & Server Deployment",
+        "total": 8,
+        "published": 2,
+        "planned": 6,
+        "ratio": 0.25
+      },
+      {
+        "name": "Active Directory Domain Services & Enterprise Identity",
+        "total": 8,
+        "published": 1,
+        "planned": 7,
+        "ratio": 0.125
+      },
+      {
+        "name": "Core Infrastructure Services (DNS & DHCP)",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "Virtualization & Enterprise Hypervisors",
+        "total": 8,
+        "published": 1,
+        "planned": 7,
+        "ratio": 0.125
+      },
+      {
+        "name": "Enterprise Storage, File Services & SAN/NAS",
+        "total": 8,
+        "published": 1,
+        "planned": 7,
+        "ratio": 0.125
+      },
+      {
+        "name": "High Availability, Clustering & Disaster Recovery",
+        "total": 8,
+        "published": 1,
+        "planned": 7,
+        "ratio": 0.125
+      },
+      {
+        "name": "Server Monitoring, Telemetry & Capacity Planning",
+        "total": 7,
+        "published": 0,
+        "planned": 7,
+        "ratio": 0.0
+      },
+      {
+        "name": "Server Security, Hardening & Compliance",
+        "total": 7,
+        "published": 0,
+        "planned": 7,
+        "ratio": 0.0
+      },
+      {
+        "name": "Root-Cause Diagnostics & Server Troubleshooting",
+        "total": 7,
+        "published": 0,
+        "planned": 7,
+        "ratio": 0.0
+      }
+    ],
+    "zero_published": [
+      "Server Monitoring, Telemetry & Capacity Planning",
+      "Server Security, Hardening & Compliance",
+      "Root-Cause Diagnostics & Server Troubleshooting"
+    ],
+    "one_published": [
+      "Active Directory Domain Services & Enterprise Identity",
+      "Core Infrastructure Services (DNS & DHCP)",
+      "Virtualization & Enterprise Hypervisors",
+      "Enterprise Storage, File Services & SAN/NAS",
+      "High Availability, Clustering & Disaster Recovery"
+    ]
+  },
+  "cybersecurity": {
+    "name": "Cybersecurity",
+    "total": 74,
+    "published": 9,
+    "planned": 65,
+    "levels": {
+      "Beginner": 18,
+      "Intermediate": 47,
+      "Advanced": 9
+    },
+    "sections": [
+      {
+        "name": "Security Principles, Risk & Governance",
+        "total": 9,
+        "published": 1,
+        "planned": 8,
+        "ratio": 0.1111111111111111
+      },
+      {
+        "name": "Enterprise Identity & Access Management (IAM)",
+        "total": 8,
+        "published": 1,
+        "planned": 7,
+        "ratio": 0.125
+      },
+      {
+        "name": "Authentication Protocols, MFA & Credential Security",
+        "total": 8,
+        "published": 2,
+        "planned": 6,
+        "ratio": 0.25
+      },
+      {
+        "name": "Endpoint Protection, Antivirus & EDR Architecture",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "Network Defense, Firewalls & Microsegmentation",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "Email Security & Anti-Phishing Defense",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "Vulnerability Management & Threat Intelligence",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "Centralized Logging, SIEM & Security Monitoring",
+        "total": 7,
+        "published": 0,
+        "planned": 7,
+        "ratio": 0.0
+      },
+      {
+        "name": "Incident Response & Threat Containment",
+        "total": 7,
+        "published": 0,
+        "planned": 7,
+        "ratio": 0.0
+      },
+      {
+        "name": "Zero Trust Architecture & Enterprise Baselines",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      }
+    ],
+    "zero_published": [
+      "Centralized Logging, SIEM & Security Monitoring",
+      "Incident Response & Threat Containment"
+    ],
+    "one_published": [
+      "Security Principles, Risk & Governance",
+      "Enterprise Identity & Access Management (IAM)",
+      "Endpoint Protection, Antivirus & EDR Architecture",
+      "Network Defense, Firewalls & Microsegmentation",
+      "Email Security & Anti-Phishing Defense",
+      "Vulnerability Management & Threat Intelligence",
+      "Zero Trust Architecture & Enterprise Baselines"
+    ]
+  },
+  "cloud": {
+    "name": "Cloud & AI",
+    "total": 77,
+    "published": 9,
+    "planned": 68,
+    "levels": {
+      "Beginner": 19,
+      "Intermediate": 51,
+      "Advanced": 7
+    },
+    "sections": [
+      {
+        "name": "Cloud Computing Architecture & Service Models",
+        "total": 9,
+        "published": 2,
+        "planned": 7,
+        "ratio": 0.2222222222222222
+      },
+      {
+        "name": "AWS Core Infrastructure & Foundational Services",
+        "total": 9,
+        "published": 3,
+        "planned": 6,
+        "ratio": 0.3333333333333333
+      },
+      {
+        "name": "Microsoft Azure Core Infrastructure & Services",
+        "total": 8,
+        "published": 1,
+        "planned": 7,
+        "ratio": 0.125
+      },
+      {
+        "name": "Cloud Identity & Access Management (IAM)",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "Cloud Compute, Scaling & Container Infrastructure",
+        "total": 7,
+        "published": 0,
+        "planned": 7,
+        "ratio": 0.0
+      },
+      {
+        "name": "Cloud Networking, Hybrid Connectivity & Traffic Routing",
+        "total": 7,
+        "published": 0,
+        "planned": 7,
+        "ratio": 0.0
+      },
+      {
+        "name": "Cloud Storage, Data Protection & Disaster Recovery",
+        "total": 7,
+        "published": 1,
+        "planned": 6,
+        "ratio": 0.14285714285714285
+      },
+      {
+        "name": "Cloud Monitoring, Telemetry & Infrastructure as Code (IaC)",
+        "total": 8,
+        "published": 1,
+        "planned": 7,
+        "ratio": 0.125
+      },
+      {
+        "name": "Cloud Security, Governance, Compliance & FinOps",
+        "total": 7,
+        "published": 0,
+        "planned": 7,
+        "ratio": 0.0
+      },
+      {
+        "name": "Enterprise AI for IT Operations (AIOps) & AI Governance",
+        "total": 8,
+        "published": 0,
+        "planned": 8,
+        "ratio": 0.0
+      }
+    ],
+    "zero_published": [
+      "Cloud Compute, Scaling & Container Infrastructure",
+      "Cloud Networking, Hybrid Connectivity & Traffic Routing",
+      "Cloud Security, Governance, Compliance & FinOps",
+      "Enterprise AI for IT Operations (AIOps) & AI Governance"
+    ],
+    "one_published": [
+      "Microsoft Azure Core Infrastructure & Services",
+      "Cloud Identity & Access Management (IAM)",
+      "Cloud Storage, Data Protection & Disaster Recovery",
+      "Cloud Monitoring, Telemetry & Infrastructure as Code (IaC)"
+    ]
+  }
+}
