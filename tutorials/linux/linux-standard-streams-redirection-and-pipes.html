@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Streams (stdin, stdout, stderr), Pipes & Redirection Operators | Linux Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master POSIX standard I/O streams: File descriptors 0, 1, and 2, redirection operators (>, >>, 2>&1), pipelines (|), tee, and robust exit code handling in Bash.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/linux/linux-standard-streams-redirection-and-pipes.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Standard Streams (stdin, stdout, stderr), Pipes & Redirection Operators | Linux Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master POSIX standard I/O streams: File descriptors 0, 1, and 2, redirection operators (>, >>, 2>&1), pipelines (|), tee, and robust exit code handling in Bash.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/linux/linux-standard-streams-redirection-and-pipes.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Standard Streams (stdin, stdout, stderr), Pipes & Redirection Operators | Linux Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master POSIX standard I/O streams: File descriptors 0, 1, and 2, redirection operators (>, >>, 2>&1), pipelines (|), tee, and robust exit code handling in Bash.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Standard Streams (stdin, stdout, stderr), Pipes & Redirection Operators",
+    "description": "Master POSIX standard I/O streams: File descriptors 0, 1, and 2, redirection operators (>, >>, 2>&1), pipelines (|), tee, and robust exit code handling in Bash.",
+    "url": "https://themjtechhub.site/tutorials/linux/linux-standard-streams-redirection-and-pipes.html",
+    "datePublished": "2026-09-11",
+    "dateModified": "2026-09-11",
+    "proficiencyLevel": "Beginner",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/linux/linux-standard-streams-redirection-and-pipes.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../linux.html">Linux</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Standard Streams (stdin, stdout, stderr), Pipes & Redirection Operators</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge beginner">Beginner</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 4 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 11, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Standard Streams (stdin, stdout, stderr), Pipes & Redirection Operators</h1>
+            <p class="tutorial-hero-desc">Master POSIX standard I/O streams: File descriptors 0, 1, and 2, redirection operators (>, >>, 2>&1), pipelines (|), tee, and robust exit code handling in Bash.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>The Unix philosophy is built around a core architectural tenet: <em>"Write programs that do one thing and do it well. Write programs to work together. Write programs to handle text streams, because that is a universal interface."</em></p>
+<p>At the foundation of this philosophy lies the concept of <strong>Standard I/O Streams</strong>. Understanding how the Linux kernel abstracts inputs and outputs through numeric file descriptors, and how the Bash shell redirects and chains these streams using operators and pipes, is essential for every systems administrator and automation engineer.</p>
+
+<h2>POSIX Standard File Descriptors: 0, 1, and 2</h2>
+<p>Whenever the Linux kernel launches a process, it automatically binds three fundamental I/O channels represented by numeric <strong>File Descriptors (FD)</strong>:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>File Descriptor</th>
+                <th>Stream Name</th>
+                <th>Default Source / Destination</th>
+                <th>Functional Purpose</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>0</code></td>
+                <td><strong>stdin</strong> (Standard Input)</td>
+                <td>Keyboard / Terminal</td>
+                <td>Feeds input data into the process for execution.</td>
+            </tr>
+            <tr>
+                <td><code>1</code></td>
+                <td><strong>stdout</strong> (Standard Output)</td>
+                <td>Display Terminal / Screen</td>
+                <td>Transmits successful execution results and primary data stream.</td>
+            </tr>
+            <tr>
+                <td><code>2</code></td>
+                <td><strong>stderr</strong> (Standard Error)</td>
+                <td>Display Terminal / Screen</td>
+                <td>Transmits error messages, diagnostics, and operational warnings.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<p>Because both <code>stdout</code> and <code>stderr</code> render to the terminal screen simultaneously by default, users often fail to realize they are entirely separate streams. Separating them via shell redirection allows administrators to log errors independently from standard output.</p>
+
+<h2>Redirection Operators Deep Dive</h2>
+<p>The shell intercepts redirection operators before launching the command, modifying the process's file descriptor table:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Operator</th>
+                <th>Description</th>
+                <th>Practical Example</th>
+                <th>Behavioral Effect</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>&gt;</code></td>
+                <td>Redirect stdout (overwrite)</td>
+                <td><code>uname -r &gt; kernel.txt</code></td>
+                <td>Overwrites destination file with process stdout.</td>
+            </tr>
+            <tr>
+                <td><code>&gt;&gt;</code></td>
+                <td>Redirect stdout (append)</td>
+                <td><code>date &gt;&gt; uptime.log</code></td>
+                <td>Appends process stdout to the end of the file.</td>
+            </tr>
+            <tr>
+                <td><code>2&gt;</code></td>
+                <td>Redirect stderr (overwrite)</td>
+                <td><code>find / -name "*.conf" 2&gt; errors.txt</code></td>
+                <td>Captures permission denied errors into <code>errors.txt</code> while displaying clean output on screen.</td>
+            </tr>
+            <tr>
+                <td><code>2&gt;&gt;</code></td>
+                <td>Redirect stderr (append)</td>
+                <td><code>backup.sh 2&gt;&gt; backup_errors.log</code></td>
+                <td>Appends error messages to an ongoing error log file.</td>
+            </tr>
+            <tr>
+                <td><code>&lt;</code></td>
+                <td>Redirect stdin from file</td>
+                <td><code>mysql -u root db_prod &lt; dump.sql</code></td>
+                <td>Supplies the contents of a file as input to stdin.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Combining Streams: The 2>&1 Idiom</h2>
+<p>To capture both standard output and error diagnostics into a single unified log file, administrators use stream duplication:</p>
+
+<div class="tutorial-command">
+    <pre><code># POSIX Standard Method: Redirect stdout to file, then duplicate stderr to stdout
+command > output.log 2>&1
+
+# Modern Bash Shortcut (equivalent behavior)
+command &> output.log</code></pre>
+</div>
+
+<div class="tutorial-callout callout-warning">
+    <p><strong>Order of Operations Trap:</strong> The sequence of redirection matters! Executing <code>command 2>&1 > output.log</code> does <em>not</em> combine streams into the file. The shell evaluates left-to-right: it first redirects <code>stderr</code> to the current location of <code>stdout</code> (the terminal screen), and then redirects <code>stdout</code> to the file. As a result, errors still spill onto the terminal!</p>
+</div>
+
+<h3>Discarding Unwanted Output: /dev/null</h3>
+<p>The special character device <code>/dev/null</code> (the Unix bit-bucket) discards all data written to it. To run a command silently in cron jobs or background scripts:</p>
+
+<div class="tutorial-command">
+    <pre><code># Discard all output and all error messages completely
+command > /dev/null 2>&1</code></pre>
+</div>
+
+<h2>Pipelines: Inter-Process Communication in Memory</h2>
+<p>The pipe operator (<code>|</code>) connects the <strong>stdout (FD 1)</strong> of the preceding process directly to the <strong>stdin (FD 0)</strong> of the succeeding process:</p>
+
+<div class="tutorial-command">
+    <pre><code># Count how many users have /bin/bash as their default login shell
+grep '/bin/bash' /etc/passwd | wc -l
+
+# Identify the top 5 memory-consuming processes
+ps aux --sort=-%mem | head -n 6</code></pre>
+</div>
+
+<p>Pipes execute concurrently in separate subshells. Data flows through a kernel memory buffer without touching physical storage, making pipelines exceptionally fast and scalable.</p>
+
+<div class="tutorial-callout callout-note">
+    <p><strong>Pipes Only Capture stdout:</strong> By default, the pipe operator (<code>|</code>) redirects only standard output (FD 1). Errors generated on <code>stderr</code> (FD 2) will still bypass the pipe and print directly to the terminal screen. In modern Bash, use <code>|&</code> to pipe both stdout and stderr together into the next command.</p>
+</div>
+
+<h2>Splitting Streams with tee</h2>
+<p>When running long automation scripts, administrators often want to observe command progress live on screen while simultaneously logging output to disk. The <code>tee</code> utility acts as a T-junction splitter:</p>
+
+<div class="tutorial-command">
+    <pre><code># Print output to terminal and simultaneously write to build.log
+./build_kernel.sh | tee build.log
+
+# Append to log file instead of overwriting (-a)
+./deploy.sh | tee -a deployment.log</code></pre>
+</div>
+
+<h2>Pipeline Exit Codes & PIPESTATUS</h2>
+<p>In standard Bash execution, the return code (<code>$?</code>) of a pipeline reflects only the exit code of the <em>final</em> command in the chain:</p>
+
+<div class="tutorial-command">
+    <pre><code># Even if 'cat' fails because file does not exist, 'grep' returns 1 (no match)
+cat non_existent_file.txt | grep "test"
+echo $?
+# Output: 1 (grep's exit code, hiding cat's failure!)</code></pre>
+</div>
+
+<p>In production enterprise scripts, use <strong>pipefail</strong> to ensure that failures anywhere in a pipeline trigger error handling:</p>
+
+<div class="tutorial-command">
+    <pre><code># Enable pipefail: returns the exit code of the rightmost command that failed
+set -o pipefail
+
+# In Bash, inspect exit codes of every segment in the pipeline:
+cat non_existent_file.txt | grep "test"
+echo "${PIPESTATUS[@]}"
+# Example Output: 1 1 (both commands failed)</code></pre>
+</div>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

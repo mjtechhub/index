@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Registry Architecture: Root Hives & System Keys | Windows Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master Windows Registry internals: HKEY root hives, disk-backed hive files, transaction logging, value data types, and enterprise management via PowerShell.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/windows/windows-registry-architecture-and-root-hives.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Windows Registry Architecture: Root Hives & System Keys | Windows Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master Windows Registry internals: HKEY root hives, disk-backed hive files, transaction logging, value data types, and enterprise management via PowerShell.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/windows/windows-registry-architecture-and-root-hives.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Windows Registry Architecture: Root Hives & System Keys | Windows Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master Windows Registry internals: HKEY root hives, disk-backed hive files, transaction logging, value data types, and enterprise management via PowerShell.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Windows Registry Architecture: Root Hives & System Keys",
+    "description": "Master Windows Registry internals: HKEY root hives, disk-backed hive files, transaction logging, value data types, and enterprise management via PowerShell.",
+    "url": "https://themjtechhub.site/tutorials/windows/windows-registry-architecture-and-root-hives.html",
+    "datePublished": "2026-09-11",
+    "dateModified": "2026-09-11",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/windows/windows-registry-architecture-and-root-hives.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../windows.html">Windows</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Windows Registry Architecture: Root Hives & System Keys</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 4 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 11, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Windows Registry Architecture: Root Hives & System Keys</h1>
+            <p class="tutorial-hero-desc">Master Windows Registry internals: HKEY root hives, disk-backed hive files, transaction logging, value data types, and enterprise management via PowerShell.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>The <strong>Windows Registry</strong> is a hierarchical, database-driven configuration store introduced in early Windows NT to replace legacy text-based <code>.ini</code> and configuration files. Operating at the core of Windows 11 and Windows Server 2022/2025, the Registry centralizes hardware drivers, kernel parameters, service configurations, user profile preferences, and installed software settings.</p>
+<p>For systems administrators, mastering the Registry is vital: group policies, system hardening baselines, security configurations, and forensic analysis all interface directly with its root hives and underlying disk files.</p>
+
+<h2>Logical Structure: The Five Root Hives</h2>
+<p>When administrators launch the Registry Editor (<code>regedit.exe</code>), Windows presents five logical root keys (often abbreviated as hives). While they appear as top-level containers, two are primary hardware/system stores, and three are dynamic symbolic links:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Logical Root Hive</th>
+                <th>Abbreviation</th>
+                <th>Physical Storage Type</th>
+                <th>Operational Scope & Content</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>HKEY_LOCAL_MACHINE</strong></td>
+                <td><code>HKLM</code></td>
+                <td>Physical on disk</td>
+                <td>System-wide settings applicable to all users and hardware: kernel parameters, security policy, system services, and installed software.</td>
+            </tr>
+            <tr>
+                <td><strong>HKEY_USERS</strong></td>
+                <td><code>HKU</code></td>
+                <td>Physical on disk</td>
+                <td>Contains individual subkeys for every loaded user profile on the machine, indexed by their Active Directory / local Security Identifier (SID).</td>
+            </tr>
+            <tr>
+                <td><strong>HKEY_CURRENT_USER</strong></td>
+                <td><code>HKCU</code></td>
+                <td>Symbolic Link</td>
+                <td>Points dynamically to the currently logged-on user's branch inside <code>HKEY_USERS\&lt;User-SID&gt;</code> (e.g., desktop background, app settings).</td>
+            </tr>
+            <tr>
+                <td><strong>HKEY_CLASSES_ROOT</strong></td>
+                <td><code>HKCR</code></td>
+                <td>Symbolic Link / Merged</td>
+                <td>Merges <code>HKLM\Software\Classes</code> with <code>HKCU\Software\Classes</code>. Stores file associations, ProgIDs, and COM/OLE object registrations.</td>
+            </tr>
+            <tr>
+                <td><strong>HKEY_CURRENT_CONFIG</strong></td>
+                <td><code>HKCC</code></td>
+                <td>Symbolic Link</td>
+                <td>Points to <code>HKLM\SYSTEM\CurrentControlSet\Hardware Profiles\Current</code>, storing volatile hardware profile information used at boot.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Physical Hive Files & Transactional Integrity</h2>
+<p>The registry is not stored as a single monolithic file. Instead, the kernel's Configuration Manager parses distinct binary files called <strong>hives</strong> located on the physical disk:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Registry Hive Branch</th>
+                <th>Physical File Path on Disk</th>
+                <th>Access & Security Level</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>HKLM\SYSTEM</code></td>
+                <td><code>C:\Windows\System32\config\SYSTEM</code></td>
+                <td>System / Kernel startup parameters and driver boot control sets.</td>
+            </tr>
+            <tr>
+                <td><code>HKLM\SOFTWARE</code></td>
+                <td><code>C:\Windows\System32\config\SOFTWARE</code></td>
+                <td>Machine-wide third-party software and Windows operating system components.</td>
+            </tr>
+            <tr>
+                <td><code>HKLM\SAM</code></td>
+                <td><code>C:\Windows\System32\config\SAM</code></td>
+                <td>Local Security Accounts Manager; stores local user hashes (heavily restricted to SYSTEM).</td>
+            </tr>
+            <tr>
+                <td><code>HKLM\SECURITY</code></td>
+                <td><code>C:\Windows\System32\config\SECURITY</code></td>
+                <td>Local security policies, audit rules, and LSA secrets.</td>
+            </tr>
+            <tr>
+                <td><code>HKCU</code></td>
+                <td><code>C:\Users\&lt;Username&gt;\NTUSER.DAT</code></td>
+                <td>User-specific profile hive mounted into memory during user login.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h3>Registry Transaction Logs (.LOG1, .LOG2)</h3>
+<p>To prevent catastrophic database corruption during sudden power losses or system crashes, Windows utilizes <strong>Common Log File System (CLFS)</strong> transactional logging. Alongside each hive file are transaction journals (e.g., <code>SYSTEM.LOG1</code> and <code>SYSTEM.LOG2</code>). All registry write operations are recorded in the transaction log first before being committed to the main hive file. If the system loses power mid-write, the kernel replays or rolls back incomplete transactions during the subsequent boot phase.</p>
+
+<h2>Registry Value Data Types</h2>
+<p>Each registry key contains one or more named values storing specific binary or string data structures:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Data Type Constant</th>
+                <th>Common Usage</th>
+                <th>Example Value Representation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>REG_SZ</strong></td>
+                <td>Fixed-length Unicode text string.</td>
+                <td><code>"C:\Program Files\MyApp"</code></td>
+            </tr>
+            <tr>
+                <td><strong>REG_EXPAND_SZ</strong></td>
+                <td>Expandable string containing unexpanded environment variables.</td>
+                <td><code>"%SystemRoot%\System32"</code></td>
+            </tr>
+            <tr>
+                <td><strong>REG_DWORD</strong></td>
+                <td>32-bit unsigned integer (boolean flags, port numbers, time limits).</td>
+                <td><code>0x00000001 (1)</code> or <code>3389</code></td>
+            </tr>
+            <tr>
+                <td><strong>REG_QWORD</strong></td>
+                <td>64-bit integer used for 64-bit memory sizes and 64-bit timestamps.</td>
+                <td><code>0x00000001A4C00000</code></td>
+            </tr>
+            <tr>
+                <td><strong>REG_BINARY</strong></td>
+                <td>Raw binary byte array (hardware configuration, cryptographic hashes).</td>
+                <td><code>01 00 00 00 D0 8C 9DDF</code></td>
+            </tr>
+            <tr>
+                <td><strong>REG_MULTI_SZ</strong></td>
+                <td>Array of null-terminated strings delimited by an empty string.</td>
+                <td><code>"DNS1\0DNS2\0DNS3\0\0"</code></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Managing the Registry via PowerShell (PSDrives)</h2>
+<p>Modern Windows systems administration avoids manual <code>regedit.exe</code> editing. Instead, administrators automate registry changes using PowerShell's built-in <code>Registry</code> provider, which exposes <code>HKLM:</code> and <code>HKCU:</code> as virtual filesystems:</p>
+
+<div class="tutorial-command">
+    <pre><code># 1. Inspect registry keys using standard filesystem cmdlets
+Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion' | Select-Object ProgramFilesDir, CommonFilesDir
+
+# 2. Create a new registry key for an application policy
+New-Item -Path 'HKLM:\SOFTWARE\Policies\MyEnterprise' -Force
+
+# 3. Create or update a REG_DWORD value (e.g., enable telemetry restriction)
+Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\MyEnterprise' -Name "DisableTelemetry" -Value 1 -Type DWord
+
+# 4. Read the configured value back to verify
+Get-ItemPropertyValue -Path 'HKLM:\SOFTWARE\Policies\MyEnterprise' -Name "DisableTelemetry"
+
+# 5. Remove the value cleanly
+Remove-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\MyEnterprise' -Name "DisableTelemetry"</code></pre>
+</div>
+
+<div class="tutorial-callout callout-warning">
+    <p><strong>Destructive Registry Operations:</strong> Erroneous modifications or deletions in <code>HKLM\SYSTEM</code> or <code>HKLM\SOFTWARE</code> can render the Windows operating system unbootable. Always export a backup of the target branch (<code>reg export HKLM\SYSTEM C:\Backup\system.reg</code>) or create a System Restore Point prior to making registry changes.</p>
+</div>
+
+<h2>Registry Hardening & Security Best Practices</h2>
+<ul>
+    <li><strong>Principle of Least Privilege:</strong> Non-administrative users should have strictly read-only permissions across <code>HKLM</code>. Only elevated administrators and <code>NT AUTHORITY\SYSTEM</code> should possess write rights.</li>
+    <li><strong>Auditing Registry Persistence:</strong> Adversaries frequently achieve persistence via Run keys: <code>HKLM\Software\Microsoft\Windows\CurrentVersion\Run</code> and <code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code>. Monitor these keys with Sysinternals Autoruns or EDR tools.</li>
+    <li><strong>Remote Registry Service:</strong> Ensure the <code>RemoteRegistry</code> Windows service is disabled in enterprise environments unless strictly required by centralized vulnerability scanners.</li>
+</ul>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

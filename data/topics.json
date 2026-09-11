@@ -316,7 +316,8 @@
                             "id": "tcp-three-way-handshake-and-teardown",
                             "name": "TCP Three-Way Handshake & Connection Teardown Flow",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/networking/tcp-three-way-handshake-and-teardown.html"
                         },
                         {
                             "id": "tcp-flow-control-sliding-window-and-buffers",
@@ -367,7 +368,8 @@
                             "id": "dns-resolution-iterative-vs-recursive-queries",
                             "name": "DNS Resolution Process: Iterative vs Recursive Queries",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/networking/dns-resolution-iterative-vs-recursive-queries.html"
                         },
                         {
                             "id": "dhcp-dora-process-and-options-architecture",
@@ -415,9 +417,10 @@
                         },
                         {
                             "id": "wi-fi-security-wpa2-enterprise-vs-wpa3",
-                            "name": "Wi-Fi Security: WPA2-Enterprise (802.1X) vs WPA3 SAE",
+                            "name": "WPA2-Enterprise vs WPA3-Enterprise: 802.1X, PMF & Modern Wireless Security",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/networking/wi-fi-security-wpa2-enterprise-vs-wpa3.html"
                         },
                         {
                             "id": "rf-channel-planning-and-interference-mitigation",
@@ -714,7 +717,8 @@
                             "id": "windows-registry-architecture-and-root-hives",
                             "name": "Windows Registry Architecture: Root Hives & System Keys",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/windows/windows-registry-architecture-and-root-hives.html"
                         },
                         {
                             "id": "windows-syswow64-and-64bit-os-redirection",
@@ -762,7 +766,8 @@
                             "id": "windows-robocopy-advanced-file-replication-guide",
                             "name": "Robocopy Advanced File Replication, Mirroring & Multithreading",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/windows/windows-robocopy-advanced-file-replication-guide.html"
                         },
                         {
                             "id": "windows-netsh-command-line-network-administration",
@@ -1069,7 +1074,8 @@
                             "id": "windows-active-directory-domain-join-prerequisites-workflow",
                             "name": "Active Directory Domain Join: Prerequisites, DNS & Troubleshooting",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/windows/windows-active-directory-domain-join-prerequisites-workflow.html"
                         },
                         {
                             "id": "windows-group-policy-processing-order-lsdou",
@@ -1353,7 +1359,8 @@
                             "id": "linux-standard-streams-redirection-and-pipes",
                             "name": "Standard Streams (stdin, stdout, stderr), Pipes & Redirection Operators",
                             "level": "Beginner",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/linux/linux-standard-streams-redirection-and-pipes.html"
                         },
                         {
                             "id": "linux-text-processing-grep-cut-sort-uniq-tr",
@@ -1431,7 +1438,8 @@
                             "id": "linux-sudo-configuration-and-visudo-administration",
                             "name": "Sudoers Administration: Configuring Least Privilege Rules with visudo",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/linux/linux-sudo-configuration-and-visudo-administration.html"
                         },
                         {
                             "id": "linux-posix-access-control-lists-getfacl-setfacl",
@@ -1696,7 +1704,8 @@
                             "id": "linux-troubleshooting-boot-failures-grub-emergency-mode",
                             "name": "Troubleshooting Boot Failures: Navigating GRUB Rescue & Emergency Mode",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/linux/linux-troubleshooting-boot-failures-grub-emergency-mode.html"
                         },
                         {
                             "id": "linux-rescue-target-and-single-user-mode-boot",
@@ -2138,7 +2147,8 @@
                             "id": "server-hardware-health-monitoring-ipmi-snmp-traps",
                             "name": "Server Hardware Health Telemetry via IPMI Sensors & SNMP Traps",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/servers/server-hardware-health-monitoring-ipmi-snmp-traps.html"
                         },
                         {
                             "id": "centralized-server-metrics-collection-prometheus-and-grafana",
@@ -2185,7 +2195,8 @@
                             "id": "windows-server-security-baselines-and-cis-benchmark-hardening",
                             "name": "Windows Server Hardening via CIS Benchmarks & Microsoft Security Baselines",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/servers/windows-server-security-baselines-and-cis-benchmark-hardening.html"
                         },
                         {
                             "id": "linux-server-hardening-best-practices-and-system-bastioning",
@@ -2268,7 +2279,8 @@
                             "id": "systematic-root-cause-analysis-rca-methodology-for-server-outages",
                             "name": "Systematic Root Cause Analysis (RCA) Methodology & 5-Whys for System Outages",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/servers/systematic-root-cause-analysis-rca-methodology-for-server-outages.html"
                         }
                     ]
                 }
@@ -2310,7 +2322,8 @@
                             "id": "defense-in-depth-strategy-and-layered-controls",
                             "name": "Defense-in-Depth Architecture: Layered Perimeter, Network & Host Controls",
                             "level": "Beginner",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cybersecurity/defense-in-depth-strategy-and-layered-controls.html"
                         },
                         {
                             "id": "security-control-categories-preventative-detective-corrective",
@@ -2376,7 +2389,8 @@
                             "id": "privileged-access-management-pam-vaulting-and-session-recording",
                             "name": "Privileged Access Management (PAM): Credential Vaulting & Session Monitoring",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cybersecurity/privileged-access-management-pam-vaulting-and-session-recording.html"
                         },
                         {
                             "id": "just-in-time-jit-privileged-access-and-ephemeral-credentials",
@@ -2468,7 +2482,8 @@
                             "id": "endpoint-detection-and-response-edr-architecture-and-telemetry",
                             "name": "Endpoint Detection and Response (EDR): Sensor Architecture & Process Telemetry",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cybersecurity/endpoint-detection-and-response-edr-architecture-and-telemetry.html"
                         },
                         {
                             "id": "extended-detection-and-response-xdr-cross-domain-telemetry",
@@ -3060,7 +3075,8 @@
                             "id": "cloud-container-services-overview-ecs-aci-and-managed-k8s",
                             "name": "Containerized Workloads in the Cloud: Docker, Amazon ECS, Azure ACI & Managed Kubernetes",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cloud/cloud-container-services-overview-ecs-aci-and-managed-k8s.html"
                         },
                         {
                             "id": "cloud-vm-snapshot-and-backup-automation-policies",
@@ -3087,9 +3103,10 @@
                         },
                         {
                             "id": "cloud-security-groups-vs-network-access-control-lists",
-                            "name": "Stateful Cloud Security Groups vs Stateless Network ACLs (NACLs)",
+                            "name": "AWS VPC Security Groups vs Network ACLs: Stateful vs Stateless Filtering",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cloud/cloud-security-groups-vs-network-access-control-lists.html"
                         },
                         {
                             "id": "cloud-virtual-network-peering-intra-region-and-cross-region",
@@ -3280,7 +3297,8 @@
                             "id": "aiops-architecture-applying-machine-learning-to-it-operations",
                             "name": "AIOps Architecture: Machine Learning for Event Correlation & Root Cause Analysis",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cloud/aiops-architecture-applying-machine-learning-to-it-operations.html"
                         },
                         {
                             "id": "ai-powered-anomaly-detection-in-metrics-and-log-streams",

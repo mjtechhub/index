@@ -840,6 +840,42 @@
         "updatedAt": "2026-09-10"
     },
     {
+        "id": "tcp-three-way-handshake-and-teardown",
+        "title": "TCP Three-Way Handshake & Connection Teardown Flow",
+        "description": "Master Transmission Control Protocol (TCP) connection lifecycle: SYN/SYN-ACK/ACK handshakes, sequence numbers, FIN/ACK vs RST teardown, and TIME_WAIT socket states.",
+        "category": "Networking",
+        "level": "Intermediate",
+        "readTime": "6 min read",
+        "keywords": "tcp, three-way handshake, syn ack, connection teardown, fin ack, rst, time_wait, seq ack, msl, transport layer, wireshark",
+        "url": "tutorials/networking/tcp-three-way-handshake-and-teardown.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
+        "id": "dns-resolution-iterative-vs-recursive-queries",
+        "title": "DNS Resolution Process: Iterative vs Recursive Queries",
+        "description": "Deconstruct the hierarchical Domain Name System (DNS) resolution architecture: Stub resolvers, recursive vs iterative lookups, root name servers, TLD delegations, and authoritative answers.",
+        "category": "Networking",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "dns resolution, recursive query, iterative query, root servers, tld, authoritative nameserver, stub resolver, anycast, ttl, dig trace",
+        "url": "tutorials/networking/dns-resolution-iterative-vs-recursive-queries.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
+        "id": "wi-fi-security-wpa2-enterprise-vs-wpa3",
+        "title": "WPA2-Enterprise vs WPA3-Enterprise: 802.1X, PMF & Modern Wireless Security",
+        "description": "Deconstruct enterprise wireless security: 802.1X/EAP authentication frameworks, RADIUS integration, WPA3-Enterprise security enhancements, PMF (802.11w), and the architectural distinction from WPA3-Personal SAE.",
+        "category": "Networking",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "wifi security, wpa2 enterprise, wpa3 enterprise, 802.1x, eap-tls, peap, radius, wpa3 personal sae, pmf 802.11w, enterprise wlan",
+        "url": "tutorials/networking/wi-fi-security-wpa2-enterprise-vs-wpa3.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
         "id": "windows-operating-system-fundamentals",
         "title": "Windows Operating System Fundamentals",
         "description": "Understand the core architecture of Microsoft Windows, including user mode, kernel mode, the NT executive, and system processes.",
@@ -982,6 +1018,42 @@
         "url": "tutorials/windows/windows-update-for-business-wufb-deployment-rings.html",
         "publishedAt": "2026-09-10",
         "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "windows-registry-architecture-and-root-hives",
+        "title": "Windows Registry Architecture: Root Hives & System Keys",
+        "description": "Master Windows Registry internals: HKEY root hives, disk-backed hive files, transaction logging, value data types, and enterprise management via PowerShell.",
+        "category": "Windows",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "windows registry, regedit, hklm, hkcu, registry hives, ntuser.dat, dword, reg_sz, powershell psdrive, sysadmin",
+        "url": "tutorials/windows/windows-registry-architecture-and-root-hives.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
+        "id": "windows-robocopy-advanced-file-replication-guide",
+        "title": "Robocopy Advanced File Replication, Mirroring & Multithreading",
+        "description": "Master Windows Robust File Copy (Robocopy): enterprise data migration, /MIR mirroring mechanics, multithreaded performance (/MT), ACL security preservation, and exit code handling.",
+        "category": "Windows",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "robocopy, windows file copy, file migration, /mir, multithreading /mt, copyall, ntfs acls, exit codes, powershell, sysadmin",
+        "url": "tutorials/windows/windows-robocopy-advanced-file-replication-guide.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
+        "id": "windows-active-directory-domain-join-prerequisites-workflow",
+        "title": "Active Directory Domain Join: Prerequisites, DNS & Troubleshooting",
+        "description": "Master Windows Active Directory domain join architecture: DNS SRV record locator discovery, Kerberos time sync, Netlogon secure channel, and offline domain join with djoin.",
+        "category": "Windows",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "active directory, domain join, dc locator, srv records, netlogon, secure channel, djoin, offline domain join, powershell, sysadmin",
+        "url": "tutorials/windows/windows-active-directory-domain-join-prerequisites-workflow.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
     },
     {
         "id": "linux-operating-system-fundamentals",
@@ -1128,6 +1200,42 @@
         "updatedAt": "2026-09-10"
     },
     {
+        "id": "linux-troubleshooting-boot-failures-grub-emergency-mode",
+        "title": "Troubleshooting Boot Failures: Navigating GRUB Rescue & Emergency Mode",
+        "description": "Diagnose and resolve critical Linux boot failures: navigating GRUB rescue prompts, dracut initramfs emergency shells, fstab mount errors, and systemd emergency mode.",
+        "category": "Linux",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "linux boot failure, grub rescue, emergency mode, dracut, initramfs, fstab errors, chroot recovery, sysadmin, kernel panic",
+        "url": "tutorials/linux/linux-troubleshooting-boot-failures-grub-emergency-mode.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
+        "id": "linux-standard-streams-redirection-and-pipes",
+        "title": "Standard Streams (stdin, stdout, stderr), Pipes & Redirection Operators",
+        "description": "Master POSIX standard I/O streams: File descriptors 0, 1, and 2, redirection operators (>, >>, 2>&1), pipelines (|), tee, and robust exit code handling in Bash.",
+        "category": "Linux",
+        "level": "Beginner",
+        "readTime": "4 min read",
+        "keywords": "linux streams, stdin, stdout, stderr, redirection, bash pipes, file descriptors, 2>&1, /dev/null, tee, pipestatus",
+        "url": "tutorials/linux/linux-standard-streams-redirection-and-pipes.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
+        "id": "linux-sudo-configuration-and-visudo-administration",
+        "title": "Sudoers Administration: Configuring Least Privilege Rules with visudo",
+        "description": "Master enterprise Linux privilege delegation: /etc/sudoers syntax, visudo safety locking, granular command aliases, NOPASSWD controls, and NOEXEC escape prevention.",
+        "category": "Linux",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "linux sudo, visudo, /etc/sudoers, least privilege, sudoers.d, cmnd_alias, nopasswd, noexec, privilege escalation, sysadmin",
+        "url": "tutorials/linux/linux-sudo-configuration-and-visudo-administration.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
         "id": "what-is-a-server",
         "title": "What Is a Server?",
         "description": "Discover what defines server hardware and software, client-server models, high-availability components, and enterprise roles.",
@@ -1270,6 +1378,42 @@
         "url": "tutorials/servers/windows-server-failover-clustering-wsfc-architecture.html",
         "publishedAt": "2026-09-10",
         "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "server-hardware-health-monitoring-ipmi-snmp-traps",
+        "title": "Server Hardware Health Telemetry via IPMI Sensors & SNMP Traps",
+        "description": "Master out-of-band enterprise server hardware monitoring: Baseboard Management Controllers (BMC), IPMI 2.0 sensor telemetry, Redfish APIs, and real-time SNMP trap alerting.",
+        "category": "Servers",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "ipmi, bmc, server hardware monitoring, snmp traps, idrac, ilo, ipmitool, redfish, hardware sensors, sysadmin",
+        "url": "tutorials/servers/server-hardware-health-monitoring-ipmi-snmp-traps.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
+        "id": "windows-server-security-baselines-and-cis-benchmark-hardening",
+        "title": "Windows Server Hardening via CIS Benchmarks & Microsoft Security Baselines",
+        "description": "Harden Windows Server 2022/2025: Microsoft Security Compliance Toolkit (MSCT), CIS Level 1 & Level 2 benchmarks, LSA Protection, Credential Guard, and disabling legacy protocols.",
+        "category": "Servers",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "windows server hardening, cis benchmarks, security baselines, lgpo, lsa protection, credential guard, smbv1, ntlm, sysadmin",
+        "url": "tutorials/servers/windows-server-security-baselines-and-cis-benchmark-hardening.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
+        "id": "systematic-root-cause-analysis-rca-methodology-for-server-outages",
+        "title": "Systematic Root Cause Analysis (RCA) Methodology & 5-Whys for System Outages",
+        "description": "Master enterprise infrastructure Root Cause Analysis (RCA): blameless post-mortem culture, timeline reconstruction, the 5-Whys framework, Fishbone diagrams, and preventative action tracking.",
+        "category": "Servers",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "root cause analysis, rca, 5 whys, blameless post-mortem, server outage, site reliability engineering, sre, capa, incident post-mortem",
+        "url": "tutorials/servers/systematic-root-cause-analysis-rca-methodology-for-server-outages.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
     },
     {
         "id": "cybersecurity-fundamentals",
@@ -1416,6 +1560,42 @@
         "updatedAt": "2026-09-10"
     },
     {
+        "id": "defense-in-depth-strategy-and-layered-controls",
+        "title": "Defense-in-Depth Architecture: Layered Perimeter, Network & Host Controls",
+        "description": "Master the Defense-in-Depth (DiD) cybersecurity paradigm: concentric defensive layers, preventative vs detective controls, and eliminating single points of security failure.",
+        "category": "Cybersecurity",
+        "level": "Beginner",
+        "readTime": "4 min read",
+        "keywords": "defense in depth, layered security, perimeter security, network segmentation, host defense, security controls, zero trust, cis baselines, infosec",
+        "url": "tutorials/cybersecurity/defense-in-depth-strategy-and-layered-controls.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
+        "id": "privileged-access-management-pam-vaulting-and-session-recording",
+        "title": "Privileged Access Management (PAM): Credential Vaulting & Session Monitoring",
+        "description": "Master enterprise Privileged Access Management (PAM): credential vaulting, automated password rotation, proxy-based session recording, and Just-In-Time (JIT) access controls.",
+        "category": "Cybersecurity",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "privileged access management, pam, cyberark, beyondtrust, credential vaulting, session recording, jit access, break-glass, tiering, infosec",
+        "url": "tutorials/cybersecurity/privileged-access-management-pam-vaulting-and-session-recording.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
+        "id": "endpoint-detection-and-response-edr-architecture-and-telemetry",
+        "title": "Endpoint Detection and Response (EDR): Sensor Architecture & Process Telemetry",
+        "description": "Master Endpoint Detection and Response (EDR) engineering: Behavioral heuristics, process lineage telemetry, coexistence with antivirus/EPP, and automated containment.",
+        "category": "Cybersecurity",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "edr, endpoint detection and response, process telemetry, crowdstrike, defender for endpoint, sentinelone, mitre att&ck, behavioral analysis, infosec",
+        "url": "tutorials/cybersecurity/endpoint-detection-and-response-edr-architecture-and-telemetry.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
         "id": "cloud-computing-fundamentals",
         "title": "Cloud Computing Fundamentals",
         "description": "Learn the core definition, essential characteristics, and business advantages of modern cloud computing architectures.",
@@ -1558,5 +1738,41 @@
         "url": "tutorials/cloud/finops-fundamentals-cloud-financial-management-and-cost-allocation.html",
         "publishedAt": "2026-09-10",
         "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "cloud-container-services-overview-ecs-aci-and-managed-k8s",
+        "title": "Containerized Workloads in the Cloud: Docker, Amazon ECS, Azure ACI & Managed Kubernetes",
+        "description": "Master enterprise cloud container architectures: Docker image standards, serverless container instances (Fargate/ACI), provider orchestrators (ECS), and managed Kubernetes (EKS/AKS).",
+        "category": "Cloud & AI",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "cloud containers, docker, amazon ecs, azure aci, fargate, kubernetes, eks, aks, container orchestration, devops",
+        "url": "tutorials/cloud/cloud-container-services-overview-ecs-aci-and-managed-k8s.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
+        "id": "cloud-security-groups-vs-network-access-control-lists",
+        "title": "AWS VPC Security Groups vs Network ACLs: Stateful vs Stateless Filtering",
+        "description": "Deconstruct AWS VPC network filtering: Stateful Security Groups vs stateless Network Access Control Lists (NACLs), rule processing order, and ephemeral return traffic dynamics.",
+        "category": "Cloud & AI",
+        "level": "Intermediate",
+        "readTime": "6 min read",
+        "keywords": "aws security groups, nacl, network access control lists, stateful vs stateless, aws vpc security, eni filtering, ephemeral ports, cloud networking, sysadmin",
+        "url": "tutorials/cloud/cloud-security-groups-vs-network-access-control-lists.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
+    },
+    {
+        "id": "aiops-architecture-applying-machine-learning-to-it-operations",
+        "title": "AIOps Architecture: Machine Learning for Event Correlation & Root Cause Analysis",
+        "description": "Master Artificial Intelligence for IT Operations (AIOps): high-throughput telemetry ingestion, event deduplication, ML anomaly detection, and automated root cause analysis.",
+        "category": "Cloud & AI",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "aiops, machine learning it operations, event correlation, root cause analysis, anomaly detection, telemetry ingestion, alert fatigue, observability, sysadmin",
+        "url": "tutorials/cloud/aiops-architecture-applying-machine-learning-to-it-operations.html",
+        "publishedAt": "2026-09-11",
+        "updatedAt": "2026-09-11"
     }
 ]

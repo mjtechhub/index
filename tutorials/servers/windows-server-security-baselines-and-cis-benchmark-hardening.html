@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Server Hardening via CIS Benchmarks & Microsoft Security Baselines | Servers Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Harden Windows Server 2022/2025: Microsoft Security Compliance Toolkit (MSCT), CIS Level 1 & Level 2 benchmarks, LSA Protection, Credential Guard, and disabling legacy protocols.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/servers/windows-server-security-baselines-and-cis-benchmark-hardening.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Windows Server Hardening via CIS Benchmarks & Microsoft Security Baselines | Servers Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Harden Windows Server 2022/2025: Microsoft Security Compliance Toolkit (MSCT), CIS Level 1 & Level 2 benchmarks, LSA Protection, Credential Guard, and disabling legacy protocols.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/servers/windows-server-security-baselines-and-cis-benchmark-hardening.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Windows Server Hardening via CIS Benchmarks & Microsoft Security Baselines | Servers Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Harden Windows Server 2022/2025: Microsoft Security Compliance Toolkit (MSCT), CIS Level 1 & Level 2 benchmarks, LSA Protection, Credential Guard, and disabling legacy protocols.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Windows Server Hardening via CIS Benchmarks & Microsoft Security Baselines",
+    "description": "Harden Windows Server 2022/2025: Microsoft Security Compliance Toolkit (MSCT), CIS Level 1 & Level 2 benchmarks, LSA Protection, Credential Guard, and disabling legacy protocols.",
+    "url": "https://themjtechhub.site/tutorials/servers/windows-server-security-baselines-and-cis-benchmark-hardening.html",
+    "datePublished": "2026-09-11",
+    "dateModified": "2026-09-11",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/servers/windows-server-security-baselines-and-cis-benchmark-hardening.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../servers.html">Servers</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Windows Server Hardening via CIS Benchmarks & Microsoft Security Baselines</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 4 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 11, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Windows Server Hardening via CIS Benchmarks & Microsoft Security Baselines</h1>
+            <p class="tutorial-hero-desc">Harden Windows Server 2022/2025: Microsoft Security Compliance Toolkit (MSCT), CIS Level 1 & Level 2 benchmarks, LSA Protection, Credential Guard, and disabling legacy protocols.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>Fresh installations of Windows Server are engineered by default to maximize backward compatibility with legacy applications and enterprise networks. Out of the box, legacy protocols, permissive local rights, broad administrative shares, and unhardened cryptographic ciphers remain enabled.</p>
+<p>In production enterprise environments, systems administrators must harden operating system configurations against lateral movement, credential dumping (Mimikatz), and privilege escalation. Hardening Windows Server requires adopting verified industry baselines: the <strong>Microsoft Security Compliance Toolkit (MSCT)</strong> and <strong>Center for Internet Security (CIS) Benchmarks</strong>.</p>
+
+<h2>CIS Benchmark Levels: Level 1 vs Level 2</h2>
+<p>The Center for Internet Security (CIS) publishes globally recognized consensus benchmarks for Windows Server 2022 and 2025, partitioned into two distinct security operational tiers:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Hardening Tier</th>
+                <th>Target Environment</th>
+                <th>Operational Impact</th>
+                <th>Key Included Baselines</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>CIS Level 1 (Benchmark)</strong></td>
+                <td>Standard enterprise production servers</td>
+                <td>Minimal to no service disruption; balance of defense and utility.</td>
+                <td>Disabling SMBv1/LLMNR, enforcing password complexity, restricting anonymous enumeration, enabling Windows Defender Antivirus.</td>
+            </tr>
+            <tr>
+                <td><strong>CIS Level 2 (Defense-in-Depth)</strong></td>
+                <td>High-security, defense, financial, and critical infrastructure</td>
+                <td>May inhibit legacy software; requires extensive pre-production testing.</td>
+                <td>Mandatory Credential Guard, strict LSA protection, blocking debug privileges, disabling NTLM completely in favor of Kerberos.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Core Hardening Vectors</h2>
+
+<h3>1. Eliminating Insecure Legacy Protocols</h3>
+<p>Adversaries rely heavily on unhardened network broadcast and legacy transport protocols for network poisoning and relay attacks:</p>
+<ul>
+    <li><strong>Disable SMBv1:</strong> SMBv1 is cryptographically obsolete and vulnerable to remote code execution (e.g., EternalBlue / WannaCry). Modern servers must enforce SMBv2/v3 with mandatory encryption and pre-authentication integrity.</li>
+    <li><strong>Disable LLMNR & NetBIOS:</strong> Link-Local Multicast Name Resolution (LLMNR) and NetBIOS over TCP/IP transmit broadcast requests when DNS lookups fail. Attackers use tools like Responder to capture and relay password hashes across the subnet.</li>
+    <li><strong>Mandate NTLMv2 & Restrict LM:</strong> Enforce <code>LmCompatibilityLevel = 5</code> (Send NTLMv2 response only, refuse LM & NTLM).</li>
+</ul>
+
+<h3>2. Memory Defense: LSA Protection & Credential Guard</h3>
+<p>The <strong>Local Security Authority Subsystem Service (LSASS)</strong> process (<code>lsass.exe</code>) manages user authentications and tokens. Unhardened servers allow administrative processes to read LSASS memory and dump plaintext credentials and Kerberos tickets:</p>
+<ul>
+    <li><strong>LSA Protection (RunAsPPL):</strong> Configures LSASS as a Protected Process Light (PPL). Once enabled, even processes running as <code>NT AUTHORITY\SYSTEM</code> cannot read or inject code into LSASS without a cryptographically signed Microsoft kernel certificate.</li>
+    <li><strong>Windows Defender Credential Guard:</strong> Leverages <strong>Virtualization-Based Security (VBS)</strong> to isolate NTLM and Kerberos secret keys into a hardware-isolated micro-hypervisor (Virtual Secure Mode), completely inaccessible to the host kernel.</li>
+</ul>
+
+<h3>3. Restricting User Rights Assignments (URA)</h3>
+<p>Hardened servers enforce strict least-privilege user rights under Local Security Policy:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>User Rights Policy</th>
+                <th>Recommended Baseline</th>
+                <th>Threat Vector Mitigated</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Access this computer from the network</strong></td>
+                <td>Restrict to <code>Administrators</code> and authorized service accounts. Exclude local accounts.</td>
+                <td>Pass-the-Hash and lateral movement across servers using local administrative credentials.</td>
+            </tr>
+            <tr>
+                <td><strong>Debug programs (SeDebugPrivilege)</strong></td>
+                <td>Assign strictly to <code>Administrators</code> (or empty in high-security Tier 0 DCs).</td>
+                <td>Attacker processes attaching to running system services to extract memory or inject code.</td>
+            </tr>
+            <tr>
+                <td><strong>Shut down the system</strong></td>
+                <td>Restrict to <code>Administrators</code>.</td>
+                <td>Accidental or malicious server shutdowns by standard users.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Applying Baselines via Microsoft LGPO Utility</h2>
+<p>To automate baseline application without waiting for Active Directory Group Policy synchronization, administrators deploy Microsoft's <strong>Local Group Policy Object (LGPO.exe)</strong> utility:</p>
+
+<div class="tutorial-command">
+    <pre><code># 1. Export current baseline as a backup before making changes
+lgpo.exe /b "C:\Backup\PreHardening_GPO"
+
+# 2. Apply Microsoft Security Compliance Toolkit security templates
+lgpo.exe /g "C:\SecBaselines\WindowsServer2022_MemberServer"
+
+# 3. Force instant local policy recompilation
+gpupdate /force</code></pre>
+</div>
+
+<h2>Enforcing Security Baselines via PowerShell</h2>
+<p>Administrators can automate key CIS compliance baselines directly via PowerShell:</p>
+
+<div class="tutorial-command">
+    <pre><code># 1. Enable LSA Protection (Protected Process Light)
+Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa' -Name "RunAsPPL" -Value 1 -Type DWord
+
+# 2. Disable NetBIOS over TCP/IP on all network adapters
+Get-CimInstance Win32_NetworkAdapterConfiguration | Where-Object { $_.IPEnabled } | ForEach-Object {
+    $_.SetTcpipNetbios(2) # 2 = Disable NetBIOS
+}
+
+# 3. Disable LLMNR across all network profiles
+Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient' -Name "EnableMulticast" -Value 0 -Type DWord
+
+# 4. Enforce strict NTLMv2 only (LmCompatibilityLevel = 5)
+Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Lsa' -Name "LmCompatibilityLevel" -Value 5 -Type DWord</code></pre>
+</div>
+
+<div class="tutorial-callout callout-warning">
+    <p><strong>LSA Protection UEFI Lock Considerations:</strong> Setting <code>RunAsPPL = 1</code> enables software-level protection. To achieve maximum tamper-proofing, administrators configure the UEFI variable lock (<code>RunAsPPL = 2</code> on Windows Server 2022/2025). Note that once locked via UEFI, this policy cannot be disabled via registry edits without physical access to the server BIOS.</p>
+</div>
+
+<h2>Auditing & Compliance Verification Checklist</h2>
+<ul>
+    <li>Run Microsoft <strong>Policy Analyzer</strong> to compare active GPOs against the official Microsoft Security Baseline.</li>
+    <li>Verify LSA Protection state in the System Event Log: look for Event ID <code>12</code> (LSASS was started as a protected process).</li>
+    <li>Conduct regular vulnerability scans using SCAP/CIS-CAT benchmark compliance engines to detect configuration drift.</li>
+</ul>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

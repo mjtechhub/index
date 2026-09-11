@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endpoint Detection and Response (EDR): Sensor Architecture & Process Telemetry | Cybersecurity Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master Endpoint Detection and Response (EDR) engineering: Behavioral heuristics, process lineage telemetry, coexistence with antivirus/EPP, and automated containment.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/cybersecurity/endpoint-detection-and-response-edr-architecture-and-telemetry.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Endpoint Detection and Response (EDR): Sensor Architecture & Process Telemetry | Cybersecurity Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master Endpoint Detection and Response (EDR) engineering: Behavioral heuristics, process lineage telemetry, coexistence with antivirus/EPP, and automated containment.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/cybersecurity/endpoint-detection-and-response-edr-architecture-and-telemetry.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Endpoint Detection and Response (EDR): Sensor Architecture & Process Telemetry | Cybersecurity Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master Endpoint Detection and Response (EDR) engineering: Behavioral heuristics, process lineage telemetry, coexistence with antivirus/EPP, and automated containment.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Endpoint Detection and Response (EDR): Sensor Architecture & Process Telemetry",
+    "description": "Master Endpoint Detection and Response (EDR) engineering: Behavioral heuristics, process lineage telemetry, coexistence with antivirus/EPP, and automated containment.",
+    "url": "https://themjtechhub.site/tutorials/cybersecurity/endpoint-detection-and-response-edr-architecture-and-telemetry.html",
+    "datePublished": "2026-09-11",
+    "dateModified": "2026-09-11",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/cybersecurity/endpoint-detection-and-response-edr-architecture-and-telemetry.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../cybersecurity.html">Cybersecurity</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Endpoint Detection and Response (EDR): Sensor Architecture & Process Telemetry</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 4 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 11, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Endpoint Detection and Response (EDR): Sensor Architecture & Process Telemetry</h1>
+            <p class="tutorial-hero-desc">Master Endpoint Detection and Response (EDR) engineering: Behavioral heuristics, process lineage telemetry, coexistence with antivirus/EPP, and automated containment.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>For decades, endpoint security was anchored primarily by traditional signature-based <strong>Antivirus (AV)</strong> software. Antivirus engines scanned files on disk against catalogs of known cryptographic hashes (MD5, SHA256) and static binary signatures. However, modern adversaries frequently bypass signature-only defenses: polymorphic malware alters its binary structure on compilation, in-memory exploits execute without touching disk, and attackers exploit <strong>Living-off-the-Land Binaries (LOLBins)</strong> like PowerShell and WMI.</p>
+<p>Rather than universally replacing antivirus, <strong>Endpoint Detection and Response (EDR)</strong> extends endpoint protection with continuous behavioral telemetry, deep investigation, threat hunting, and automated detection and response capabilities, commonly coexisting with—and converging into—modern Antivirus and Endpoint Protection Platforms (EPP).</p>
+
+<h2>Antivirus (EPP) vs EDR: Architectural Comparison</h2>
+<p>Understanding how preventative antivirus and investigative EDR capabilities complement each other is vital for enterprise security architecture:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Security Dimension</th>
+                <th>Antivirus / EPP Focus</th>
+                <th>Endpoint Detection & Response (EDR) Focus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Primary Objective</strong></td>
+                <td>Pre-execution prevention and static file hygiene</td>
+                <td>Post-execution detection, investigation, threat hunting, and automated containment.</td>
+            </tr>
+            <tr>
+                <td><strong>Detection Methodology</strong></td>
+                <td>Static signatures, known file hashes, file heuristics</td>
+                <td>Continuous behavioral telemetry analysis, process relationship graphs, anomaly detection.</td>
+            </tr>
+            <tr>
+                <td><strong>Visibility Scope</strong></td>
+                <td>Files written to or read from physical storage</td>
+                <td>Runtime system telemetry: process creation trees, thread injection, memory execution, network sockets, registry modifications.</td>
+            </tr>
+            <tr>
+                <td><strong>Fileless Exploit Defense</strong></td>
+                <td>Limited visibility into in-memory execution</td>
+                <td>Monitors script interpreters, system calls, and runtime memory allocation to intercept anomalous behaviors.</td>
+            </tr>
+            <tr>
+                <td><strong>Response Mechanics</strong></td>
+                <td>Delete or quarantine an infected binary file</td>
+                <td>Host-level network isolation, process ancestry tree termination, remote forensic analysis, automated configuration rollback.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>EDR Sensor Architecture: Platform Implementation Mechanisms</h2>
+<p>To collect runtime telemetry without degrading system stability, EDR sensors integrate with host operating systems. The exact mechanisms vary significantly by vendor platform and operating system architecture, utilizing distinct platform-specific capabilities:</p>
+
+<ul>
+    <li><strong>Windows Kernel & System Telemetry (Examples):</strong> Many enterprise Windows sensors utilize Microsoft <strong>Early Launch Antimalware (ELAM)</strong> drivers to initialize before third-party software, File System Minifilter drivers to intercept file I/O operations, and <strong>Event Tracing for Windows (ETW)</strong> / ETW-Threat-Intelligence providers to capture structured kernel events.</li>
+    <li><strong>Linux System Hooks (Examples):</strong> On modern Linux distributions, sensors increasingly leverage <strong>eBPF (Extended Berkeley Packet Filter)</strong> programs or the Linux Audit framework (<code>auditd</code>) to safely observe system calls (such as <code>execve</code>, <code>connect</code>, and <code>ptrace</code>) in kernel space without loading custom kernel modules.</li>
+    <li><strong>Script Interpreter Inspection (AMSI):</strong> On Windows endpoints, sensors frequently hook the <strong>Antimalware Scan Interface (AMSI)</strong> to inspect dynamic scripts (PowerShell, VBScript, JavaScript, Office VBA macros) in memory after de-obfuscation and immediately prior to execution.</li>
+</ul>
+
+<h2>Process Lineage & Ancestry Correlation</h2>
+<p>The core superpower of EDR telemetry is <strong>process tree analysis</strong>. Legitimate administrative tools become indicators of attack (IoAs) when invoked by anomalous parent processes:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Process Execution Chain</th>
+                <th>Contextual Assessment</th>
+                <th>MITRE ATT&CK Classification</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>explorer.exe</code> &rarr; <code>powershell.exe</code></td>
+                <td>Normal administrator opening a PowerShell console interactively.</td>
+                <td>Benign Administrative Activity</td>
+            </tr>
+            <tr>
+                <td><code>WINWORD.EXE</code> &rarr; <code>cmd.exe</code> &rarr; <code>powershell.exe -enc ...</code></td>
+                <td><strong>Highly Malicious:</strong> Word document executing an obfuscated macro payload to download stage-2 shellcode.</td>
+                <td>T1059.001 (Command and Scripting Interpreter: PowerShell)</td>
+            </tr>
+            <tr>
+                <td><code>w3wp.exe</code> (IIS Web Server) &rarr; <code>cmd.exe</code> &rarr; <code>whoami.exe</code></td>
+                <td><strong>Highly Malicious:</strong> Web application server spawning a command shell indicates an active Web Shell exploit.</td>
+                <td>T1505.003 (Server Software Component: Web Shell)</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Automated Threat Containment & Response</h2>
+<p>When an EDR sensor detects malicious behavior exceeding risk thresholds, it executes automated remediation workflows within seconds:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Containment Action</th>
+                <th>Technical Execution</th>
+                <th>Defensive Impact</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Network Host Isolation</strong></td>
+                <td>Sensor injects dynamic firewall rules blocking all inbound/outbound IP traffic except the EDR telemetry tunnel.</td>
+                <td>Completely halts lateral movement across internal subnets while preserving security analysts' ability to investigate remotely.</td>
+            </tr>
+            <tr>
+                <td><strong>Process Tree Termination</strong></td>
+                <td>Sends uncatchable <code>SIGKILL</code> / <code>TerminateProcess</code> signals to the malicious binary and all spawned child processes.</td>
+                <td>Instantly halts active beaconing or ransomware file encryption routines.</td>
+            </tr>
+            <tr>
+                <td><strong>Remediation & Rollback</strong></td>
+                <td>Uses Windows Volume Shadow Copies (VSS) or file journals to restore encrypted or altered files to their pre-infection state.</td>
+                <td>Enables rapid recovery from ransomware outbreaks without requiring bare-metal server reimaging.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="tutorial-callout callout-warning">
+    <p><strong>Sensor Tamper-Proofing:</strong> Adversaries actively attempt to disable EDR agents using kernel exploits, specialized drivers (Bring Your Own Vulnerable Driver - BYOVD), or service termination scripts. Modern enterprise EDR enforces <strong>Tamper Protection</strong>: sensor services and registry keys cannot be stopped or modified even by local <code>SYSTEM</code> or <code>Administrator</code> accounts without entering a single-use authorization token generated by the cloud security console.</p>
+</div>
+
+<h2>Key Takeaways for Security Operations</h2>
+<ul>
+    <li>Deploy EDR agents across 100% of enterprise workloads—including virtual desktops, cloud VMs, and on-premises physical servers.</li>
+    <li>Enable <strong>Tamper Protection</strong> and cloud-delivered protection engines across all deployed sensor policies.</li>
+    <li>Tune false positives systematically to avoid alert fatigue in the Security Operations Center (SOC).</li>
+</ul>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

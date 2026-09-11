@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Directory Domain Join: Prerequisites, DNS & Troubleshooting | Windows Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master Windows Active Directory domain join architecture: DNS SRV record locator discovery, Kerberos time sync, Netlogon secure channel, and offline domain join with djoin.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/windows/windows-active-directory-domain-join-prerequisites-workflow.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Active Directory Domain Join: Prerequisites, DNS & Troubleshooting | Windows Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master Windows Active Directory domain join architecture: DNS SRV record locator discovery, Kerberos time sync, Netlogon secure channel, and offline domain join with djoin.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/windows/windows-active-directory-domain-join-prerequisites-workflow.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Active Directory Domain Join: Prerequisites, DNS & Troubleshooting | Windows Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master Windows Active Directory domain join architecture: DNS SRV record locator discovery, Kerberos time sync, Netlogon secure channel, and offline domain join with djoin.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Active Directory Domain Join: Prerequisites, DNS & Troubleshooting",
+    "description": "Master Windows Active Directory domain join architecture: DNS SRV record locator discovery, Kerberos time sync, Netlogon secure channel, and offline domain join with djoin.",
+    "url": "https://themjtechhub.site/tutorials/windows/windows-active-directory-domain-join-prerequisites-workflow.html",
+    "datePublished": "2026-09-11",
+    "dateModified": "2026-09-11",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/windows/windows-active-directory-domain-join-prerequisites-workflow.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../windows.html">Windows</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Active Directory Domain Join: Prerequisites, DNS & Troubleshooting</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 4 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 11, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Active Directory Domain Join: Prerequisites, DNS & Troubleshooting</h1>
+            <p class="tutorial-hero-desc">Master Windows Active Directory domain join architecture: DNS SRV record locator discovery, Kerberos time sync, Netlogon secure channel, and offline domain join with djoin.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>In standalone enterprise environments, Windows workstations and servers operate within isolated Workgroups, relying strictly on their local Security Accounts Manager (SAM) database for user authentication. To transition an endpoint into an enterprise management fabric, the system must undergo an <strong>Active Directory Domain Join</strong>.</p>
+<p>Joining an Active Directory domain establishes a mutual trust boundary between the endpoint and the domain: Kerberos single sign-on (SSO) is enabled, centralized Group Policy Objects (GPOs) are applied, and a machine account with a cryptographically rotated secure channel password is created in the directory.</p>
+
+<h2>Architecture: The Domain Join Lifecycle</h2>
+<p>When an administrator initiates a domain join, the operating system executes a strict multi-step cryptographic handshake across the network:</p>
+
+<ol>
+    <li><strong>DNS DC Locator Discovery:</strong> The client queries its configured DNS server for Active Directory Service Location (SRV) records: <code>_ldap._tcp.dc._msdcs.&lt;DomainName&gt;</code>.</li>
+    <li><strong>LDAP Ping & Site Identification:</strong> The client sends an unauthenticated UDP LDAP ping to candidate Domain Controllers (DCs). The DCs respond with Netlogon details, informing the client of its Active Directory Site assignment.</li>
+    <li><strong>Kerberos / NTLM Authentication:</strong> The client contacts the DC using the administrative credentials supplied by the user to authenticate admission rights.</li>
+    <li><strong>Computer Object Provisioning:</strong> The DC creates or takes ownership of a <strong>Computer Object</strong> in the directory (by default inside the <code>CN=Computers</code> container, unless pre-staged in a designated Organizational Unit).</li>
+    <li><strong>Secure Channel Password Generation:</strong> The client and DC negotiate a shared 120-character random password. This establishes the <strong>Netlogon Secure Channel</strong> used to encrypt machine-to-DC communication.</li>
+    <li><strong>Local SAM Group Adjustment:</strong> The domain's <code>Domain Admins</code> group is automatically injected into the client's local <code>Administrators</code> group, and <code>Domain Users</code> is added to local <code>Users</code>.</li>
+</ol>
+
+<h2>Foundational Technical Prerequisites</h2>
+<p>Domain join failures almost universally stem from deficiencies in foundational networking prerequisites:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Prerequisite Domain</th>
+                <th>Technical Requirement</th>
+                <th>Failure Consequence</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>DNS Configuration</strong></td>
+                <td>Primary network adapter must point exclusively to AD Domain Controllers as primary DNS resolvers.</td>
+                <td>Error <code>0x54B</code> (Domain does not exist or cannot be contacted) if client queries public DNS (8.8.8.8) that cannot resolve internal <code>_msdcs</code> zones.</td>
+            </tr>
+            <tr>
+                <td><strong>Time Synchronization</strong></td>
+                <td>Client system clock must match the Domain Controller within <strong>5 minutes (300 seconds)</strong>.</td>
+                <td>Kerberos authentication fails with <code>KRB_AP_ERR_SKEW</code>; domain join is rejected due to replay attack prevention.</td>
+            </tr>
+            <tr>
+                <td><strong>Network Port Egress</strong></td>
+                <td>TCP/UDP 53 (DNS), TCP/UDP 88 (Kerberos), TCP/UDP 389 (LDAP), TCP 445 (SMB), TCP 135 (RPC Endpoint Mapper).</td>
+                <td>RPC server unavailable or transport timeouts during machine account creation.</td>
+            </tr>
+            <tr>
+                <td><strong>Account Permissions</strong></td>
+                <td>Joining account must have <em>Create Computer Objects</em> permission in target container/OU.</td>
+                <td>Access Denied (Error <code>0x5</code>) if the standard user has already reached their 10-machine join quota (<code>ms-DS-MachineAccountQuota</code>).</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Joining a Domain via PowerShell</h2>
+<p>Modern administration automates domain onboarding using native PowerShell cmdlets:</p>
+
+<div class="tutorial-command">
+    <pre><code># 1. Verify DNS resolution of the Domain Controller's SRV records
+Resolve-DnsName -Name "_ldap._tcp.dc._msdcs.corp.contoso.com" -Type SRV
+
+# 2. Verify clock synchronization with the Domain Controller
+w32tm /stripchart /computer:dc01.corp.contoso.com /samples:3 /dataonly
+
+# 3. Join the domain and specify destination Organizational Unit (OU)
+$credential = Get-Credential
+Add-Computer -DomainName "corp.contoso.com" `
+             -OUPath "OU=Workstations,OU=NYC,DC=corp,DC=contoso,DC=com" `
+             -Credential $credential `
+             -Restart</code></pre>
+</div>
+
+<h2>Offline Domain Join (ODJ) via djoin.exe</h2>
+<p>In secure enterprise environments, systems administrators frequently deploy servers into isolated perimeter networks (DMZs), branch offices without network connectivity, or automated virtual machine templates. Active Directory supports <strong>Offline Domain Join (ODJ)</strong> using <code>djoin.exe</code>:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Phase</th>
+                <th>Executed On</th>
+                <th>Command & Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>1. Provisioning</strong></td>
+                <td>Online Domain Controller</td>
+                <td><code>djoin.exe /provision /domain corp.contoso.com /machine WEB-SRV-01 /savefile C:\ODJ\blob.txt</code><br>Creates computer account in AD and exports cryptographic metadata into a provisioning blob file.</td>
+            </tr>
+            <tr>
+                <td><strong>2. Insertion</strong></td>
+                <td>Offline Target Machine</td>
+                <td><code>djoin.exe /requestODJ /loadfile C:\ODJ\blob.txt /windowspath %SystemRoot% /localos</code><br>Injects domain membership metadata and machine password into offline Windows image. Upon reboot and network connection, the system is fully domain-joined.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Diagnosing Common Domain Join Failures</h2>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Reported Error Message</th>
+                <th>Root Cause Analysis</th>
+                <th>Remediation Workflow</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>The specified domain either does not exist or could not be contacted (0x54B)</strong></td>
+                <td>Client's network adapter is using external public DNS (e.g., home router or 1.1.1.1) or local firewall is blocking UDP port 53.</td>
+                <td>Update IPv4/IPv6 DNS settings on adapter to point directly to the corporate domain controller. Validate with <code>nltest /dsgetdc:corp.contoso.com</code>.</td>
+            </tr>
+            <tr>
+                <td><strong>Access is denied (0x5)</strong></td>
+                <td>User account lacks administrative rights on local machine or exceeded the <code>ms-DS-MachineAccountQuota</code> in Active Directory.</td>
+                <td>Pre-stage computer account in target OU with delegated permissions, or use a domain administrator account.</td>
+            </tr>
+            <tr>
+                <td><strong>The trust relationship between this workstation and the primary domain failed</strong></td>
+                <td>Machine account password desynchronized (e.g., computer restored from VM snapshot or inactive for 60+ days).</td>
+                <td>Reset the secure channel from PowerShell: <code>Test-ComputerSecureChannel -Repair -Credential (Get-Credential)</code>.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Post-Join Validation Checklist</h2>
+<ul>
+    <li>Log in using domain credentials: <code>CORP\AdminUser</code>.</li>
+    <li>Validate secure channel health: <code>Test-ComputerSecureChannel -Verbose</code>.</li>
+    <li>Verify Group Policy processing: execute <code>gpresult /r</code> to confirm applied Computer and User policy GPOs.</li>
+</ul>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>
