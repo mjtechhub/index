@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Defender Firewall with Advanced Security: Rules & Profiles | Windows Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master enterprise host firewall administration: Domain, Private, and Public profiles, rule precedence mechanics, program/port scoping, IPsec connection security rules, and PowerShell management.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/windows/windows-defender-firewall-with-advanced-security.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Windows Defender Firewall with Advanced Security: Rules & Profiles | Windows Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master enterprise host firewall administration: Domain, Private, and Public profiles, rule precedence mechanics, program/port scoping, IPsec connection security rules, and PowerShell management.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/windows/windows-defender-firewall-with-advanced-security.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Windows Defender Firewall with Advanced Security: Rules & Profiles | Windows Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master enterprise host firewall administration: Domain, Private, and Public profiles, rule precedence mechanics, program/port scoping, IPsec connection security rules, and PowerShell management.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Windows Defender Firewall with Advanced Security: Rules & Profiles",
+    "description": "Master enterprise host firewall administration: Domain, Private, and Public profiles, rule precedence mechanics, program/port scoping, IPsec connection security rules, and PowerShell management.",
+    "url": "https://themjtechhub.site/tutorials/windows/windows-defender-firewall-with-advanced-security.html",
+    "datePublished": "2026-09-10",
+    "dateModified": "2026-09-10",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/windows/windows-defender-firewall-with-advanced-security.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../windows.html">Windows</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Windows Defender Firewall with Advanced Security: Rules & Profiles</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 10, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Windows Defender Firewall with Advanced Security: Rules & Profiles</h1>
+            <p class="tutorial-hero-desc">Master enterprise host firewall administration: Domain, Private, and Public profiles, rule precedence mechanics, program/port scoping, IPsec connection security rules, and PowerShell management.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>Network perimeter firewalls provide vital boundary defense, but they offer zero visibility or control over east-west lateral movement once an attacker compromises an endpoint inside the local subnet. Host-based network defense is the cornerstone of defense-in-depth, and on Windows platforms, this capability is delivered by <strong>Windows Defender Firewall with Advanced Security (WFAS)</strong>.</p>
+<p>Operating as a stateful packet inspection firewall integrated deeply with the <strong>Windows Filtering Platform (WFP)</strong>, WFAS evaluates inbound and outbound network traffic based on transport-layer parameters, application executable paths, specific service security identifiers (SIDs), Active Directory user groups, and IPsec cryptographic identities.</p>
+
+<h2>Network Location Profiles: Domain, Private, and Public</h2>
+<p>Windows automatically assigns every network adapter to a specific <strong>Network Location Profile</strong> based on network detection criteria. WFAS maintains independent configuration policies for each of the three profiles:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Profile Name</th>
+                <th>Automatic Detection Criteria</th>
+                <th>Default Security Posture</th>
+                <th>Typical Enterprise Application</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Domain Profile</strong></td>
+                <td>Activated automatically when the network adapter authenticates to an Active Directory Domain Controller for the domain to which the computer is joined.</td>
+                <td>Inbound blocked except rules; Outbound allowed. Permits enterprise management protocols (WinRM, RPC, RDP, WMI).</td>
+                <td>Corporate enterprise LANs, domain-joined branch offices, data center subnets.</td>
+            </tr>
+            <tr>
+                <td><strong>Private Profile</strong></td>
+                <td>User- or administrator-designated trusted network (e.g., home office, isolated lab) where the machine is not joined to a corporate domain.</td>
+                <td>Inbound blocked except rules; Outbound allowed. Permits local network discovery (SSDP, LLMNR) and local file/printer sharing.</td>
+                <td>Remote teleworker home LANs, dedicated isolated developer sandbox environments.</td>
+            </tr>
+            <tr>
+                <td><strong>Public Profile</strong></td>
+                <td>Assigned by default to all unrecognized networks, direct broadband interfaces, public Wi-Fi hotspots, or untrusted hotel connections.</td>
+                <td><strong>Highest Restrictiveness:</strong> Inbound blocked completely except critical core OS services; network discovery, file sharing, and remote management disabled.</td>
+                <td>Traveling laptops, public Wi-Fi access, direct Internet-facing virtual machines.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="tutorial-callout callout-note">
+    <p><strong>Multi-Homed Host Behavior:</strong> If a server possesses multiple network adapters connected to different networks (e.g., NIC 1 connected to the corporate Domain LAN and NIC 2 connected to a Public DMZ or storage network), Windows Defender Firewall applies the <em>most restrictive profile</em> rules globally while simultaneously applying profile-specific rules to each respective physical interface.</p>
+</div>
+
+<h2>Rule Evaluation Precedence & Processing Logic</h2>
+<p>When a network packet arrives at or departs from a Windows host, the Windows Filtering Platform evaluates firewall rules in a strictly deterministic sequence:</p>
+
+<ol>
+    <li><strong>Windows Service Hardening:</strong> Core system rules that restrict system services (e.g., preventing a compromised print spooler service from opening outbound sockets).</li>
+    <li><strong>Connection Security Rules (IPsec):</strong> Determines whether the traffic must be authenticated via Kerberos or certificates, or encrypted via ESP (Encapsulating Security Payload).</li>
+    <li><strong>Explicit Block Rules:</strong> If any matching rule specifies <em>Block</em>, the packet is immediately dropped. <strong>Block rules override Allow rules by default.</strong></li>
+    <li><strong>Allow if Secure Rules:</strong> Rules that permit traffic only if it is authenticated or encrypted via IPsec, with optional authorization checks on user or computer accounts.</li>
+    <li><strong>Standard Allow Rules:</strong> Matches explicit permit rules based on program, service, port, protocol, and IP scope.</li>
+    <li><strong>Default Profile Action:</strong> If no rules match the packet, the default profile action is applied (typically <em>Block Inbound</em> and <em>Allow Outbound</em>).</li>
+</ol>
+
+<div class="tutorial-callout callout-important">
+    <p><strong>Do Not Disable the Firewall as a Diagnostic Default:</strong> Disabling Windows Defender Firewall (<code>Set-NetFirewallProfile -Enabled False</code>) does not simply open ports—it disables the Windows Filtering Platform state machine, terminates active IPsec security associations, dismantles service isolation tokens, and leaves the endpoint completely blind to local subnet scans. Diagnostic troubleshooting should always be performed by creating temporary scoped logging rules or inspecting packet drops via the Security log.</p>
+</div>
+
+<h2>Anatomy of an Enterprise Firewall Rule</h2>
+<p>Modern host-based rules should be tightly scoped across multiple operational parameters rather than creating open, wildcard port allowances:</p>
+
+<ul>
+    <li><strong>Program & Service Scoping:</strong> Instead of opening port 8080 globally, restrict the rule to the specific binary path: <code>%ProgramFiles%\CustomApp\app.exe</code>. Furthermore, rules can target specific Windows Services via their Service SID, ensuring that even if another process binds to the same port, unauthorized traffic is discarded.</li>
+    <li><strong>Protocol & Ports:</strong> Specify Layer 4 protocol (TCP, UDP, ICMPv4, ICMPv6) and exact port ranges.</li>
+    <li><strong>Scope (Local & Remote Addresses):</strong> Restrict the rule to authorized administrative subnets (e.g., allowing RDP or WinRM only from <code>10.10.50.0/24</code>), preventing arbitrary internal workstations from connecting.</li>
+    <li><strong>Interface Types:</strong> Limit the rule's application to specific network interface types: Local Area Network (Ethernet), Wireless (802.11), or Remote Access (VPN).</li>
+</ul>
+
+<h2>Managing Windows Defender Firewall via PowerShell</h2>
+<p>Systems administrators manage WFAS policies at scale using the native <code>NetSecurity</code> PowerShell module:</p>
+
+<div class="tutorial-command">
+    <pre><code># 1. Inspect the operational state of all three firewall profiles
+Get-NetFirewallProfile | Select-Object Name, Enabled, DefaultInboundAction, DefaultOutboundAction, LogFileName
+
+# 2. Enable Windows Defender Firewall across all profiles
+Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled True
+
+# 3. Create a hardened inbound rule for an internal web service
+# Scoped strictly to the Domain profile, TCP port 8443, and authorized management subnet
+New-NetFirewallRule -Name "App-HTTPS-Internal" `
+    -DisplayName "Corporate ERP Web Service (HTTPS 8443)" `
+    -Description "Permits internal HTTPS access to ERP application from corporate VLAN" `
+    -Profile Domain `
+    -Direction Inbound `
+    -Action Allow `
+    -Protocol TCP `
+    -LocalPort 8443 `
+    -Program "C:\Program Files\ERPApp\bin\erp_service.exe" `
+    -RemoteAddress 10.10.0.0/16
+
+# 4. Create an outbound block rule to prevent PowerShell from making outbound Internet connections
+New-NetFirewallRule -Name "Block-PowerShell-Outbound-Internet" `
+    -DisplayName "Block Outbound Internet Access for PowerShell" `
+    -Direction Outbound `
+    -Action Block `
+    -Program "%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" `
+    -RemoteAddress "10.0.0.0/8","172.16.0.0/12","192.168.0.0/16" -PolicyStore ActiveStore</code></pre>
+</div>
+
+<h2>Enabling Packet Drop Logging for Diagnostics</h2>
+<p>When troubleshooting network connectivity issues without disabling protection, enable drop logging to record discarded connections in real-time:</p>
+
+<div class="tutorial-command">
+    <pre><code># Enable dropped packet logging on the Domain profile
+Set-NetFirewallProfile -Profile Domain -LogDroppedPackets True -LogFileName "%SystemRoot%\system32\LogFiles\Firewall\pfirewall.log" -LogMaxSizeKilobytes 16384
+
+# Monitor the firewall log file in real-time using PowerShell
+Get-Content -Path "C:\Windows\system32\LogFiles\Firewall\pfirewall.log" -Tail 20 -Wait</code></pre>
+</div>
+<p>Analyze log entries with the action code <code>DROP</code> to identify blocked IP addresses, port numbers, and matching transport protocols without lowering host defenses.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

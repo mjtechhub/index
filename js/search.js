@@ -45,18 +45,18 @@
     const emptyState = document.getElementById('search-empty-state');
     
     let searchDataCache = null;
-    let isFetching = false;
+    let fetchPromise = null;
     let activeIndex = -1;
     let currentResults = [];
 
     // 3. Fetch Data Once
-    async function getSearchData() {
-        if (searchDataCache) return searchDataCache;
-        if (isFetching) return null; // wait
-        isFetching = true;
+    function getSearchData() {
+        if (searchDataCache) return Promise.resolve(searchDataCache);
+        if (fetchPromise) return fetchPromise;
         
-        let data = [];
-        try {
+        fetchPromise = (async () => {
+            let data = [];
+            try {
             const [topicsRes, tutsRes, cmdsRes, resRes] = await Promise.all([
                 fetch(`${basePath}/data/topics.json`).catch(()=>null),
                 fetch(`${basePath}/data/tutorials.json`).catch(()=>null),
@@ -147,11 +147,15 @@
             }
             
             searchDataCache = data;
+            return searchDataCache;
         } catch (e) {
             console.error("Search data load failed", e);
+            return [];
+        } finally {
+            fetchPromise = null;
         }
-        isFetching = false;
-        return searchDataCache;
+        })();
+        return fetchPromise;
     }
 
     // 4. Ranking Algorithm
@@ -189,7 +193,17 @@
             });
         }
         
-        return scored.sort((a, b) => b.score - a.score).slice(0, 12).map(r => r.item);
+        const seenKeys = new Set();
+        const uniqueResults = [];
+        for (let r of scored.sort((a, b) => b.score - a.score)) {
+            const normUrl = (r.item.url || '').replace(/^\.?\//, '');
+            const dedupKey = normUrl.includes('tutorials/') ? normUrl : `${r.item.type}:${r.item.title}:${normUrl}`;
+            if (seenKeys.has(dedupKey)) continue;
+            seenKeys.add(dedupKey);
+            uniqueResults.push(r.item);
+            if (uniqueResults.length >= 12) break;
+        }
+        return uniqueResults;
     }
 
     // 5. Safe Rendering

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Server DHCP Failover: Load Balance vs Hot Standby Modes | Servers Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master Windows Server DHCP high availability: Load Balance vs Hot Standby modes, Maximum Client Lead Time (MCLT), partner communication states, and DHCPv4 scope replication.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/servers/enterprise-dhcp-failover-load-balancing-and-hot-standby.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Windows Server DHCP Failover: Load Balance vs Hot Standby Modes | Servers Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master Windows Server DHCP high availability: Load Balance vs Hot Standby modes, Maximum Client Lead Time (MCLT), partner communication states, and DHCPv4 scope replication.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/servers/enterprise-dhcp-failover-load-balancing-and-hot-standby.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Windows Server DHCP Failover: Load Balance vs Hot Standby Modes | Servers Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master Windows Server DHCP high availability: Load Balance vs Hot Standby modes, Maximum Client Lead Time (MCLT), partner communication states, and DHCPv4 scope replication.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Windows Server DHCP Failover: Load Balance vs Hot Standby Modes",
+    "description": "Master Windows Server DHCP high availability: Load Balance vs Hot Standby modes, Maximum Client Lead Time (MCLT), partner communication states, and DHCPv4 scope replication.",
+    "url": "https://themjtechhub.site/tutorials/servers/enterprise-dhcp-failover-load-balancing-and-hot-standby.html",
+    "datePublished": "2026-09-10",
+    "dateModified": "2026-09-10",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/servers/enterprise-dhcp-failover-load-balancing-and-hot-standby.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../servers.html">Servers</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Windows Server DHCP Failover: Load Balance vs Hot Standby Modes</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 4 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 10, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Windows Server DHCP Failover: Load Balance vs Hot Standby Modes</h1>
+            <p class="tutorial-hero-desc">Master Windows Server DHCP high availability: Load Balance vs Hot Standby modes, Maximum Client Lead Time (MCLT), partner communication states, and DHCPv4 scope replication.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>In enterprise local area networks, Dynamic Host Configuration Protocol (DHCP) is a mission-critical infrastructure dependency: if DHCP servers become unreachable, endpoints cannot renew IP addresses, lose default gateway routing, fail to resolve DNS names, and drop off corporate networks entirely. Historically, administrators achieved redundancy through "split-scope" designs (e.g., Server A handles 80% of the pool, Server B handles 20%) or complex clustered storage instances.</p>
+<p>Modern enterprise IP resiliency on Windows platforms relies on native <strong>Windows Server DHCP Failover</strong> (RFC 3074). Built directly into the DHCP Server role on Windows Server, DHCP Failover enables two standalone DHCP servers to share a common subnet scope, synchronize lease states in real-time, and provide seamless, zero-downtime failover without requiring shared SAN storage or failover clustering.</p>
+
+<h2>Failover Modes: Load Balance vs Hot Standby</h2>
+<p>When configuring a failover relationship between two Windows Server DHCP partners, administrators must select between two distinct architectural modes:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Operational Dimension</th>
+                <th>Load Balance Mode (Active-Active)</th>
+                <th>Hot Standby Mode (Active-Passive)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Primary Deployment Topology</strong></td>
+                <td>Single physical site where both DHCP servers reside on high-speed low-latency corporate subnets.</td>
+                <td>Hub-and-spoke or multi-site topology where the Active server is local and the Standby partner is located in a central data center.</td>
+            </tr>
+            <tr>
+                <td><strong>Traffic Handling</strong></td>
+                <td><strong>Active-Active:</strong> Both partner servers actively respond to client DHCPDISCOVER and DHCPREQUEST messages simultaneously.</td>
+                <td><strong>Active-Passive:</strong> The Primary server serves 100% of client leases under normal conditions. The Secondary server remains passive.</td>
+            </tr>
+            <tr>
+                <td><strong>Load Distribution</strong></td>
+                <td>Determined by a deterministic hash of the client's MAC address (RFC 3074). Default split is <strong>50% / 50%</strong> (configurable, e.g., 70/30).</td>
+                <td>Primary serves all traffic; Standby maintains a configurable <strong>Reserve Pool</strong> (default 5% of scope) for temporary leases during an outage.</td>
+            </tr>
+            <tr>
+                <td><strong>WAN Sensitivity</strong></td>
+                <td>Requires low latency (&lt; 10 ms) between partners for synchronized hashing.</td>
+                <td>Resilient across higher-latency WAN connections between branch offices and data centers.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>The Failover State Machine & Maximum Client Lead Time (MCLT)</h2>
+<p>DHCP Failover partners communicate continuously over <strong>TCP port 647</strong> to synchronize lease database modifications. The resiliency of the relationship is governed by the <strong>Maximum Client Lead Time (MCLT)</strong> parameter (default: 1 hour):</p>
+
+<ol>
+    <li><strong>Normal State:</strong> Both partners communicate over TCP 647. Whenever Server A grants or renews an IP lease, it sends a binding update (BNDUPD) to Server B, which acknowledges the update (BNDACK). Both lease tables remain synchronized.</li>
+    <li><strong>Communication-Interrupted State:</strong> If Server A loses network connectivity to Server B, Server B transitions to <code>COMMUNICATION-INTERRUPTED</code>. Server B does not know if Server A has crashed or if a temporary network partition occurred. To prevent granting duplicate IP addresses, Server B issues new leases and renewals strictly for the duration of the <strong>MCLT</strong> (e.g., 1 hour), rather than the full scope lease time (e.g., 8 days).</li>
+    <li><strong>Partner-Down State:</strong> If an administrator or automated script confirms that Server A has physically crashed and will not return, Server B is transitioned into <code>PARTNER-DOWN</code>. Server B waits for the MCLT timer to expire (ensuring all existing client leases expire or renew), and then takes over <strong>100% of the entire scope pool</strong>, serving full-duration leases.</li>
+</ol>
+
+<div class="tutorial-callout callout-important">
+    <p><strong>Critical Scope Limitation: IPv4 Only:</strong> Windows Server DHCP Failover is supported <strong>exclusively for DHCPv4 scopes</strong>. Microsoft DHCP Server does <em>not</em> support failover relationships for DHCPv6 scopes. For IPv6 environments, high availability is achieved natively via router advertisements (SLAAC) or deploying independent stateless DHCPv6 servers.</p>
+</div>
+
+<h2>Configuring Windows Server DHCP Failover via PowerShell</h2>
+<p>Systems administrators configure, replicate, and manage DHCP failover relationships using the native <code>DhcpServer</code> module:</p>
+
+<div class="tutorial-command">
+    <pre><code># 1. Create a Load Balance failover relationship between DC1 and DC2 for subnet 10.10.10.0
+Add-DhcpServerv4Failover -ComputerName "DC1.corp.contoso.com" `
+    -Name "DC1-DC2-Failover" `
+    -PartnerServer "DC2.corp.contoso.com" `
+    -ScopeId 10.10.10.0 `
+    -Mode LoadBalance `
+    -LoadPercent 50 `
+    -MaxClientLeadTime 01:00:00 `
+    -SharedSecret "ComplexClusterSecretP@ss2026" `
+    -AutoStateTransition $True `
+    -StateSwitchInterval 00:30:00
+
+# 2. Alternatively, create a Hot Standby relationship for branch site 10.20.10.0
+# DC1 is Active Primary; DC2 is Standby holding 10% reserve capacity
+Add-DhcpServerv4Failover -ComputerName "DC1.corp.contoso.com" `
+    -Name "DC1-DC2-BranchStandby" `
+    -PartnerServer "DC2.corp.contoso.com" `
+    -ScopeId 10.20.10.0 `
+    -Mode HotStandby `
+    -ServerRole Active `
+    -ReservePercent 10 `
+    -MaxClientLeadTime 01:00:00 `
+    -SharedSecret "ComplexClusterSecretP@ss2026"
+
+# 3. Manually replicate scope configuration updates from Primary to Partner
+Invoke-DhcpServerv4FailoverReplication -ComputerName "DC1.corp.contoso.com"</code></pre>
+</div>
+
+<h2>Auditing and Monitoring Failover Health</h2>
+<p>To inspect active partnership health and verify that lease synchronization is operational:</p>
+
+<div class="tutorial-command">
+    <pre><code># Query active failover relationship operational states
+Get-DhcpServerv4Failover -ComputerName "DC1.corp.contoso.com" | Format-List Name, Mode, ServerRole, State, PartnerState
+
+# Inspect active lease counts and scope allocation across both failover partners
+Get-DhcpServerv4ScopeStatistics -ComputerName "DC1.corp.contoso.com" -ScopeId 10.10.10.0</code></pre>
+</div>
+<p>Verify that both <code>State</code> and <code>PartnerState</code> report <code>Normal</code>, and ensure that TCP port 647 is permitted through local host firewalls on both Domain Controllers.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

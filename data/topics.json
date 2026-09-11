@@ -200,9 +200,10 @@
                         },
                         {
                             "id": "chassis-stacking-and-switch-virtualization",
-                            "name": "Switch Stacking Architecture & Virtual Chassis",
+                            "name": "Switch Stacking Architecture, Virtual Chassis & Multi-Chassis Link Aggregation",
                             "level": "Advanced",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/networking/chassis-stacking-and-switch-virtualization.html"
                         }
                     ]
                 },
@@ -370,9 +371,10 @@
                         },
                         {
                             "id": "dhcp-dora-process-and-options-architecture",
-                            "name": "DHCP DORA Process & Essential Scope Options (Option 3, 6, 66)",
+                            "name": "DHCP DORA Process & Common DHCP Options: Router, DNS and TFTP",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/networking/dhcp-dora-process-and-options-architecture.html"
                         },
                         {
                             "id": "reverse-dns-and-ptr-record-architecture",
@@ -428,7 +430,8 @@
                             "id": "wireless-roaming-802-11r-k-v-standards",
                             "name": "Seamless Wireless Roaming Standards: 802.11r, 802.11k & 802.11v",
                             "level": "Advanced",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/networking/wireless-roaming-802-11r-k-v-standards.html"
                         }
                     ]
                 },
@@ -981,7 +984,8 @@
                             "id": "windows-remote-desktop-protocol-rdp-configuration",
                             "name": "Remote Desktop Protocol (RDP) Configuration, Port & NLA Security",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/windows/windows-remote-desktop-protocol-rdp-configuration.html"
                         },
                         {
                             "id": "windows-network-location-profiles-domain-private-public",
@@ -1016,7 +1020,8 @@
                             "id": "windows-defender-firewall-with-advanced-security",
                             "name": "Windows Defender Firewall with Advanced Security: Rules & Profiles",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/windows/windows-defender-firewall-with-advanced-security.html"
                         },
                         {
                             "id": "windows-bitlocker-drive-encryption-and-tpm-architecture",
@@ -1122,9 +1127,10 @@
                         },
                         {
                             "id": "windows-update-for-business-wufb-deployment-rings",
-                            "name": "Windows Update for Business (WUfB) Deployment Rings & Deferral Policies",
+                            "name": "Windows Update Client Policies: Deployment Rings, Deferrals & Deadlines",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/windows/windows-update-for-business-wufb-deployment-rings.html"
                         },
                         {
                             "id": "windows-admin-center-installation-and-gateway-setup",
@@ -1304,7 +1310,8 @@
                             "id": "linux-lvm-architecture-physical-volumes-volume-groups",
                             "name": "Logical Volume Manager (LVM) Architecture: PV, VG and LV Provisioning",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/linux/linux-lvm-architecture-physical-volumes-volume-groups.html"
                         },
                         {
                             "id": "linux-lvm-dynamic-volume-resizing-and-snapshots",
@@ -1453,7 +1460,8 @@
                             "id": "linux-process-signaling-and-termination-kill-pkill",
                             "name": "Process Termination & POSIX Signals: SIGTERM, SIGKILL, SIGHUP (kill/pkill)",
                             "level": "Beginner",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/linux/linux-process-signaling-and-termination-kill-pkill.html"
                         },
                         {
                             "id": "linux-systemd-service-units-creation-and-control",
@@ -1591,7 +1599,8 @@
                             "id": "linux-systemd-journalctl-log-analysis-and-filtering",
                             "name": "Systemd Journal Architecture & Advanced journalctl Filtering Queries",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/linux/linux-systemd-journalctl-log-analysis-and-filtering.html"
                         },
                         {
                             "id": "linux-traditional-syslog-and-logrotate-management",
@@ -1827,7 +1836,8 @@
                             "id": "windows-server-core-headless-deployment-and-remote-management",
                             "name": "Windows Server Core: Headless Installation & Remote Administration",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/servers/windows-server-core-headless-deployment-and-remote-management.html"
                         },
                         {
                             "id": "bare-metal-server-provisioning-pxe-boot-and-wds",
@@ -1939,9 +1949,10 @@
                         },
                         {
                             "id": "enterprise-dhcp-failover-load-balancing-and-hot-standby",
-                            "name": "DHCP Server Failover Architecture: Load Balancing vs Hot Standby Modes",
+                            "name": "Windows Server DHCP Failover: Load Balance vs Hot Standby Modes",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/servers/enterprise-dhcp-failover-load-balancing-and-hot-standby.html"
                         },
                         {
                             "id": "enterprise-dhcp-relay-agents-ip-helper-in-routed-networks",
@@ -2078,7 +2089,8 @@
                             "id": "windows-server-failover-clustering-wsfc-architecture",
                             "name": "Windows Server Failover Clustering (WSFC) Architecture & Validation Tests",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/servers/windows-server-failover-clustering-wsfc-architecture.html"
                         },
                         {
                             "id": "cluster-quorum-models-witness-types-cloud-disk-file-share",
@@ -2419,7 +2431,8 @@
                             "id": "single-sign-on-sso-architecture-saml-2-0-and-oidc",
                             "name": "Enterprise Single Sign-On (SSO): SAML 2.0 Assertions vs OpenID Connect Tokens",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cybersecurity/single-sign-on-sso-architecture-saml-2-0-and-oidc.html"
                         },
                         {
                             "id": "kerberos-authentication-architecture-and-tickets-flow",
@@ -2646,7 +2659,8 @@
                             "id": "security-information-and-event-management-siem-architecture",
                             "name": "Security Information and Event Management (SIEM): Log Ingestion, Parsing & Indexing",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cybersecurity/security-information-and-event-management-siem-architecture.html"
                         },
                         {
                             "id": "authoring-high-fidelity-siem-detection-rules-and-correlation-logic",
@@ -2685,9 +2699,10 @@
                     "subtopics": [
                         {
                             "id": "nist-sp-800-61-computer-security-incident-handling-guide",
-                            "name": "NIST SP 800-61 Incident Handling Guide: The Four IR Lifecycle Phases",
+                            "name": "NIST SP 800-61 Rev. 3: Incident Response with the CSF 2.0 Lifecycle",
                             "level": "Beginner",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cybersecurity/nist-sp-800-61-computer-security-incident-handling-guide.html"
                         },
                         {
                             "id": "incident-response-phases-preparation-detection-containment-recovery",
@@ -2844,7 +2859,8 @@
                             "id": "serverless-computing-architecture-and-event-driven-design",
                             "name": "Serverless Computing Concepts: Function-as-a-Service (FaaS) & Event Triggers",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cloud/serverless-computing-architecture-and-event-driven-design.html"
                         }
                     ]
                 },
@@ -2936,7 +2952,8 @@
                             "id": "azure-virtual-networks-vnet-subnets-and-peering-architecture",
                             "name": "Azure VNet Architecture: Subnet Delegation, Peering & Service Endpoints",
                             "level": "Intermediate",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cloud/azure-virtual-networks-vnet-subnets-and-peering-architecture.html"
                         },
                         {
                             "id": "microsoft-entra-id-vs-on-premises-active-directory-architecture",
@@ -3227,7 +3244,8 @@
                             "id": "finops-fundamentals-cloud-financial-management-and-cost-allocation",
                             "name": "FinOps Fundamentals: Cloud Financial Governance, Chargeback & Showback Models",
                             "level": "Beginner",
-                            "status": "planned"
+                            "status": "published",
+                            "url": "tutorials/cloud/finops-fundamentals-cloud-financial-management-and-cost-allocation.html"
                         },
                         {
                             "id": "cloud-cost-allocation-resource-tagging-strategies-and-cost-centers",

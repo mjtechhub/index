@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure VNet Architecture: Subnet Delegation, Peering & Service Endpoints | Cloud & AI Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master enterprise Azure networking: Virtual Network (VNet) topology, subnet delegation, Network Security Groups (NSGs), Application Security Groups (ASGs), and non-transitive VNet peering.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/cloud/azure-virtual-networks-vnet-subnets-and-peering-architecture.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Azure VNet Architecture: Subnet Delegation, Peering & Service Endpoints | Cloud & AI Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master enterprise Azure networking: Virtual Network (VNet) topology, subnet delegation, Network Security Groups (NSGs), Application Security Groups (ASGs), and non-transitive VNet peering.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/cloud/azure-virtual-networks-vnet-subnets-and-peering-architecture.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Azure VNet Architecture: Subnet Delegation, Peering & Service Endpoints | Cloud & AI Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master enterprise Azure networking: Virtual Network (VNet) topology, subnet delegation, Network Security Groups (NSGs), Application Security Groups (ASGs), and non-transitive VNet peering.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Azure VNet Architecture: Subnet Delegation, Peering & Service Endpoints",
+    "description": "Master enterprise Azure networking: Virtual Network (VNet) topology, subnet delegation, Network Security Groups (NSGs), Application Security Groups (ASGs), and non-transitive VNet peering.",
+    "url": "https://themjtechhub.site/tutorials/cloud/azure-virtual-networks-vnet-subnets-and-peering-architecture.html",
+    "datePublished": "2026-09-10",
+    "dateModified": "2026-09-10",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/cloud/azure-virtual-networks-vnet-subnets-and-peering-architecture.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../cloud.html">Cloud & AI</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Azure VNet Architecture: Subnet Delegation, Peering & Service Endpoints</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 10, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Azure VNet Architecture: Subnet Delegation, Peering & Service Endpoints</h1>
+            <p class="tutorial-hero-desc">Master enterprise Azure networking: Virtual Network (VNet) topology, subnet delegation, Network Security Groups (NSGs), Application Security Groups (ASGs), and non-transitive VNet peering.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>In enterprise cloud deployments on Microsoft Azure, the fundamental building block of private infrastructure isolation is the <strong>Azure Virtual Network (VNet)</strong>. A VNet provides a dedicated, logically isolated software-defined network boundary in which virtual machines, application services, and managed databases communicate securely with each other, with on-premises corporate data centers, and with the public Internet.</p>
+<p>Architecting enterprise-grade Azure network topologies requires looking beyond basic IP allocation: understanding internal subnet reservation mechanics, securing east-west traffic using <strong>Network Security Groups (NSGs)</strong>, configuring <strong>Subnet Delegation</strong> for PaaS integrations, and orchestrating multi-VNet connectivity via <strong>Virtual Network Peering</strong> while respecting non-transitive routing constraints.</p>
+
+<h2>VNet Foundations and Azure IP Address Reservations</h2>
+<p>An Azure Virtual Network is scoped to a single Azure Subscription and physical Region. Administrators assign one or more Classless Inter-Domain Routing (CIDR) address prefixes from private IPv4 address ranges (RFC 1918, e.g., <code>10.20.0.0/16</code>):</p>
+
+<p>When dividing a VNet into subnets, systems architects must account for <strong>Azure's 5-IP address reservation rule</strong>. In every subnet created in Azure, the underlying software-defined networking fabric permanently reserves five IP addresses:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Reserved IP Offset</th>
+                <th>Example (in 10.20.1.0/24 Subnet)</th>
+                <th>Dedicated Network Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>x.x.x.0</code></td>
+                <td><code>10.20.1.0</code></td>
+                <td><strong>Network Address:</strong> Required by RFC specifications; cannot be assigned to hosts.</td>
+            </tr>
+            <tr>
+                <td><code>x.x.x.1</code></td>
+                <td><code>10.20.1.1</code></td>
+                <td><strong>Default Gateway:</strong> The Azure software-defined default gateway router IP for the subnet.</td>
+            </tr>
+            <tr>
+                <td><code>x.x.x.2</code></td>
+                <td><code>10.20.1.2</code></td>
+                <td><strong>Azure DNS Resolver 1:</strong> Maps DNS queries to the Azure recursive resolver fabric.</td>
+            </tr>
+            <tr>
+                <td><code>x.x.x.3</code></td>
+                <td><code>10.20.1.3</code></td>
+                <td><strong>Azure DNS Resolver 2:</strong> Redundant internal DNS mapping address.</td>
+            </tr>
+            <tr>
+                <td><code>x.x.x.255</code></td>
+                <td><code>10.20.1.255</code></td>
+                <td><strong>Subnet Broadcast Address:</strong> Retained for RFC standard compliance.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="tutorial-callout callout-note">
+    <p><strong>Usable Subnet Capacity Calculation:</strong> Because of this mandatory reservation, a <code>/28</code> subnet (16 total IP addresses) yields only <strong>11 usable IP addresses</strong> for workloads. Sizing subnets too small during initial provisioning causes IP exhaustion when clusters autoscale.</p>
+</div>
+
+<h2>Subnet Delegation: Injecting PaaS Services into VNets</h2>
+<p>Traditionally, Azure Platform-as-a-Service (PaaS) offerings (such as Azure App Service, Azure SQL Managed Instance, or Azure Databricks) operated exclusively on multitenant public infrastructure. To allow these PaaS services to communicate privately with backend virtual machines without exposing endpoints to the Internet, Azure provides <strong>Subnet Delegation</strong>.</p>
+<p>Delegating a subnet explicitly surrenders full configuration authority of that dedicated subnet to a designated Azure service (e.g., <code>Microsoft.Web/serverFarms</code>). The platform injects private network interface cards (NICs) directly into the delegated subnet, allowing App Services to reach internal corporate databases across private IP routes seamlessly.</p>
+
+<h2>Traffic Filtering: Network Security Groups (NSGs) & Application Security Groups (ASGs)</h2>
+<p>East-west microsegmentation within and across Azure subnets is enforced through stateful Layer 4 packet inspection firewalls called <strong>Network Security Groups (NSGs)</strong>:</p>
+
+<ul>
+    <li><strong>5-Tuple Filtering:</strong> Rules evaluate Source IP, Source Port, Destination IP, Destination Port, and Protocol (TCP/UDP/ICMP).</li>
+    <li><strong>Priority-Based Processing:</strong> Rules are evaluated in strict numerical order from <strong>100 to 4096</strong>. As soon as a packet matches an explicit rule, evaluation halts.</li>
+    <li><strong>Application Security Groups (ASGs):</strong> Authoring NSG rules using hardcoded IP addresses creates fragile, unmanageable configurations. ASGs allow administrators to group virtual machine NICs by logical workload tag (e.g., <code>ASG-WebServers</code>, <code>ASG-Databases</code>). Administrators write intuitive security rules: <em>Allow Inbound TCP 1433 from ASG-WebServers to ASG-Databases</em>, completely eliminating manual IP management.</li>
+</ul>
+
+<h2>Virtual Network Peering & Non-Transitive Routing Mechanics</h2>
+<p>To connect multiple VNets together—such as linking a centralized shared-services "Hub" VNet with multiple application "Spoke" VNets—organizations deploy <strong>Virtual Network Peering</strong>. Traffic traversing a peering connection flows entirely across Microsoft's private global fiber backbone, offering low latency, full private IP reachability, and high bandwidth without traversing the public Internet.</p>
+
+<div class="tutorial-callout callout-warning">
+    <p><strong>CRITICAL ARCHITECTURAL TENET: Peering is Non-Transitive by Default:</strong> A fundamental networking law in Azure is that <strong>VNet peering is strictly non-transitive</strong>. If VNet A is peered with VNet B (Hub), and VNet B is peered with VNet C, <strong>VNet A cannot communicate with VNet C through VNet B</strong>:</p>
+    <ul>
+        <li>Azure's software-defined routing tables will simply discard packets from VNet A destined for VNet C.</li>
+        <li>To enable transit communication between spokes through a central hub, administrators must deploy a <strong>Network Virtual Appliance (NVA)</strong> or <strong>Azure Firewall</strong> in the hub VNet and configure <strong>User-Defined Routes (UDR)</strong> on spoke subnets with <code>NextHopType = VirtualAppliance</code> pointing to the firewall's private IP.</li>
+        <li>Alternatively, enterprises deploy <strong>Azure Virtual WAN</strong>, which provides a managed software-defined global transit routing fabric natively.</li>
+    </ul>
+</div>
+
+<h2>Gateway Transit and Remote Gateways</h2>
+<p>When connecting an on-premises data center to Azure via an ExpressRoute circuit or IPsec Site-to-Site VPN, organizations do not deploy expensive VPN gateways in every spoke VNet. Instead, they leverage <strong>Gateway Transit</strong>:</p>
+<ul>
+    <li>A single Virtual Network Gateway is deployed in the central Hub VNet.</li>
+    <li>In the peering settings, the Hub VNet enables <em>Allow gateway transit</em>.</li>
+    <li>Spoke VNets enable <em>Use remote gateways</em> in their peering configurations.</li>
+    <li>Spoke workloads automatically route on-premises traffic through the central Hub gateway, centralizing edge connectivity and slashing cloud costs.</li>
+</ul>
+
+<h2>Configuring Azure Networking via Azure CLI</h2>
+<p>Systems administrators manage and inspect Azure virtual networks using the cross-platform Azure CLI:</p>
+
+<div class="tutorial-command">
+    <pre><code># 1. Create a Hub Virtual Network with a default management subnet
+az network vnet create \
+    --resource-group "rg-enterprise-networking" \
+    --name "vnet-hub-eastus" \
+    --address-prefix "10.10.0.0/16" \
+    --subnet-name "snet-management" \
+    --subnet-prefix "10.10.1.0/24"
+
+# 2. Create a Spoke Virtual Network for application workloads
+az network vnet create \
+    --resource-group "rg-enterprise-networking" \
+    --name "vnet-spoke-app01" \
+    --address-prefix "10.20.0.0/16" \
+    --subnet-name "snet-workload" \
+    --subnet-prefix "10.20.1.0/24"
+
+# 3. Establish bi-directional VNet Peering between Hub and Spoke
+# Step A: Hub -> Spoke Peering
+az network vnet peering create \
+    --resource-group "rg-enterprise-networking" \
+    --name "peer-hub-to-app01" \
+    --vnet-name "vnet-hub-eastus" \
+    --remote-vnet "vnet-spoke-app01" \
+    --allow-vnet-access
+
+# Step B: Spoke -> Hub Peering
+az network vnet peering create \
+    --resource-group "rg-enterprise-networking" \
+    --name "peer-app01-to-hub" \
+    --vnet-name "vnet-spoke-app01" \
+    --remote-vnet "vnet-hub-eastus" \
+    --allow-vnet-access
+
+# 4. Verify peering operational status is 'Connected'
+az network vnet peering show \
+    --resource-group "rg-enterprise-networking" \
+    --name "peer-hub-to-app01" \
+    --vnet-name "vnet-hub-eastus" \
+    --query "peeringState" -o tsv</code></pre>
+</div>
+<p>Confirm that the output reports <code>Connected</code> on both sides of the peering relationship to verify active private routing across the Microsoft backbone.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

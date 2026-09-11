@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows Server Core: Headless Installation & Remote Administration | Servers Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master headless Windows Server 2022/2025 administration: reduced attack surface, initial configuration with sconfig, Windows Admin Center (WAC), PowerShell Remoting, and RSAT.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/servers/windows-server-core-headless-deployment-and-remote-management.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Windows Server Core: Headless Installation & Remote Administration | Servers Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master headless Windows Server 2022/2025 administration: reduced attack surface, initial configuration with sconfig, Windows Admin Center (WAC), PowerShell Remoting, and RSAT.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/servers/windows-server-core-headless-deployment-and-remote-management.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Windows Server Core: Headless Installation & Remote Administration | Servers Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master headless Windows Server 2022/2025 administration: reduced attack surface, initial configuration with sconfig, Windows Admin Center (WAC), PowerShell Remoting, and RSAT.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Windows Server Core: Headless Installation & Remote Administration",
+    "description": "Master headless Windows Server 2022/2025 administration: reduced attack surface, initial configuration with sconfig, Windows Admin Center (WAC), PowerShell Remoting, and RSAT.",
+    "url": "https://themjtechhub.site/tutorials/servers/windows-server-core-headless-deployment-and-remote-management.html",
+    "datePublished": "2026-09-10",
+    "dateModified": "2026-09-10",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/servers/windows-server-core-headless-deployment-and-remote-management.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../servers.html">Servers</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Windows Server Core: Headless Installation & Remote Administration</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 10, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Windows Server Core: Headless Installation & Remote Administration</h1>
+            <p class="tutorial-hero-desc">Master headless Windows Server 2022/2025 administration: reduced attack surface, initial configuration with sconfig, Windows Admin Center (WAC), PowerShell Remoting, and RSAT.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>When deploying Windows Server in production enterprise environments, the default installation choice historically included the graphical <strong>Desktop Experience</strong>. While a local GUI provides familiarity, running a full desktop shell on a production server introduces severe operational liabilities: it consumes 4+ GB of additional disk space, increases memory utilization, broadens the attack surface with hundreds of unnecessary binaries, and mandates frequent server reboots to patch non-critical desktop and graphics rendering libraries.</p>
+<p>In modern enterprise infrastructure on <strong>Windows Server 2022 and Windows Server 2025</strong>, Microsoft's recommended production baseline is <strong>Server Core</strong>. Server Core provides a lean, headless operating system that eliminates the graphical desktop entirely, relying on modern remote administration tooling: <strong>Windows Admin Center (WAC)</strong>, <strong>PowerShell Remoting</strong>, and <strong>Remote Server Administration Tools (RSAT)</strong>.</p>
+
+<h2>Architectural Benefits of Headless Server Core</h2>
+<p>Deploying Server Core delivers measurable security and operational advantages over Desktop Experience:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Operational Metric</th>
+                <th>Server with Desktop Experience</th>
+                <th>Headless Server Core</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Disk Footprint</strong></td>
+                <td>Requires ~15 GB – 25 GB base disk capacity.</td>
+                <td>Requires ~6 GB – 10 GB (reduces baseline storage consumption by over 40%).</td>
+            </tr>
+            <tr>
+                <td><strong>Memory Overhead</strong></td>
+                <td>Desktop shell (Explorer), MMC, and GUI services consume 1.5 GB – 2 GB RAM at idle.</td>
+                <td>Headless baseline consumes less than 512 MB – 800 MB RAM at idle.</td>
+            </tr>
+            <tr>
+                <td><strong>Attack Surface</strong></td>
+                <td>Includes Internet Explorer/Edge engines, multimedia codecs, font parsers, and Shell DLLs.</td>
+                <td><strong>Stripped Minimal Surface:</strong> Only essential server subsystem binaries are present on disk.</td>
+            </tr>
+            <tr>
+                <td><strong>Servicing Reboots</strong></td>
+                <td>Frequent required reboots; majority of Windows monthly quality fixes target desktop shell libraries.</td>
+                <td><strong>Significantly Fewer Reboots:</strong> Kernel and infrastructure updates only; higher uptime SLAs.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Initial Out-of-the-Box Configuration: sconfig</h2>
+<p>Upon booting Server Core for the first time, administrators are greeted by a command prompt window running the <strong>Server Configuration tool (sconfig)</strong>:</p>
+
+<div class="tutorial-command">
+    <pre><code># Launch sconfig if closed accidentally
+sconfig</code></pre>
+</div>
+
+<p>The text-based menu guides the administrator through mandatory foundational configuration tasks without requiring a GUI:</p>
+<ul>
+    <li><strong>Option 1: Domain/Workgroup:</strong> Joins the server to an Active Directory domain or assigns an isolated workgroup.</li>
+    <li><strong>Option 2: Computer Name:</strong> Renames the default randomly generated machine name to corporate naming standards (e.g., <code>NYC-DC-01</code>).</li>
+    <li><strong>Option 4: Configure Remote Management:</strong> Ensures Windows Remote Management (WinRM) is enabled to permit remote PowerShell and Server Manager connections.</li>
+    <li><strong>Option 8: Network Settings:</strong> Configures static IPv4 addressing, subnet mask, default gateway, and DNS resolvers on primary network adapters.</li>
+    <li><strong>Option 10: Telemetry Settings:</strong> Configures Windows Update servicing channels and download schedules.</li>
+</ul>
+
+<h2>Configuring Networking via PowerShell</h2>
+<p>Administrators can automate post-installation configuration directly from the command line using native PowerShell cmdlets:</p>
+
+<div class="tutorial-command">
+    <pre><code># 1. Identify network adapter interface index (ifIndex)
+Get-NetAdapter | Select-Object Name, InterfaceIndex, Status, LinkSpeed
+
+# 2. Assign static IPv4 address and default gateway to interface index 2
+New-NetIPAddress -InterfaceIndex 2 -IPAddress 10.10.10.15 -PrefixLength 24 -DefaultGateway 10.10.10.1
+
+# 3. Configure primary and secondary Active Directory DNS servers
+Set-DnsClientServerAddress -InterfaceIndex 2 -ServerAddresses ("10.10.10.10", "10.10.10.11")
+
+# 4. Join the server to the corporate Active Directory domain and reboot
+Add-Computer -DomainName "corp.contoso.com" -Restart</code></pre>
+</div>
+
+<h2>The Modern Remote Administration Stack</h2>
+<p>Operating Server Core does not mean living in a local console window. Production environments manage Server Core nodes through four remote administration vectors:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Administration Tool</th>
+                <th>Management Protocol</th>
+                <th>Primary Administrative Use Case</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Windows Admin Center (WAC)</strong></td>
+                <td>HTTPS (Port 443) / PowerShell / WMI</td>
+                <td>Modern browser-based single-pane gateway: manages certificates, events, storage, performance graphs, firewall rules, and virtual machines without installing GUI agents on the server.</td>
+            </tr>
+            <tr>
+                <td><strong>PowerShell Remoting</strong></td>
+                <td>WinRM (HTTP 5985 / HTTPS 5986)</td>
+                <td>Automated command execution and interactive CLI sessions (<code>Enter-PSSession</code>, <code>Invoke-Command</code>).</td>
+            </tr>
+            <tr>
+                <td><strong>Server Manager Console</strong></td>
+                <td>WMI / DCOM / WinRM</td>
+                <td>Centralized multi-server console on admin workstations to install roles, inspect service states, and monitor events.</td>
+            </tr>
+            <tr>
+                <td><strong>RSAT (Remote MMC Tools)</strong></td>
+                <td>RPC / LDAP / Kerberos</td>
+                <td>Native MMC snap-ins (Active Directory Users and Computers, DNS Manager, DHCP Console) running on admin workstations targeting the headless server.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="tutorial-callout callout-note">
+    <p><strong>WinRM Protocol Dynamics: HTTP 5985 vs HTTPS 5986:</strong></p>
+    <p>PowerShell Remoting operates over the Windows Remote Management (WinRM) service, listening on <strong>TCP port 5985 (HTTP)</strong> and <strong>TCP port 5986 (HTTPS)</strong>. It is an architectural misconception that remoting over HTTP/5985 transmits plaintext commands:</p>
+    <ul>
+        <li><strong>Message-Level Encryption on HTTP (Port 5985):</strong> WinRM encrypts PowerShell Remoting communication after authentication has completed. HTTP/5985 does not mean unencrypted traffic; rather, it uses message-level encryption negotiated by the authentication protocol. Kerberos is normally used for domain computer-name connections, and modern Kerberos environments commonly use AES-based encryption to cryptographically protect the remoting payload. When NTLM is negotiated instead (such as IP-address connections or non-domain scenarios), NTLM provides its own distinct message protection characteristics. Therefore, HTTP/5985 is not inherently plaintext PowerShell Remoting traffic after authentication.</li>
+        <li><strong>TLS Transport Protection on HTTPS (Port 5986):</strong> Establishing an HTTPS listener provides full TLS transport-layer protection, requiring a valid X.509 certificate (issued by an enterprise PKI or trusted CA) bound to the WinRM service. HTTPS is appropriate and recommended for untrusted workgroup connections, cross-forest administration, or public/DMZ scenarios where Kerberos mutual authentication is unavailable and TLS is needed to validate host identity.</li>
+    </ul>
+    <p><strong>Architectural Decision:</strong> Administrators should choose between HTTP/5985 and HTTPS/5986 based on trust boundaries, authentication mechanisms, and deployment architecture: trusted Active Directory domain workloads commonly leverage default HTTP/5985 with Kerberos message encryption, while untrusted or perimeter boundaries deploy HTTPS/5986 with TLS.</p>
+</div>
+
+<h2>Installing Server Roles via PowerShell</h2>
+<p>Roles and features are provisioned on Server Core using the <code>ServerManager</code> PowerShell module:</p>
+
+<div class="tutorial-command">
+    <pre><code># 1. Query available roles on the Server Core host
+Get-WindowsFeature -Name *DHCP*, *DNS*, *AD* | Select-Object Name, DisplayName, InstallState
+
+# 2. Install Active Directory Domain Services with management tools
+Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
+
+# 3. Install DNS Server role and failover clustering
+Install-WindowsFeature -Name DNS, Failover-Clustering -IncludeManagementTools</code></pre>
+</div>
+
+<div class="tutorial-callout callout-important">
+    <p><strong>Supported Roles on Server Core:</strong> Server Core supports all foundational infrastructure roles, including AD DS, DNS, DHCP, Hyper-V, File & Storage Services, IIS Web Server, and Failover Clustering. However, legacy software that strictly relies on desktop APIs or SQL Server Reporting Services may require Desktop Experience or containerized deployment.</p>
+</div>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

@@ -804,6 +804,42 @@
         "updatedAt": "2026-09-09"
     },
     {
+        "id": "dhcp-dora-process-and-options-architecture",
+        "title": "DHCP DORA Process & Common DHCP Options: Router, DNS and TFTP",
+        "description": "Master dynamic IP configuration: DORA four-step transaction semantics, lease timer states (T1/T2), and common enterprise scope options (3, 6, 15, 66) with IP Helper PXE guidance.",
+        "category": "Networking",
+        "level": "Intermediate",
+        "readTime": "6 min read",
+        "keywords": "dhcp, dora, discover, offer, request, acknowledge, option 3, option 6, option 66, tftp, pxe boot, ip helper, networking",
+        "url": "tutorials/networking/dhcp-dora-process-and-options-architecture.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "wireless-roaming-802-11r-k-v-standards",
+        "title": "Seamless Wireless Roaming Standards: 802.11r, 802.11k & 802.11v",
+        "description": "Explore seamless enterprise Wi-Fi mobility: Radio Resource Measurement (802.11k), BSS Transition Management (802.11v), and Fast BSS Transition (802.11r FT) roaming architecture.",
+        "category": "Networking",
+        "level": "Advanced",
+        "readTime": "6 min read",
+        "keywords": "wireless roaming, 802.11r, 802.11k, 802.11v, fast bss transition, neighbor report, wifi mobility, enterprise wifi, networking",
+        "url": "tutorials/networking/wireless-roaming-802-11r-k-v-standards.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "chassis-stacking-and-switch-virtualization",
+        "title": "Switch Stacking Architecture, Virtual Chassis & Multi-Chassis Link Aggregation",
+        "description": "Master high-availability enterprise switching: Hardware backplane stacking, Juniper Virtual Chassis, and Multi-Chassis Link Aggregation (MLAG, Cisco vPC, StackWise Virtual).",
+        "category": "Networking",
+        "level": "Advanced",
+        "readTime": "6 min read",
+        "keywords": "switch stacking, virtual chassis, mlag, vpc, stackwise, lacp, high availability, link aggregation, enterprise switching, networking",
+        "url": "tutorials/networking/chassis-stacking-and-switch-virtualization.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
         "id": "windows-operating-system-fundamentals",
         "title": "Windows Operating System Fundamentals",
         "description": "Understand the core architecture of Microsoft Windows, including user mode, kernel mode, the NT executive, and system processes.",
@@ -910,6 +946,42 @@
         "url": "tutorials/windows/windows-group-policy-processing-order-lsdou.html",
         "publishedAt": "2026-09-09",
         "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "windows-remote-desktop-protocol-rdp-configuration",
+        "title": "Remote Desktop Protocol (RDP) Configuration, Port & NLA Security",
+        "description": "Master secure Windows remote administration: TCP/UDP 3389 architecture, Network Level Authentication (NLA) via CredSSP, TLS encryption, Restricted Admin mode, and enterprise perimeter defenses.",
+        "category": "Windows",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "rdp, remote desktop, port 3389, nla, credssp, restricted admin, rdp security, tls, windows administration, sysadmin",
+        "url": "tutorials/windows/windows-remote-desktop-protocol-rdp-configuration.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "windows-defender-firewall-with-advanced-security",
+        "title": "Windows Defender Firewall with Advanced Security: Rules & Profiles",
+        "description": "Master enterprise host firewall administration: Domain, Private, and Public profiles, rule precedence mechanics, program/port scoping, IPsec connection security rules, and PowerShell management.",
+        "category": "Windows",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "windows firewall, wfas, defender firewall, network profiles, inbound rules, outbound rules, ipsec, connection security, powershell, sysadmin",
+        "url": "tutorials/windows/windows-defender-firewall-with-advanced-security.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "windows-update-for-business-wufb-deployment-rings",
+        "title": "Windows Update Client Policies: Deployment Rings, Deferrals & Deadlines",
+        "description": "Master modern Windows 11 client servicing: Deployment rings, quality vs feature updates, deferral policies, compliance deadlines, and Intune/Windows Autopatch vs legacy WSUS.",
+        "category": "Windows",
+        "level": "Intermediate",
+        "readTime": "6 min read",
+        "keywords": "windows update client policies, wufb, deployment rings, quality updates, feature updates, deferrals, deadlines, wsus, intune, autopatch, sysadmin",
+        "url": "tutorials/windows/windows-update-for-business-wufb-deployment-rings.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
     },
     {
         "id": "linux-operating-system-fundamentals",
@@ -1020,6 +1092,42 @@
         "updatedAt": "2026-09-09"
     },
     {
+        "id": "linux-lvm-architecture-physical-volumes-volume-groups",
+        "title": "Logical Volume Manager (LVM) Architecture: PV, VG and LV Provisioning",
+        "description": "Master Linux storage virtualization: Physical Volumes (PV), Volume Groups (VG), Logical Volumes (LV), Physical Extents (PE), dynamic expansion, and filesystem resizing constraints.",
+        "category": "Linux",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "lvm, physical volume, volume group, logical volume, pvcreate, vgcreate, lvcreate, lvextend, resize2fs, xfs_growfs, linux storage, sysadmin",
+        "url": "tutorials/linux/linux-lvm-architecture-physical-volumes-volume-groups.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "linux-process-signaling-and-termination-kill-pkill",
+        "title": "Process Termination & POSIX Signals: SIGTERM, SIGKILL, SIGHUP (kill/pkill)",
+        "description": "Master Linux process lifecycle: PID/PPID hierarchy, process execution states, foreground/background job control, and POSIX signal handling with kill, pkill, and killall.",
+        "category": "Linux",
+        "level": "Beginner",
+        "readTime": "5 min read",
+        "keywords": "linux process, posix signals, sigterm, sigkill, sighup, kill, pkill, pgrep, ps, process management, sysadmin",
+        "url": "tutorials/linux/linux-process-signaling-and-termination-kill-pkill.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "linux-systemd-journalctl-log-analysis-and-filtering",
+        "title": "Systemd Journal Architecture & Advanced journalctl Filtering Queries",
+        "description": "Master systemd centralized logging: binary journal storage, journald.conf configuration, and high-performance filtering queries by boot, unit, priority, and time.",
+        "category": "Linux",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "journalctl, systemd-journald, logging, linux logs, log filtering, systemd, journald.conf, vacuum, sysadmin, telemetry",
+        "url": "tutorials/linux/linux-systemd-journalctl-log-analysis-and-filtering.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
         "id": "what-is-a-server",
         "title": "What Is a Server?",
         "description": "Discover what defines server hardware and software, client-server models, high-availability components, and enterprise roles.",
@@ -1126,6 +1234,42 @@
         "url": "tutorials/servers/the-3-2-1-backup-rule-and-modern-ransomware-protection.html",
         "publishedAt": "2026-09-09",
         "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "windows-server-core-headless-deployment-and-remote-management",
+        "title": "Windows Server Core: Headless Installation & Remote Administration",
+        "description": "Master headless Windows Server 2022/2025 administration: reduced attack surface, initial configuration with sconfig, Windows Admin Center (WAC), PowerShell Remoting, and RSAT.",
+        "category": "Servers",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "windows server core, headless server, sconfig, windows admin center, winrm, powershell remoting, rsat, server administration, sysadmin",
+        "url": "tutorials/servers/windows-server-core-headless-deployment-and-remote-management.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "enterprise-dhcp-failover-load-balancing-and-hot-standby",
+        "title": "Windows Server DHCP Failover: Load Balance vs Hot Standby Modes",
+        "description": "Master Windows Server DHCP high availability: Load Balance vs Hot Standby modes, Maximum Client Lead Time (MCLT), partner communication states, and DHCPv4 scope replication.",
+        "category": "Servers",
+        "level": "Intermediate",
+        "readTime": "4 min read",
+        "keywords": "dhcp failover, windows server dhcp, load balance, hot standby, mclt, scope replication, high availability, server administration, sysadmin",
+        "url": "tutorials/servers/enterprise-dhcp-failover-load-balancing-and-hot-standby.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "windows-server-failover-clustering-wsfc-architecture",
+        "title": "Windows Server Failover Clustering (WSFC) Architecture & Validation Tests",
+        "description": "Master enterprise high availability clustering: WSFC nodes, quorum models, witness types (Cloud/File Share/Disk), Cluster Validation Wizard, and stateful workload failover.",
+        "category": "Servers",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "wsfc, failover clustering, windows server cluster, quorum, cloud witness, file share witness, cluster validation, high availability, sysadmin",
+        "url": "tutorials/servers/windows-server-failover-clustering-wsfc-architecture.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
     },
     {
         "id": "cybersecurity-fundamentals",
@@ -1236,6 +1380,42 @@
         "updatedAt": "2026-09-09"
     },
     {
+        "id": "single-sign-on-sso-architecture-saml-2-0-and-oidc",
+        "title": "Enterprise Single Sign-On (SSO): SAML 2.0 Assertions vs OpenID Connect Tokens",
+        "description": "Master federated identity architecture: SAML 2.0 XML assertions, OAuth 2.0 authorization framework, OpenID Connect (OIDC) identity tokens, and enterprise IdP integration.",
+        "category": "Cybersecurity",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "saml 2.0, oauth 2.0, oidc, openid connect, sso, federated identity, jwt, id token, access token, idp, cybersecurity",
+        "url": "tutorials/cybersecurity/single-sign-on-sso-architecture-saml-2-0-and-oidc.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "security-information-and-event-management-siem-architecture",
+        "title": "Security Information and Event Management (SIEM): Log Ingestion, Parsing & Indexing",
+        "description": "Master security telemetry engineering: Log ingestion, parsing/normalization (CEF/ECS), enrichment pipelines, multi-stage correlation engines, and SIEM vs EDR vs SOAR boundaries.",
+        "category": "Cybersecurity",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "siem, log ingestion, log parsing, normalization, correlation engine, ecs, cef, edr, soar, soc, cybersecurity",
+        "url": "tutorials/cybersecurity/security-information-and-event-management-siem-architecture.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "nist-sp-800-61-computer-security-incident-handling-guide",
+        "title": "NIST SP 800-61 Rev. 3: Incident Response with the CSF 2.0 Lifecycle",
+        "description": "Master enterprise incident handling: Modern NIST SP 800-61 Rev. 3 lifecycle integrated with CSF 2.0 (Govern, Identify, Protect, Detect, Respond, Recover), containment strategies, and forensics.",
+        "category": "Cybersecurity",
+        "level": "Beginner",
+        "readTime": "5 min read",
+        "keywords": "nist sp 800-61 rev 3, incident response, csf 2.0, csirt, containment, forensics, eradication, recovery, cybersecurity, soc",
+        "url": "tutorials/cybersecurity/nist-sp-800-61-computer-security-incident-handling-guide.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
         "id": "cloud-computing-fundamentals",
         "title": "Cloud Computing Fundamentals",
         "description": "Learn the core definition, essential characteristics, and business advantages of modern cloud computing architectures.",
@@ -1342,5 +1522,41 @@
         "url": "tutorials/cloud/infrastructure-as-code-iac-declarative-vs-imperative-principles.html",
         "publishedAt": "2026-09-09",
         "updatedAt": "2026-09-09"
+    },
+    {
+        "id": "serverless-computing-architecture-and-event-driven-design",
+        "title": "Serverless Computing Concepts: Function-as-a-Service (FaaS) & Event Triggers",
+        "description": "Master serverless cloud architecture: Function-as-a-Service (FaaS) execution lifecycles, event-driven triggers, cold vs warm start optimization, stateless design, and managed infrastructure.",
+        "category": "Cloud & AI",
+        "level": "Intermediate",
+        "readTime": "6 min read",
+        "keywords": "serverless, faas, event driven, lambda, cloud functions, cold start, warm start, stateless architecture, cloud architecture, cloud computing",
+        "url": "tutorials/cloud/serverless-computing-architecture-and-event-driven-design.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "azure-virtual-networks-vnet-subnets-and-peering-architecture",
+        "title": "Azure VNet Architecture: Subnet Delegation, Peering & Service Endpoints",
+        "description": "Master enterprise Azure networking: Virtual Network (VNet) topology, subnet delegation, Network Security Groups (NSGs), Application Security Groups (ASGs), and non-transitive VNet peering.",
+        "category": "Cloud & AI",
+        "level": "Intermediate",
+        "readTime": "5 min read",
+        "keywords": "azure vnet, virtual network, subnet delegation, vnet peering, nsg, asg, non-transitive peering, private endpoint, cloud networking, azure",
+        "url": "tutorials/cloud/azure-virtual-networks-vnet-subnets-and-peering-architecture.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
+    },
+    {
+        "id": "finops-fundamentals-cloud-financial-management-and-cost-allocation",
+        "title": "FinOps Fundamentals: Cloud Financial Governance, Chargeback & Showback Models",
+        "description": "Master enterprise cloud financial management: FinOps Foundation framework, resource tagging taxonomy, showback vs chargeback accounting, rightsizing, and commitment discounts.",
+        "category": "Cloud & AI",
+        "level": "Beginner",
+        "readTime": "5 min read",
+        "keywords": "finops, cloud financial management, cost allocation, tagging taxonomy, showback, chargeback, rightsizing, savings plans, reserved instances, cloud governance",
+        "url": "tutorials/cloud/finops-fundamentals-cloud-financial-management-and-cost-allocation.html",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10"
     }
 ]

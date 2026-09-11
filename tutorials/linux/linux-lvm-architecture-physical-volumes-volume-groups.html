@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logical Volume Manager (LVM) Architecture: PV, VG and LV Provisioning | Linux Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master Linux storage virtualization: Physical Volumes (PV), Volume Groups (VG), Logical Volumes (LV), Physical Extents (PE), dynamic expansion, and filesystem resizing constraints.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/linux/linux-lvm-architecture-physical-volumes-volume-groups.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Logical Volume Manager (LVM) Architecture: PV, VG and LV Provisioning | Linux Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master Linux storage virtualization: Physical Volumes (PV), Volume Groups (VG), Logical Volumes (LV), Physical Extents (PE), dynamic expansion, and filesystem resizing constraints.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/linux/linux-lvm-architecture-physical-volumes-volume-groups.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Logical Volume Manager (LVM) Architecture: PV, VG and LV Provisioning | Linux Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master Linux storage virtualization: Physical Volumes (PV), Volume Groups (VG), Logical Volumes (LV), Physical Extents (PE), dynamic expansion, and filesystem resizing constraints.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Logical Volume Manager (LVM) Architecture: PV, VG and LV Provisioning",
+    "description": "Master Linux storage virtualization: Physical Volumes (PV), Volume Groups (VG), Logical Volumes (LV), Physical Extents (PE), dynamic expansion, and filesystem resizing constraints.",
+    "url": "https://themjtechhub.site/tutorials/linux/linux-lvm-architecture-physical-volumes-volume-groups.html",
+    "datePublished": "2026-09-10",
+    "dateModified": "2026-09-10",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/linux/linux-lvm-architecture-physical-volumes-volume-groups.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../linux.html">Linux</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Logical Volume Manager (LVM) Architecture: PV, VG and LV Provisioning</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 10, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Logical Volume Manager (LVM) Architecture: PV, VG and LV Provisioning</h1>
+            <p class="tutorial-hero-desc">Master Linux storage virtualization: Physical Volumes (PV), Volume Groups (VG), Logical Volumes (LV), Physical Extents (PE), dynamic expansion, and filesystem resizing constraints.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>In traditional Linux storage administration, filesystems were formatted directly onto raw block partitions (e.g., <code>/dev/sdb1</code>). While simple, this static partitioning model presents severe operational limitations: expanding a filesystem requires unmounting the volume, modifying the partition table, rebooting the system, and risking data corruption if sector boundaries are miscalculated. Furthermore, a single filesystem cannot span across multiple physical disks.</p>
+<p>The <strong>Logical Volume Manager (LVM)</strong> abstracts physical storage into a flexible, virtualized pooling architecture. With LVM, systems administrators can concatenate multiple physical drives into dynamic pools, allocate virtual block devices on demand, extend volumes online without service downtime, and take instant point-in-time snapshots.</p>
+
+<h2>The LVM Three-Tier Abstraction Hierarchy</h2>
+<p>LVM organizes storage across three distinct architectural layers:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>LVM Layer</th>
+                <th>Abbreviation</th>
+                <th>Architectural Role</th>
+                <th>Underlying Unit of Allocation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Physical Volume</strong></td>
+                <td><strong>PV</strong></td>
+                <td>The physical foundation: a raw block storage device, NVMe drive, SSD, SAN LUN, or partition tagged with LVM metadata headers.</td>
+                <td>Raw sectors initialized with an LVM UUID and label.</td>
+            </tr>
+            <tr>
+                <td><strong>Volume Group</strong></td>
+                <td><strong>VG</strong></td>
+                <td>The centralized storage pool: aggregates one or more PVs into a unified capacity pool.</td>
+                <td>Sliced into uniform allocation chunks called <strong>Physical Extents (PE)</strong>, typically <strong>4 MiB</strong> by default.</td>
+            </tr>
+            <tr>
+                <td><strong>Logical Volume</strong></td>
+                <td><strong>LV</strong></td>
+                <td>The virtual partition: carved out of the VG, presenting as a standard block device (e.g., <code>/dev/vg_data/lv_app</code>) ready to format with ext4 or XFS.</td>
+                <td>Composed of <strong>Logical Extents (LE)</strong>, each mapping directly 1-to-1 to a Physical Extent (PE) in the underlying Volume Group.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<p>When an administrator writes data to a Logical Volume, LVM's device mapper kernel driver translates requests from Logical Extents (LE) to the corresponding Physical Extents (PE) distributed across one or more physical drives seamlessly.</p>
+
+<h2>Step-by-Step LVM Provisioning Workflow</h2>
+<p>Deploying a production-ready LVM storage volume follows a disciplined sequential pipeline:</p>
+
+<h3>1. Initialize Physical Volumes (PV)</h3>
+<p>Convert raw block devices (such as new SSDs <code>/dev/sdb</code> and <code>/dev/sdc</code>) into LVM physical volumes:</p>
+<div class="tutorial-command">
+    <pre><code># Tag block devices as LVM Physical Volumes
+sudo pvcreate /dev/sdb /dev/sdc
+
+# Verify PV initialization, size, and assigned UUIDs
+sudo pvs
+sudo pvdisplay /dev/sdb</code></pre>
+</div>
+
+<h3>2. Create the Volume Group (VG)</h3>
+<p>Pool the initialized Physical Volumes into a named Volume Group:</p>
+<div class="tutorial-command">
+    <pre><code># Create Volume Group 'vg_enterprise' using both physical volumes
+sudo vgcreate vg_enterprise /dev/sdb /dev/sdc
+
+# Verify total pool capacity, free extents, and PE size (default 4 MiB)
+sudo vgs
+sudo vgdisplay vg_enterprise</code></pre>
+</div>
+
+<h3>3. Allocate the Logical Volume (LV)</h3>
+<p>Carve a Logical Volume from the pool by specifying an absolute size (e.g., <code>-L 50G</code>) or a percentage of remaining free pool extents (e.g., <code>-l 100%FREE</code>):</p>
+<div class="tutorial-command">
+    <pre><code># Allocate a 50 GB Logical Volume named 'lv_database' from 'vg_enterprise'
+sudo lvcreate -n lv_database -L 50G vg_enterprise
+
+# Verify LV creation and device-mapper path (/dev/vg_enterprise/lv_database)
+sudo lvs</code></pre>
+</div>
+
+<h3>4. Format and Mount the Filesystem</h3>
+<p>Format the virtual block device with an enterprise filesystem (e.g., ext4) and mount it to the directory tree:</p>
+<div class="tutorial-command">
+    <pre><code># Format the LV with ext4
+sudo mkfs.ext4 /dev/vg_enterprise/lv_database
+
+# Create mount point and mount the volume
+sudo mkdir -p /srv/database
+sudo mount /dev/vg_enterprise/lv_database /srv/database
+
+# Retrieve the filesystem UUID for permanent fstab mounting
+sudo blkid /dev/vg_enterprise/lv_database</code></pre>
+</div>
+
+<h2>Dynamic Volume Expansion (Online Storage Growth)</h2>
+<p>When an application volume nears full capacity, LVM enables seamless online capacity expansion without unmounting the filesystem or restarting services:</p>
+
+<div class="tutorial-command">
+    <pre><code># 1. (Optional) Add a new physical drive (/dev/sdd) to the Volume Group if pool capacity is depleted
+sudo pvcreate /dev/sdd
+sudo vgextend vg_enterprise /dev/sdd
+
+# 2. Extend the Logical Volume by adding 20 GB of extents
+sudo lvextend -L +20G /dev/vg_enterprise/lv_database
+
+# 3. Expand the filesystem to occupy the newly available volume space:
+# For ext4 filesystems (online expansion):
+sudo resize2fs /dev/vg_enterprise/lv_database
+
+# For XFS filesystems (must specify mount point, not device path):
+sudo xfs_growfs /srv/database</code></pre>
+</div>
+
+<div class="tutorial-callout callout-warning">
+    <p><strong>DANGER: Critical Warnings on Volume Reduction & Filesystem Constraints:</strong></p>
+    <ul>
+        <li><strong>Volume Reduction Risks:</strong> Shrinking a Logical Volume (<code>lvreduce</code>) is a high-risk destructive operation. If the block device is reduced before the filesystem is safely shrunk, file headers are truncated, resulting in irreversible data loss. Always perform a complete backup prior to volume reduction.</li>
+        <li><strong>ext4 Requires Offline Shrinking:</strong> While ext4 supports <em>online expansion</em>, it strictly requires taking the volume offline (<code>umount</code>) to shrink. The administrator must execute <code>e2fsck -f</code>, shrink the filesystem first with <code>resize2fs</code>, and only then shrink the LV.</li>
+        <li><strong>XFS CANNOT BE SHRUNK:</strong> <strong>XFS filesystems do NOT support shrinking under any circumstance.</strong> By architectural design, the XFS metadata structure cannot be reduced. If an XFS volume must be made smaller, administrators must back up all data, delete the Logical Volume, recreate a smaller LV, format it with XFS, and restore the data.</li>
+    </ul>
+</div>
+
+<h2>Inspection and Health Telemetry</h2>
+<p>Systems administrators monitor LVM health and extent allocation using standardized reporting commands:</p>
+
+<div class="tutorial-command">
+    <pre><code># Terse tabular overview across all three layers
+sudo pvs
+sudo vgs
+sudo lvs
+
+# Query free extents in a specific Volume Group
+sudo vgdisplay vg_enterprise | grep -E "(Total PE|Alloc PE|Free PE)"
+
+# Inspect block device mapper relationships and mount hierarchies
+lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,UUID</code></pre>
+</div>
+<p>Ensure that Volume Groups maintain a safety margin of unallocated Free PEs to facilitate online LVM snapshot creation for consistent database backups.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

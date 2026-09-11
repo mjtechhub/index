@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Information and Event Management (SIEM): Log Ingestion, Parsing & Indexing | Cybersecurity Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master security telemetry engineering: Log ingestion, parsing/normalization (CEF/ECS), enrichment pipelines, multi-stage correlation engines, and SIEM vs EDR vs SOAR boundaries.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/cybersecurity/security-information-and-event-management-siem-architecture.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Security Information and Event Management (SIEM): Log Ingestion, Parsing & Indexing | Cybersecurity Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master security telemetry engineering: Log ingestion, parsing/normalization (CEF/ECS), enrichment pipelines, multi-stage correlation engines, and SIEM vs EDR vs SOAR boundaries.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/cybersecurity/security-information-and-event-management-siem-architecture.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Security Information and Event Management (SIEM): Log Ingestion, Parsing & Indexing | Cybersecurity Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master security telemetry engineering: Log ingestion, parsing/normalization (CEF/ECS), enrichment pipelines, multi-stage correlation engines, and SIEM vs EDR vs SOAR boundaries.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Security Information and Event Management (SIEM): Log Ingestion, Parsing & Indexing",
+    "description": "Master security telemetry engineering: Log ingestion, parsing/normalization (CEF/ECS), enrichment pipelines, multi-stage correlation engines, and SIEM vs EDR vs SOAR boundaries.",
+    "url": "https://themjtechhub.site/tutorials/cybersecurity/security-information-and-event-management-siem-architecture.html",
+    "datePublished": "2026-09-10",
+    "dateModified": "2026-09-10",
+    "proficiencyLevel": "Intermediate",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/cybersecurity/security-information-and-event-management-siem-architecture.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../cybersecurity.html">Cybersecurity</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">Security Information and Event Management (SIEM): Log Ingestion, Parsing & Indexing</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge intermediate">Intermediate</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 10, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">Security Information and Event Management (SIEM): Log Ingestion, Parsing & Indexing</h1>
+            <p class="tutorial-hero-desc">Master security telemetry engineering: Log ingestion, parsing/normalization (CEF/ECS), enrichment pipelines, multi-stage correlation engines, and SIEM vs EDR vs SOAR boundaries.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>In modern enterprise environments, hundreds of discrete infrastructure systems generate security telemetry simultaneously: perimeter firewalls log connection attempts, domain controllers record Kerberos authentication requests, cloud audit trails track IAM role modifications, and endpoint sensors record process executions. If these event logs remain isolated on their originating hosts, security operations center (SOC) analysts cannot correlate multi-stage attacks across the enterprise kill chain.</p>
+<p>A <strong>Security Information and Event Management (SIEM)</strong> platform serves as the central nervous system of enterprise defense. By ingesting, normalizing, enriching, and correlating massive volumes of heterogeneous log streams in real time, a SIEM transforms fragmented diagnostic data into high-fidelity, actionable security detections.</p>
+
+<h2>The SIEM Telemetry Pipeline Architecture</h2>
+<p>Enterprise SIEM architectures process security telemetry through a disciplined five-stage pipeline:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Pipeline Stage</th>
+                <th>Engineering Function</th>
+                <th>Key Technologies & Standards</th>
+                <th>Operational Objective</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>1. Collection & Ingestion</strong></td>
+                <td>Aggregates raw event data from diverse network and host endpoints.</td>
+                <td>Syslog (RFC 5424), Windows Event Forwarding (WEF), Kafka, cloud streaming APIs (CloudWatch, Event Hubs), lightweight shipper agents (Logstash, Fluentbit).</td>
+                <td>Lossless, low-latency log transport from edge systems into the central data lake.</td>
+            </tr>
+            <tr>
+                <td><strong>2. Parsing & Normalization</strong></td>
+                <td>Extracts key-value fields from unstructured text and maps them to a standardized taxonomy.</td>
+                <td>Common Event Format (CEF), Elastic Common Schema (ECS), Splunk Common Information Model (CIM).</td>
+                <td>Standardizes disparate field names (e.g., mapping <code>src_ip</code>, <code>SourceIpAddress</code>, and <code>c-ip</code> into <code>source.ip</code>).</td>
+            </tr>
+            <tr>
+                <td><strong>3. Contextual Enrichment</strong></td>
+                <td>Augments parsed events with external operational metadata.</td>
+                <td>GeoIP lookups, Active Directory user department/manager metadata, asset criticality tagging, Threat Intelligence (IOC feeds via STIX/TAXII).</td>
+                <td>Adds critical investigation context (e.g., identifying that an internal IP belongs to a domain controller, or a destination IP is a known C2 beacon).</td>
+            </tr>
+            <tr>
+                <td><strong>4. Correlation & Detection</strong></td>
+                <td>Evaluates enriched event streams against detection rules in real time.</td>
+                <td>Stateful correlation engines, rule languages (Sigma, YARA-L, KQL, SPL), threshold baselines.</td>
+                <td>Identifies multi-stage attack patterns that escape single-host inspection.</td>
+            </tr>
+            <tr>
+                <td><strong>5. Storage & Retention</strong></td>
+                <td>Indexes events for sub-second search and long-term regulatory compliance.</td>
+                <td>Tiered storage: Hot (fast NVMe SSD for real-time search), Warm (compressed object storage for 30–90 days), Cold/WORM (immutable archive for multi-year compliance).</td>
+                <td>Ensures fast threat hunting while meeting regulatory mandates (PCI-DSS, HIPAA, SOC 2).</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<h2>Technology Demarcation: SIEM vs EDR vs SOAR vs IDS</h2>
+<p>Effective SOC architecture requires defining clear operational boundaries across the security technology stack:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Security Technology</th>
+                <th>Primary Data Source</th>
+                <th>Core Analytical Focus</th>
+                <th>Primary Response Capability</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>SIEM</strong></td>
+                <td>Broad, heterogeneous enterprise-wide logs (firewalls, routers, AD, cloud trails, SaaS applications).</td>
+                <td>Cross-domain telemetry correlation, compliance reporting, centralized search, and long-term retention.</td>
+                <td>Generates alerts, security incidents, and triggers automated playbooks.</td>
+            </tr>
+            <tr>
+                <td><strong>EDR (Endpoint Detection & Response)</strong></td>
+                <td>Deep, kernel-level host telemetry from physical/virtual endpoints (process trees, memory injections, file modifications).</td>
+                <td>Behavioral endpoint heuristics, in-memory attack detection, root-cause process lineage.</td>
+                <td>Active host containment: network isolation, killing malicious process trees, quarantining files.</td>
+            </tr>
+            <tr>
+                <td><strong>SOAR (Security Orchestration, Automation & Response)</strong></td>
+                <td>SIEM alerts, EDR detections, threat intelligence feeds, incident ticketing APIs.</td>
+                <td>Workflow orchestration, automating repetitive analyst triage, cross-tool API integration.</td>
+                <td>Executes automated playbooks: blocking firewall IPs, disabling compromised AD user accounts, isolating hosts.</td>
+            </tr>
+            <tr>
+                <td><strong>NIDS / NIPS (Network Intrusion Detection/Prevention)</strong></td>
+                <td>Raw network packet streams from SPAN ports, optical taps, or inline network interfaces.</td>
+                <td>Deep packet inspection (DPI), exploit signature matching, protocol anomaly detection.</td>
+                <td>Alerting (IDS) or active inline packet dropping / TCP session resetting (IPS).</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="tutorial-callout callout-note">
+    <p><strong>Integrated SOC Workflow:</strong> In a mature SOC, these technologies work collaboratively: a NIDS detects suspicious payload patterns and forwards a syslog event to the <strong>SIEM</strong>. The SIEM correlates the network alert with an authentication failure log from Active Directory and a process spawn log from <strong>EDR</strong>. The SIEM fires a high-severity alert to <strong>SOAR</strong>, which automatically executes a playbook to isolate the host via EDR and open a ticket for human analysis.</p>
+</div>
+
+<h2>Multi-Stage Correlation Logic in Practice</h2>
+<p>Single-event alerts (such as "user failed a password") generate overwhelming alert fatigue. SIEM correlation engines filter noise by detecting temporal sequences across disparate systems:</p>
+
+<div class="tutorial-callout callout-important">
+    <p><strong>Example Multi-Stage Correlation Rule: Brute-Force to Suspicious Egress</strong></p>
+    <ul>
+        <li><strong>Stage 1 (Active Directory):</strong> 5 or more failed logon events (Event ID <code>4625</code>) targeting a specific user account within 3 minutes.</li>
+        <li><strong>Stage 2 (Active Directory):</strong> Followed by a successful logon event (Event ID <code>4624</code>) for the same user account from the same IP address.</li>
+        <li><strong>Stage 3 (Cloud Audit / Firewall):</strong> Within 10 minutes of successful logon, the user initiates a data transfer of &gt; 500 MB to an unclassified external IP address.</li>
+    </ul>
+    <p>Individually, these events might seem benign. Correlated across time and system boundaries, they indicate account compromise and active data exfiltration.</p>
+</div>
+
+<h2>SIEM Engineering Best Practices</h2>
+<p>To prevent SIEM operational failures and alert fatigue, security engineering teams enforce three core practices:</p>
+<ol>
+    <li><strong>Filter at the Collector:</strong> Drop noisy, non-actionable debug events at the ingestion tier (e.g., repetitive successful internal DNS lookups) before they reach the indexing engine to save storage costs and licensing fees.</li>
+    <li><strong>Maintain Data Dictionaries:</strong> Strictly enforce field naming conventions (ECS/CIM) during parser development. If a parser fails to map an IP to <code>source.ip</code>, correlation rules relying on that field will silently fail to fire.</li>
+    <li><strong>Test Rules Against Baselines:</strong> Backtest new correlation rules against 30 days of historical data before enabling alerting to identify and eliminate false positive triggers.</li>
+</ol>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>

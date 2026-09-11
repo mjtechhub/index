@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../../js/theme-init.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIST SP 800-61 Rev. 3: Incident Response with the CSF 2.0 Lifecycle | Cybersecurity Tutorial | MJ Tech Hub</title>
+    <meta name="description" content="Master enterprise incident handling: Modern NIST SP 800-61 Rev. 3 lifecycle integrated with CSF 2.0 (Govern, Identify, Protect, Detect, Respond, Recover), containment strategies, and forensics.">
+    <link rel="canonical" href="https://themjtechhub.site/tutorials/cybersecurity/nist-sp-800-61-computer-security-incident-handling-guide.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="NIST SP 800-61 Rev. 3: Incident Response with the CSF 2.0 Lifecycle | Cybersecurity Tutorial | MJ Tech Hub">
+    <meta property="og:description" content="Master enterprise incident handling: Modern NIST SP 800-61 Rev. 3 lifecycle integrated with CSF 2.0 (Govern, Identify, Protect, Detect, Respond, Recover), containment strategies, and forensics.">
+    <meta property="og:url" content="https://themjtechhub.site/tutorials/cybersecurity/nist-sp-800-61-computer-security-incident-handling-guide.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="article">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="NIST SP 800-61 Rev. 3: Incident Response with the CSF 2.0 Lifecycle | Cybersecurity Tutorial | MJ Tech Hub">
+    <meta name="twitter:description" content="Master enterprise incident handling: Modern NIST SP 800-61 Rev. 3 lifecycle integrated with CSF 2.0 (Govern, Identify, Protect, Detect, Respond, Recover), containment strategies, and forensics.">
+
+    <!-- Schema.org TechArticle JSON-LD -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "NIST SP 800-61 Rev. 3: Incident Response with the CSF 2.0 Lifecycle",
+    "description": "Master enterprise incident handling: Modern NIST SP 800-61 Rev. 3 lifecycle integrated with CSF 2.0 (Govern, Identify, Protect, Detect, Respond, Recover), containment strategies, and forensics.",
+    "url": "https://themjtechhub.site/tutorials/cybersecurity/nist-sp-800-61-computer-security-incident-handling-guide.html",
+    "datePublished": "2026-09-10",
+    "dateModified": "2026-09-10",
+    "proficiencyLevel": "Beginner",
+    "author": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "MJ Tech Hub",
+        "url": "https://themjtechhub.site",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://themjtechhub.site/assets/logo/mj-tech-hub-logo.png"
+        }
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://themjtechhub.site/tutorials/cybersecurity/nist-sp-800-61-computer-security-incident-handling-guide.html"
+    }
+}
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../css/themes.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/responsive.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="site-header"></div>
+
+    <main id="main-content" class="container py-4">
+        <!-- Tutorial Hero Header -->
+        <header id="tutorial-header" class="tutorial-hero">
+            <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: var(--space-4);">
+                <a href="../../index.html">Home</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../topics.html">Topics</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <a href="../../cybersecurity.html">Cybersecurity</a>
+                <span class="breadcrumb-separator" aria-hidden="true">/</span>
+                <span aria-current="page">NIST SP 800-61 Rev. 3: Incident Response with the CSF 2.0 Lifecycle</span>
+            </nav>
+
+            <div class="tutorial-meta-row">
+                <span class="cat-tut-badge beginner">Beginner</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-clock" aria-hidden="true"></i> 5 min read</span>
+                <span class="tutorial-meta-item"><i class="fa-regular fa-calendar" aria-hidden="true"></i> Updated: Sep 10, 2026</span>
+            </div>
+
+            <h1 class="tutorial-hero-title">NIST SP 800-61 Rev. 3: Incident Response with the CSF 2.0 Lifecycle</h1>
+            <p class="tutorial-hero-desc">Master enterprise incident handling: Modern NIST SP 800-61 Rev. 3 lifecycle integrated with CSF 2.0 (Govern, Identify, Protect, Detect, Respond, Recover), containment strategies, and forensics.</p>
+        </header>
+
+        <!-- Technical Reading Layout (Main Article + Sticky TOC) -->
+        <div class="tutorial-reading-layout">
+            <article class="tutorial-article content lesson-content">
+<p>Security controls, host hardening baselines, and intrusion detection systems are designed to minimize an organization's risk profile, but no cybersecurity defense is completely impenetrable. Sophisticated adversaries, zero-day vulnerabilities, social engineering, and insider threats guarantee that security incidents will occur. The true measure of enterprise cyber resilience is not whether an incident happens, but how swiftly, methodically, and effectively the organization responds.</p>
+<p>For over a decade, enterprise incident handling was structured around NIST Special Publication 800-61 Revision 2. However, with the evolution of complex multi-cloud ecosystems, widespread ransomware syndicates, and interconnected supply chains, the National Institute of Standards and Technology published <strong>NIST SP 800-61 Revision 3 (Incident Response Recommendations and Considerations for Cybersecurity Risk Management)</strong>, finalizing the modernization in April 2025.</p>
+
+<h2>The Modernized NIST SP 800-61 Rev. 3 Architecture</h2>
+<p>NIST SP 800-61 Rev. 3 fundamentally modernizes incident response by retiring the legacy isolated four-phase lifecycle and integrating incident handling directly into the six core functions of the <strong>NIST Cybersecurity Framework (CSF 2.0)</strong>:</p>
+
+<div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>CSF 2.0 Integration Layer</th>
+                <th>Core Function</th>
+                <th>Role in Enterprise Incident Management</th>
+                <th>Key Organizational Activities</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="3"><strong>Supporting Cybersecurity Risk Management</strong></td>
+                <td><strong>Govern (GV)</strong></td>
+                <td>Establishing organizational context, incident response governance, policy, roles, legal escalation matrices, and risk appetite.</td>
+                <td>Defining incident severity criteria, designating executive and legal communication authorities, establishing regulatory disclosure playbooks.</td>
+            </tr>
+            <tr>
+                <td><strong>Identify (ID)</strong></td>
+                <td>Understanding the enterprise environment, maintaining asset inventories, threat modeling, and vulnerability tracking.</td>
+                <td>Maintaining authoritative CMDB asset inventories, tracking high-value data repositories, mapping third-party supply chain dependencies.</td>
+            </tr>
+            <tr>
+                <td><strong>Protect (PR)</strong></td>
+                <td>Implementing proactive defense safeguards to prevent incidents or dramatically limit blast radius.</td>
+                <td>Enforcing least privilege, multi-factor authentication, network microsegmentation, immutable backups, and endpoint hardening.</td>
+            </tr>
+            <tr>
+                <td rowspan="3"><strong>Active Incident Response Lifecycle</strong></td>
+                <td><strong>Detect (DE)</strong></td>
+                <td>Continuous monitoring, telemetry analysis, anomaly detection, event validation, and incident scoping.</td>
+                <td>Correlating SIEM alerts, validating EDR behavioral anomalies, scoping adversary footholds, establishing initial incident indicators.</td>
+            </tr>
+            <tr>
+                <td><strong>Respond (RS)</strong></td>
+                <td>Active mitigation, containment, eradication, cross-functional communication, and stakeholder management.</td>
+                <td>Executing containment playbooks (network isolation, token revocation), eradicating adversary persistence artifacts, regulatory disclosure.</td>
+            </tr>
+            <tr>
+                <td><strong>Recover (RC)</strong></td>
+                <td>Restoring operational services, validating system integrity, continuous monitoring, and organizational post-incident learning.</td>
+                <td>Restoring workloads from clean verified backups, enhanced continuous telemetry monitoring, executing blameless post-mortem reviews.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="tutorial-callout callout-note">
+    <p><strong>Historical Context: The Legacy Rev. 2 Model:</strong> For historical reference, NIST SP 800-61 Rev. 2 (published in 2012) organized incident handling into four linear phases: <em>Preparation</em>, <em>Detection & Analysis</em>, <em>Containment, Eradication & Recovery</em>, and <em>Post-Incident Activity</em>. Revision 3 supersedes this model by recognizing that preparation is an ongoing component of organizational governance (Govern, Identify, Protect), and that recovery must be elevated as a discrete strategic phase aligned with CSF 2.0.</p>
+</div>
+
+<h2>The Active Incident Response Execution Phases</h2>
+<p>When an active threat is identified, the Computer Security Incident Response Team (CSIRT) executes the operational phases of the lifecycle:</p>
+
+<h3>1. Detect (DE): Validation, Scoping & Triage</h3>
+<p>Detection begins when a security alert or user report signals an anomalous event. The response team must validate that the event is a genuine security incident rather than a benign false positive:</p>
+<ul>
+    <li><strong>Initial Triage & Classification:</strong> Classify the incident according to corporate severity matrices (e.g., P1 Critical Data Breach vs P4 Minor Malware Block).</li>
+    <li><strong>Scoping the Blast Radius:</strong> Identify all compromised user accounts, affected hostnames, IP addresses, and encrypted network shares. Establish a shared timeline of adversary actions.</li>
+</ul>
+
+<h3>2. Respond (RS): Containment & Eradication</h3>
+<p>Once the threat is scoped, the team acts decisively to prevent further damage:</p>
+<ul>
+    <li><strong>Short-Term Containment:</strong> Immediately isolate affected endpoints at the network layer (using EDR host isolation or switch port shutdown), revoke compromised user session tokens, reset credentials, and sever suspect VPN connections.</li>
+    <li><strong>Preserving Digital Evidence:</strong> Prior to shutting down or rebooting affected hosts, preserve volatile evidence adhering to the <strong>Order of Volatility (RFC 3227)</strong>: RAM memory dumps, active network socket states, running process listings, and system event logs with a strict chain of custody.</li>
+    <li><strong>Eradication:</strong> Remove all attacker footholds: terminate malicious scheduled tasks, delete registry persistence keys, close exploited firewall ports, patch vulnerable software, and verify that no secondary backdoors remain dormant.</li>
+</ul>
+
+<h3>3. Recover (RC): Restoration & Enhanced Monitoring</h3>
+<p>Returning systems to production must be executed cautiously to avoid re-infection:</p>
+<ul>
+    <li><strong>Clean Restoration:</strong> Rebuild operating systems from trusted golden images rather than attempting to manually clean rootkits. Restore application databases from verified offline or immutable backups created prior to initial adversary compromise.</li>
+    <li><strong>Enhanced Monitoring:</strong> Deploy intensive telemetry logging and active threat hunting on restored systems for 30–90 days to verify that the threat actor has not regained access.</li>
+</ul>
+
+<h2>Continuous Improvement: Post-Incident Lessons Learned</h2>
+<p>Under NIST SP 800-61 Rev. 3, incident response is an iterative feedback loop that continuously feeds insights back into the <strong>Govern</strong> and <strong>Protect</strong> functions:</p>
+
+<div class="tutorial-callout callout-important">
+    <p><strong>The Blameless Post-Mortem (Post-Incident Review):</strong> Within two weeks of incident closure, the CSIRT, engineering leadership, and executive stakeholders conduct a blameless post-mortem review answering critical questions:</p>
+    <ul>
+        <li>Exactly what root cause allowed the adversary initial ingress?</li>
+        <li>Which detection rules failed to fire, and why did dwell time elapse before discovery?</li>
+        <li>Did containment playbooks execute smoothly, or did operational roadblocks delay isolation?</li>
+        <li>What specific policy, architecture, or configuration changes must be implemented in the <strong>Govern</strong> and <strong>Protect</strong> baselines to permanently eliminate this attack vector?</li>
+    </ul>
+</div>
+<p>Documenting findings in a formal <strong>Post-Incident Report (PIR)</strong> transforms a security crisis into hardened enterprise cyber resilience.</p>
+            </article>
+
+            <!-- Sticky Table of Contents Sidebar -->
+            <aside class="tutorial-sidebar" aria-label="Table of Contents">
+                <nav id="tutorial-toc" class="tutorial-toc">
+                    <!-- Populated dynamically by tutorial.js -->
+                </nav>
+            </aside>
+        </div>
+
+        <!-- Dynamic Navigation Mount (Previous/Next, Back to Category, Related Tutorials) -->
+        <div id="tutorial-footer-mount"></div>
+    </main>
+
+    <!-- Accessible Toast for Code Copy Feedback -->
+    <div id="copy-toast" class="sr-toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-check text-success" aria-hidden="true"></i>
+        <span id="copy-toast-msg">Code copied to clipboard!</span>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/components.js"></script>
+    <script src="../../js/tutorial.js" defer></script>
+    <script src="../../js/main.js"></script>
+    <script src="../../js/theme.js"></script>
+</body>
+</html>
