@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../js/theme-init.js"></script>
+    <!-- SEO & Metadata -->
+    <title>Enterprise Port &amp; Protocol Reference | MJ Tech Hub</title>
+    <meta name="description" content="Searchable, filterable enterprise port and protocol directory with objective security notes, transport types, and firewall hardening guidance.">
+    <link rel="canonical" href="https://themjtechhub.site/tools/port-reference.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Enterprise Port &amp; Protocol Reference | MJ Tech Hub">
+    <meta property="og:description" content="Searchable, filterable enterprise port and protocol directory with objective security notes, transport types, and firewall hardening guidance.">
+    <meta property="og:url" content="https://themjtechhub.site/tools/port-reference.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <div id="site-header"></div>
+    
+    <main id="main-content">
+        <section class="tools-hero container">
+            <span class="about-eyebrow">ENTERPRISE DIRECTORY</span>
+            <h1 class="page-title">Port &amp; Protocol Reference</h1>
+            <p class="page-subtitle">Curated reference of enterprise network ports and protocols with transport specifications and objective security hardening considerations.</p>
+        </section>
+
+        <section class="container" aria-label="Port Reference Directory" style="margin-bottom: 4rem;">
+            <!-- Filter & Search Controls -->
+            <div class="ports-filter-bar">
+                <div class="search-box-wrap" style="position: relative;">
+                    <i class="fa-solid fa-search" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);" aria-hidden="true"></i>
+                    <input type="text" id="ports-search-input" class="form-control" style="padding-left: 2.75rem;" placeholder="Search by port (e.g. 53, 443, 3389) or service (DNS, Kerberos, BGP, IPsec)..." aria-label="Search ports and protocols">
+                </div>
+
+                <!-- Category Filters -->
+                <div class="ports-pills-row" role="group" aria-label="Filter by Category">
+                    <button type="button" class="btn btn-secondary btn-sm ports-cat-pill active" data-category="all" aria-current="true">All Categories</button>
+                    <button type="button" class="btn btn-secondary btn-sm ports-cat-pill" data-category="Core Infrastructure">Core Infrastructure</button>
+                    <button type="button" class="btn btn-secondary btn-sm ports-cat-pill" data-category="Remote Access &amp; Administration">Remote Access</button>
+                    <button type="button" class="btn btn-secondary btn-sm ports-cat-pill" data-category="Directory &amp; Identity">Directory &amp; Identity</button>
+                    <button type="button" class="btn btn-secondary btn-sm ports-cat-pill" data-category="Web &amp; Mail Services">Web &amp; Mail</button>
+                    <button type="button" class="btn btn-secondary btn-sm ports-cat-pill" data-category="Monitoring &amp; Storage">Monitoring &amp; Storage</button>
+                    <button type="button" class="btn btn-secondary btn-sm ports-cat-pill" data-category="Network &amp; Routing">Network &amp; Routing</button>
+                </div>
+
+                <!-- Transport Filters -->
+                <div class="ports-pills-row" style="align-items: center; justify-content: space-between;" role="group" aria-label="Filter by Transport Protocol">
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <span style="font-size: var(--text-xs); font-weight: 700; color: var(--text-muted); align-self: center; margin-right: 0.25rem;">Transport:</span>
+                        <button type="button" class="btn btn-secondary btn-sm ports-transport-pill active" data-transport="all" aria-current="true">All</button>
+                        <button type="button" class="btn btn-secondary btn-sm ports-transport-pill" data-transport="TCP">TCP</button>
+                        <button type="button" class="btn btn-secondary btn-sm ports-transport-pill" data-transport="UDP">UDP</button>
+                        <button type="button" class="btn btn-secondary btn-sm ports-transport-pill" data-transport="IP Protocol">IP Protocol</button>
+                    </div>
+                    <span id="ports-count-badge" class="badge badge-secondary">Loading...</span>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="ports-empty-state" class="card" style="display: none; text-align: center; padding: 3rem 1rem;">
+                <i class="fa-solid fa-filter-circle-xmark" style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 1rem;" aria-hidden="true"></i>
+                <h2 style="font-size: var(--text-lg); font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">No Matching Protocols Found</h2>
+                <p style="font-size: var(--text-sm); color: var(--text-secondary); margin: 0;">Try searching for a different port number, protocol name, or clearing filters.</p>
+            </div>
+
+            <!-- Ports Grid -->
+            <div id="ports-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.25rem;"></div>
+
+            <!-- Screen Reader Live Announcer -->
+            <div id="ports-live-announcer" class="sr-only" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="../js/theme.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/search.js"></script>
+    <script src="../js/port-reference.js"></script>
+</body>
+</html>

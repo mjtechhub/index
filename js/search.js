@@ -57,11 +57,12 @@
         fetchPromise = (async () => {
             let data = [];
             try {
-            const [topicsRes, tutsRes, cmdsRes, resRes] = await Promise.all([
+            const [topicsRes, tutsRes, cmdsRes, resRes, labsRes] = await Promise.all([
                 fetch(`${basePath}/data/topics.json`).catch(()=>null),
                 fetch(`${basePath}/data/tutorials.json`).catch(()=>null),
                 fetch(`${basePath}/data/commands.json`).catch(()=>null),
-                fetch(`${basePath}/data/resources.json`).catch(()=>null)
+                fetch(`${basePath}/data/resources.json`).catch(()=>null),
+                fetch(`${basePath}/data/troubleshooting-labs.json`).catch(()=>null)
             ]);
             
             if (topicsRes && topicsRes.ok) {
@@ -124,7 +125,7 @@
                             type: 'Command',
                             title: c.command,
                             desc: c.purpose,
-                            tags: `${(c.platform || '').toLowerCase()} ${(c.category || '').toLowerCase()} ${c.useCase || ''}`,
+                            tags: `${(c.platform || '').toLowerCase()} ${(c.category || '').toLowerCase()} ${c.useCase || ''} ${Array.isArray(c.keywords) ? c.keywords.join(' ') : ''}`,
                             url: 'commands.html'
                         });
                     });
@@ -141,6 +142,55 @@
                             desc: r.description,
                             tags: `${r.tags || ''} ${(r.category || '').toLowerCase()} ${(r.type || '').toLowerCase()}`,
                             url: r.url
+                        });
+                    });
+                }
+            }
+
+            // Index 4 Interactive IT Tools
+            const interactiveTools = [
+                {
+                    type: 'Tool',
+                    title: 'Subnet & CIDR Calculator',
+                    desc: 'IPv4 Subnet & CIDR Calculator: calculate network IDs, broadcast, wildcard masks, usable host ranges, and binary layout (/0 to /32).',
+                    tags: 'subnet calculator cidr calculator ip addressing mask network rfc 1918 rfc 3021 ipv4',
+                    url: 'tools/subnet-calculator.html'
+                },
+                {
+                    type: 'Tool',
+                    title: 'VLSM / Subnet Planner',
+                    desc: 'Variable Length Subnet Masking (VLSM) planner: largest-first non-overlapping subnet allocations with parent boundary capacity validation.',
+                    tags: 'vlsm subnet planner variable length subnet masking vlan host allocation ip planning',
+                    url: 'tools/vlsm-planner.html'
+                },
+                {
+                    type: 'Tool',
+                    title: 'Network Diagnostic Workbench',
+                    desc: 'Interactive troubleshooting decision workbench: isolate TCP/IP issues across Gateway, WAN, DNS, and Port layers with recommended commands.',
+                    tags: 'network diagnostic workbench troubleshooting ping dns port gateway fault domain isolate',
+                    url: 'tools/network-diagnostic-workbench.html'
+                },
+                {
+                    type: 'Tool',
+                    title: 'Port & Protocol Reference',
+                    desc: 'Searchable directory of enterprise network ports, transport protocols (TCP/UDP/IP Protocol), and objective security hardening notes.',
+                    tags: 'port protocol reference dns http https rdp ssh kerberos bgp ldap syslog snmp enterprise directory',
+                    url: 'tools/port-reference.html'
+                }
+            ];
+            interactiveTools.forEach(tool => data.push(tool));
+
+            // Index 6 Guided Troubleshooting Labs (Top-level landing entries)
+            if (labsRes && labsRes.ok) {
+                const labs = await labsRes.json();
+                if (Array.isArray(labs)) {
+                    labs.forEach(lab => {
+                        data.push({
+                            type: 'Lab',
+                            title: `Lab: ${lab.title}`,
+                            desc: `[${lab.category} Lab] ${lab.symptoms} (${lab.level}, ${lab.estimatedTime})`,
+                            tags: `lab troubleshooting simulation incident rca ${lab.category.toLowerCase()} ${lab.level.toLowerCase()}`,
+                            url: `labs.html?lab=${lab.id}`
                         });
                     });
                 }
@@ -176,6 +226,13 @@
             if (tags.includes(q)) score += 45;
             
             if (d.includes(q)) score += 20;
+
+            // Multi-word query support (e.g. "Subnet Calculator" matching "Subnet & CIDR Calculator")
+            const words = q.split(/\s+/).filter(w => w.length > 1);
+            if (words.length > 1) {
+                if (words.every(w => t.includes(w))) score += 55;
+                else if (words.every(w => tags.includes(w) || t.includes(w))) score += 40;
+            }
             
             return { item, score };
         }).filter(r => r.score > 0);
@@ -224,7 +281,12 @@
             
             let finalUrl = res.url;
             if (finalUrl.startsWith('/')) finalUrl = finalUrl.substring(1);
-            if (!finalUrl.startsWith('http')) finalUrl = `${basePath}/${finalUrl}`;
+            if (!finalUrl.startsWith('http')) {
+                finalUrl = `${basePath}/${finalUrl}`;
+            } else {
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+            }
             a.href = finalUrl;
             
             const titleEl = document.createElement('div');
@@ -240,7 +302,9 @@
             const icon = document.createElement('i');
             icon.className = res.type === 'Command' ? 'fas fa-terminal' : 
                              res.type === 'Topic' ? 'fas fa-layer-group' : 
-                             res.type === 'Resource' ? 'fas fa-folder-open' : 'fas fa-book-open';
+                             res.type === 'Resource' ? 'fas fa-folder-open' :
+                             res.type === 'Tool' ? 'fas fa-calculator' :
+                             res.type === 'Lab' ? 'fas fa-flask-vial' : 'fas fa-book-open';
             icon.setAttribute('aria-hidden', 'true');
             metaEl.appendChild(icon);
             metaEl.appendChild(document.createTextNode(' ' + res.type));

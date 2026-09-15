@@ -1,0 +1,578 @@
+import json
+
+existing_cmds = [
+    {
+        'id': 'cmd-ipconfig-all',
+        'command': 'ipconfig /all',
+        'platform': 'Windows',
+        'purpose': 'Display detailed Windows network configuration.',
+        'syntax': 'ipconfig /all',
+        'example': 'ipconfig /all',
+        'expectedResult': 'Shows IPv4 address, subnet mask, default gateway, DNS server, DHCP status, and MAC address.',
+        'useCase': 'Troubleshooting network connectivity, checking if DHCP assigned an IP correctly.',
+        'category': 'Networking',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-ping',
+        'command': 'ping',
+        'platform': 'Windows/Linux',
+        'purpose': 'Test reachability of a host on an IP network.',
+        'syntax': 'ping <hostname or IP>',
+        'example': 'ping 8.8.8.8',
+        'expectedResult': 'Replies from the destination indicating latency and packet loss.',
+        'useCase': 'Verifying internet connection or if a specific server is online.',
+        'category': 'Networking',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-tracert',
+        'command': 'tracert',
+        'platform': 'Windows',
+        'purpose': 'Trace the path that an IP packet takes to its destination.',
+        'syntax': 'tracert <hostname or IP>',
+        'example': 'tracert google.com',
+        'expectedResult': 'List of routers (hops) the packet passed through and response times.',
+        'useCase': 'Finding where a network connection drops or slows down.',
+        'category': 'Networking',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-nslookup',
+        'command': 'nslookup',
+        'platform': 'Windows/Linux',
+        'purpose': 'Query Internet name servers interactively.',
+        'syntax': 'nslookup <hostname>',
+        'example': 'nslookup example.com',
+        'expectedResult': 'IP addresses associated with the domain name.',
+        'useCase': 'Troubleshooting DNS resolution issues.',
+        'category': 'Networking',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-netstat-ano',
+        'command': 'netstat -ano',
+        'platform': 'Windows',
+        'purpose': 'Displays active TCP connections, ports on which the computer is listening, and PID.',
+        'syntax': 'netstat -ano',
+        'example': 'netstat -ano | findstr 8080',
+        'expectedResult': 'List of active connections and their state, along with the process ID.',
+        'useCase': 'Finding which application is using a specific port.',
+        'category': 'Networking',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-sfc-scannow',
+        'command': 'sfc /scannow',
+        'platform': 'Windows',
+        'purpose': 'Scans and verifies the integrity of all protected system files.',
+        'syntax': 'sfc /scannow',
+        'example': 'sfc /scannow',
+        'expectedResult': 'Verifies files and replaces incorrect versions with correct Microsoft versions.',
+        'useCase': 'Fixing corrupted Windows system files causing crashes or strange behavior.',
+        'category': 'System',
+        'safety': 'Configuration-changing',
+        'warnings': 'Must be run as Administrator.'
+    },
+    {
+        'id': 'cmd-systeminfo',
+        'command': 'systeminfo',
+        'platform': 'Windows',
+        'purpose': 'Displays detailed configuration information about a computer and its operating system.',
+        'syntax': 'systeminfo',
+        'example': 'systeminfo',
+        'expectedResult': 'Outputs OS version, system manufacturer, BIOS version, memory stats, hotfixes, and network card info.',
+        'useCase': 'Quickly auditing computer specs, uptime, OS installation date, and installed Windows updates.',
+        'category': 'System',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-tasklist',
+        'command': 'tasklist',
+        'platform': 'Windows',
+        'purpose': 'Displays a list of currently running processes on either a local or remote machine.',
+        'syntax': 'tasklist',
+        'example': 'tasklist /v',
+        'expectedResult': 'Shows Image Name, PID, Session Name, Session Number, and Memory Usage for every running process.',
+        'useCase': 'Identifying runaway processes, finding specific service PIDs, or scripting health checks.',
+        'category': 'System',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-chkdsk',
+        'command': 'chkdsk',
+        'platform': 'Windows',
+        'purpose': 'Checks the file system and volume metadata for logical and physical errors.',
+        'syntax': 'chkdsk [volume:] [/f] [/r]',
+        'example': 'chkdsk C: /f',
+        'expectedResult': 'Scans filesystem sectors, repairs directory corruption, and locates bad sectors.',
+        'useCase': 'Troubleshooting corrupted disk partitions, file access errors, or failing drives.',
+        'category': 'System',
+        'safety': 'Configuration-changing',
+        'warnings': 'Must be run as Administrator. May require a system restart to dismount volume.'
+    },
+    {
+        'id': 'cmd-gpupdate-force',
+        'command': 'gpupdate /force',
+        'platform': 'Windows',
+        'purpose': 'Forces immediate background reapplication of all Active Directory Group Policy settings.',
+        'syntax': 'gpupdate /force',
+        'example': 'gpupdate /force',
+        'expectedResult': 'Outputs: Updating policy... Computer Policy update has completed successfully. User Policy update has completed successfully.',
+        'useCase': 'Applying newly configured GPO security policies or mapped drives without waiting for the default 90-minute refresh.',
+        'category': 'System',
+        'safety': 'Configuration-changing',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-driverquery',
+        'command': 'driverquery',
+        'platform': 'Windows',
+        'purpose': 'Enables an administrator to display a comprehensive list of installed device drivers.',
+        'syntax': 'driverquery [/v]',
+        'example': 'driverquery /v',
+        'expectedResult': 'Displays table of module name, display name, driver type, and link date.',
+        'useCase': 'Troubleshooting BSOD crashes and hardware device driver incompatibility.',
+        'category': 'System',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-wmic',
+        'command': 'wmic',
+        'platform': 'Windows',
+        'purpose': 'Windows Management Instrumentation command-line utility for advanced system queries.',
+        'syntax': 'wmic <alias> [options]',
+        'example': 'wmic bios get serialnumber',
+        'expectedResult': 'Returns specific hardware metadata such as device serial number, CPU model, or disk health.',
+        'useCase': 'Automated IT asset inventory, retrieving motherboard and BIOS serial numbers remotely.',
+        'category': 'System',
+        'safety': 'Read-only',
+        'warnings': 'WMIC is deprecated in newer Windows 11 builds in favor of CIM/WMI PowerShell cmdlets.'
+    }
+]
+
+new_cmds = [
+    # Networking (+5)
+    {
+        'id': 'cmd-ss-tulpn',
+        'command': 'ss -tulpn',
+        'platform': 'Linux',
+        'purpose': 'Displays all listening TCP and UDP sockets with numeric ports and associated process IDs.',
+        'syntax': 'ss -tulpn',
+        'example': 'ss -tulpn | grep \':80\'',
+        'expectedResult': 'Netid State Recv-Q Send-Q Local Address:Port Peer Address:Port Process\ntcp LISTEN 0 128 0.0.0.0:80 0.0.0.0:* users:(("nginx",pid=1024,fd=6))',
+        'useCase': 'Identifying which service or daemon is bound to a network port and diagnosing port conflicts.',
+        'category': 'Networking',
+        'safety': 'Read-only',
+        'warnings': 'Requires root (sudo) privileges to display process names and PIDs.'
+    },
+    {
+        'id': 'cmd-dig-trace',
+        'command': 'dig +trace',
+        'platform': 'Linux/macOS/Windows',
+        'purpose': 'Performs iterative DNS resolution tracing from the 13 root nameservers down to authoritative records.',
+        'syntax': 'dig +trace <domain>',
+        'example': 'dig +trace themjtechhub.site',
+        'expectedResult': 'Hierarchical delegation output showing root (.) query, TLD nameserver delegation, and authoritative nameserver answers.',
+        'useCase': 'Diagnosing DNS propagation delays, delegation latency, or missing zone authority records.',
+        'category': 'Networking',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-ip-route-show',
+        'command': 'ip route show',
+        'platform': 'Linux',
+        'purpose': 'Displays the Linux kernel IP routing table including default gateway and metric priorities.',
+        'syntax': 'ip route show [options]',
+        'example': 'ip route show default',
+        'expectedResult': 'default via 192.168.1.1 dev eth0 proto dhcp src 192.168.1.50 metric 100',
+        'useCase': 'Verifying default gateway assignments, interface metrics, and multi-homed routing paths.',
+        'category': 'Networking',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-test-netconnection',
+        'command': 'Test-NetConnection',
+        'platform': 'Windows PowerShell',
+        'purpose': 'Tests TCP three-way handshake and ICMP ping connectivity with route diagnostic tracing.',
+        'syntax': 'Test-NetConnection -ComputerName <host> -Port <port>',
+        'example': 'Test-NetConnection -ComputerName 8.8.8.8 -Port 53',
+        'expectedResult': 'ComputerName: 8.8.8.8, RemoteAddress: 8.8.8.8, RemotePort: 53, InterfaceAlias: Ethernet0, TcpTestSucceeded: True',
+        'useCase': 'Validating outbound firewall port traversal when ICMP ping is blocked by network filters.',
+        'category': 'Networking',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-arp-a',
+        'command': 'arp -a',
+        'platform': 'Windows/Linux',
+        'purpose': 'Displays Address Resolution Protocol (ARP) cache table mapping IP addresses to physical MAC addresses.',
+        'syntax': 'arp -a [inet_addr]',
+        'example': 'arp -a',
+        'expectedResult': 'Interface: 192.168.1.50 --- 0x2\n  Internet Address      Physical Address      Type\n  192.168.1.1           00-11-22-33-44-55     dynamic',
+        'useCase': 'Investigating Layer 2 Ethernet mapping, discovering duplicate IPs, or troubleshooting ARP cache poisoning.',
+        'category': 'Networking',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+
+    # Windows / PowerShell (+5)
+    {
+        'id': 'cmd-get-service',
+        'command': 'Get-Service',
+        'platform': 'Windows PowerShell',
+        'purpose': 'Retrieves all Windows services currently in the Running execution state.',
+        'syntax': 'Get-Service | Where-Object {$_.Status -eq \'<Status>\'}',
+        'example': 'Get-Service | Where-Object {$_.Status -eq \'Running\'}',
+        'expectedResult': 'Status   Name               DisplayName\n------   ----               -----------\nRunning  Spooler            Print Spooler\nRunning  Winmgmt            Windows Management Instrumentation',
+        'useCase': 'Auditing active operating system background daemons and verifying core service operational health.',
+        'category': 'Windows',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-get-winevent',
+        'command': 'Get-WinEvent',
+        'platform': 'Windows PowerShell',
+        'purpose': 'Queries the Windows Event Log for recent system errors, warnings, and audit events.',
+        'syntax': 'Get-WinEvent -LogName <LogName> [-MaxEvents <int>]',
+        'example': 'Get-WinEvent -FilterHashtable @{LogName=\'System\'; Level=2} -MaxEvents 10',
+        'expectedResult': 'TimeCreated          ProviderName  Id LevelDisplayName Message\n-----------          ------------  -- ---------------- -------\n9/15/2026 9:15:02 AM Service Con.. 7001 Error            The service failed...',
+        'useCase': 'Diagnosing hardware faults, kernel crashes, unexpected reboots, and service startup failures.',
+        'category': 'Windows',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-get-netipconfiguration',
+        'command': 'Get-NetIPConfiguration',
+        'platform': 'Windows PowerShell',
+        'purpose': 'Outputs detailed network adapter IP configuration, default gateways, and DNS server addresses.',
+        'syntax': 'Get-NetIPConfiguration [-InterfaceAlias <string>]',
+        'example': 'Get-NetIPConfiguration',
+        'expectedResult': 'InterfaceAlias: Ethernet0, InterfaceDescription: Intel(R) I211, IPv4Address: 192.168.1.50/24, IPv4DefaultGateway: 192.168.1.1, DNSServer: 1.1.1.1',
+        'useCase': 'Automated network configuration inspection and programmatic PowerShell pipeline integration.',
+        'category': 'Windows',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-get-localuser',
+        'command': 'Get-LocalUser',
+        'platform': 'Windows PowerShell',
+        'purpose': 'Audits all local Windows security accounts and their enabled and password enforcement states.',
+        'syntax': 'Get-LocalUser [options]',
+        'example': 'Get-LocalUser | Select-Object Name, Enabled, PasswordRequired, LastLogon',
+        'expectedResult': 'Name          Enabled PasswordRequired LastLogon\n----          ------- ---------------- ---------\nAdministrator False   True             9/1/2026 10:00:00 AM\nUser          True    True             9/15/2026 8:30:00 AM',
+        'useCase': 'Defensive endpoint auditing to identify rogue local accounts and verify disabled default accounts.',
+        'category': 'Windows',
+        'safety': 'Read-only',
+        'warnings': 'Requires administrative privileges to inspect sensitive security properties.'
+    },
+    {
+        'id': 'cmd-robocopy',
+        'command': 'robocopy',
+        'platform': 'Windows',
+        'purpose': 'High-performance robust file copy mirroring directory trees using multi-threading with retry logic.',
+        'syntax': 'robocopy <Source> <Destination> [/MIR] [/MT:threads] [/R:retries] [/W:wait]',
+        'example': 'robocopy C:\\Data D:\\Backup /MIR /MT:8 /R:3 /W:5',
+        'expectedResult': 'ROBOCOPY :: Robust File Copy for Windows\nSource : C:\\Data\\\nDest : D:\\Backup\\\nFiles : *.*\nOptions : /MIR /R:3 /W:5 /MT:8\nTotal: 1204, Copied: 1204, Skipped: 0, Mismatch: 0, Failed: 0',
+        'useCase': 'Server migration, enterprise data synchronization, and automated differential disk backups.',
+        'category': 'Windows',
+        'safety': 'Potentially destructive',
+        'warnings': 'Caution: /MIR (mirror) purges files in the destination directory that do not exist in the source.'
+    },
+
+    # Linux (+5)
+    {
+        'id': 'cmd-journalctl',
+        'command': 'journalctl',
+        'platform': 'Linux',
+        'purpose': 'Queries systemd journal log database for a specific service unit within a relative time window.',
+        'syntax': 'journalctl -u <unit> [--since <time>] [--no-pager]',
+        'example': 'journalctl -u nginx --since "1 hour ago" -n 50',
+        'expectedResult': 'Sep 15 09:00:01 web-01 systemd[1]: Starting A high performance web server...\nSep 15 09:00:02 web-01 nginx[1024]: Configuration syntax ok.',
+        'useCase': 'Isolating web server crashes, HTTP 502 gateway errors, and configuration reload failures.',
+        'category': 'Linux',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-systemctl-status',
+        'command': 'systemctl status',
+        'platform': 'Linux',
+        'purpose': 'Inspects runtime state, PID, memory consumption, cgroup tree, and recent logs for a systemd unit.',
+        'syntax': 'systemctl status <unit>',
+        'example': 'systemctl status sshd',
+        'expectedResult': 'Loaded: loaded (/usr/lib/systemd/system/sshd.service; enabled)\nActive: active (running) since Tue 2026-09-15 08:00:00 UTC\nMain PID: 842 (sshd)\nTasks: 1 (limit: 4915)\nMemory: 4.8M',
+        'useCase': 'Verifying service availability after boot or determining why a daemon failed to bind sockets.',
+        'category': 'Linux',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-lsblk-f',
+        'command': 'lsblk -f',
+        'platform': 'Linux',
+        'purpose': 'Lists all available block devices, partition hierarchies, filesystem types, and filesystem UUIDs.',
+        'syntax': 'lsblk [-f] [-m]',
+        'example': 'lsblk -f',
+        'expectedResult': 'NAME   FSTYPE FSVER LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINTS\nsda                                                                                   \n├─sda1 ext4   1.0         3a7b8c9d-1234-5678-9abc-def012345678   22.4G    42% /\n└─sda2 swap   1           98765432-abcd-ef01-2345-6789abcdef01                  [SWAP]',
+        'useCase': 'Verifying disk partitioning, finding disk UUIDs for persistent /etc/fstab entries, and auditing mountpoints.',
+        'category': 'Linux',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-df-ht',
+        'command': 'df -hT',
+        'platform': 'Linux',
+        'purpose': 'Reports file system disk space usage with human-readable capacities and filesystem types.',
+        'syntax': 'df [-h] [-T]',
+        'example': 'df -hT',
+        'expectedResult': 'Filesystem     Type      Size  Used Avail Use% Mounted on\n/dev/sda1      ext4       40G   18G   20G  48% /\ntmpfs          tmpfs     3.9G     0  3.9G   0% /dev/shm',
+        'useCase': 'Rapidly checking disk partition exhaustion, identifying read-only remounts, and monitoring /var and /tmp.',
+        'category': 'Linux',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-tar-czvf',
+        'command': 'tar -czvf',
+        'platform': 'Linux',
+        'purpose': 'Creates a gzip-compressed tape archive (.tar.gz) of specified directory trees preserving file permissions.',
+        'syntax': 'tar -czvf <archive_name.tar.gz> <source_path>',
+        'example': 'tar -czvf /var/backups/nginx-config.tar.gz /etc/nginx/',
+        'expectedResult': '/etc/nginx/\n/etc/nginx/nginx.conf\n/etc/nginx/conf.d/\n/etc/nginx/conf.d/default.conf',
+        'useCase': 'Creating cold backups of server configurations before applying major software upgrades or patches.',
+        'category': 'Linux',
+        'safety': 'Configuration-changing',
+        'warnings': 'Overwrites existing destination archive file if one already exists with the same filename.'
+    },
+
+    # Servers / Infrastructure (+5)
+    {
+        'id': 'cmd-get-aduser',
+        'command': 'Get-ADUser',
+        'platform': 'Windows Server / PowerShell',
+        'purpose': 'Queries Active Directory Domain Services for user accounts and their replicated last logon timestamps.',
+        'syntax': 'Get-ADUser -Filter <filter> -Properties <props> | Select-Object <props>',
+        'example': 'Get-ADUser -Filter * -Properties LastLogonDate | Where-Object {$_.LastLogonDate -lt (Get-Date).AddDays(-90)}',
+        'expectedResult': 'Name           LastLogonDate\n----           -------------\nAlex.Smith     3/14/2026 2:15:00 PM\nTaylor.Jones   5/22/2026 8:40:00 AM',
+        'useCase': 'Auditing dormant or stale user accounts in Active Directory for compliance and credential lifecycle hygiene.',
+        'category': 'Servers',
+        'safety': 'Read-only',
+        'warnings': 'Requires Active Directory PowerShell module and domain connectivity.'
+    },
+    {
+        'id': 'cmd-dcdiag',
+        'command': 'dcdiag /v /test:DNS',
+        'platform': 'Windows Server',
+        'purpose': 'Performs comprehensive Active Directory Domain Controller health tests specifically targeting DNS integration.',
+        'syntax': 'dcdiag [/v] [/test:DNS]',
+        'example': 'dcdiag /v /test:DNS',
+        'expectedResult': 'Directory Server Diagnosis\nTesting server: Default-First-Site-Name\\DC01\n   Starting test: DNS\n      DNS test completed and passed successfully. All SRV records registered.',
+        'useCase': 'Troubleshooting AD replication failures, missing SRV resource records, and cross-site DC discovery.',
+        'category': 'Servers',
+        'safety': 'Read-only',
+        'warnings': 'Requires Domain Administrator or Enterprise Administrator privileges on the DC.'
+    },
+    {
+        'id': 'cmd-get-dhcpserverv4scope',
+        'command': 'Get-DhcpServerv4Scope',
+        'platform': 'Windows Server / PowerShell',
+        'purpose': 'Retrieves all configured IPv4 DHCP scopes, start/end IP ranges, subnet masks, and scope states.',
+        'syntax': 'Get-DhcpServerv4Scope [-ComputerName <string>]',
+        'example': 'Get-DhcpServerv4Scope',
+        'expectedResult': 'ScopeId       SubnetMask      Name         State    StartRange      EndRange\n-------       ----------      ----         -----    ----------      --------\n192.168.10.0  255.255.255.0   Workstations Active   192.168.10.100  192.168.10.254',
+        'useCase': 'Verifying DHCP scope provisioning, IP address lease pool boundaries, and scope activation status.',
+        'category': 'Servers',
+        'safety': 'Read-only',
+        'warnings': 'Requires DHCP Server administration privileges.'
+    },
+    {
+        'id': 'cmd-qm-list',
+        'command': 'qm list',
+        'platform': 'Proxmox VE',
+        'purpose': 'Lists all QEMU/KVM virtual machines configured on the Proxmox hypervisor node with runtime states.',
+        'syntax': 'qm list',
+        'example': 'qm list',
+        'expectedResult': 'VMID NAME                 STATUS     MEM(MB)    BOOTDISK(GB) PID       \n100  app-server-01        running    4096       32.00        1892      \n101  database-cluster-01  running    16384      128.00       2104      \n102  test-sandbox         stopped    2048       16.00        0',
+        'useCase': 'Checking hypervisor VM allocations, identifying offline guests, and verifying VMIDs for automation scripts.',
+        'category': 'Servers',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-ipmitool-sdr',
+        'command': 'ipmitool sdr elist',
+        'platform': 'Enterprise Servers / Linux',
+        'purpose': 'Enumerate Intelligent Platform Management Interface (IPMI) Sensor Data Records for physical hardware telemetry.',
+        'syntax': 'ipmitool sdr elist [all]',
+        'example': 'ipmitool sdr elist',
+        'expectedResult': 'CPU1 Temp        | 42 degrees C      | ok\nSystem Temp      | 28 degrees C      | ok\nFAN 1 RPM        | 6200 RPM          | ok\nPSU1 Status      | 0x01              | ok',
+        'useCase': 'Auditing server physical motherboard temperatures, power supply unit redundancies, and fan speeds.',
+        'category': 'Servers',
+        'safety': 'Read-only',
+        'warnings': 'Requires OpenIPMI driver loaded or remote BMC credentials configured.'
+    },
+
+    # Cybersecurity / Defensive Administration (+5)
+    {
+        'id': 'cmd-get-mpcomputerstatus',
+        'command': 'Get-MpComputerStatus',
+        'platform': 'Windows PowerShell',
+        'purpose': 'Inspects Microsoft Defender Antivirus operational state, real-time protection, and definition engine version.',
+        'syntax': 'Get-MpComputerStatus',
+        'example': 'Get-MpComputerStatus | Select-Object AMServiceEnabled, RealTimeProtectionEnabled, AntivirusSignatureAge',
+        'expectedResult': 'AMServiceEnabled           : True\nRealTimeProtectionEnabled  : True\nAntivirusSignatureAge      : 0',
+        'useCase': 'Validating endpoint protection compliance and verifying that antivirus signatures are actively updated.',
+        'category': 'Cybersecurity',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-netsh-advfirewall-state',
+        'command': 'netsh advfirewall show allprofiles state',
+        'platform': 'Windows',
+        'purpose': 'Queries operational status (ON/OFF) of Windows Defender Firewall across Domain, Private, and Public profiles.',
+        'syntax': 'netsh advfirewall show allprofiles state',
+        'example': 'netsh advfirewall show allprofiles state',
+        'expectedResult': 'Domain Profile Settings:\n----------------------------------------------------------------------\nState                                 ON\n\nPrivate Profile Settings:\n----------------------------------------------------------------------\nState                                 ON\n\nPublic Profile Settings:\n----------------------------------------------------------------------\nState                                 ON',
+        'useCase': 'Auditing endpoint host firewall compliance against enterprise hardening baselines.',
+        'category': 'Cybersecurity',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-get-filehash',
+        'command': 'Get-FileHash',
+        'platform': 'Windows PowerShell',
+        'purpose': 'Computes cryptographic hash of a file to verify software integrity against manufacturer checksums.',
+        'syntax': 'Get-FileHash -Path <path> [-Algorithm <SHA256|SHA384|SHA512>]',
+        'example': 'Get-FileHash -Algorithm SHA256 server-installer.iso',
+        'expectedResult': 'Algorithm       Hash                                                               Path\n---------       ----                                                               ----\nSHA256          E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855   C:\\server-installer.iso',
+        'useCase': 'Detecting corrupted downloads and verifying software packages against supply chain tampering.',
+        'category': 'Cybersecurity',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-sshd-t-grep',
+        'command': 'sshd -T',
+        'platform': 'Linux',
+        'purpose': 'Inspects active runtime configuration of the OpenSSH server daemon to verify hardening compliance.',
+        'syntax': 'sshd -T | grep -E "<patterns>"',
+        'example': 'sshd -T | grep -E "permitrootlogin|passwordauthentication"',
+        'expectedResult': 'permitrootlogin no\npasswordauthentication no',
+        'useCase': 'Verifying SSH bastion host hardening to ensure root login and password-based authentication are disabled.',
+        'category': 'Cybersecurity',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-ufw-status-verbose',
+        'command': 'ufw status verbose',
+        'platform': 'Linux',
+        'purpose': 'Inspects Uncomplicated Firewall status, default policies for incoming/outgoing traffic, and active port rules.',
+        'syntax': 'ufw status verbose',
+        'example': 'ufw status verbose',
+        'expectedResult': 'Status: active\nLogging: on (low)\nDefault: deny (incoming), allow (outgoing), disabled (routed)\n\nTo                         Action      From\n--                         ------      ----\n22/tcp                     ALLOW IN    Anywhere\n443/tcp                    ALLOW IN    Anywhere',
+        'useCase': 'Validating host firewall ingress restrictions and confirming only required management ports are exposed.',
+        'category': 'Cybersecurity',
+        'safety': 'Read-only',
+        'warnings': 'Requires root (sudo) privileges to query netfilter firewall state.'
+    },
+
+    # Cloud (+5)
+    {
+        'id': 'cmd-aws-sts-caller-identity',
+        'command': 'aws sts get-caller-identity',
+        'platform': 'AWS CLI',
+        'purpose': 'Returns details about the IAM identity or assumed role whose credentials authenticate the AWS request.',
+        'syntax': 'aws sts get-caller-identity',
+        'example': 'aws sts get-caller-identity',
+        'expectedResult': '{\n    "UserId": "AROAEXAMPLE123456789:ops-session",\n    "Account": "123456789012",\n    "Arn": "arn:aws:sts::123456789012:assumed-role/CloudAdminRole/ops-session"\n}',
+        'useCase': 'Confirming active AWS credential context and preventing accidental operations against production accounts.',
+        'category': 'Cloud',
+        'safety': 'Read-only',
+        'warnings': 'Requires valid configured AWS credentials in environment variables or ~/.aws/credentials.'
+    },
+    {
+        'id': 'cmd-aws-ec2-describe-instances',
+        'command': 'aws ec2 describe-instances',
+        'platform': 'AWS CLI',
+        'purpose': 'Queries running EC2 virtual machines and projects instance IDs, instance types, and private IP addresses.',
+        'syntax': 'aws ec2 describe-instances [--filters <filters>] [--query <JMESPath>]',
+        'example': 'aws ec2 describe-instances --filters "Name=instance-state-name,Values=running" --query "Reservations[*].Instances[*].[InstanceId,InstanceType,PrivateIpAddress]" --output table',
+        'expectedResult': '----------------------------------------------------------\n|                    DescribeInstances                   |\n+----------------------+--------------+------------------+\n|  i-0123456789abcdef0 |  t3.medium   |  10.0.1.25       |\n|  i-0abcdef0123456789 |  m6i.large   |  10.0.1.44       |\n+----------------------+--------------+------------------',
+        'useCase': 'Cloud inventory auditing and generating dynamic host inventories for configuration management.',
+        'category': 'Cloud',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-az-account-show',
+        'command': 'az account show',
+        'platform': 'Azure CLI',
+        'purpose': 'Displays active Microsoft Azure subscription, tenant GUID, user account, and environment context.',
+        'syntax': 'az account show [-o table]',
+        'example': 'az account show -o table',
+        'expectedResult': 'EnvironmentName    HomeTenantId                          Id (SubscriptionId)                   IsDefault    Name             State\n-----------------  ------------------------------------  ------------------------------------  -----------  ---------------  -------\nAzureCloud         aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee  11111111-2222-3333-4444-555555555555  True         Prod-Core-Sub    Enabled',
+        'useCase': 'Validating the active Azure CLI subscription context before running resource deployment or destruction commands.',
+        'category': 'Cloud',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-az-vm-list',
+        'command': 'az vm list',
+        'platform': 'Azure CLI',
+        'purpose': 'Lists Azure virtual machines across all resource groups with runtime power states and IP configurations.',
+        'syntax': 'az vm list -d [--query <JMESPath>] [-o table]',
+        'example': 'az vm list -d --query "[].{Name:name, State:powerState, ResourceGroup:resourceGroup, PrivateIP:privateIps}" -o table',
+        'expectedResult': 'Name         State       ResourceGroup      PrivateIP\n-----------  ----------  -----------------  ----------\nvm-web-01    VM running  rg-prod-workloads  10.20.1.10\nvm-db-01     VM running  rg-prod-workloads  10.20.2.15',
+        'useCase': 'Multi-resource group Azure VM inventory auditing and verifying operational state after maintenance.',
+        'category': 'Cloud',
+        'safety': 'Read-only',
+        'warnings': None
+    },
+    {
+        'id': 'cmd-kubectl-get-pods',
+        'command': 'kubectl get pods',
+        'platform': 'Kubernetes / kubectl',
+        'purpose': 'Lists all Kubernetes pods across all namespaces that are not in the Running phase.',
+        'syntax': 'kubectl get pods -A [--field-selector=<selector>]',
+        'example': 'kubectl get pods -A --field-selector=status.phase!=Running',
+        'expectedResult': 'NAMESPACE     NAME                           READY   STATUS             RESTARTS   AGE\nproduction    auth-service-589dfb648-2q4km   0/1     CrashLoopBackOff   5          12m\npayment-gw    settlement-worker-89c-49jkl    0/1     Pending            0          3m',
+        'useCase': 'Fast cluster-wide incident response to identify unhealthy, failing, or unscheduled container workloads.',
+        'category': 'Cloud',
+        'safety': 'Read-only',
+        'warnings': 'Requires valid kubeconfig file and cluster RBAC view permissions.'
+    }
+]
+
+all_cmds = existing_cmds + new_cmds
+print(f'Total commands generated: {len(all_cmds)}')
+
+# Validation check
+required_fields = ["command", "platform", "purpose", "syntax", "example", "expectedResult", "useCase", "category"]
+for idx, c in enumerate(all_cmds):
+    for rf in required_fields:
+        if rf not in c:
+            raise ValueError(f"Command #{idx} missing required field {rf}")
+
+with open('data/commands.json', 'w', encoding='utf-8') as f:
+    json.dump(all_cmds, f, indent=4, ensure_ascii=False)
+print('Successfully saved data/commands.json')

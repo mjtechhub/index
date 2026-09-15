@@ -1,0 +1,422 @@
+[
+  {
+    "id": "port-dns",
+    "service": "DNS (Domain Name System)",
+    "port": "53",
+    "transport": "TCP/UDP",
+    "description": "Translates human-readable domain names into IP addresses. Uses UDP for standard queries under 512 bytes (or EDNS0) and TCP for zone transfers (AXFR/IXFR) or large query responses.",
+    "category": "Core Infrastructure",
+    "securityNotes": "DNS traffic is plaintext by default. Deploy DNSSEC to prevent cache poisoning, and adopt DoT (DNS over TLS, port 853) or DoH (port 443) for transport privacy.",
+    "keywords": ["dns", "name resolution", "53", "udp", "tcp", "bind", "edns", "axfr", "root hints"]
+  },
+  {
+    "id": "port-dhcp",
+    "service": "DHCP (Dynamic Host Configuration Protocol)",
+    "port": "67/68",
+    "transport": "UDP",
+    "description": "Automatically assigns IPv4 addresses, subnet masks, default gateways, and DNS servers to network clients. Port 67 serves DHCP server listening; Port 68 serves client responses (DORA exchange).",
+    "category": "Core Infrastructure",
+    "securityNotes": "Vulnerable to rogue DHCP servers and DHCP starvation attacks. Mitigate on enterprise switches with DHCP Snooping, Option 82 insertion, and Dynamic ARP Inspection (DAI).",
+    "keywords": ["dhcp", "dora", "67", "68", "ip address assignment", "lease", "options", "snooping"]
+  },
+  {
+    "id": "port-ntp",
+    "service": "NTP (Network Time Protocol)",
+    "port": "123",
+    "transport": "UDP",
+    "description": "Synchronizes computer clocks across packet-switched data networks to millisecond precision using a hierarchical stratum architecture (Stratum 0 atomic reference down to Stratum 1-15 servers).",
+    "category": "Core Infrastructure",
+    "securityNotes": "Accurate time is essential for Kerberos authentication (5-minute maximum skew tolerance), TLS certificate validity, and forensics log correlation. Restrict access to authoritative internal time sources.",
+    "keywords": ["ntp", "time", "clock", "stratum", "123", "chrony", "timesync", "kerberos skew"]
+  },
+  {
+    "id": "port-snmp",
+    "service": "SNMP (Simple Network Management Protocol)",
+    "port": "161",
+    "transport": "UDP",
+    "description": "Monitors network devices, servers, routers, and switches for health metrics, interface statistics, and operational telemetry via Management Information Bases (MIBs) and OIDs.",
+    "category": "Monitoring & Storage",
+    "securityNotes": "SNMPv1 and SNMPv2c transmit community strings in cleartext across the wire. Mandate SNMPv3 which provides user authentication (USM) and cryptographic payload encryption (AES).",
+    "keywords": ["snmp", "monitoring", "mib", "oid", "161", "telemetry", "snmpv3", "community string"]
+  },
+  {
+    "id": "port-snmptrap",
+    "service": "SNMP Trap",
+    "port": "162",
+    "transport": "UDP",
+    "description": "Asynchronous event notifications sent by managed network devices directly to an SNMP management station or NMS when an unsolicited threshold condition or failure occurs (e.g. link down, power supply failure).",
+    "category": "Monitoring & Storage",
+    "securityNotes": "Traps can be spoofed on UDP without authentication unless SNMPv3 Inform requests or authenticated trap receivers are configured. Restrict port 162 access via firewall ACLs.",
+    "keywords": ["snmp trap", "traps", "162", "asynchronous alerts", "nms", "event monitoring"]
+  },
+  {
+    "id": "port-syslog",
+    "service": "Syslog",
+    "port": "514",
+    "transport": "TCP/UDP",
+    "description": "Standard architecture for forwarding system event messages, operational logs, and security telemetry from network devices and Unix/Linux servers to central log collectors (RFC 5424).",
+    "category": "Monitoring & Storage",
+    "securityNotes": "Standard UDP 514 syslog lacks encryption, sender verification, and delivery guarantees. Adopt Syslog over TLS (RFC 5425, port 6514 TCP) for secure transport to SIEM systems.",
+    "keywords": ["syslog", "514", "logging", "rfc 5424", "rsyslog", "syslog-ng", "siem", "events"]
+  },
+  {
+    "id": "port-ssh",
+    "service": "SSH (Secure Shell)",
+    "port": "22",
+    "transport": "TCP",
+    "description": "Encrypted remote command-line login, system administration, SFTP file transfer, and secure port forwarding across untrusted networks.",
+    "category": "Remote Access & Administration",
+    "securityNotes": "Disable direct root SSH login, disable password-based authentication in favor of Ed25519/RSA public keys, enforce rate-limiting or fail2ban, and protect management endpoints behind VPN or bastions.",
+    "keywords": ["ssh", "secure shell", "22", "tcp", "terminal", "sftp", "bastion", "public key"]
+  },
+  {
+    "id": "port-rdp",
+    "service": "RDP (Remote Desktop Protocol)",
+    "port": "3389",
+    "transport": "TCP/UDP",
+    "description": "Proprietary Microsoft protocol providing interactive graphical desktop access and application virtualization to remote Windows workstations and servers.",
+    "category": "Remote Access & Administration",
+    "securityNotes": "Never expose port 3389 directly to the public Internet due to continuous ransomware attacks and brute force campaigns. Enforce Network Level Authentication (NLA), MFA, and access via Remote Desktop Gateway.",
+    "keywords": ["rdp", "remote desktop", "3389", "mstsc", "nla", "windows terminal services", "vdi"]
+  },
+  {
+    "id": "port-winrm-http",
+    "service": "WinRM HTTP (Windows Remote Management)",
+    "port": "5985",
+    "transport": "TCP",
+    "description": "SOAP-based remote management protocol implemented via the WS-Management standard for remote PowerShell execution and automated Windows administration over plaintext HTTP transport.",
+    "category": "Remote Access & Administration",
+    "securityNotes": "Even though Kerberos encrypts message payloads on domain networks over HTTP, WinRM over HTTPS (port 5986) with valid certificates is recommended on untrusted or non-domain segments.",
+    "keywords": ["winrm", "powershell remoting", "ws-management", "5985", "enter-pssession", "invoke-command"]
+  },
+  {
+    "id": "port-winrm-https",
+    "service": "WinRM HTTPS",
+    "port": "5986",
+    "transport": "TCP",
+    "description": "Encrypted Windows Remote Management over TLS. Used for secure cross-domain, workgroup, and cloud-to-on-premises PowerShell remoting and automated configuration management (e.g. Ansible).",
+    "category": "Remote Access & Administration",
+    "securityNotes": "Requires dedicated TLS listener configuration and server certificate binding. Ensures transport-level encryption regardless of whether domain Kerberos authentication is available.",
+    "keywords": ["winrm https", "5986", "powershell tls", "ansible windows", "remote management"]
+  },
+  {
+    "id": "port-http",
+    "service": "HTTP (Hypertext Transfer Protocol)",
+    "port": "80",
+    "transport": "TCP",
+    "description": "Foundational client-server application protocol for distributing hypertext, web documents, and APIs across the Internet without transport encryption.",
+    "category": "Web & Mail Services",
+    "securityNotes": "All transmitted data, credentials, and session tokens are unencrypted. In production, configure HTTP solely to issue HTTP 301/308 permanent redirects to HTTPS, and enforce HSTS.",
+    "keywords": ["http", "web", "80", "tcp", "cleartext", "hsts", "www", "apache", "nginx"]
+  },
+  {
+    "id": "port-https",
+    "service": "HTTPS (HTTP Secure)",
+    "port": "443",
+    "transport": "TCP",
+    "description": "Standard encrypted web protocol encapsulating HTTP within TLS (Transport Layer Security) to ensure bidirectional confidentiality, integrity, and server authentication.",
+    "category": "Web & Mail Services",
+    "securityNotes": "Mandate modern TLS 1.3 or TLS 1.2 with forward secrecy (ECDHE) ciphers. Disable legacy SSL 3.0, TLS 1.0, and TLS 1.1. Implement automated certificate renewal with ACME.",
+    "keywords": ["https", "tls", "ssl", "443", "web encryption", "certificate", "alpn", "http/2", "http/3"]
+  },
+  {
+    "id": "port-smtp",
+    "service": "SMTP (Simple Mail Transfer Protocol)",
+    "port": "25",
+    "transport": "TCP",
+    "description": "Standard protocol for message transfer between Mail Transfer Agents (MTAs). Relays electronic mail across the Internet from originating MTA to destination mail server.",
+    "category": "Web & Mail Services",
+    "securityNotes": "Port 25 is commonly blocked outbound by residential ISPs and cloud providers to prevent spam botnets. Upgrade opportunistic connections to TLS via STARTTLS, and deploy SPF, DKIM, and DMARC.",
+    "keywords": ["smtp", "mail relay", "25", "mta", "starttls", "dmarc", "spf", "postfix", "exchange"]
+  },
+  {
+    "id": "port-submission",
+    "service": "Message Submission (SMTP Submission)",
+    "port": "587",
+    "transport": "TCP",
+    "description": "Dedicated port for Mail User Agents (MUAs like Outlook, Thunderbird) to submit outgoing mail messages to an authorized outgoing mail server with mandatory client authentication.",
+    "category": "Web & Mail Services",
+    "securityNotes": "Mandates SMTP authentication (SASL) and STARTTLS encryption before client credentials or mail payloads are accepted, preventing unauthorized relaying.",
+    "keywords": ["submission", "smtp auth", "587", "mua", "outgoing mail", "client submission"]
+  },
+  {
+    "id": "port-smtps",
+    "service": "SMTPS (SMTP over TLS)",
+    "port": "465",
+    "transport": "TCP",
+    "description": "Implicit TLS mail submission port where the transport session immediately establishes a TLS handshake upon connection before initiating SMTP command sequences.",
+    "category": "Web & Mail Services",
+    "securityNotes": "Recommended by RFC 8314 for end-user mail submission with immediate cryptographic protection, preventing plaintext fallback vulnerabilities.",
+    "keywords": ["smtps", "implicit tls", "465", "mail submission", "rfc 8314"]
+  },
+  {
+    "id": "port-imap",
+    "service": "IMAP (Internet Message Access Protocol)",
+    "port": "143",
+    "transport": "TCP",
+    "description": "Permits email clients to access and manage messages stored on a remote mail server, supporting multi-device folder synchronization and flag tracking.",
+    "category": "Web & Mail Services",
+    "securityNotes": "Port 143 transmits credentials in plaintext unless the connection immediately upgrades via STARTTLS. Implicit IMAPS (port 993) is strongly preferred.",
+    "keywords": ["imap", "email retrieval", "143", "starttls", "dovecot", "mailbox sync"]
+  },
+  {
+    "id": "port-imaps",
+    "service": "IMAPS (IMAP over TLS)",
+    "port": "993",
+    "transport": "TCP",
+    "description": "IMAP with implicit TLS encryption from initial socket connection. Standard for mobile and desktop email clients accessing mailbox stores securely.",
+    "category": "Web & Mail Services",
+    "securityNotes": "Provides immediate encryption, ensuring authentication credentials and message bodies remain protected across public and untrusted networks.",
+    "keywords": ["imaps", "993", "secure imap", "mailbox synchronization", "tls email"]
+  },
+  {
+    "id": "port-pop3",
+    "service": "POP3 (Post Office Protocol v3)",
+    "port": "110",
+    "transport": "TCP",
+    "description": "Legacy mail retrieval protocol where clients download messages from a remote mail server to local storage, typically deleting the remote copies.",
+    "category": "Web & Mail Services",
+    "securityNotes": "Plaintext protocol vulnerable to credential interception. Deprecated in modern enterprise environments in favor of IMAPS or modern Graph/MAPI HTTPS endpoints.",
+    "keywords": ["pop3", "110", "legacy email", "mail retrieval", "cleartext"]
+  },
+  {
+    "id": "port-pop3s",
+    "service": "POP3S (POP3 over TLS)",
+    "port": "995",
+    "transport": "TCP",
+    "description": "POP3 protocol wrapped in implicit TLS from connection initiation, protecting authentication credentials and downloaded messages.",
+    "category": "Web & Mail Services",
+    "securityNotes": "Protects transport credentials, but lacks the modern multi-device synchronization and granular control offered by IMAP and modern cloud mail APIs.",
+    "keywords": ["pop3s", "995", "secure pop3", "encrypted mail retrieval"]
+  },
+  {
+    "id": "port-ldap",
+    "service": "LDAP (Lightweight Directory Access Protocol)",
+    "port": "389",
+    "transport": "TCP/UDP",
+    "description": "Directory query and modification protocol for querying user identities, organizational units, and domain objects in Active Directory and OpenLDAP.",
+    "category": "Directory & Identity",
+    "securityNotes": "Standard port 389 connections transmit simple bind credentials in cleartext unless SASL signing/sealing or STARTTLS is negotiated. Active Directory mandates signing or LDAPS.",
+    "keywords": ["ldap", "directory services", "389", "active directory", "openldap", "user lookup"]
+  },
+  {
+    "id": "port-ldaps",
+    "service": "LDAPS (LDAP over TLS)",
+    "port": "636",
+    "transport": "TCP",
+    "description": "LDAP wrapped inside an implicit TLS connection. Required for secure directory authentication, password resets, and user authorization queries across networks.",
+    "category": "Directory & Identity",
+    "securityNotes": "Ensures all directory queries, attributes, and user credentials remain encrypted. Requires valid enterprise PKI certificates on Domain Controllers.",
+    "keywords": ["ldaps", "636", "secure ldap", "active directory tls", "pki authentication"]
+  },
+  {
+    "id": "port-kerberos",
+    "service": "Kerberos Authentication",
+    "port": "88",
+    "transport": "TCP/UDP",
+    "description": "Ticket-based network authentication protocol used by Microsoft Active Directory and MIT Kerberos. Issues Ticket Granting Tickets (TGT) and service tickets to prevent password transmission.",
+    "category": "Directory & Identity",
+    "securityNotes": "Requires synchronized system clocks across domain members (maximum 5-minute skew by default). Protect Domain Controllers and monitor for Kerberoasting and AS-REP roasting attacks.",
+    "keywords": ["kerberos", "tgt", "kdc", "88", "active directory authentication", "time skew", "tickets"]
+  },
+  {
+    "id": "port-smb",
+    "service": "SMB (Server Message Block)",
+    "port": "445",
+    "transport": "TCP",
+    "description": "File sharing, printer sharing, and named pipes remote procedure call (RPC) protocol for Windows enterprise environments and Samba servers.",
+    "category": "Monitoring & Storage",
+    "securityNotes": "Block inbound port 445 at the network perimeter. Disable obsolete SMBv1 entirely. Mandate SMB signing and SMB encryption (SMB 3.1.1) to protect against relay and eavesdropping.",
+    "keywords": ["smb", "cifs", "445", "file sharing", "named pipes", "samba", "active directory file share"]
+  },
+  {
+    "id": "port-iscsi",
+    "service": "iSCSI (Internet Small Computer Systems Interface)",
+    "port": "3260",
+    "transport": "TCP",
+    "description": "Storage networking protocol that encapsulates SCSI commands over TCP/IP networks, allowing servers to mount block-level storage targets across IP SANs.",
+    "category": "Monitoring & Storage",
+    "securityNotes": "Isolate iSCSI traffic on dedicated non-routable storage VLANs or physical SAN networks. Configure CHAP authentication and utilize IPsec encryption where cross-site transport is required.",
+    "keywords": ["iscsi", "storage area network", "3260", "san", "scsi", "block storage", "chap"]
+  },
+  {
+    "id": "port-bgp",
+    "service": "BGP (Border Gateway Protocol)",
+    "port": "179",
+    "transport": "TCP",
+    "description": "The standardized exterior gateway routing protocol that manages routing decisions and autonomous system (AS) reachability across the Internet and enterprise cloud interconnects.",
+    "category": "Network & Routing",
+    "securityNotes": "Enforce TCP MD5 authentication (RFC 2385) or TCP-AO (RFC 5925), TTL security (GTSM), RPKI route validation to prevent BGP route hijacking, and prefix-lists on peering sessions.",
+    "keywords": ["bgp", "179", "routing", "autonomous system", "asn", "ebgp", "ibgp", "rpki", "peering"]
+  },
+  {
+    "id": "port-radius-auth",
+    "service": "RADIUS Authentication",
+    "port": "1812",
+    "transport": "UDP",
+    "description": "Remote Authentication Dial-In User Service (RFC 2865) providing centralized AAA authentication and authorization for 802.1X wireless, switch port security, and VPN access.",
+    "category": "Directory & Identity",
+    "securityNotes": "RADIUS relies on MD5 and shared secrets which are vulnerable to cryptanalysis. Mandate long random shared secrets, restrict network access, and transition to RadSec (RADIUS over TLS).",
+    "keywords": ["radius", "1812", "aaa", "802.1x", "network policy server", "wpa2-enterprise", "nps"]
+  },
+  {
+    "id": "port-radius-acct",
+    "service": "RADIUS Accounting",
+    "port": "1813",
+    "transport": "UDP",
+    "description": "RADIUS accounting service (RFC 2866) recording session connection duration, byte consumption, and disconnect reasons for auditing and compliance tracking.",
+    "category": "Directory & Identity",
+    "securityNotes": "Accounting packets contain sensitive user identity and session telemetry. Restrict listener access to authorized network access servers (NAS) via firewalls.",
+    "keywords": ["radius accounting", "1813", "accounting", "session tracking", "audit logs"]
+  },
+  {
+    "id": "port-tacacs",
+    "service": "TACACS+ (Terminal Access Controller Access-Control System+)",
+    "port": "49",
+    "transport": "TCP",
+    "description": "Cisco-developed AAA protocol that separates authentication, authorization, and accounting. Used widely for administrator login and per-command authorization on network devices.",
+    "category": "Directory & Identity",
+    "securityNotes": "Unlike standard RADIUS which only encrypts the password attribute, TACACS+ encrypts the entire packet payload past the 12-byte header using the configured shared secret.",
+    "keywords": ["tacacs+", "tacacs", "49", "aaa", "cisco ise", "command authorization", "admin access"]
+  },
+  {
+    "id": "port-ipsec-ike",
+    "service": "IPsec IKE (Internet Key Exchange)",
+    "port": "500",
+    "transport": "UDP",
+    "description": "Negotiates Security Associations (SA), authenticates peers, and exchanges cryptographic keys for establishing IPsec VPN tunnels (IKEv1 and IKEv2).",
+    "category": "Network & Routing",
+    "securityNotes": "Prefer IKEv2 over legacy IKEv1. Enforce strong Diffie-Hellman groups (Group 14+ / 2048-bit or ECDH Groups 19/20) and modern AES-GCM encryption algorithms.",
+    "keywords": ["ipsec", "ike", "ikev2", "500", "vpn tunnel", "security association", "diffie-hellman"]
+  },
+  {
+    "id": "port-ipsec-nat-t",
+    "service": "IPsec NAT Traversal (NAT-T)",
+    "port": "4500",
+    "transport": "UDP",
+    "description": "Encapsulates IPsec ESP packets inside standard UDP datagrams to permit seamless traversal across Network Address Translation (NAT) gateways and stateful firewalls (RFC 3948).",
+    "category": "Network & Routing",
+    "securityNotes": "Allows VPN clients behind residential or enterprise PAT routers to connect securely to corporate concentrators without NAT breakages.",
+    "keywords": ["nat-t", "4500", "ipsec nat traversal", "esp encapsulation", "vpn gateway"]
+  },
+  {
+    "id": "port-ipsec-esp",
+    "service": "IPsec ESP (Encapsulating Security Payload)",
+    "port": "IP Protocol 50",
+    "transport": "IP Protocol",
+    "description": "Network-layer protocol providing confidentiality, data-origin authentication, connectionless integrity, and anti-replay services for IPsec tunnels. Note: Operates as IP Protocol 50 directly on the IP header, NOT a TCP or UDP port number.",
+    "category": "Network & Routing",
+    "securityNotes": "Because ESP has no Layer 4 port numbers, native ESP cannot traverse port-restricted NAT gateways without UDP encapsulation on port 4500 (NAT-T). Ensure firewalls permit IP protocol 50.",
+    "keywords": ["esp", "ip protocol 50", "ipsec encryption", "tunnel mode", "transport mode", "no tcp port"]
+  },
+  {
+    "id": "port-ipsec-ah",
+    "service": "IPsec AH (Authentication Header)",
+    "port": "IP Protocol 51",
+    "transport": "IP Protocol",
+    "description": "Network-layer protocol providing connectionless integrity and data authentication for IP packets without data encryption. Note: Operates as IP Protocol 51, NOT a TCP or UDP port number.",
+    "category": "Network & Routing",
+    "securityNotes": "AH hashes parts of the IP header (including source and destination IPs). Consequently, any NAT device modifying IP headers will invalidate AH hashes, breaking connectivity.",
+    "keywords": ["ah", "ip protocol 51", "authentication header", "ipsec integrity", "not a port"]
+  },
+  {
+    "id": "port-icmp",
+    "service": "ICMP (Internet Control Message Protocol)",
+    "port": "IP Protocol 1",
+    "transport": "IP Protocol",
+    "description": "Essential network-layer diagnostic and control protocol used by routers and hosts to generate error notifications (Destination Unreachable, Time Exceeded) and diagnostic probes (Echo Request/Reply for ping). Operates as IP Protocol 1, NOT a TCP/UDP port.",
+    "category": "Core Infrastructure",
+    "securityNotes": "Do not block all ICMP unconditionally! Blocking ICMP Type 3 Code 4 (Fragmentation Needed) breaks Path MTU Discovery (PMTUD), causing subtle packet-dropping black holes for large TCP sessions.",
+    "keywords": ["icmp", "ping", "traceroute", "echo request", "ip protocol 1", "pmtud", "error reporting"]
+  },
+  {
+    "id": "port-telnet",
+    "service": "Telnet",
+    "port": "23",
+    "transport": "TCP",
+    "description": "Legacy bidirectional interactive text communication protocol developed in 1969 for terminal sessions across ARPANET.",
+    "category": "Remote Access & Administration",
+    "securityNotes": "Transmits usernames, passwords, and commands in unencrypted cleartext. Strictly prohibited for production system administration; replace universally with SSH.",
+    "keywords": ["telnet", "23", "cleartext", "legacy terminal", "deprecated"]
+  },
+  {
+    "id": "port-ftp",
+    "service": "FTP (File Transfer Protocol)",
+    "port": "20/21",
+    "transport": "TCP",
+    "description": "Legacy client-server file transfer protocol. Port 21 manages control commands and authentication; Port 20 (or dynamic ephemeral ports in Passive mode) handles bulk data transfer.",
+    "category": "Monitoring & Storage",
+    "securityNotes": "Transmits user credentials and data payloads in cleartext. Complex dual-port architecture requires firewall helper modules. Replace with SFTP (SSH port 22) or FTPS.",
+    "keywords": ["ftp", "20", "21", "file transfer", "passive ftp", "active ftp", "sftp"]
+  },
+  {
+    "id": "port-tftp",
+    "service": "TFTP (Trivial File Transfer Protocol)",
+    "port": "69",
+    "transport": "UDP",
+    "description": "Simplified file transfer protocol without user authentication or directory listing. Primarily used for PXE network booting (downloading bootstrap kernels) and network router firmware backups.",
+    "category": "Core Infrastructure",
+    "securityNotes": "Has no authentication, encryption, or integrity mechanisms. Isolate TFTP servers strictly within controlled provisioning VLANs or out-of-band management subnets.",
+    "keywords": ["tftp", "69", "pxe boot", "firmware recovery", "udp file transfer"]
+  },
+  {
+    "id": "port-mssql",
+    "service": "Microsoft SQL Server",
+    "port": "1433",
+    "transport": "TCP",
+    "description": "Default TCP listening port for Microsoft SQL Server Database Engine instances across enterprise environments.",
+    "category": "Monitoring & Storage",
+    "securityNotes": "Never expose database listeners directly to public networks. Enforce TLS encryption for client-server connections and configure Windows Authentication (Kerberos) over SQL logins.",
+    "keywords": ["mssql", "1433", "sql server", "database", "tsql", "relational database"]
+  },
+  {
+    "id": "port-mysql",
+    "service": "MySQL / MariaDB",
+    "port": "3306",
+    "transport": "TCP",
+    "description": "Default network listener for open-source MySQL and MariaDB relational database management systems.",
+    "category": "Monitoring & Storage",
+    "securityNotes": "Bind the daemon strictly to local interfaces (127.0.0.1) or private VPC subnets. Require TLS connections and avoid root remote login permissions.",
+    "keywords": ["mysql", "mariadb", "3306", "database", "sql listener"]
+  },
+  {
+    "id": "port-postgres",
+    "service": "PostgreSQL",
+    "port": "5432",
+    "transport": "TCP",
+    "description": "Default connection port for the PostgreSQL enterprise-class open-source object-relational database system.",
+    "category": "Monitoring & Storage",
+    "securityNotes": "Configure pg_hba.conf to enforce scram-sha-256 authentication and reject plaintext connections. Mandate SSL/TLS encryption for all remote client traffic.",
+    "keywords": ["postgres", "postgresql", "5432", "database", "pg_hba", "rdbms"]
+  },
+  {
+    "id": "port-vxlan",
+    "service": "VxLAN (Virtual Extensible LAN)",
+    "port": "4789",
+    "transport": "UDP",
+    "description": "Network virtualization technology using MAC-in-UDP encapsulation (RFC 7348) to extend Layer 2 overlay segments across Layer 3 underlay datacenter fabrics.",
+    "category": "Network & Routing",
+    "securityNotes": "Encapsulates tenant traffic within the datacenter fabric. Protect VTEP endpoints and underlay networks against spoofed UDP injection packets.",
+    "keywords": ["vxlan", "4789", "overlay network", "datacenter", "vtep", "sdn"]
+  },
+  {
+    "id": "port-wireguard",
+    "service": "WireGuard VPN",
+    "port": "51820",
+    "transport": "UDP",
+    "description": "Modern, lightweight, high-performance VPN protocol using state-of-the-art cryptography (ChaCha20, Poly1305, Curve25519) operating over a single UDP port.",
+    "category": "Remote Access & Administration",
+    "securityNotes": "WireGuard is silent by default: it does not respond to unauthenticated packets, mitigating port scanning. Manage private keys securely and rotate endpoint keys periodically.",
+    "keywords": ["wireguard", "51820", "vpn", "modern cryptography", "tunnel", "udp vpn"]
+  },
+  {
+    "id": "port-openvpn",
+    "service": "OpenVPN",
+    "port": "1194",
+    "transport": "UDP",
+    "description": "Widely deployed open-source SSL/TLS VPN solution supporting site-to-site and client-to-gateway secure network connectivity.",
+    "category": "Remote Access & Administration",
+    "securityNotes": "Default port 1194 UDP is recommended for performance; TCP 443 can be used as fallback for restrictive firewalls. Enforce certificate-based PKI authentication and multi-factor authentication.",
+    "keywords": ["openvpn", "1194", "vpn", "ssl vpn", "tls tunnel", "client vpn"]
+  }
+]

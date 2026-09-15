@@ -6,6 +6,7 @@
     "type": "object",
     "required": ["command", "platform", "purpose", "syntax", "example", "expectedResult", "useCase", "category"],
     "properties": {
+      "id": { "type": "string" },
       "command": { "type": "string" },
       "platform": { "type": "string" },
       "purpose": { "type": "string" },
@@ -14,7 +15,9 @@
       "expectedResult": { "type": "string" },
       "useCase": { "type": "string" },
       "category": { "type": "string" },
-      "warnings": { "type": ["string", "null"] }
+      "safety": { "type": "string", "enum": ["Read-only", "Configuration-changing", "Potentially destructive"] },
+      "warnings": { "type": ["string", "null"] },
+      "keywords": { "type": "array", "items": { "type": "string" } }
     }
   }
 }

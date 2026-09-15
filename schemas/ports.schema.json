@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ports and Protocols Schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "service",
+      "port",
+      "transport",
+      "description",
+      "category",
+      "securityNotes",
+      "keywords"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^port-[a-z0-9-]+$"
+      },
+      "service": {
+        "type": "string",
+        "minLength": 2
+      },
+      "port": {
+        "type": "string",
+        "description": "Port number, range, or protocol identifier (e.g. '53', '67/68', 'IP Protocol 50')"
+      },
+      "transport": {
+        "type": "string",
+        "enum": ["TCP", "UDP", "TCP/UDP", "IP Protocol"]
+      },
+      "description": {
+        "type": "string",
+        "minLength": 10
+      },
+      "category": {
+        "type": "string",
+        "enum": [
+          "Core Infrastructure",
+          "Remote Access & Administration",
+          "Web & Mail Services",
+          "Directory & Identity",
+          "Monitoring & Storage",
+          "Network & Routing"
+        ]
+      },
+      "securityNotes": {
+        "type": "string",
+        "minLength": 10
+      },
+      "keywords": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "additionalProperties": false
+  }
+}

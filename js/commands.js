@@ -38,6 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
             allCommands = Array.isArray(data) ? data : [];
+            const metaPillCount = document.querySelector('.page-hero-meta .meta-pill-brand');
+            if (metaPillCount) {
+                metaPillCount.innerHTML = `<i class="fa-solid fa-terminal" aria-hidden="true"></i> ${allCommands.length} Essential Commands`;
+            }
+            if (counter) {
+                counter.textContent = `Showing ${allCommands.length} commands`;
+            }
             setupCategoryFilters(allCommands);
             setupSearch();
             renderCommandList(allCommands);
@@ -90,8 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
             filterTabsContainer.appendChild(btn);
         });
 
-        // Add platform specific filter tab if data supports it
-        if (linuxCount > 0) {
+        // Add platform specific filter tab if data supports it and not already a category tab
+        if (linuxCount > 0 && !categories.includes('Linux')) {
             const linuxBtn = document.createElement('button');
             linuxBtn.className = 'cmd-filter-btn';
             linuxBtn.setAttribute('role', 'tab');
@@ -140,7 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const syntax = (c.syntax || '').toLowerCase();
                 const ex = (c.example || '').toLowerCase();
                 const useCase = (c.useCase || '').toLowerCase();
-                return cmd.includes(searchQuery) || purpose.includes(searchQuery) || syntax.includes(searchQuery) || ex.includes(searchQuery) || useCase.includes(searchQuery);
+                const matchesKeywords = Array.isArray(c.keywords) && c.keywords.some(k => (k || '').toLowerCase().includes(searchQuery));
+                return cmd.includes(searchQuery) || purpose.includes(searchQuery) || syntax.includes(searchQuery) || ex.includes(searchQuery) || useCase.includes(searchQuery) || matchesKeywords;
             });
         }
 
@@ -194,6 +202,15 @@ document.addEventListener('DOMContentLoaded', () => {
             catBadge.className = 'cmd-badge cmd-badge-cat';
             catBadge.textContent = cmd.category;
             titleWrap.appendChild(catBadge);
+
+            if (cmd.safety) {
+                const safetyBadge = document.createElement('span');
+                const safetyCls = cmd.safety === 'Potentially destructive' ? 'cmd-badge-destructive' :
+                                  cmd.safety === 'Configuration-changing' ? 'cmd-badge-config' : 'cmd-badge-readonly';
+                safetyBadge.className = `cmd-badge cmd-badge-safety ${safetyCls}`;
+                safetyBadge.textContent = cmd.safety;
+                titleWrap.appendChild(safetyBadge);
+            }
 
             topRow.appendChild(titleWrap);
 

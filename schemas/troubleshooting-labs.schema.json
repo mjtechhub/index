@@ -1,0 +1,153 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Troubleshooting Labs Schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "category",
+      "title",
+      "level",
+      "estimatedTime",
+      "symptoms",
+      "environment",
+      "scenarioDescription",
+      "initialStepId",
+      "decisionPoints",
+      "finalDiagnosis"
+    ],
+    "properties": {
+      "id": {
+        "type": "string",
+        "pattern": "^lab-[a-z0-9-]+$"
+      },
+      "category": {
+        "type": "string",
+        "enum": ["Networking", "Windows", "Linux", "Servers", "Cybersecurity", "Cloud"]
+      },
+      "title": {
+        "type": "string",
+        "minLength": 5
+      },
+      "level": {
+        "type": "string",
+        "enum": ["Beginner", "Intermediate", "Advanced"]
+      },
+      "estimatedTime": {
+        "type": "string"
+      },
+      "symptoms": {
+        "type": "string",
+        "minLength": 10
+      },
+      "environment": {
+        "type": "string",
+        "minLength": 10
+      },
+      "scenarioDescription": {
+        "type": "string",
+        "minLength": 20
+      },
+      "initialStepId": {
+        "type": "string"
+      },
+      "decisionPoints": {
+        "type": "array",
+        "minItems": 4,
+        "maxItems": 8,
+        "items": {
+          "type": "object",
+          "required": [
+            "id",
+            "stepNumber",
+            "title",
+            "description",
+            "evidenceType",
+            "evidence",
+            "options"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "stepNumber": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "evidenceType": {
+              "type": "string",
+              "enum": ["terminal", "log", "config", "diagram"]
+            },
+            "evidence": {
+              "type": "string"
+            },
+            "options": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 4,
+              "items": {
+                "type": "object",
+                "required": ["id", "text", "type", "feedback", "nextStepId"],
+                "properties": {
+                  "id": { "type": "string" },
+                  "text": { "type": "string" },
+                  "type": {
+                    "type": "string",
+                    "enum": ["optimal", "suboptimal", "inefficient", "unsafe"]
+                  },
+                  "feedback": { "type": "string" },
+                  "nextStepId": { "type": "string" }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "finalDiagnosis": {
+        "type": "object",
+        "required": [
+          "title",
+          "rootCause",
+          "evidenceSummary",
+          "recommendedRemediation",
+          "verificationSteps",
+          "preventionMeasures",
+          "relatedCommands",
+          "relatedTutorials",
+          "relatedResources"
+        ],
+        "properties": {
+          "title": { "type": "string" },
+          "rootCause": { "type": "string" },
+          "evidenceSummary": { "type": "string" },
+          "recommendedRemediation": { "type": "string" },
+          "verificationSteps": { "type": "string" },
+          "preventionMeasures": { "type": "string" },
+          "relatedCommands": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "relatedTutorials": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "relatedResources": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "additionalProperties": false
+  }
+}

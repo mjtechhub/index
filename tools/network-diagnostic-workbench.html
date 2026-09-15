@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../js/theme-init.js"></script>
+    <!-- SEO & Metadata -->
+    <title>Network Diagnostic Workbench | MJ Tech Hub</title>
+    <meta name="description" content="Interactive network diagnostic workbench. Methodically isolate network and DNS issues across Layer 1 through Layer 7 with systematic troubleshooting logic.">
+    <link rel="canonical" href="https://themjtechhub.site/tools/network-diagnostic-workbench.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Network Diagnostic Workbench | MJ Tech Hub">
+    <meta property="og:description" content="Methodically isolate network and DNS issues across Layer 1 through Layer 7 with systematic troubleshooting logic.">
+    <meta property="og:url" content="https://themjtechhub.site/tools/network-diagnostic-workbench.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <div id="site-header"></div>
+    
+    <main id="main-content">
+        <section class="tools-hero container">
+            <span class="about-eyebrow">DECISION BENCHMARK</span>
+            <h1 class="page-title">Network Diagnostic Workbench</h1>
+            <p class="page-subtitle">Educational troubleshooting decision tool. Input observed symptoms to systematically isolate TCP/IP fault domains without guessing.</p>
+        </section>
+
+        <section class="container tool-workspace" aria-label="Network Diagnostic Workbench">
+            <!-- Platform Transparency Callout -->
+            <div class="callout callout-info" style="margin-bottom: 2rem; padding: 1.25rem 1.5rem; background: var(--surface); border-left: 4px solid var(--brand-primary); border-radius: var(--radius-md); box-shadow: var(--shadow-sm);">
+                <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                    <i class="fa-solid fa-circle-info" style="color: var(--brand-primary); font-size: 1.25rem; margin-top: 0.2rem;" aria-hidden="true"></i>
+                    <div>
+                        <strong style="color: var(--text-primary); font-size: var(--text-sm); display: block; margin-bottom: 0.25rem;">Browser Execution &amp; Privacy Architecture</strong>
+                        <p style="color: var(--text-secondary); font-size: var(--text-xs); margin: 0; line-height: 1.6;">
+                            This workbench runs 100% locally in your browser. As a static security boundary, it does not send raw ICMP packets or execute terminal commands on your computer. Enter the results of diagnostic tests you perform locally, and the engine models the TCP/IP stack to deduce likely fault domains and recommend authoritative next steps.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Questions Form -->
+            <form id="diag-form" class="tool-form-card" onsubmit="return false;">
+                <h2 style="font-size: var(--text-xl); font-weight: 700; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+                    Step 1: Enter Observed Diagnostic Symptoms
+                </h2>
+
+                <!-- Question 1: Gateway Ping -->
+                <div class="diag-question-group">
+                    <div class="diag-question-title">
+                        <i class="fa-solid fa-network-wired" style="color: var(--brand-primary);" aria-hidden="true"></i>
+                        <span>1. Can you ping your local Default Gateway?</span>
+                    </div>
+                    <div class="diag-options-row">
+                        <label class="diag-radio-label">
+                            <input type="radio" name="gateway-ping" value="yes" checked> Yes (0% loss, low latency)
+                        </label>
+                        <label class="diag-radio-label">
+                            <input type="radio" name="gateway-ping" value="no"> No (Request timed out / unreachable)
+                        </label>
+                        <label class="diag-radio-label">
+                            <input type="radio" name="gateway-ping" value="not_tested"> Not Tested Yet
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2: Public IP Ping -->
+                <div class="diag-question-group">
+                    <div class="diag-question-title">
+                        <i class="fa-solid fa-globe" style="color: var(--brand-secondary);" aria-hidden="true"></i>
+                        <span>2. Can you ping a known Public IP address (e.g. 8.8.8.8 or 1.1.1.1)?</span>
+                    </div>
+                    <div class="diag-options-row">
+                        <label class="diag-radio-label">
+                            <input type="radio" name="public-ping" value="yes" checked> Yes (Internet IP reachable)
+                        </label>
+                        <label class="diag-radio-label">
+                            <input type="radio" name="public-ping" value="no"> No (Public pings fail / timeout)
+                        </label>
+                        <label class="diag-radio-label">
+                            <input type="radio" name="public-ping" value="not_tested"> Not Tested Yet
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3: DNS Resolution -->
+                <div class="diag-question-group">
+                    <div class="diag-question-title">
+                        <i class="fa-solid fa-signs-post" style="color: var(--cat-linux);" aria-hidden="true"></i>
+                        <span>3. Does DNS successfully resolve domain names (e.g. nslookup or ping by hostname)?</span>
+                    </div>
+                    <div class="diag-options-row">
+                        <label class="diag-radio-label">
+                            <input type="radio" name="dns-resolve" value="yes"> Yes (Hostname resolves to IP)
+                        </label>
+                        <label class="diag-radio-label">
+                            <input type="radio" name="dns-resolve" value="no" checked> No (Server failure / Non-existent domain)
+                        </label>
+                        <label class="diag-radio-label">
+                            <input type="radio" name="dns-resolve" value="not_tested"> Not Tested Yet
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4: Port Reachability -->
+                <div class="diag-question-group">
+                    <div class="diag-question-title">
+                        <i class="fa-solid fa-door-open" style="color: var(--cat-servers);" aria-hidden="true"></i>
+                        <span>4. Can the destination TCP port be reached (e.g. Test-NetConnection or curl)?</span>
+                    </div>
+                    <div class="diag-options-row">
+                        <label class="diag-radio-label">
+                            <input type="radio" name="port-reachable" value="yes"> Yes (Port is open / handshake completes)
+                        </label>
+                        <label class="diag-radio-label">
+                            <input type="radio" name="port-reachable" value="no"> No (Connection refused / timed out)
+                        </label>
+                        <label class="diag-radio-label">
+                            <input type="radio" name="port-reachable" value="not_tested" checked> Not Tested / Unknown
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Scope & Connection Meta -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem;">
+                    <div class="diag-question-group">
+                        <div class="diag-question-title">
+                            <i class="fa-solid fa-users" style="color: var(--cat-cloud);" aria-hidden="true"></i>
+                            <span>Scope of Issue</span>
+                        </div>
+                        <div class="diag-options-row" style="flex-direction: column; gap: 0.5rem;">
+                            <label class="diag-radio-label"><input type="radio" name="scope" value="single" checked> Single Device</label>
+                            <label class="diag-radio-label"><input type="radio" name="scope" value="multiple"> Multiple Devices</label>
+                            <label class="diag-radio-label"><input type="radio" name="scope" value="entire_site"> Entire Site / Subnet</label>
+                        </div>
+                    </div>
+
+                    <div class="diag-question-group">
+                        <div class="diag-question-title">
+                            <i class="fa-solid fa-plug" style="color: var(--cat-cybersecurity);" aria-hidden="true"></i>
+                            <span>Connection Medium</span>
+                        </div>
+                        <div class="diag-options-row" style="flex-direction: column; gap: 0.5rem;">
+                            <label class="diag-radio-label"><input type="radio" name="conn-type" value="wired" checked> Wired Ethernet</label>
+                            <label class="diag-radio-label"><input type="radio" name="conn-type" value="wifi"> Wi-Fi Wireless</label>
+                            <label class="diag-radio-label"><input type="radio" name="conn-type" value="vpn"> Remote Access VPN</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1.5rem;">
+                    <button type="button" id="diag-analyze-btn" class="btn btn-primary">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Analyze Diagnostic Data
+                    </button>
+                </div>
+            </form>
+
+            <!-- Results Card -->
+            <div id="diag-results-card" class="calc-results-card" aria-live="polite">
+                <div class="calc-results-header">
+                    <div>
+                        <span style="font-size: var(--text-xs); text-transform: uppercase; font-weight: 700; color: var(--text-muted);">Layer Isolation Analysis</span>
+                        <h2 id="diag-fault-domain" style="font-size: var(--text-2xl); font-weight: 800; color: var(--text-primary); margin: 0;">DNS Resolution / Forwarder Failure</h2>
+                    </div>
+                    <span id="diag-confidence" class="badge badge-primary">Likely Fault Domain</span>
+                </div>
+
+                <div style="margin-bottom: 1.75rem;">
+                    <h3 style="font-size: var(--text-base); font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Diagnostic Reasoning:</h3>
+                    <p id="diag-explanation" style="font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.6; margin: 0;"></p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <div>
+                        <h3 style="font-size: var(--text-base); font-weight: 700; color: var(--text-primary); margin-bottom: 0.75rem;">
+                            <i class="fa-solid fa-list-check" style="color: var(--brand-primary);" aria-hidden="true"></i> Recommended Next Steps
+                        </h3>
+                        <ul id="diag-next-steps" style="padding-left: 1.25rem; font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.6;"></ul>
+                    </div>
+
+                    <div>
+                        <h3 style="font-size: var(--text-base); font-weight: 700; color: var(--text-primary); margin-bottom: 0.75rem;">
+                            <i class="fa-solid fa-terminal" style="color: var(--cat-linux);" aria-hidden="true"></i> Suggested Terminal Commands
+                        </h3>
+                        <div id="diag-commands-list"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="font-size: var(--text-base); font-weight: 700; color: var(--text-primary); margin-bottom: 0.75rem;">
+                        <i class="fa-solid fa-book-open" style="color: var(--cat-networking);" aria-hidden="true"></i> In-Depth Related Tutorials
+                    </h3>
+                    <div id="diag-tutorials-list"></div>
+                </div>
+            </div>
+
+            <!-- Screen Reader Live Announcer -->
+            <div id="diag-live-announcer" class="sr-only" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="../js/theme.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/search.js"></script>
+    <script src="../js/network-diagnostic.js"></script>
+</body>
+</html>

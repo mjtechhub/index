@@ -88,9 +88,14 @@
         </div>
         
         <div id="quiz-app" class="card quiz-panel" style="padding: 2.5rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                <h2 id="quiz-title" style="margin: 0;"></h2>
-                <div id="question-tracker" style="color: var(--text-secondary); font-weight: 500;"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <button id="back-to-quizzes" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 0.8rem; margin-bottom: 0.75rem;" aria-label="Back to available quizzes">
+                        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back to Quizzes
+                    </button>
+                    <h2 id="quiz-title" style="margin: 0;"></h2>
+                </div>
+                <div id="question-tracker" style="color: var(--text-secondary); font-weight: 600;"></div>
             </div>
             
             <div style="background: var(--bg-secondary); height: 8px; border-radius: 4px; margin-bottom: 2rem; overflow: hidden;">
@@ -107,7 +112,7 @@
             </div>
         </div>
         
-        <div id="result-screen" class="card quiz-panel" style="padding: 2.5rem; text-align: center;">
+        <div id="result-screen" class="card quiz-panel" style="padding: 2.5rem; text-align: center;" role="region" aria-live="polite" aria-label="Quiz Results">
             <h2 style="margin-bottom: 1.5rem;">Quiz Complete!</h2>
             <div id="score-circle" style="font-size: 3.5rem; font-weight: 800; color: var(--brand-primary); margin-bottom: 1rem;"></div>
             <h3 id="score-message" style="margin-bottom: 2rem;"></h3>

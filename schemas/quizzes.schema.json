@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Quizzes",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "title", "description", "category", "questions"],
+    "properties": {
+      "id": { "type": "string" },
+      "title": { "type": "string" },
+      "description": { "type": "string" },
+      "category": { "type": "string" },
+      "questions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["id", "question", "options", "correctIndex", "explanation"],
+          "properties": {
+            "id": { "type": "string" },
+            "question": { "type": "string" },
+            "options": {
+              "type": "array",
+              "items": { "type": "string" },
+              "minItems": 4,
+              "maxItems": 4
+            },
+            "correctIndex": { "type": "integer", "minimum": 0, "maximum": 3 },
+            "explanation": { "type": "string" },
+            "difficulty": { "type": "string", "enum": ["Beginner", "Intermediate", "Advanced"] },
+            "category": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

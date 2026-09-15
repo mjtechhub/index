@@ -61,6 +61,10 @@ async def run_phase4_tests():
         # A. Statistics check (exact dynamic count from JSON)
         with open(ROOT_DIR / "data" / "tutorials.json", "r", encoding="utf-8") as f:
             expected_tut_count = str(len(json.load(f)))
+        with open(ROOT_DIR / "data" / "commands.json", "r", encoding="utf-8") as f:
+            expected_cmd_count = str(len(json.load(f)))
+        with open(ROOT_DIR / "data" / "quizzes.json", "r", encoding="utf-8") as f:
+            expected_quiz_count = str(len(json.load(f)))
 
         stats = await page.evaluate("""() => {
             return {
@@ -72,11 +76,11 @@ async def run_phase4_tests():
         }""")
         test_results["stats_dynamic"] = (
             stats["tutorials"] == expected_tut_count and
-            stats["commands"] == "12" and
+            stats["commands"] == expected_cmd_count and
             stats["topics"] == "6" and
-            stats["quizzes"] == "2"
+            stats["quizzes"] == expected_quiz_count
         )
-        print(f"[{'PASS' if test_results['stats_dynamic'] else 'FAIL'}] Dynamic Statistics (Exact Tutorials: {stats['tutorials']} == {expected_tut_count}, Commands: {stats['commands']}, Topics: {stats['topics']}, Quizzes: {stats['quizzes']})")
+        print(f"[{'PASS' if test_results['stats_dynamic'] else 'FAIL'}] Dynamic Statistics (Exact Tutorials: {stats['tutorials']} == {expected_tut_count}, Commands: {stats['commands']} == {expected_cmd_count}, Topics: {stats['topics']}, Quizzes: {stats['quizzes']} == {expected_quiz_count})")
 
         # Hero Assets Check (Light & Dark theme assets)
         hero_assets = await page.evaluate("""() => {

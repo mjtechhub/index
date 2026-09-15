@@ -36,6 +36,8 @@ function initComponents() {
                 isActive = isHome;
             } else if (targetSlug === 'topics') {
                 isActive = categoryKeywords.some(cat => currentPath.includes(cat));
+            } else if (targetSlug === 'resources') {
+                isActive = currentPath.includes('resources') || currentPath.includes('tools') || currentPath.includes('labs');
             } else if (targetSlug) {
                 isActive = currentPath.includes(targetSlug);
             }

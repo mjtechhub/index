@@ -52,6 +52,14 @@ async def run_phase5_tests():
     with open(ROOT_DIR / "data" / "tutorials.json", "r", encoding="utf-8") as f:
         tuts_data = json.load(f)
 
+    with open(ROOT_DIR / "data" / "commands.json", "r", encoding="utf-8") as f:
+        cmds_data = json.load(f)
+    expected_cmds_total = len(cmds_data)
+    expected_net_cmds = sum(1 for c in cmds_data if c.get("category") == "Networking")
+    expected_sys_cmds = sum(1 for c in cmds_data if c.get("category") == "System")
+    expected_linux_cmds = sum(1 for c in cmds_data if c.get("category") == "Linux")
+    expected_ipconfig_cmds = sum(1 for c in cmds_data if "ipconfig" in (c.get("command","") + c.get("purpose","") + c.get("syntax","") + c.get("example","") + c.get("useCase","")).lower())
+
     net_tuts = [t for t in tuts_data if t["category"] == "Networking"]
     net_total = len(net_tuts)
     net_inter = sum(1 for t in net_tuts if t["level"] == "Intermediate")
@@ -271,8 +279,8 @@ async def run_phase5_tests():
         await page.wait_for_selector("#commands-container .command-item-card", timeout=5000)
 
         cmd_count = await page.evaluate("() => document.querySelectorAll('#commands-container .command-item-card').length")
-        test_results["commands_total"] = (cmd_count == 12)
-        print(f"[{'PASS' if test_results['commands_total'] else 'FAIL'}] Commands Loaded from JSON (Rendered: {cmd_count}, Expected: 12)")
+        test_results["commands_total"] = (cmd_count == expected_cmds_total)
+        print(f"[{'PASS' if test_results['commands_total'] else 'FAIL'}] Commands Loaded from JSON (Rendered: {cmd_count}, Expected: {expected_cmds_total})")
 
         # Terminology Checks
         # A. Assert "Expected Result" does NOT exist in Commands UI
@@ -288,8 +296,8 @@ async def run_phase5_tests():
             const labels = document.querySelectorAll('.cmd-detail-field .cmd-detail-label');
             return Array.from(labels).filter(l => l.textContent.trim() === 'Example Output').length;
         }""")
-        test_results["example_output_rendered"] = (example_output_labels_count == 12)
-        print(f"[{'PASS' if test_results['example_output_rendered'] else 'FAIL'}] 'Example Output' Rendered on All Command Cards ({example_output_labels_count} of 12)")
+        test_results["example_output_rendered"] = (example_output_labels_count == expected_cmds_total)
+        print(f"[{'PASS' if test_results['example_output_rendered'] else 'FAIL'}] 'Example Output' Rendered on All Command Cards ({example_output_labels_count} of {expected_cmds_total})")
 
         # C. Assert summary text is updated
         summary_text = await page.evaluate("() => document.querySelector('.cmd-details-summary')?.textContent.trim()")
@@ -297,26 +305,26 @@ async def run_phase5_tests():
         print(f"[{'PASS' if test_results['summary_terminology'] else 'FAIL'}] Details Summary Terminology ('{summary_text}')")
 
         # D. Category & Platform Filtering on Commands
-        # Networking category (5 commands)
+        # Networking category
         await page.click("#command-category-filters button:has-text('Networking')")
         await page.wait_for_timeout(200)
         net_cmd_count = await page.evaluate("() => document.querySelectorAll('#commands-container .command-item-card').length")
-        test_results["cmd_filter_net"] = (net_cmd_count == 5)
-        print(f"[{'PASS' if test_results['cmd_filter_net'] else 'FAIL'}] Command Filter 'Networking' (Rendered: {net_cmd_count}, Expected: 5)")
+        test_results["cmd_filter_net"] = (net_cmd_count == expected_net_cmds)
+        print(f"[{'PASS' if test_results['cmd_filter_net'] else 'FAIL'}] Command Filter 'Networking' (Rendered: {net_cmd_count}, Expected: {expected_net_cmds})")
 
-        # System category (7 commands)
+        # System category
         await page.click("#command-category-filters button:has-text('System')")
         await page.wait_for_timeout(200)
         sys_cmd_count = await page.evaluate("() => document.querySelectorAll('#commands-container .command-item-card').length")
-        test_results["cmd_filter_sys"] = (sys_cmd_count == 7)
-        print(f"[{'PASS' if test_results['cmd_filter_sys'] else 'FAIL'}] Command Filter 'System' (Rendered: {sys_cmd_count}, Expected: 7)")
+        test_results["cmd_filter_sys"] = (sys_cmd_count == expected_sys_cmds)
+        print(f"[{'PASS' if test_results['cmd_filter_sys'] else 'FAIL'}] Command Filter 'System' (Rendered: {sys_cmd_count}, Expected: {expected_sys_cmds})")
 
-        # Linux platform filter (2 commands: ping, nslookup)
+        # Linux platform filter
         await page.click("#command-category-filters button:has-text('Linux')")
         await page.wait_for_timeout(200)
         linux_cmd_count = await page.evaluate("() => document.querySelectorAll('#commands-container .command-item-card').length")
-        test_results["cmd_filter_linux"] = (linux_cmd_count == 2)
-        print(f"[{'PASS' if test_results['cmd_filter_linux'] else 'FAIL'}] Command Platform Filter 'Linux' (Rendered: {linux_cmd_count}, Expected: 2)")
+        test_results["cmd_filter_linux"] = (linux_cmd_count == expected_linux_cmds)
+        print(f"[{'PASS' if test_results['cmd_filter_linux'] else 'FAIL'}] Command Platform Filter 'Linux' (Rendered: {linux_cmd_count}, Expected: {expected_linux_cmds})")
 
         # Reset to All
         await page.click("#command-category-filters button:has-text('All')")
@@ -326,8 +334,8 @@ async def run_phase5_tests():
         await page.fill("#commands-search-input", "ipconfig")
         await page.wait_for_timeout(200)
         search_cmd_count = await page.evaluate("() => document.querySelectorAll('#commands-container .command-item-card').length")
-        test_results["cmd_search"] = (search_cmd_count == 1)
-        print(f"[{'PASS' if test_results['cmd_search'] else 'FAIL'}] Command Live Search for 'ipconfig' (Rendered: {search_cmd_count}, Expected: 1)")
+        test_results["cmd_search"] = (search_cmd_count == expected_ipconfig_cmds)
+        print(f"[{'PASS' if test_results['cmd_search'] else 'FAIL'}] Command Live Search for 'ipconfig' (Rendered: {search_cmd_count}, Expected: {expected_ipconfig_cmds})")
 
         # Clear search
         await page.fill("#commands-search-input", "")

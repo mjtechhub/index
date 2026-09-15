@@ -1,0 +1,637 @@
+[
+  {
+    "id": "lab-net-01",
+    "category": "Networking",
+    "title": "Public IP Reachable but Domain Name Fails to Resolve",
+    "level": "Beginner",
+    "estimatedTime": "10-15 min",
+    "symptoms": "Workstation users report they cannot open corporate intranet web portals or external websites by name (e.g. intranet.corp.local, github.com), but pinging public IP 8.8.8.8 succeeds.",
+    "environment": "Enterprise Branch Office LAN (192.168.10.0/24), Cisco Catalyst Switch, DHCP Server on Gateway, Active Directory Internal DNS.",
+    "scenarioDescription": "A user calls the IT help desk stating: 'The Internet is completely down for my computer, but my coworker can still access everything.' As the network administrator, you need to isolate the fault domain methodically starting from local host configuration up through DNS query resolution.",
+    "initialStepId": "step-net-01",
+    "decisionPoints": [
+      {
+        "id": "step-net-01",
+        "stepNumber": 1,
+        "title": "Verify Local Workstation IP Configuration",
+        "description": "Begin by inspecting the client's current IPv4 configuration to establish a baseline of the client's IP, subnet mask, default gateway, and DNS servers.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - Workstation Windows Command Prompt:\nC:\\> ipconfig /all\n\nEthernet adapter Ethernet0:\n   Connection-specific DNS Suffix  . : corp.local\n   IPv4 Address. . . . . . . . . . . : 192.168.10.45(Preferred)\n   Subnet Mask . . . . . . . . . . . : 255.255.255.0\n   Default Gateway . . . . . . . . . : 192.168.10.1\n   DHCP Server . . . . . . . . . . . : 192.168.10.1\n   DNS Servers . . . . . . . . . . . : 192.168.10.250\n   NetBIOS over Tcpip. . . . . . . . : Enabled",
+        "options": [
+          {
+            "id": "opt-net-1a",
+            "text": "Immediately run 'ipconfig /release && ipconfig /renew' to re-request DHCP settings blindly.",
+            "type": "suboptimal",
+            "feedback": "Renewing DHCP without testing the existing gateway and DNS reachability destroys current state without telling you if the gateway or DNS server is reachable.",
+            "nextStepId": "step-net-02"
+          },
+          {
+            "id": "opt-net-1b",
+            "text": "Ping the Default Gateway (192.168.10.1) and Public IP (8.8.8.8) to isolate Layer 1-3 network connectivity.",
+            "type": "optimal",
+            "feedback": "Optimal step: Testing the default gateway and a known public IP immediately separates local Layer 1/2/3 connectivity from application-layer DNS resolution issues.",
+            "nextStepId": "step-net-02"
+          },
+          {
+            "id": "opt-net-1c",
+            "text": "Instruct the user to restart their computer to clear any transient network errors.",
+            "type": "inefficient",
+            "feedback": "Blind reboots waste time, disrupt users, and provide zero root cause evidence.",
+            "nextStepId": "step-net-02"
+          }
+        ]
+      },
+      {
+        "id": "step-net-02",
+        "stepNumber": 2,
+        "title": "Test Layer 3 Gateway and Internet Reachability",
+        "description": "Execute ICMP echo probes to verify if the client can route traffic through the local default gateway and out to the Internet.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - ICMP Ping Connectivity Test:\nC:\\> ping -n 2 192.168.10.1\nPinging 192.168.10.1 with 32 bytes of data:\nReply from 192.168.10.1: bytes=32 time<1ms TTL=64\nReply from 192.168.10.1: bytes=32 time<1ms TTL=64\nPing statistics for 192.168.10.1:\n    Packets: Sent = 2, Received = 2, Lost = 0 (0% loss)\n\nC:\\> ping -n 2 8.8.8.8\nPinging 8.8.8.8 with 32 bytes of data:\nReply from 8.8.8.8: bytes=32 time=14ms TTL=117\nReply from 8.8.8.8: bytes=32 time=13ms TTL=117\nPing statistics for 8.8.8.8:\n    Packets: Sent = 2, Received = 2, Lost = 0 (0% loss)",
+        "options": [
+          {
+            "id": "opt-net-2a",
+            "text": "Conclude that Internet routing is working properly, and test DNS resolution specifically using nslookup.",
+            "type": "optimal",
+            "feedback": "Optimal: Since both the default gateway and public IP 8.8.8.8 respond cleanly with low latency, Layer 1 through Layer 3 routing is healthy. The fault is isolated to DNS name resolution.",
+            "nextStepId": "step-net-03"
+          },
+          {
+            "id": "opt-net-2b",
+            "text": "Replace the network patch cable connecting the workstation to the wall jack.",
+            "type": "inefficient",
+            "feedback": "The cable is transmitting packets cleanly at Layer 1/2 with 0% packet loss and <1ms latency to the gateway. Replacing hardware is unwarranted.",
+            "nextStepId": "step-net-03"
+          },
+          {
+            "id": "opt-net-2c",
+            "text": "Disable the Windows Defender Firewall on the workstation.",
+            "type": "unsafe",
+            "feedback": "Disabling the local firewall weakens endpoint defense without addressing the fact that ICMP already succeeds bidirectionally.",
+            "nextStepId": "step-net-03"
+          }
+        ]
+      },
+      {
+        "id": "step-net-03",
+        "stepNumber": 3,
+        "title": "Probe DNS Name Resolution and Server Responsiveness",
+        "description": "Use nslookup to query both internal and external hostnames against the configured DNS server (192.168.10.250).",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - DNS Query Diagnostics:\nC:\\> nslookup intranet.corp.local\nDNS request timed out.\n    timeout was 2 seconds.\n*** Can't find intranet.corp.local: No answer\n\nC:\\> nslookup intranet.corp.local 192.168.10.250\nDNS request timed out.\n    timeout was 2 seconds.\n*** Can't find intranet.corp.local: No response from server\n\nC:\\> ping -n 2 192.168.10.250\nPinging 192.168.10.250 with 32 bytes of data:\nReply from 192.168.10.45: Destination host unreachable.\nReply from 192.168.10.45: Destination host unreachable.",
+        "options": [
+          {
+            "id": "opt-net-3a",
+            "text": "Test DNS resolution against the known corporate Domain Controller at 192.168.10.10 and public DNS 8.8.8.8.",
+            "type": "optimal",
+            "feedback": "Optimal: By testing with an explicit DNS server IP (nslookup intranet.corp.local 192.168.10.10), you can confirm whether the real DNS server is operational and why 192.168.10.250 is unreachable.",
+            "nextStepId": "step-net-04"
+          },
+          {
+            "id": "opt-net-3b",
+            "text": "Add intranet.corp.local and all external websites manually into C:\\Windows\\System32\\drivers\\etc\\hosts.",
+            "type": "inefficient",
+            "feedback": "Editing the hosts file is an unmaintainable workaround that does not solve the root network problem and breaks dynamic DNS updates.",
+            "nextStepId": "step-net-04"
+          },
+          {
+            "id": "opt-net-3c",
+            "text": "Delete the client's local DNS cache using 'ipconfig /flushdns' and retest.",
+            "type": "suboptimal",
+            "feedback": "Flushing local cache won't help when the configured DNS server IP (192.168.10.250) itself is completely unreachable.",
+            "nextStepId": "step-net-04"
+          }
+        ]
+      },
+      {
+        "id": "step-net-04",
+        "stepNumber": 4,
+        "title": "Cross-Verify DNS Server Availability and Scope Configuration",
+        "description": "Test queries against the primary corporate DNS server at 10.10.10.10 and inspect the local branch router's DHCP scope settings.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - Explicit DNS Query & Router DHCP Scope:\nC:\\> nslookup intranet.corp.local 192.168.10.10\nServer:  dc01.corp.local\nAddress:  192.168.10.10\n\nName:    intranet.corp.local\nAddress:  192.168.10.80\n\nRouter SSH Session (Router# show run | section dhcp):\nip dhcp pool BRANCH-OFFICE\n   network 192.168.10.0 255.255.255.0\n   default-router 192.168.10.1\n   dns-server 192.168.10.250 192.168.10.10\n   lease 0 8",
+        "options": [
+          {
+            "id": "opt-net-4a",
+            "text": "Identify that 192.168.10.250 is an invalid/decommissioned DNS server configured as primary in the DHCP pool, and proceed to final remediation.",
+            "type": "optimal",
+            "feedback": "Optimal deduction: The router's DHCP pool is handing out 192.168.10.250 as primary DNS. Because 192.168.10.250 is dead, queries time out before failing over or aborting. Updating the DHCP pool to 192.168.10.10 permanently resolves the issue.",
+            "nextStepId": "diagnosis"
+          },
+          {
+            "id": "opt-net-4b",
+            "text": "Reboot the router to force all clients to renegotiate DHCP.",
+            "type": "unsafe",
+            "feedback": "Rebooting the router will disrupt all active sessions across the branch office without fixing the misconfigured DNS IP in the running config.",
+            "nextStepId": "diagnosis"
+          }
+        ]
+      }
+    ],
+    "finalDiagnosis": {
+      "title": "DHCP Scope Misconfigured with Decommissioned Primary DNS Server",
+      "rootCause": "The branch office DHCP scope on the default gateway (192.168.10.1) was distributing 192.168.10.250 as the primary DNS server. This server was decommissioned last week, resulting in 2-second query timeouts on all client DNS requests. The secondary DNS server (192.168.10.10) was fully functional but client lookups were failing or experiencing extreme latency.",
+      "evidenceSummary": "1. Client had valid Layer 3 IP, subnet mask, and gateway.\n2. ICMP ping to gateway (192.168.10.1) and public IP (8.8.8.8) had 0% packet loss and low latency.\n3. nslookup directly to 192.168.10.250 timed out, and host was unreachable.\n4. nslookup explicitly directed to 192.168.10.10 succeeded immediately.\n5. Router DHCP pool showed 192.168.10.250 configured as the first DNS server.",
+      "recommendedRemediation": "1. On the branch router: Remove 192.168.10.250 from the DHCP pool and set primary DNS to 192.168.10.10 with an active backup (e.g. 192.168.20.10).\n2. Save router configuration with 'write memory'.\n3. Instruct client workstations to run 'ipconfig /renew' to pull corrected DNS server attributes.",
+      "verificationSteps": "1. Run 'ipconfig /all' on the client and verify DNS server shows 192.168.10.10.\n2. Run 'nslookup intranet.corp.local' and verify immediate answer without timeouts.\n3. Test browsing to corporate intranet portals and external web sites.",
+      "preventionMeasures": "Implement change management checks during infrastructure decommissioning to audit and update all DHCP scopes, static server configurations, and IPAM reservations prior to decommissioning legacy IP endpoints.",
+      "relatedCommands": ["cmd-ipconfig", "cmd-ping", "cmd-tracert", "cmd-nslookup"],
+      "relatedTutorials": ["tutorials/networking/dns-resolution-iterative-vs-recursive-queries.html", "tutorials/networking/dhcp-dora-process-and-ip-assignment.html"],
+      "relatedResources": ["res-iana-registries", "res-rfc-editor"]
+    }
+  },
+  {
+    "id": "lab-win-01",
+    "category": "Windows",
+    "title": "Domain User Sign-In Fails with No Logon Servers Available",
+    "level": "Intermediate",
+    "estimatedTime": "15-20 min",
+    "symptoms": "Users on newly booted Windows 11 enterprise workstations receive the error: 'There are currently no logon servers available to service the logon request' when attempting to sign in with Active Directory domain credentials.",
+    "environment": "Active Directory Domain Services (corp.local), Windows Server 2022 Domain Controllers, Windows 11 Enterprise Hyper-V VM Clients.",
+    "scenarioDescription": "A virtual desktop user cannot sign in on Monday morning. Cached credentials allow local login with limited privileges, but domain resources, mapped drives, and group policies fail to apply. You need to troubleshoot domain controller locator mechanics, network connectivity, and Kerberos dependencies.",
+    "initialStepId": "step-win-01",
+    "decisionPoints": [
+      {
+        "id": "step-win-01",
+        "stepNumber": 1,
+        "title": "Check Workstation IP and Domain Network Profile",
+        "description": "Inspect network interface details to confirm the workstation has received valid IP parameters and can communicate with the local subnet.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - PowerShell Diagnostic Console:\nPS C:\\> Get-NetIPConfiguration\n\nInterfaceAlias      : vEthernet (Default Switch)\nIPv4Address         : 10.10.5.42\nIPv4DefaultGateway  : 10.10.5.1\nDNSServer           : 10.10.1.10\nNetProfile.Name     : corp.local (DomainAuthenticated)\n\nPS C:\\> Test-Connection -TargetName 10.10.5.1 -Count 2 -Quiet\nTrue\nPS C:\\> Test-Connection -TargetName 10.10.1.10 -Count 2 -Quiet\nTrue",
+        "options": [
+          {
+            "id": "opt-win-1a",
+            "text": "Unjoin the computer from the domain and rejoin it using local administrator credentials.",
+            "type": "unsafe",
+            "feedback": "Unjoining and rejoining is a destructive, high-overhead step that invalidates user profiles, resets machine account passwords, and masks the underlying issue.",
+            "nextStepId": "step-win-02"
+          },
+          {
+            "id": "opt-win-1b",
+            "text": "Query Active Directory DNS SRV records using nltest and nslookup to test Domain Controller discovery.",
+            "type": "optimal",
+            "feedback": "Optimal: nltest /dsgetdc checks the DC locator mechanism (DNS SRV record lookup and Netlogon ping over UDP 389) which is the core mechanism Windows uses to discover logon servers.",
+            "nextStepId": "step-win-02"
+          },
+          {
+            "id": "opt-win-1c",
+            "text": "Restart the workstation 3 times to trigger automatic startup repair.",
+            "type": "inefficient",
+            "feedback": "Startup repair fixes corrupted boot loaders, not domain network authentication failures.",
+            "nextStepId": "step-win-02"
+          }
+        ]
+      },
+      {
+        "id": "step-win-02",
+        "stepNumber": 2,
+        "title": "Examine Domain Controller Locator and DNS SRV Records",
+        "description": "Run nltest to verify if the Netlogon service can locate an operational Domain Controller in the corp.local domain.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - DC Locator Query:\nPS C:\\> nltest /dsgetdc:corp.local\n           DC: \\\\DC01.corp.local\n      Address: \\\\10.10.1.10\n     Dom Guid: 3a2c5e71-9f44-48b2-b7e1-8899220011aa\n     Dom Name: corp.local\n  Forest Name: corp.local\n Dc Site Name: Default-First-Site-Name\nOur Site Name: Default-First-Site-Name\n        Flags: PDC GC DS LDAP KDC TIMESERV GTIMESERV WRITABLE DNS_DC DNS_DOMAIN DNS_FOREST CLOSE_SITE FULL_SECRET\nThe command completed successfully.",
+        "options": [
+          {
+            "id": "opt-win-2a",
+            "text": "Verify Kerberos (TCP/UDP 88) and LDAP (TCP 389) port reachability to DC01 using Test-NetConnection.",
+            "type": "optimal",
+            "feedback": "Optimal: DC locator succeeded, so DNS SRV records and Netlogon ping are functional. The next logical step is verifying transport connectivity to the Kerberos Key Distribution Center (KDC) on port 88.",
+            "nextStepId": "step-win-03"
+          },
+          {
+            "id": "opt-win-2b",
+            "text": "Delete the computer account in Active Directory Users and Computers.",
+            "type": "unsafe",
+            "feedback": "Deleting the Active Directory computer account severs the domain trust relationship completely, requiring offline domain rejoin.",
+            "nextStepId": "step-win-03"
+          }
+        ]
+      },
+      {
+        "id": "step-win-03",
+        "stepNumber": 3,
+        "title": "Audit Port Reachability and Kerberos Authentication Logs",
+        "description": "Test TCP port 88 connectivity to the DC and inspect the Windows System Event Log for Kerberos error events.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - Port Reachability & Security Event Log:\nPS C:\\> Test-NetConnection -ComputerName 10.10.1.10 -Port 88\nComputerName     : 10.10.1.10\nRemotePort       : 88\nTcpTestSucceeded : True\n\nPS C:\\> Get-WinEvent -FilterHashtable @{LogName='System'; ProviderName='Microsoft-Windows-Kerberos-Key-Distribution-Center','Microsoft-Windows-Time-Service'; MaxEvents=2} | Format-List TimeCreated, Id, Message\n\nTimeCreated : 9/15/2026 1:04:12 PM\nId          : 143\nMessage     : The Kerberos client received a KRB_AP_ERR_SKEW error from the server DC01$. The difference between the client time and server time is too large. A ticket cannot be issued until the clocks are synchronized.\n\nPS C:\\> w32tm /stripchart /computer:10.10.1.10 /samples:1 /dataonly\nTracking 10.10.1.10 [10.10.1.10:123].\n13:05:00, +487.3241050s",
+        "options": [
+          {
+            "id": "opt-win-3a",
+            "text": "Identify excessive Kerberos clock skew (+487 seconds, exceeding the 5-minute / 300-second Kerberos limit) caused by Hyper-V host time desynchronization, and proceed to remediation.",
+            "type": "optimal",
+            "feedback": "Optimal: Event ID 143 and w32tm output clearly prove the client clock is skewed by over 8 minutes. Active Directory Kerberos protocol strictly enforces a maximum 5-minute skew tolerance to defeat replay attacks.",
+            "nextStepId": "diagnosis"
+          },
+          {
+            "id": "opt-win-3b",
+            "text": "Disable Kerberos authentication across the domain and force NTLM fallback via Group Policy.",
+            "type": "unsafe",
+            "feedback": "Disabling Kerberos degrades domain security to vulnerable NTLM hashes, which is unacceptable and fails enterprise compliance baselines.",
+            "nextStepId": "diagnosis"
+          }
+        ]
+      }
+    ],
+    "finalDiagnosis": {
+      "title": "Kerberos Authentication Blocked by Excessive System Clock Skew",
+      "rootCause": "The Windows 11 Hyper-V VM experienced clock drift during weekend host sleep/resume, causing its local time to deviate by +487 seconds (over 8 minutes) from the Domain Controller. Because Kerberos authentication protocol enforces a maximum clock skew tolerance of 300 seconds (5 minutes) to protect against ticket replay attacks, the KDC on DC01 rejected the AS-REQ with KRB_AP_ERR_SKEW, surfacing as 'No logon servers available'.",
+      "evidenceSummary": "1. Workstation had active network connectivity and successful ping to gateway and DC.\n2. DC Locator successfully resolved DC01.corp.local.\n3. Test-NetConnection confirmed TCP port 88 (Kerberos) was listening and reachable.\n4. System Event Log recorded Event ID 143: 'KRB_AP_ERR_SKEW: difference between client time and server time is too large'.\n5. 'w32tm /stripchart' proved +487 seconds time delta between workstation and DC01.",
+      "recommendedRemediation": "1. Resynchronize client clock against the domain hierarchy: Run 'w32tm /resync /force'.\n2. If Windows Time service is stopped or misconfigured, re-register and start it: 'net stop w32time', 'w32tm /unregister', 'w32tm /register', 'net start w32time', 'w32tm /resync'.\n3. Verify VM time synchronization integration service is enabled in Hyper-V VM settings.",
+      "verificationSteps": "1. Run 'w32tm /query /status' to confirm source is DC01.corp.local and stratum is aligned.\n2. Run 'klist purge' followed by 'klist' or attempt domain interactive logon.\n3. Verify user signs in successfully and receives valid Ticket Granting Ticket (TGT).",
+      "preventionMeasures": "Configure Group Policy for Windows Time Service to ensure all domain members query the authoritative PDC Emulator, and configure Hyper-V host time synchronization integration components properly.",
+      "relatedCommands": ["cmd-ipconfig", "cmd-netsh-advfirewall", "cmd-ping"],
+      "relatedTutorials": ["tutorials/windows/active-directory-domain-join-prerequisites-and-troubleshooting.html", "tutorials/networking/tcp-three-way-handshake-and-teardown.html"],
+      "relatedResources": ["res-ms-learn", "res-rfc-editor"]
+    }
+  },
+  {
+    "id": "lab-lin-01",
+    "category": "Linux",
+    "title": "Web Application Service Fails to Start After Server Reboot",
+    "level": "Intermediate",
+    "estimatedTime": "15-20 min",
+    "symptoms": "Following a scheduled security patch and server reboot, the backend node service 'api-service.service' on an Ubuntu 24.04 LTS server fails to start with systemctl error code 1/FAILURE.",
+    "environment": "Ubuntu 24.04 LTS Server, systemd init system, Node.js backend application, Dedicated /mnt/storage partition in /etc/fstab.",
+    "scenarioDescription": "The production operations team reports that an internal API service is down following automated kernel patch updates. The server is up and SSH is working, but the application daemon refuses to start. You need to inspect systemd service unit status, parse journalctl logs, and identify the root dependency failure.",
+    "initialStepId": "step-lin-01",
+    "decisionPoints": [
+      {
+        "id": "step-lin-01",
+        "stepNumber": 1,
+        "title": "Inspect systemd Service Unit Status",
+        "description": "Query the service status using systemctl to inspect the exit code, PID status, and recent journal snippet.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - systemctl status output:\n$ sudo systemctl status api-service.service\n\u00d7 api-service.service - Core Enterprise API Gateway\n     Loaded: loaded (/etc/systemd/system/api-service.service; enabled; preset: enabled)\n     Active: failed (Result: exit-code) since Mon 2026-09-15 08:22:11 UTC; 4min ago\n    Process: 1042 ExecStart=/usr/bin/node /opt/api/server.js (code=exited, status=1/FAILURE)\n   Main PID: 1042 (code=exited, status=1/FAILURE)\n        CPU: 124ms\n\nSep 15 08:22:11 srv-app01 systemd[1]: Starting api-service.service...\nSep 15 08:22:11 srv-app01 node[1042]: Error: ENOENT: no such file or directory, open '/mnt/storage/config/production.json'\nSep 15 08:22:11 srv-app01 systemd[1]: api-service.service: Main process exited, code=exited, status=1/FAILURE\nSep 15 08:22:11 srv-app01 systemd[1]: api-service.service: Failed with result 'exit-code'.",
+        "options": [
+          {
+            "id": "opt-lin-1a",
+            "text": "Reinstall Node.js and re-run npm install across the whole application directory.",
+            "type": "suboptimal",
+            "feedback": "The error is ENOENT (file not found on path '/mnt/storage/config/production.json'), not a Node binary corruption or missing npm dependency.",
+            "nextStepId": "step-lin-02"
+          },
+          {
+            "id": "opt-lin-1b",
+            "text": "Investigate filesystem mounts and verify if /mnt/storage is currently mounted using findmnt and df.",
+            "type": "optimal",
+            "feedback": "Optimal: The log indicates /mnt/storage/config/production.json is missing. In server operations, missing files on secondary mount points usually mean the filesystem failed to mount during boot.",
+            "nextStepId": "step-lin-02"
+          },
+          {
+            "id": "opt-lin-1c",
+            "text": "Change ownership of /opt/api recursively to root:root with chmod 777.",
+            "type": "unsafe",
+            "feedback": "Indiscriminate chmod 777 destroys filesystem security, violates principle of least privilege, and does not fix the missing file.",
+            "nextStepId": "step-lin-02"
+          }
+        ]
+      },
+      {
+        "id": "step-lin-02",
+        "stepNumber": 2,
+        "title": "Verify Filesystem Mounts and Disk Partition State",
+        "description": "Check whether /mnt/storage is mounted and review block devices using findmnt and lsblk.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - Mount Table & Block Devices:\n$ findmnt /mnt/storage\n(returns empty exit code 1)\n\n$ ls -la /mnt/storage\ntotal 8\ndrwxr-xr-x 2 root root 4096 Sep 10 14:00 .\ndrwxr-xr-x 4 root root 4096 Sep 10 14:00 ..\n(directory is completely empty)\n\n$ lsblk -f\nNAME   FSTYPE FSVER LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINTS\nsda\n\u251c\u2500sda1 ext4   1.0         4f8b9a10-22c1-4b72-9844-0192a83120ff   42.1G    38% /\nsdb\n\u2514\u2500sdb1 ext4   1.0   DATA  e51240c8-7f91-49b0-a332-6bb20145c110",
+        "options": [
+          {
+            "id": "opt-lin-2a",
+            "text": "Audit /etc/fstab to inspect the mount configuration for /mnt/storage against the actual UUID of /dev/sdb1.",
+            "type": "optimal",
+            "feedback": "Optimal: /dev/sdb1 exists with UUID 'e51240c8-7f91-49b0-a332-6bb20145c110' but is unmounted. Comparing /etc/fstab entries will reveal why it failed to mount at boot.",
+            "nextStepId": "step-lin-03"
+          },
+          {
+            "id": "opt-lin-2b",
+            "text": "Format /dev/sdb1 using 'mkfs.ext4 /dev/sdb1' to create a clean filesystem.",
+            "type": "unsafe",
+            "feedback": "Running mkfs formats the disk and destroys all production application data and configuration files permanently!",
+            "nextStepId": "step-lin-03"
+          }
+        ]
+      },
+      {
+        "id": "step-lin-03",
+        "stepNumber": 3,
+        "title": "Audit /etc/fstab Configuration and findmnt --verify",
+        "description": "Inspect /etc/fstab and test mount verification using findmnt --verify.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - /etc/fstab inspection:\n$ cat /etc/fstab\n# /etc/fstab: static file system information.\nUUID=4f8b9a10-22c1-4b72-9844-0192a83120ff / ext4 errors=remount-ro 0 1\nUUID=e51240c8-7f91-49b0-a332-6bb20145c119 /mnt/storage ext4 defaults 0 2\n\n$ sudo findmnt --verify\n/etc/fstab: parse error at line 3: [FAILED] UUID=e51240c8-7f91-49b0-a332-6bb20145c119: no such device found",
+        "options": [
+          {
+            "id": "opt-lin-3a",
+            "text": "Identify UUID typo in /etc/fstab (ending in 'c119' instead of 'c110'), correct the UUID, mount the disk, and restart api-service.",
+            "type": "optimal",
+            "feedback": "Optimal: The UUID in /etc/fstab had a single-digit typo ('c119' vs actual block device UUID 'c110'). Updating /etc/fstab and running 'sudo mount -a' will mount /mnt/storage and allow api-service to start.",
+            "nextStepId": "diagnosis"
+          },
+          {
+            "id": "opt-lin-3b",
+            "text": "Modify server.js code to disable production configuration file validation.",
+            "type": "suboptimal",
+            "feedback": "Bypassing configuration validation leaves the application running in an invalid unconfigured state without access to its persistent storage database.",
+            "nextStepId": "diagnosis"
+          }
+        ]
+      }
+    ],
+    "finalDiagnosis": {
+      "title": "Typo in /etc/fstab UUID Prevented Secondary Disk Mount at Boot",
+      "rootCause": "During a prior disk maintenance window, an administrator updated /etc/fstab with a typographical error in the UUID for /mnt/storage ('...c119' instead of actual partition UUID '...c110'). Because the mount was not verified prior to reboot, systemd was unable to mount /mnt/storage at boot time. When api-service started, it crashed with ENOENT because its required configuration file '/mnt/storage/config/production.json' was absent on the unmounted mount point.",
+      "evidenceSummary": "1. 'systemctl status api-service' logged exit status 1 due to missing '/mnt/storage/config/production.json'.\n2. 'findmnt /mnt/storage' confirmed /mnt/storage was not mounted.\n3. 'lsblk -f' revealed physical disk /dev/sdb1 had UUID 'e51240c8-7f91-49b0-a332-6bb20145c110'.\n4. '/etc/fstab' showed erroneous UUID ending in '...c119'.\n5. 'findmnt --verify' flagged the exact fstab parsing failure.",
+      "recommendedRemediation": "1. Edit /etc/fstab with sudo and correct the UUID to 'UUID=e51240c8-7f91-49b0-a332-6bb20145c110'.\n2. Add 'nofail' mount option if this volume is non-critical for OS boot: 'defaults,nofail'.\n3. Run 'sudo mount -a' to mount all filesystems in fstab.\n4. Run 'sudo systemctl start api-service.service' and verify status is active (running).",
+      "verificationSteps": "1. Run 'findmnt /mnt/storage' and verify it shows ext4 on /dev/sdb1.\n2. Run 'sudo findmnt --verify' and ensure 0 errors reported.\n3. Run 'sudo systemctl status api-service' and confirm Active: active (running).\n4. Send HTTP GET to API health endpoint: 'curl -I http://localhost:3000/health' (HTTP 200 OK).",
+      "preventionMeasures": "Mandate the use of 'sudo findmnt --verify' and 'sudo mount -a' before rebooting any server after modifying /etc/fstab, and utilize configuration management (Ansible) with UUID templating.",
+      "relatedCommands": ["cmd-findmnt-verify", "cmd-systemctl-status", "cmd-journalctl-xe", "cmd-ss-tulpn"],
+      "relatedTutorials": ["tutorials/linux/linux-troubleshooting-boot-failures-grub-emergency-mode.html", "tutorials/linux/linux-systemd-service-management-and-troubleshooting.html"],
+      "relatedResources": ["res-kernel-org", "res-rfc-editor"]
+    }
+  },
+  {
+    "id": "lab-srv-01",
+    "category": "Servers",
+    "title": "Virtual Machine Running but Internal Service Unreachable Across Network",
+    "level": "Intermediate",
+    "estimatedTime": "15-20 min",
+    "symptoms": "Other servers and load balancers on the subnet cannot connect to a backend analytics service on TCP port 8080. The hypervisor reports the VM is healthy and ping to the VM's IP address works.",
+    "environment": "Enterprise VMware ESXi / Linux KVM Virtualized Infrastructure, Rocky Linux 9 Guest OS (IP 10.20.4.50), Backend Java Microservice.",
+    "scenarioDescription": "A backend analytics VM was updated over the weekend. The virtualization team reports the VM is powered on with zero packet loss on ping, but client services receive 'Connection refused' whenever attempting to connect to port 8080. You need to isolate layered server networking and socket binding.",
+    "initialStepId": "step-srv-01",
+    "decisionPoints": [
+      {
+        "id": "step-srv-01",
+        "stepNumber": 1,
+        "title": "Confirm Guest OS Status and Remote Reachability",
+        "description": "Establish an SSH session to the VM at 10.20.4.50 to verify guest OS health and test local connectivity.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - SSH & Local Connectivity Probe:\n$ ping -c 2 10.20.4.50\n64 bytes from 10.20.4.50: icmp_seq=1 ttl=64 time=0.321 ms\n64 bytes from 10.20.4.50: icmp_seq=2 ttl=64 time=0.298 ms\n\n$ ssh admin@10.20.4.50\nLast login: Mon Sep 15 09:12:00 2026 from 10.20.4.100\n[admin@srv-analytics ~]$ uptime\n 09:15:02 up 14:32,  1 user,  load average: 0.12, 0.08, 0.05",
+        "options": [
+          {
+            "id": "opt-srv-1a",
+            "text": "Check the service status of analytics-backend using systemctl and examine listening ports with ss -tulpn.",
+            "type": "optimal",
+            "feedback": "Optimal: System uptime and SSH prove guest OS and network interfaces are running. Checking the service daemon and socket listener state immediately isolates whether the application is listening on the network.",
+            "nextStepId": "step-srv-02"
+          },
+          {
+            "id": "opt-srv-1b",
+            "text": "Restart the virtual machine from the hypervisor console.",
+            "type": "inefficient",
+            "feedback": "The VM is running normally with low load. Rebooting without investigating socket listeners will not fix configuration issues.",
+            "nextStepId": "step-srv-02"
+          }
+        ]
+      },
+      {
+        "id": "step-srv-02",
+        "stepNumber": 2,
+        "title": "Inspect Application Daemon and Active Socket Listeners",
+        "description": "Check if the process is active and determine which IP addresses and ports it has bound to.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - Process Status & Socket Listeners:\n[admin@srv-analytics ~]$ sudo systemctl status analytics-backend\n\u25cf analytics-backend.service - Analytics Engine\n   Loaded: loaded (/etc/systemd/system/analytics-backend.service; enabled)\n   Active: active (running) since Mon 2026-09-15 08:00:00 UTC; 1h 15min ago\n Main PID: 2104 (java)\n\n[admin@srv-analytics ~]$ sudo ss -tulpn\nNetid  State   Recv-Q  Send-Q   Local Address:Port   Peer Address:Port  Process\ntcp    LISTEN  0       128          127.0.0.1:8080        0.0.0.0:*      users:((\"java\",pid=2104,fd=14))\ntcp    LISTEN  0       128            0.0.0.0:22          0.0.0.0:*      users:((\"sshd\",pid=842,fd=3))",
+        "options": [
+          {
+            "id": "opt-srv-2a",
+            "text": "Notice the application is listening strictly on loopback (127.0.0.1:8080) rather than all interfaces (0.0.0.0:8080), explaining why external connections are refused.",
+            "type": "optimal",
+            "feedback": "Optimal: A socket bound to 127.0.0.1 only accepts traffic originating locally within the same OS. External packets arriving on interface 10.20.4.50 are dropped or rejected with TCP RST (Connection refused).",
+            "nextStepId": "step-srv-03"
+          },
+          {
+            "id": "opt-srv-2b",
+            "text": "Disable firewalld on Rocky Linux to see if packets start passing.",
+            "type": "suboptimal",
+            "feedback": "Even if firewalld permitted port 8080, the Linux kernel TCP stack rejects external packets addressed to 10.20.4.50 when no listener exists on that IP.",
+            "nextStepId": "step-srv-03"
+          }
+        ]
+      },
+      {
+        "id": "step-srv-03",
+        "stepNumber": 3,
+        "title": "Review Application Configuration and Firewall Rules",
+        "description": "Inspect /etc/analytics/application.properties and check firewalld port allowances.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - Configuration & Firewall Audit:\n[admin@srv-analytics ~]$ cat /etc/analytics/application.properties\nserver.port=8080\nserver.address=127.0.0.1\nspring.datasource.url=jdbc:postgresql://db.corp.local:5432/analytics\n\n[admin@srv-analytics ~]$ sudo firewall-cmd --list-all\npublic (active)\n  target: default\n  interfaces: eth0\n  services: ssh\n  ports: 8080/tcp",
+        "options": [
+          {
+            "id": "opt-srv-3a",
+            "text": "Change server.address to 0.0.0.0 in application.properties, restart analytics-backend, and verify remote connectivity.",
+            "type": "optimal",
+            "feedback": "Optimal: Binding to 0.0.0.0 permits the Java daemon to listen on all IPv4 interfaces, including 10.20.4.50, allowing the firewalld rule (which already allows 8080/tcp) to accept remote client traffic.",
+            "nextStepId": "diagnosis"
+          },
+          {
+            "id": "opt-srv-3b",
+            "text": "Configure an iptables PREROUTING port forwarding rule to redirect eth0 traffic to 127.0.0.1:8080.",
+            "type": "suboptimal",
+            "feedback": "NAT port forwarding to loopback is an unnecessarily complex anti-pattern that obscures client source IPs and adds routing overhead.",
+            "nextStepId": "diagnosis"
+          }
+        ]
+      }
+    ],
+    "finalDiagnosis": {
+      "title": "Application Daemon Bound to Loopback (127.0.0.1) Instead of Network Interface",
+      "rootCause": "In the recently deployed configuration file (/etc/analytics/application.properties), 'server.address' was set to '127.0.0.1' (default development setting). Consequently, the Java backend daemon only opened a TCP listener on the loopback interface. When remote systems sent SYN packets to the VM's physical IP (10.20.4.50:8080), the Linux network stack replied with TCP RST ('Connection refused') because no application had bound to that network address.",
+      "evidenceSummary": "1. VM ping and SSH (port 22) responded normally over the network.\n2. 'systemctl status analytics-backend' proved the daemon was running.\n3. 'ss -tulpn' revealed local address was '127.0.0.1:8080', not '0.0.0.0:8080'.\n4. Configuration file had explicit setting 'server.address=127.0.0.1'.\n5. 'firewall-cmd' already had port 8080/tcp allowed.",
+      "recommendedRemediation": "1. Edit /etc/analytics/application.properties and configure 'server.address=0.0.0.0'.\n2. Restart the application daemon: 'sudo systemctl restart analytics-backend'.\n3. Verify socket listener with 'ss -tulpn | grep 8080'.",
+      "verificationSteps": "1. From the local server, run 'curl -I http://10.20.4.50:8080/health'.\n2. From a remote client on the subnet, test TCP reachability: 'curl -I http://10.20.4.50:8080/health' (HTTP 200 OK).\n3. Confirm load balancer backend health checks return healthy.",
+      "preventionMeasures": "Implement configuration linting in CI/CD deployment pipelines to detect and reject localhost or 127.0.0.1 bindings on production environment profiles.",
+      "relatedCommands": ["cmd-ss-tulpn", "cmd-systemctl-status", "cmd-journalctl-xe", "cmd-ping"],
+      "relatedTutorials": ["tutorials/servers/server-hardware-health-monitoring-ipmi-snmp-traps.html", "tutorials/networking/tcp-three-way-handshake-and-teardown.html"],
+      "relatedResources": ["res-rfc-editor", "res-dmtf-redfish"]
+    }
+  },
+  {
+    "id": "lab-sec-01",
+    "category": "Cybersecurity",
+    "title": "Multiple Failed Authentication Alerts Followed by Sudden Interactive Login",
+    "level": "Advanced",
+    "estimatedTime": "15-20 min",
+    "symptoms": "SIEM security alert fires: User account 'jdoe' generated 35 failed logon attempts within 3 minutes from an anomalous foreign IP address, immediately followed by a successful interactive authentication and MFA approval.",
+    "environment": "Enterprise Identity Provider (IdP), Azure AD / Entra ID, Microsoft Defender for Identity, SIEM / SOC Telemetry.",
+    "scenarioDescription": "As a SOC Tier 2 Security Analyst, an alert flashes on your console: 'Potential Password Spray Succeeded with Push Fatigue Approval'. The user 'jdoe' is an IT Helpdesk Operator holding elevated administrative roles. You must analyze the evidence, assess risk, and execute rapid containment without executing offensive actions.",
+    "initialStepId": "step-sec-01",
+    "decisionPoints": [
+      {
+        "id": "step-sec-01",
+        "stepNumber": 1,
+        "title": "Triage SIEM Authentication Logs and Geo-Telemetry",
+        "description": "Examine the SIEM authentication logs to assess the source IP, user agent, authentication protocol, and target account.",
+        "evidenceType": "log",
+        "evidence": "Lab Evidence - SIEM Event Log Aggregation:\nTimestamp: 2026-09-15T09:40:12Z | User: jdoe@corp.com | EventID: 4625 (Logon Failure) | SourceIP: 185.220.101.42 (Tor Exit Node, NL) | FailureReason: Bad Password | Count: 35 attempts\nTimestamp: 2026-09-15T09:43:05Z | User: jdoe@corp.com | EventID: 4624 (Logon Success) | SourceIP: 185.220.101.42 (Tor Exit Node, NL) | AuthType: Password | MFA: Challenged\nTimestamp: 2026-09-15T09:43:58Z | User: jdoe@corp.com | EventID: 50074 (MFA Prompt) | Method: Mobile Push Notification | Result: Approved\n\nUser Profile: Jane Doe (Helpdesk Operations, Member of: 'Helpdesk-Admins', 'Workstation-Tier1-Operators'). Usual Location: Boston, MA, USA (Workstation IP 73.12.98.22).",
+        "options": [
+          {
+            "id": "opt-sec-1a",
+            "text": "Dismiss the alert as a false positive because the final authentication returned successful with MFA approval.",
+            "type": "unsafe",
+            "feedback": "Never dismiss sudden foreign Tor exit node logins following rapid failed authentication attempts as false positives; this is the classic signature of password spraying followed by MFA push bombing fatigue.",
+            "nextStepId": "step-sec-02"
+          },
+          {
+            "id": "opt-sec-1b",
+            "text": "Examine MFA challenge logs and active sessions to determine if the user intentionally approved the request.",
+            "type": "optimal",
+            "feedback": "Optimal: Correlating multiple rapid MFA push notifications before approval clarifies whether this was legitimate or an MFA fatigue attack.",
+            "nextStepId": "step-sec-02"
+          }
+        ]
+      },
+      {
+        "id": "step-sec-02",
+        "stepNumber": 2,
+        "title": "Analyze MFA Audit Logs and User Communications",
+        "description": "Inspect the Identity Provider's MFA challenge history and contact the user via out-of-band communication (work phone).",
+        "evidenceType": "log",
+        "evidence": "Lab Evidence - IdP MFA Challenge Telemetry:\n09:43:10Z - Push sent to iPhone 14 - Result: Denied (User report: Not Me)\n09:43:22Z - Push sent to iPhone 14 - Result: Denied\n09:43:35Z - Push sent to iPhone 14 - Result: Denied\n09:43:48Z - Push sent to iPhone 14 - Result: Denied\n09:43:58Z - Push sent to iPhone 14 - Result: Approved\n\nAnalyst Out-of-Band Phone Interview with Jane Doe:\n'My phone started buzzing like crazy with push requests while I was driving to the office. I accidentally tapped Approve just to make the notifications stop!'",
+        "options": [
+          {
+            "id": "opt-sec-2a",
+            "text": "Initiate immediate incident containment: Revoke all active user sessions, reset password, and temporarily disable account.",
+            "type": "optimal",
+            "feedback": "Optimal: The user confirmed unauthorized push notification spamming and accidental approval. Active sessions established from the adversary IP must be terminated immediately to prevent lateral movement.",
+            "nextStepId": "step-sec-03"
+          },
+          {
+            "id": "opt-sec-2b",
+            "text": "Wait for the user to arrive at work in 30 minutes to review her laptop in person before taking action.",
+            "type": "unsafe",
+            "feedback": "Delaying containment gives the attacker holding an active administrative session 30 minutes to harvest credentials, access directory objects, or create persistence.",
+            "nextStepId": "step-sec-03"
+          }
+        ]
+      },
+      {
+        "id": "step-sec-03",
+        "stepNumber": 3,
+        "title": "Execute Containment and Post-Incident Security Controls",
+        "description": "Revoke refresh tokens, assess if any permissions were modified during the 5-minute unauthorized session, and enforce number matching.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - Containment Execution & Audit:\nPS C:\\> Revoke-AzureADUserAllRefreshToken -ObjectId jdoe@corp.com\nSuccess: All OAuth refresh tokens and active sessions revoked.\n\nPS C:\\> Set-AzureADUser -ObjectId jdoe@corp.com -AccountEnabled $false\nSuccess: Account temporarily disabled pending credential rotation.\n\nPS C:\\> Get-AzureADAuditDirectoryLogs -Filter \"initiatedBy/user/userPrincipalName eq 'jdoe@corp.com'\" | Select-Object TimeGenerated, ActivityDisplayName\n(0 records found during session window - no persistence established).",
+        "options": [
+          {
+            "id": "opt-sec-3a",
+            "text": "Conclude incident containment, rotate credentials with strong password, and upgrade tenant MFA policy to mandatory Number Matching and FIDO2.",
+            "type": "optimal",
+            "feedback": "Optimal: Account is secured, zero persistence was established, and implementing MFA number matching permanently eliminates blind push fatigue vulnerabilities.",
+            "nextStepId": "diagnosis"
+          },
+          {
+            "id": "opt-sec-3b",
+            "text": "Attempt to scan and hack back the adversary's Netherlands IP address.",
+            "type": "unsafe",
+            "feedback": "'Hacking back' is illegal, unethical, and futile against Tor exit nodes. Enterprise defense must focus on identity hardening and containment.",
+            "nextStepId": "diagnosis"
+          }
+        ]
+      }
+    ],
+    "finalDiagnosis": {
+      "title": "Compromised Password via Spraying Exploited Through MFA Push Fatigue",
+      "rootCause": "An external attacker identified a weak or leaked password for 'jdoe@corp.com' during automated password spraying from Tor exit nodes. When confronted with MFA, the attacker repeatedly triggered 5 push notifications within 50 seconds (MFA fatigue attack). The legitimate user, while distracted, tapped 'Approve' to silence the spam, granting the adversary an active authenticated session.",
+      "evidenceSummary": "1. SIEM registered 35 rapid Event ID 4625 failures from Tor IP 185.220.101.42.\n2. Successful login occurred from Netherlands IP while user was physically in Boston.\n3. IdP MFA logs showed 4 rapid denied prompts followed by a single approved prompt.\n4. User confirmed over out-of-band phone call that she accidentally approved the notification to stop phone buzzing.\n5. Active session was revoked before directory objects or permissions could be altered.",
+      "recommendedRemediation": "1. Revoke all active session tokens and refresh tokens immediately using identity provider PowerShell cmdlets.\n2. Temporarily disable the account, conduct an audit of recent directory actions, and reset user password with a high-entropy secret.\n3. Re-enable account only after user enrollment in phishing-resistant MFA.",
+      "verificationSteps": "1. Verify user cannot sign in with old password or previous session cookies.\n2. Review unified audit logs across the tenant during the 5-minute session window to confirm no OAuth apps were consented or mail forwarding rules added.\n3. Verify successful re-authentication only occurs after new MFA enrollment.",
+      "preventionMeasures": "Mandate MFA Number Matching in Microsoft Authenticator or transition to FIDO2 / WebAuthn hardware security keys, which are mathematically immune to push fatigue and adversary-in-the-middle phishing attacks.",
+      "relatedCommands": ["cmd-sec-auditpol", "cmd-netsh-advfirewall", "cmd-ipconfig"],
+      "relatedTutorials": ["tutorials/cybersecurity/privileged-access-management-pam-vaulting-and-session-recording.html", "tutorials/cybersecurity/endpoint-detection-and-response-edr-architecture-and-investigation.html"],
+      "relatedResources": ["res-nist-csrc", "res-cisa-known-exploited", "res-mitre-attack"]
+    }
+  },
+  {
+    "id": "lab-cld-01",
+    "category": "Cloud",
+    "title": "Cloud Virtual Machine Has Internet Outbound but Web Ingress Is Blocked",
+    "level": "Intermediate",
+    "estimatedTime": "15-20 min",
+    "symptoms": "A new cloud virtual machine hosting a web service can download packages and curl external websites cleanly, but users on the Internet receive connection timeouts when trying to access https://<Public_IP>.",
+    "environment": "AWS VPC (or Azure VNet), Cloud VM Instance (Amazon Linux 2023 / Ubuntu), Internet Gateway attached, Public IPv4 address assigned.",
+    "scenarioDescription": "A DevOps engineer launched a new web server in a public subnet. Outbound updates work fine, the web daemon is confirmed listening, but external browsers cannot load the site over HTTPS (port 443). You need to methodically check cloud security boundaries: instance listeners, guest firewalls, and cloud Security Groups.",
+    "initialStepId": "step-cld-01",
+    "decisionPoints": [
+      {
+        "id": "step-cld-01",
+        "stepNumber": 1,
+        "title": "Verify In-Guest Web Service and Outbound Internet",
+        "description": "Log into the VM via SSH or Cloud Serial Console to confirm nginx is active and outbound traffic flows.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - In-Guest Web Server & Network Probe:\n$ sudo systemctl status nginx\n\u25cf nginx.service - The nginx HTTP and reverse proxy server\n   Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled)\n   Active: active (running) since Mon 2026-09-15 10:00:12 UTC; 25min ago\n Main PID: 3410 (nginx)\n\n$ curl -I http://localhost\nHTTP/1.1 200 OK\nServer: nginx/1.24.0\n\n$ curl -I https://www.google.com\nHTTP/2 200\ndate: Mon, 15 Sep 2026 10:25:30 GMT",
+        "options": [
+          {
+            "id": "opt-cld-1a",
+            "text": "Terminate and recreate the cloud virtual machine instance from scratch.",
+            "type": "inefficient",
+            "feedback": "The VM is running normally, nginx is active, and outbound routing works. Recreating the VM without understanding security rules will reproduce the exact same symptom.",
+            "nextStepId": "step-cld-02"
+          },
+          {
+            "id": "opt-cld-1b",
+            "text": "Verify socket listeners and in-guest firewall (iptables / ufw / firewalld) before inspecting cloud network rules.",
+            "type": "optimal",
+            "feedback": "Optimal: Verifying that nginx is listening on all interfaces (0.0.0.0:80 and 0.0.0.0:443) and local OS firewall isn't filtering packets isolates the issue to cloud fabric security groups.",
+            "nextStepId": "step-cld-02"
+          }
+        ]
+      },
+      {
+        "id": "step-cld-02",
+        "stepNumber": 2,
+        "title": "Check In-Guest Socket Listeners and Host Firewall",
+        "description": "Inspect listening TCP ports with ss and check host firewall status.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - Socket Listeners & Guest Firewall:\n$ sudo ss -tulpn | grep nginx\ntcp   LISTEN 0 511 0.0.0.0:80   0.0.0.0:*  users:((\"nginx\",pid=3410,fd=6))\ntcp   LISTEN 0 511 0.0.0.0:443  0.0.0.0:*  users:((\"nginx\",pid=3410,fd=7))\n\n$ sudo iptables -L -n -v\nChain INPUT (policy ACCEPT 412 packets, 38K bytes)\nChain FORWARD (policy ACCEPT 0 packets, 0 bytes)\nChain OUTPUT (policy ACCEPT 398 packets, 42K bytes)",
+        "options": [
+          {
+            "id": "opt-cld-2a",
+            "text": "Examine the Cloud Security Group inbound and outbound rules attached to the virtual machine's network interface (ENI).",
+            "type": "optimal",
+            "feedback": "Optimal: Since nginx is listening on 0.0.0.0:80 and 0.0.0.0:443 and the guest OS firewall policy is ACCEPT, the block is occurring outside the guest OS at the cloud hypervisor Security Group / NSG boundary.",
+            "nextStepId": "step-cld-03"
+          },
+          {
+            "id": "opt-cld-2b",
+            "text": "Disable SELinux on the instance.",
+            "type": "unsafe",
+            "feedback": "SELinux controls mandatory access control within the Linux kernel; it does not block incoming network packets that never reach the socket.",
+            "nextStepId": "step-cld-03"
+          }
+        ]
+      },
+      {
+        "id": "step-cld-03",
+        "stepNumber": 3,
+        "title": "Audit Cloud Security Group Configuration",
+        "description": "Inspect the virtual machine's cloud Security Group rules via AWS CLI / Cloud Console.",
+        "evidenceType": "terminal",
+        "evidence": "Lab Evidence - Cloud Security Group Rules (aws ec2 describe-security-groups):\n{\n  \"SecurityGroups\": [\n    {\n      \"GroupName\": \"web-server-sg\",\n      \"GroupId\": \"sg-0a1b2c3d4e5f6g7h8\",\n      \"IpPermissions\": [\n        {\n          \"IpProtocol\": \"tcp\",\n          \"FromPort\": 22,\n          \"ToPort\": 22,\n          \"IpRanges\": [ { \"CidrIp\": \"203.0.113.50/32\", \"Description\": \"Admin SSH\" } ]\n        }\n      ],\n      \"IpPermissionsEgress\": [\n        {\n          \"IpProtocol\": \"-1\",\n          \"IpRanges\": [ { \"CidrIp\": \"0.0.0.0/0\" } ]\n        }\n      ]\n    }\n  ]\n}",
+        "options": [
+          {
+            "id": "opt-cld-3a",
+            "text": "Identify that the Security Group only permits inbound port 22 SSH from an admin IP; add inbound allow rules for TCP port 443 (HTTPS) and port 80 (HTTP) from 0.0.0.0/0.",
+            "type": "optimal",
+            "feedback": "Optimal: Security Groups are stateful firewalls at the cloud hypervisor layer that drop all unpermitted inbound traffic by default. Egress was permitted to 0.0.0.0/0 (explaining why outbound curl worked), but inbound 443/80 was absent.",
+            "nextStepId": "diagnosis"
+          },
+          {
+            "id": "opt-cld-3b",
+            "text": "Attach a new Network ACL to the subnet with an inbound permit all rule.",
+            "type": "suboptimal",
+            "feedback": "Default cloud NACLs already allow all inbound and outbound traffic. The block is specifically located in the Security Group.",
+            "nextStepId": "diagnosis"
+          }
+        ]
+      }
+    ],
+    "finalDiagnosis": {
+      "title": "Missing Inbound HTTPS (TCP 443) Rule in Cloud Security Group",
+      "rootCause": "The cloud virtual machine's network interface was attached to 'web-server-sg', which only contained an inbound rule for TCP port 22 (SSH) from a single administrator IP. Cloud Security Groups operate as default-deny stateful firewalls for inbound traffic. Because the default egress rule allowed all outbound traffic ('0.0.0.0/0'), the VM could freely update packages and curl external web services, but all inbound connection attempts on ports 80 and 443 were silently dropped by the cloud hypervisor.",
+      "evidenceSummary": "1. In-guest nginx service was active and healthy.\n2. Local socket listener was bound to 0.0.0.0:80 and 0.0.0.0:443.\n3. In-guest iptables had default ACCEPT policy with zero drop counters.\n4. Outbound internet curl to google.com succeeded.\n5. 'describe-security-groups' confirmed inbound rules only permitted port 22; ports 80 and 443 were completely missing.",
+      "recommendedRemediation": "1. Authorize inbound HTTPS rule: 'aws ec2 authorize-security-group-ingress --group-id sg-0a1b2c3d4e5f6g7h8 --protocol tcp --port 443 --cidr 0.0.0.0/0'.\n2. Authorize inbound HTTP rule for redirection: 'aws ec2 authorize-security-group-ingress --group-id sg-0a1b2c3d4e5f6g7h8 --protocol tcp --port 80 --cidr 0.0.0.0/0'.\n3. Ensure production deployments utilize AWS Application Load Balancers (ALB) or Cloudflare in front of origin servers where appropriate.",
+      "verificationSteps": "1. Run 'curl -I https://<Public_IP>' from an external client.\n2. Verify HTTP response code 200 OK or 301 redirect.\n3. Confirm SSL certificate handshake completes successfully.",
+      "preventionMeasures": "Utilize Terraform or Infrastructure as Code (IaC) templates with standardized Security Group modules that explicitly declare required application ingress rules alongside instance deployments.",
+      "relatedCommands": ["cmd-cld-aws-s3-sync", "cmd-cld-az-vm-list", "cmd-ss-tulpn"],
+      "relatedTutorials": ["tutorials/cloud/cloud-security-groups-vs-network-access-control-lists.html", "tutorials/cloud/aws-vpc-fundamentals-subnets-route-tables-gateways.html"],
+      "relatedResources": ["res-aws-arch-center", "res-cncf"]
+    }
+  }
+]

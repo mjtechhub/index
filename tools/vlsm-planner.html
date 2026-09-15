@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="../js/theme-init.js"></script>
+    <!-- SEO & Metadata -->
+    <title>VLSM / Subnet Planner | MJ Tech Hub</title>
+    <meta name="description" content="Free, interactive VLSM (Variable Length Subnet Masking) Planner. Automatically calculate non-overlapping subnets using largest-first hierarchical IP address allocation.">
+    <link rel="canonical" href="https://themjtechhub.site/tools/vlsm-planner.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="VLSM / Subnet Planner | MJ Tech Hub">
+    <meta property="og:description" content="Calculate non-overlapping subnets using largest-first hierarchical IP address allocation.">
+    <meta property="og:url" content="https://themjtechhub.site/tools/vlsm-planner.html">
+    <meta property="og:site_name" content="MJ Tech Hub">
+    <meta property="og:type" content="website">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/themes.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <div id="site-header"></div>
+    
+    <main id="main-content">
+        <section class="tools-hero container">
+            <span class="about-eyebrow">INTERACTIVE NETWORK PLANNER</span>
+            <h1 class="page-title">VLSM / Subnet Planner</h1>
+            <p class="page-subtitle">Design hierarchical enterprise subnets without address overlaps using deterministic largest-first Variable Length Subnet Masking.</p>
+        </section>
+
+        <section class="container tool-workspace" aria-label="VLSM Planner Workspace">
+            <div class="tool-form-card">
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="vlsm-parent-input" class="form-label">Parent Network &amp; Prefix</label>
+                    <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                        <input type="text" id="vlsm-parent-input" class="form-control" style="max-width: 280px;" placeholder="e.g. 192.168.10.0/24" value="192.168.10.0/24" autocomplete="off" spellcheck="false">
+                        <button type="button" id="vlsm-preload-btn" class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Load Sample VLANs
+                        </button>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 1rem;">
+                    <span class="form-label" style="display: block; margin-bottom: 0.5rem;">Subnet Requirements (Up to 20 Rows)</span>
+                    <div id="vlsm-rows-container"></div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;">
+                    <button type="button" id="vlsm-add-row-btn" class="btn btn-secondary">
+                        <i class="fa-solid fa-plus" aria-hidden="true"></i> Add Subnet Row
+                    </button>
+                    <button type="button" id="vlsm-calc-btn" class="btn btn-primary">
+                        <i class="fa-solid fa-sitemap" aria-hidden="true"></i> Calculate VLSM Allocation
+                    </button>
+                </div>
+
+                <div id="vlsm-error-alert" class="alert alert-danger" style="display: none; margin-top: 1.25rem;" role="alert"></div>
+            </div>
+
+            <!-- Results Table -->
+            <div id="vlsm-results-card" class="calc-results-card" aria-live="polite">
+                <div class="calc-results-header">
+                    <div>
+                        <span style="font-size: var(--text-xs); text-transform: uppercase; font-weight: 700; color: var(--text-muted);">Allocation Breakdown</span>
+                        <h2 style="font-size: var(--text-xl); font-weight: 800; color: var(--text-primary); margin: 0;">Calculated VLSM Subnets</h2>
+                    </div>
+                    <div id="vlsm-stats-summary" class="badge badge-secondary" style="font-size: var(--text-xs); padding: 0.5rem 0.75rem;"></div>
+                </div>
+
+                <div class="vlsm-table-container">
+                    <table class="vlsm-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Subnet Name</th>
+                                <th scope="col">Needed</th>
+                                <th scope="col">Prefix</th>
+                                <th scope="col">Subnet Mask</th>
+                                <th scope="col">Network ID</th>
+                                <th scope="col">Usable Range</th>
+                                <th scope="col">Broadcast</th>
+                                <th scope="col">Available</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vlsm-results-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Screen Reader Live Announcer -->
+            <div id="vlsm-live-announcer" class="sr-only" aria-live="polite"></div>
+
+            <!-- Related Learning Tutorials -->
+            <div style="margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 2rem;">
+                <h3 style="font-size: var(--text-base); font-weight: 700; color: var(--text-primary); margin-bottom: 1rem;">Related Subnetting &amp; Planning Resources</h3>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="subnet-calculator.html" class="diag-tutorial-link">
+                        <i class="fa-solid fa-calculator" aria-hidden="true"></i> IPv4 Subnet &amp; CIDR Calculator
+                    </a>
+                    <a href="../tutorials/networking/subnetting-basics.html" class="diag-tutorial-link">
+                        <i class="fa-solid fa-book-open" aria-hidden="true"></i> Subnetting Basics: Network IDs, Broadcasts &amp; Masks
+                    </a>
+                    <a href="../tutorials/networking/what-is-vlan.html" class="diag-tutorial-link">
+                        <i class="fa-solid fa-book-open" aria-hidden="true"></i> VLAN Fundamentals: Segmentation &amp; Broadcast Domains
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="../js/theme.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="../js/search.js"></script>
+    <script src="../js/vlsm-planner.js"></script>
+</body>
+</html>

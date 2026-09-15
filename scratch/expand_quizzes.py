@@ -1,0 +1,672 @@
+import json
+
+# Backfill existing 2 quizzes with category and IDs
+existing_quizzes = [
+    {
+        "id": "networking-basics",
+        "title": "Networking Basics",
+        "category": "Networking",
+        "description": "Test your fundamental networking knowledge.",
+        "questions": [
+            {
+                "id": "q-net-base-01",
+                "question": "Which of the following IP addresses is a private IP address?",
+                "options": ["8.8.8.8", "192.168.1.100", "1.1.1.1", "17.253.144.10"],
+                "correctIndex": 1,
+                "explanation": "192.168.0.0 to 192.168.255.255 is an RFC 1918 reserved private IPv4 address block.",
+                "difficulty": "Beginner",
+                "category": "Networking"
+            },
+            {
+                "id": "q-net-base-02",
+                "question": "What port does HTTPS use by default?",
+                "options": ["80", "21", "443", "22"],
+                "correctIndex": 2,
+                "explanation": "HTTPS encrypted web traffic uses TCP port 443 by default.",
+                "difficulty": "Beginner",
+                "category": "Networking"
+            },
+            {
+                "id": "q-net-base-03",
+                "question": "Which protocol is responsible for resolving domain names to IP addresses?",
+                "options": ["DHCP", "FTP", "HTTP", "DNS"],
+                "correctIndex": 3,
+                "explanation": "DNS (Domain Name System) translates human-readable domain names into routable IP addresses.",
+                "difficulty": "Beginner",
+                "category": "Networking"
+            }
+        ]
+    },
+    {
+        "id": "windows-commands",
+        "title": "Windows Commands",
+        "category": "Windows",
+        "description": "Check your Windows command line skills.",
+        "questions": [
+            {
+                "id": "q-win-base-01",
+                "question": "Which command displays the IP configuration on Windows?",
+                "options": ["ifconfig", "ipconfig", "netstat", "ping"],
+                "correctIndex": 1,
+                "explanation": "ipconfig is the native Windows utility for displaying and refreshing TCP/IP configuration.",
+                "difficulty": "Beginner",
+                "category": "Windows"
+            }
+        ]
+    }
+]
+
+new_quizzes = [
+    # 1. Networking Core
+    {
+        "id": "networking-core",
+        "title": "Networking Protocols & Architecture",
+        "category": "Networking",
+        "description": "Test your mastery of TCP/IP, routing, switching, DNS, and network diagnostics.",
+        "questions": [
+            {
+                "id": "q-net-01",
+                "question": "How many usable host IP addresses are available in a standard /24 IPv4 subnet?",
+                "options": ["256", "254", "255", "252"],
+                "correctIndex": 1,
+                "explanation": "A /24 subnet contains 256 total IP addresses (2^8), but 2 addresses are reserved: the network ID (.0) and the broadcast address (.255), leaving 254 usable host addresses.",
+                "difficulty": "Beginner",
+                "category": "Networking"
+            },
+            {
+                "id": "q-net-02",
+                "question": "Which transport layer protocol provides connection-oriented, reliable, and in-order delivery of segments?",
+                "options": ["UDP", "TCP", "ICMP", "IGMP"],
+                "correctIndex": 1,
+                "explanation": "TCP (Transmission Control Protocol) is connection-oriented, establishing a three-way handshake and using sequence numbers and ACKs to guarantee reliable, in-order delivery.",
+                "difficulty": "Beginner",
+                "category": "Networking"
+            },
+            {
+                "id": "q-net-03",
+                "question": "What default TCP port is used by Secure Shell (SSH) for encrypted remote terminal access?",
+                "options": ["21", "22", "23", "25"],
+                "correctIndex": 1,
+                "explanation": "SSH uses standard TCP port 22. In contrast, port 21 is FTP control, port 23 is unencrypted Telnet, and port 25 is SMTP.",
+                "difficulty": "Beginner",
+                "category": "Networking"
+            },
+            {
+                "id": "q-net-04",
+                "question": "What is the correct order of packet flags exchanged during a standard TCP connection establishment?",
+                "options": ["SYN, ACK, SYN-ACK", "SYN, SYN-ACK, ACK", "ACK, SYN, ACK", "RST, SYN, FIN"],
+                "correctIndex": 1,
+                "explanation": "The standard TCP three-way handshake begins with the client sending SYN, the server responding with SYN-ACK, and the client acknowledging with ACK.",
+                "difficulty": "Intermediate",
+                "category": "Networking"
+            },
+            {
+                "id": "q-net-05",
+                "question": "When configuring an 802.1Q trunk link between two switches, what header is inserted into Ethernet frames to preserve VLAN membership?",
+                "options": ["A 4-byte 802.1Q tag containing a 12-bit VLAN ID", "A 16-byte MPLS label", "An 8-byte GRE tunneling header", "An IPsec Encapsulating Security Payload"],
+                "correctIndex": 0,
+                "explanation": "IEEE 802.1Q inserts a 4-byte tag into standard Ethernet frames, which includes a 12-bit VLAN Identifier (VID) supporting up to 4,094 distinct VLANs.",
+                "difficulty": "Intermediate",
+                "category": "Networking"
+            },
+            {
+                "id": "q-net-06",
+                "question": "A workstation on subnet 192.168.1.0/24 needs to send an IP packet to 8.8.8.8. Which Layer 2 MAC address does the workstation place in the destination MAC field?",
+                "options": ["The MAC address of 8.8.8.8", "The MAC address of its default gateway router", "FF:FF:FF:FF:FF:FF (Broadcast)", "The MAC address of the local DNS server"],
+                "correctIndex": 1,
+                "explanation": "Because 8.8.8.8 is outside the local /24 subnet, the host forwards the packet to its local default gateway router, using ARP to discover and insert the gateway router's MAC address.",
+                "difficulty": "Intermediate",
+                "category": "Networking"
+            },
+            {
+                "id": "q-net-07",
+                "question": "What is the four-step message exchange sequence performed during DHCP address assignment?",
+                "options": ["Discover, Offer, Request, Acknowledge (DORA)", "Request, Offer, Assign, Confirm", "Discover, Ping, Bind, Release", "Solicit, Advertise, Renew, Confirm"],
+                "correctIndex": 0,
+                "explanation": "Standard IPv4 DHCP address lease allocation follows the DORA sequence: DHCPDISCOVER (broadcast by client), DHCPOFFER (unicast/broadcast by server), DHCPREQUEST (client selection), and DHCPACK (server confirmation).",
+                "difficulty": "Intermediate",
+                "category": "Networking"
+            },
+            {
+                "id": "q-net-08",
+                "question": "Which DNS resource record type maps a canonical domain name alias to another true domain name?",
+                "options": ["A Record", "PTR Record", "CNAME Record", "MX Record"],
+                "correctIndex": 2,
+                "explanation": "A CNAME (Canonical Name) record aliases one domain name to another canonical name. In contrast, A maps to IPv4, PTR maps IP to name, and MX specifies mail exchangers.",
+                "difficulty": "Intermediate",
+                "category": "Networking"
+            },
+            {
+                "id": "q-net-09",
+                "question": "How does BGP (Border Gateway Protocol) fundamentally differ from link-state interior routing protocols like OSPF?",
+                "options": ["BGP is a path-vector protocol that routes based on autonomous system paths (AS_PATH) and policy rules rather than raw link cost", "BGP only supports broadcast Ethernet media", "BGP floods link-state advertisements (LSAs) every 10 seconds", "BGP relies solely on hop-count with a maximum of 15 hops"],
+                "correctIndex": 0,
+                "explanation": "BGP is an exterior path-vector protocol that makes routing decisions based on autonomous system paths (AS_PATH attribute), local preference, and administrative policies rather than link speed or metric cost.",
+                "difficulty": "Advanced",
+                "category": "Networking"
+            },
+            {
+                "id": "q-net-10",
+                "question": "In TCP connection teardown, what is the purpose of the client entering the TIME_WAIT state after sending the final ACK?",
+                "options": ["To ensure any delayed duplicate segments in the network expire before the socket pair can be reused (typically 2xMSL)", "To renegotiate encryption keys for the next session", "To wait for a DHCP lease refresh", "To retransmit data packets that were lost during transmission"],
+                "correctIndex": 0,
+                "explanation": "RFC 9293 specifies the TIME_WAIT state (traditionally 2x Maximum Segment Lifetime, or 2MSL) to ensure that the remote host received the final ACK and to prevent stale segments from an old connection from corrupting a new connection using the same 4-tuple.",
+                "difficulty": "Advanced",
+                "category": "Networking"
+            }
+        ]
+    },
+
+    # 2. Windows Administration
+    {
+        "id": "windows-admin",
+        "title": "Windows & PowerShell Administration",
+        "category": "Windows",
+        "description": "Test your knowledge of Windows administration, PowerShell cmdlets, Active Directory integration, and system troubleshooting.",
+        "questions": [
+            {
+                "id": "q-win-01",
+                "question": "What standard naming convention do PowerShell cmdlets follow?",
+                "options": ["Noun-Verb (e.g. Process-Get)", "Verb-Noun (e.g. Get-Process)", "Noun_Action (e.g. Process_Stop)", "ActionNoun (e.g. StopProcess)"],
+                "correctIndex": 1,
+                "explanation": "PowerShell enforces a strict Verb-Noun pair syntax (such as Get-Service, Start-Process, and New-Item), ensuring consistency across all modules.",
+                "difficulty": "Beginner",
+                "category": "Windows"
+            },
+            {
+                "id": "q-win-02",
+                "question": "Which keyboard shortcut opens the Windows Run dialog box?",
+                "options": ["Ctrl + Alt + Del", "Win + R", "Win + X", "Alt + F4"],
+                "correctIndex": 1,
+                "explanation": "The Windows Key + R shortcut instantly opens the Run dialog box for executing system utilities like cmd, powershell, and ncpa.cpl.",
+                "difficulty": "Beginner",
+                "category": "Windows"
+            },
+            {
+                "id": "q-win-03",
+                "question": "What is the standard file extension used for PowerShell script files?",
+                "options": [".bat", ".cmd", ".ps1", ".vbs"],
+                "correctIndex": 2,
+                "explanation": "PowerShell script files use the .ps1 extension. Batch files use .bat or .cmd, and VBScript files use .vbs.",
+                "difficulty": "Beginner",
+                "category": "Windows"
+            },
+            {
+                "id": "q-win-04",
+                "question": "What is the primary architectural advantage of the PowerShell pipeline compared to traditional UNIX/CMD text piping?",
+                "options": ["PowerShell passes rich .NET objects with properties and methods rather than unstructured plain text strings", "PowerShell executes commands in the BIOS", "PowerShell requires no memory allocation", "PowerShell automatically encrypts all outputs"],
+                "correctIndex": 0,
+                "explanation": "Unlike traditional shells that pipe unformatted ASCII text requiring string parsing (grep/awk), PowerShell passes fully structured .NET objects down the pipeline, allowing direct filtering by property names.",
+                "difficulty": "Intermediate",
+                "category": "Windows"
+            },
+            {
+                "id": "q-win-05",
+                "question": "Which command forces an immediate background reapplication of all Active Directory Group Policy settings on a Windows client?",
+                "options": ["gpupdate /force", "net stop gpo", "sfc /scannow", "dism /online /cleanup-image"],
+                "correctIndex": 0,
+                "explanation": "gpupdate /force immediately contacts the domain controller, reapplying all User and Computer Group Policy Objects without waiting for the default 90-minute refresh cycle.",
+                "difficulty": "Intermediate",
+                "category": "Windows"
+            },
+            {
+                "id": "q-win-06",
+                "question": "When enabling BitLocker Drive Encryption on enterprise workstations, where is the 48-digit recovery password most commonly escrowed automatically?",
+                "options": ["Active Directory Domain Services (AD DS) or Microsoft Entra ID", "A public FTP server", "The Windows System Event Log", "The client's local C:\\Temp directory"],
+                "correctIndex": 0,
+                "explanation": "In enterprise environments, BitLocker recovery keys are centrally and securely backed up to Active Directory Domain Services or Microsoft Entra ID (formerly Azure AD) via policy.",
+                "difficulty": "Intermediate",
+                "category": "Windows"
+            },
+            {
+                "id": "q-win-07",
+                "question": "Which Windows service startup type ensures a service starts shortly after the system boots without delaying the initial desktop logon experience?",
+                "options": ["Automatic (Delayed Start)", "Manual", "Disabled", "Boot Start"],
+                "correctIndex": 0,
+                "explanation": "Automatic (Delayed Start) initializes services shortly after system boot is complete, reducing boot disk contention and expediting user logon.",
+                "difficulty": "Intermediate",
+                "category": "Windows"
+            },
+            {
+                "id": "q-win-08",
+                "question": "When running robocopy with the /MIR flag, what critical operational behavior must the administrator anticipate?",
+                "options": ["It compresses all files into a ZIP container", "It purges any file in the destination directory that does not exist in the source directory", "It only copies read-only files", "It prompts for confirmation on every single file"],
+                "correctIndex": 1,
+                "explanation": "The /MIR (mirror) switch replicates the source tree and purges any file or directory in the destination that no longer exists in the source, which can delete destination files if used carelessly.",
+                "difficulty": "Intermediate",
+                "category": "Windows"
+            },
+            {
+                "id": "q-win-09",
+                "question": "Which Windows Registry root hive stores system-wide hardware, operating system, and installed software configuration settings regardless of the logged-on user?",
+                "options": ["HKEY_CURRENT_USER (HKCU)", "HKEY_LOCAL_MACHINE (HKLM)", "HKEY_USERS (HKU)", "HKEY_CURRENT_CONFIG (HKCC)"],
+                "correctIndex": 1,
+                "explanation": "HKLM (HKEY_LOCAL_MACHINE) contains machine-wide settings (SYSTEM, SOFTWARE, SAM, SECURITY hives) stored on disk in %SystemRoot%\\System32\\config, applying to all users.",
+                "difficulty": "Advanced",
+                "category": "Windows"
+            },
+            {
+                "id": "q-win-10",
+                "question": "In an Active Directory domain, what is the default maximum allowable time skew between a domain workstation and the Kerberos Key Distribution Center (KDC)?",
+                "options": ["1 minute", "5 minutes", "15 minutes", "60 minutes"],
+                "correctIndex": 1,
+                "explanation": "The Kerberos v5 specification and default Active Directory policy enforce a maximum clock skew of 5 minutes (300 seconds) to mitigate ticket replay attacks.",
+                "difficulty": "Advanced",
+                "category": "Windows"
+            }
+        ]
+    },
+
+    # 3. Linux Administration
+    {
+        "id": "linux-admin",
+        "title": "Linux Systems Administration",
+        "category": "Linux",
+        "description": "Test your expertise in Linux filesystems, permissions, systemd service management, process control, and diagnostics.",
+        "questions": [
+            {
+                "id": "q-lin-01",
+                "question": "Which Linux command displays the absolute path of the current working directory?",
+                "options": ["cd", "pwd", "ls", "whoami"],
+                "correctIndex": 1,
+                "explanation": "pwd (print working directory) prints the full absolute path of the directory you are currently in.",
+                "difficulty": "Beginner",
+                "category": "Linux"
+            },
+            {
+                "id": "q-lin-02",
+                "question": "In the bash shell, what special character represents the current user's home directory?",
+                "options": ["/", "~", ".", ".."],
+                "correctIndex": 1,
+                "explanation": "The tilde (~) expands to the current user's home directory (e.g. /home/username or /root).",
+                "difficulty": "Beginner",
+                "category": "Linux"
+            },
+            {
+                "id": "q-lin-03",
+                "question": "What permissions does the octal value 755 grant to a file in Linux?",
+                "options": ["Read, write, execute for owner; read and execute for group and others", "Full permissions for all users", "Read-only for all users", "Write and execute for owner; read-only for group"],
+                "correctIndex": 0,
+                "explanation": "7 (4+2+1 = rwx for owner), 5 (4+0+1 = r-x for group), and 5 (4+0+1 = r-x for others).",
+                "difficulty": "Beginner",
+                "category": "Linux"
+            },
+            {
+                "id": "q-lin-04",
+                "question": "What is the key technical difference between a hard link and a symbolic (soft) link in Linux?",
+                "options": ["A hard link points directly to the file's underlying inode number, whereas a symbolic link is a separate file containing a pathname string", "Hard links can cross different filesystem boundaries", "Symbolic links cannot point to directories", "Deleting the original file retains the symbolic link target"],
+                "correctIndex": 0,
+                "explanation": "Hard links share the identical inode number as the target on the same filesystem. Symbolic links are small pointer files storing the target path and can cross filesystems.",
+                "difficulty": "Intermediate",
+                "category": "Linux"
+            },
+            {
+                "id": "q-lin-05",
+                "question": "Which systemctl command instructs systemd to restart a service and reload its unit configuration file?",
+                "options": ["systemctl status", "systemctl restart <service>", "systemctl isolate <service>", "systemctl mask <service>"],
+                "correctIndex": 1,
+                "explanation": "systemctl restart stops and then starts the specified service unit, reapplying updated configuration parameters.",
+                "difficulty": "Intermediate",
+                "category": "Linux"
+            },
+            {
+                "id": "q-lin-06",
+                "question": "In Linux shell I/O redirection, what do the standard file descriptors 0, 1, and 2 represent?",
+                "options": ["0: stdin, 1: stdout, 2: stderr", "0: stdout, 1: stdin, 2: stderr", "0: stderr, 1: stdout, 2: stdin", "0: kernel, 1: user, 2: daemon"],
+                "correctIndex": 0,
+                "explanation": "POSIX defines standard file descriptors: 0 is Standard Input (stdin), 1 is Standard Output (stdout), and 2 is Standard Error (stderr).",
+                "difficulty": "Intermediate",
+                "category": "Linux"
+            },
+            {
+                "id": "q-lin-07",
+                "question": "Which utility is used to change user and group ownership of files and directories in Linux?",
+                "options": ["chmod", "chown", "umask", "setfacl"],
+                "correctIndex": 1,
+                "explanation": "chown (change owner) modifies the user and/or group ownership (e.g. chown user:group file), whereas chmod changes permission bits.",
+                "difficulty": "Intermediate",
+                "category": "Linux"
+            },
+            {
+                "id": "q-lin-08",
+                "question": "Which command lists all block devices, partition tables, filesystem UUIDs, and mount points in a clear tree format?",
+                "options": ["lsblk -f", "fdisk -l", "uname -r", "ip addr"],
+                "correctIndex": 0,
+                "explanation": "lsblk -f outputs block devices in a hierarchical tree alongside filesystem type (FSTYPE), label, UUID, and active mount points.",
+                "difficulty": "Intermediate",
+                "category": "Linux"
+            },
+            {
+                "id": "q-lin-09",
+                "question": "When editing the /etc/sudoers file, why should administrators always use the visudo command instead of a standard text editor?",
+                "options": ["visudo performs syntax verification before saving, preventing lockouts caused by syntax errors", "visudo automatically compiles the kernel", "visudo disables root account access", "visudo encrypts the filesystem"],
+                "correctIndex": 0,
+                "explanation": "visudo locks the sudoers file against simultaneous edits and strictly validates syntax before committing changes, preventing administrators from being locked out of sudo privileges.",
+                "difficulty": "Advanced",
+                "category": "Linux"
+            },
+            {
+                "id": "q-lin-10",
+                "question": "If a Linux system fails to boot due to an invalid mount option in /etc/fstab, what GRUB bootloader kernel parameter can be added to drop directly into an emergency root shell?",
+                "options": ["init=/bin/bash or rd.break", "nomodeset", "quiet splash", "single_user_fast=1"],
+                "correctIndex": 0,
+                "explanation": "Appending init=/bin/bash (or rd.break on systemd dracut initramfs) bypasses normal startup scripts and drops directly into a root shell, allowing remounting of / as read-write to correct fstab.",
+                "difficulty": "Advanced",
+                "category": "Linux"
+            }
+        ]
+    },
+
+    # 4. Enterprise Servers & Infrastructure
+    {
+        "id": "servers-infrastructure",
+        "title": "Enterprise Infrastructure & Virtualization",
+        "category": "Servers",
+        "description": "Test your knowledge of Windows Server, Active Directory DS, Proxmox VE, storage architectures, and server hardware.",
+        "questions": [
+            {
+                "id": "q-srv-01",
+                "question": "What is the primary role of Active Directory Domain Services (AD DS) in an enterprise network?",
+                "options": ["Centralized directory database for identity management, authentication, and policy enforcement", "Hardware graphics rendering", "DNS caching only", "Layer 2 packet routing"],
+                "correctIndex": 0,
+                "explanation": "AD DS provides a scalable, centralized directory service that authenticates users and computers, authorises resource access, and enforces Group Policy across a domain.",
+                "difficulty": "Beginner",
+                "category": "Servers"
+            },
+            {
+                "id": "q-srv-02",
+                "question": "How does a Type 1 bare-metal hypervisor (such as Proxmox VE or VMware ESXi) differ from a Type 2 hosted hypervisor?",
+                "options": ["Type 1 runs directly on the physical hardware without an underlying host operating system", "Type 1 requires an existing installation of Windows or macOS", "Type 1 can only run one virtual machine at a time", "Type 1 does not support virtual networking"],
+                "correctIndex": 0,
+                "explanation": "Type 1 (bare-metal) hypervisors deploy directly onto the physical server hardware, providing maximum performance, lower overhead, and direct access to CPU/memory virtualization extensions.",
+                "difficulty": "Beginner",
+                "category": "Servers"
+            },
+            {
+                "id": "q-srv-03",
+                "question": "What is the storage overhead and data protection mechanism of RAID 1?",
+                "options": ["50% capacity overhead through exact disk mirroring", "Parity calculation with no capacity loss", "Striping with zero redundancy", "Block-level striping with dual distributed parity"],
+                "correctIndex": 0,
+                "explanation": "RAID 1 mirrors identical data across two or more disks, providing 100% data redundancy at the cost of 50% total usable disk capacity.",
+                "difficulty": "Beginner",
+                "category": "Servers"
+            },
+            {
+                "id": "q-srv-04",
+                "question": "What is the minimum number of physical disks required to construct a RAID 5 array?",
+                "options": ["2 disks", "3 disks", "4 disks", "5 disks"],
+                "correctIndex": 1,
+                "explanation": "RAID 5 requires a minimum of 3 disks to distribute block-level data striping along with distributed parity across all member drives.",
+                "difficulty": "Intermediate",
+                "category": "Servers"
+            },
+            {
+                "id": "q-srv-05",
+                "question": "Which DNS resource record type is mandatory for Windows clients to locate Active Directory Domain Controllers during domain join?",
+                "options": ["SRV (Service Location) records (e.g. _ldap._tcp.dc._msdcs.<domain>)", "TXT records", "PTR records", "SOA records"],
+                "correctIndex": 0,
+                "explanation": "Active Directory relies heavily on DNS SRV records (such as _ldap._tcp.dc._msdcs.domain.com) to allow clients to locate available Domain Controllers, Kerberos KDCs, and Global Catalog servers.",
+                "difficulty": "Intermediate",
+                "category": "Servers"
+            },
+            {
+                "id": "q-srv-06",
+                "question": "When configuring DHCP Failover between two Windows Server DHCP servers, what are the two supported synchronization modes?",
+                "options": ["Load Balance and Hot Standby", "Active-Passive and Active-Dead", "Mirror and Stripe", "Master and Slave"],
+                "correctIndex": 0,
+                "explanation": "Windows Server DHCP failover supports Load Balance mode (both servers actively lease addresses simultaneously based on a percentage split) and Hot Standby mode (primary server handles leases until failure).",
+                "difficulty": "Intermediate",
+                "category": "Servers"
+            },
+            {
+                "id": "q-srv-07",
+                "question": "What modern RESTful standard developed by DMTF has largely succeeded legacy IPMI for enterprise out-of-band server hardware management?",
+                "options": ["Redfish", "SNMPv1", "Telnet", "Modbus"],
+                "correctIndex": 0,
+                "explanation": "DMTF Redfish is an open industry standard specification utilizing RESTful HTTPS APIs and JSON schemas for secure, modern out-of-band management of server hardware, BMCs, and power states.",
+                "difficulty": "Intermediate",
+                "category": "Servers"
+            },
+            {
+                "id": "q-srv-08",
+                "question": "In Proxmox VE, what is the fundamental architectural difference between a KVM virtual machine and an LXC container?",
+                "options": ["KVM provides full hardware virtualization with its own kernel, while LXC shares the host Linux kernel with OS-level isolation", "LXC requires more RAM than KVM", "KVM only runs Windows", "LXC does not support network bridges"],
+                "correctIndex": 0,
+                "explanation": "KVM virtualizes physical hardware allowing any guest OS (Windows, Linux, BSD) to run its own kernel. LXC containers share the host Linux kernel using cgroups and namespaces, offering near-zero overhead.",
+                "difficulty": "Intermediate",
+                "category": "Servers"
+            },
+            {
+                "id": "q-srv-09",
+                "question": "In a Windows Server Failover Cluster (WSFC), what is the function of the Quorum witness?",
+                "options": ["To break ties and maintain a majority vote in an even-node cluster, preventing split-brain scenarios", "To route network traffic to the active node", "To backup Active Directory", "To convert virtual disks from VHD to VHDX"],
+                "correctIndex": 0,
+                "explanation": "The Quorum witness (File Share, Cloud, or Disk Witness) provides an additional vote in even-node clusters, ensuring that if communication between nodes fails, only the partition with majority quorum stays online.",
+                "difficulty": "Advanced",
+                "category": "Servers"
+            },
+            {
+                "id": "q-srv-10",
+                "question": "What core characteristic of the ZFS filesystem ensures that existing on-disk data blocks are never overwritten during write operations?",
+                "options": ["Copy-on-Write (CoW)", "FAT32 file allocation", "Ext4 journaling", "NTFS alternate data streams"],
+                "correctIndex": 0,
+                "explanation": "ZFS utilizes a Copy-on-Write (CoW) transactional architecture where modified data is written to new unallocated blocks before metadata pointers are updated, preventing data corruption during crashes.",
+                "difficulty": "Advanced",
+                "category": "Servers"
+            }
+        ]
+    },
+
+    # 5. Cybersecurity
+    {
+        "id": "cybersecurity-defense",
+        "title": "Cybersecurity & Defensive Operations",
+        "category": "Cybersecurity",
+        "description": "Test your knowledge of the CIA triad, Zero Trust architecture, EDR, defense-in-depth, IAM, and incident response.",
+        "questions": [
+            {
+                "id": "q-sec-01",
+                "question": "What three core pillars make up the foundational CIA triad of information security?",
+                "options": ["Confidentiality, Integrity, and Availability", "Control, Identification, and Authentication", "Cloud, Internet, and Antivirus", "Compliance, Inspection, and Auditing"],
+                "correctIndex": 0,
+                "explanation": "The CIA triad consists of Confidentiality (preserving authorized access restrictions), Integrity (guarding against improper modification), and Availability (ensuring timely, reliable access).",
+                "difficulty": "Beginner",
+                "category": "Cybersecurity"
+            },
+            {
+                "id": "q-sec-02",
+                "question": "What does the Principle of Least Privilege dictate in user account administration?",
+                "options": ["Users should be granted only the minimum necessary permissions required to perform their specific job functions", "All users should have full local administrator rights", "Users should share administrative accounts to reduce overhead", "Passwords should never expire"],
+                "correctIndex": 0,
+                "explanation": "The Principle of Least Privilege states that security principals should only be granted the bare minimum permissions necessary to complete their required tasks, minimizing attack surface.",
+                "difficulty": "Beginner",
+                "category": "Cybersecurity"
+            },
+            {
+                "id": "q-sec-03",
+                "question": "Which of the following represents a valid Multi-Factor Authentication (MFA) combination?",
+                "options": ["A password (knowledge) and an authenticator app TOTP code (possession)", "Two different passwords", "A username and a secret security question", "An email address and a mother's maiden name"],
+                "correctIndex": 0,
+                "explanation": "True MFA requires credentials from two or more distinct categories: something you know (password), something you have (TOTP token/hardware key), or something you are (biometrics).",
+                "difficulty": "Beginner",
+                "category": "Cybersecurity"
+            },
+            {
+                "id": "q-sec-04",
+                "question": "What is the foundational architectural axiom of the Zero Trust security model?",
+                "options": ["Never trust, always verify; assume breach and verify explicitly regardless of network location", "Trust all devices inside the corporate LAN", "Rely exclusively on perimeter border firewalls", "Disable all encryption on internal subnets"],
+                "correctIndex": 0,
+                "explanation": "Zero Trust operates on the principle of 'Never Trust, Always Verify', treating all network segments as potentially compromised and requiring continuous authentication, authorization, and posture checks.",
+                "difficulty": "Intermediate",
+                "category": "Cybersecurity"
+            },
+            {
+                "id": "q-sec-05",
+                "question": "How does Endpoint Detection and Response (EDR) primarily differ from traditional signature-based antivirus software?",
+                "options": ["EDR continuously records endpoint telemetry, monitors process behavior in real time, and supports automated device isolation", "EDR only scans files once per month", "EDR does not require an agent", "EDR only protects network routers"],
+                "correctIndex": 0,
+                "explanation": "While legacy antivirus matches static file hashes against known signatures, EDR captures continuous endpoint behavior, detects fileless and behavioral anomalies, and enables remote threat isolation.",
+                "difficulty": "Intermediate",
+                "category": "Cybersecurity"
+            },
+            {
+                "id": "q-sec-06",
+                "question": "What is the primary function of the MITRE ATT&CK framework in defensive operations?",
+                "options": ["A globally accessible curated knowledge base classifying real-world adversary tactics, techniques, and procedures (TTPs)", "An antivirus scanning engine", "A firewall hardware appliance", "A password cracking utility"],
+                "correctIndex": 0,
+                "explanation": "MITRE ATT&CK provides a structured matrix classifying threat actor tactics, techniques, and procedures (TTPs) based on real-world observations, helping defenders map detections and vulnerabilities.",
+                "difficulty": "Intermediate",
+                "category": "Cybersecurity"
+            },
+            {
+                "id": "q-sec-07",
+                "question": "Why is the SHA-256 cryptographic hash function preferred over MD5 or SHA-1 for verifying software download integrity?",
+                "options": ["MD5 and SHA-1 suffer from known cryptographic collision vulnerabilities where different inputs produce identical hashes", "SHA-256 is an encryption cipher rather than a hash", "MD5 produces hashes that are too long to read", "SHA-256 requires a secret private key to calculate"],
+                "correctIndex": 0,
+                "explanation": "MD5 and SHA-1 have proven theoretical and practical collision vulnerabilities, making them insecure against forged binaries. SHA-256 remains collision resistant.",
+                "difficulty": "Intermediate",
+                "category": "Cybersecurity"
+            },
+            {
+                "id": "q-sec-08",
+                "question": "How do stateful packet inspection firewalls process security rules when evaluating a new connection attempt?",
+                "options": ["Rules are evaluated sequentially from top to bottom; the first matching rule executes and subsequent rules are ignored", "All rules execute simultaneously and vote on the outcome", "Rules are evaluated in reverse alphabetical order", "Firewalls only evaluate outbound traffic"],
+                "correctIndex": 0,
+                "explanation": "Firewall access control lists (ACLs) evaluate rules sequentially from top to bottom. Upon encountering the first rule that matches the packet's criteria, that action (Allow/Deny) is enforced.",
+                "difficulty": "Intermediate",
+                "category": "Cybersecurity"
+            },
+            {
+                "id": "q-sec-09",
+                "question": "In a Privileged Access Management (PAM) architecture, how does Just-In-Time (JIT) elevation protect domain environments?",
+                "options": ["Administrators maintain standard non-privileged accounts until temporary, time-bound elevated rights are granted for specific maintenance windows", "Administrators are permanently assigned Domain Admin rights", "Passwords are permanently removed from all accounts", "Administrative privileges are shared across all team members"],
+                "correctIndex": 0,
+                "explanation": "JIT elevation eliminates permanent standing administrative privileges (standing access) by provisioning temporary, time-bound, and audited elevations only when authorized.",
+                "difficulty": "Advanced",
+                "category": "Cybersecurity"
+            },
+            {
+                "id": "q-sec-10",
+                "question": "According to NIST SP 800-61, what are the four primary phases of the Incident Response lifecycle?",
+                "options": ["Preparation; Detection & Analysis; Containment, Eradication & Recovery; Post-Incident Activity", "Attack, Defense, Rebuild, Report", "Scan, Exploit, Exfiltrate, Cover Tracks", "Alert, Delete, Reinstall, Close"],
+                "correctIndex": 0,
+                "explanation": "NIST SP 800-61 defines the structured incident handling lifecycle as: 1) Preparation, 2) Detection & Analysis, 3) Containment, Eradication & Recovery, and 4) Post-Incident Activity (Lessons Learned).",
+                "difficulty": "Advanced",
+                "category": "Cybersecurity"
+            }
+        ]
+    },
+
+    # 6. Cloud & AI
+    {
+        "id": "cloud-ai-architecture",
+        "title": "Cloud Architecture & Modern Operations",
+        "category": "Cloud & AI",
+        "description": "Test your understanding of cloud service models, AWS/Azure architectures, IaC, Kubernetes, and AI-driven operations.",
+        "questions": [
+            {
+                "id": "q-cld-01",
+                "question": "Which cloud computing service model provides virtualized computing infrastructure (VMs, block storage, virtual networks) managed by the customer?",
+                "options": ["Infrastructure as a Service (IaaS)", "Software as a Service (SaaS)", "Platform as a Service (PaaS)", "Function as a Service (FaaS)"],
+                "correctIndex": 0,
+                "explanation": "IaaS provides raw infrastructure components (servers, storage, networking) where the customer is responsible for managing the OS, middleware, runtime, and applications.",
+                "difficulty": "Beginner",
+                "category": "Cloud & AI"
+            },
+            {
+                "id": "q-cld-02",
+                "question": "Under the Cloud Shared Responsibility Model, which security layer is always the responsibility of the customer across all cloud models (IaaS, PaaS, SaaS)?",
+                "options": ["Customer data and access management (IAM)", "Physical data center perimeter security", "Hypervisor patch management", "Subsea fiber cabling maintenance"],
+                "correctIndex": 0,
+                "explanation": "Regardless of whether IaaS, PaaS, or SaaS is deployed, the customer always retains ultimate responsibility for classifying, protecting, and governing their own data and user credentials.",
+                "difficulty": "Beginner",
+                "category": "Cloud & AI"
+            },
+            {
+                "id": "q-cld-03",
+                "question": "Why do cloud architectures deploy workloads across multiple Availability Zones (Multi-AZ) within a region?",
+                "options": ["To achieve high availability and fault tolerance against isolated data center power, cooling, or network failures", "To eliminate all cloud billing costs", "Because single AZs do not support IP addresses", "To automatically translate source code to Python"],
+                "correctIndex": 0,
+                "explanation": "Availability Zones are physically separated data centers within a region with redundant power and networking. Multi-AZ deployment ensures workloads survive the loss of an entire facility.",
+                "difficulty": "Beginner",
+                "category": "Cloud & AI"
+            },
+            {
+                "id": "q-cld-04",
+                "question": "In Amazon Web Services (AWS) VPC networking, what is the key state difference between Security Groups and Network Access Control Lists (NACLs)?",
+                "options": ["Security Groups are stateful (return traffic is automatically allowed); NACLs are stateless (rules must explicitly permit both directions)", "Security Groups operate at the subnet level; NACLs operate at the instance level", "Security Groups only support deny rules", "NACLs cannot inspect IP addresses"],
+                "correctIndex": 0,
+                "explanation": "Security Groups are stateful; return traffic is automatically permitted regardless of inbound rules. NACLs operate at the subnet boundary and are stateless, requiring explicit ingress and egress rules.",
+                "difficulty": "Intermediate",
+                "category": "Cloud & AI"
+            },
+            {
+                "id": "q-cld-05",
+                "question": "What is the primary benefit of managing cloud infrastructure through Infrastructure as Code (IaC) tools like Terraform or AWS CloudFormation?",
+                "options": ["Declarative, version-controlled, repeatable, and automated provisioning that eliminates manual drift and human configuration error", "Guaranteed zero-cost infrastructure", "Eliminating the need for software code", "Automatic root password guessing"],
+                "correctIndex": 0,
+                "explanation": "IaC replaces manual console clicks with declarative configuration files tracked in git, enabling repeatable environments, automated CI/CD deployment, and drift detection.",
+                "difficulty": "Intermediate",
+                "category": "Cloud & AI"
+            },
+            {
+                "id": "q-cld-06",
+                "question": "What architectural distinction separates cloud object storage (e.g. Amazon S3, Azure Blob) from block storage (e.g. AWS EBS, Azure Managed Disks)?",
+                "options": ["Object storage is an HTTP-accessible, flat namespace storing unstructured data with custom metadata; block storage exposes raw disk sectors mounted as local drives", "Object storage is only for boot drives", "Block storage cannot store files larger than 1MB", "Object storage requires formatting with NTFS"],
+                "correctIndex": 0,
+                "explanation": "Object storage stores data as discrete objects in buckets accessed via RESTful HTTP APIs with unlimited horizontal scaling. Block storage provides raw volumes attached directly to VMs for OS boot and databases.",
+                "difficulty": "Intermediate",
+                "category": "Cloud & AI"
+            },
+            {
+                "id": "q-cld-07",
+                "question": "In Kubernetes, what is the smallest deployable computing unit that can be created and managed?",
+                "options": ["Pod", "Container", "Cluster", "Virtual Machine"],
+                "correctIndex": 0,
+                "explanation": "A Pod is the fundamental atomic unit in Kubernetes. It encapsulates one or more co-located containers that share network namespaces, IP address, and storage volumes.",
+                "difficulty": "Intermediate",
+                "category": "Cloud & AI"
+            },
+            {
+                "id": "q-cld-08",
+                "question": "What is the primary objective of FinOps in modern enterprise cloud operations?",
+                "options": ["Bringing financial accountability and cost optimization to cloud engineering teams to maximize business value", "Replacing all software developers with accountants", "Terminating all cloud instances nightly", "Disabling multi-region backups"],
+                "correctIndex": 0,
+                "explanation": "FinOps is an operational framework that unites finance, engineering, and business teams to gain visibility into cloud spending, allocate costs, and continuously optimize resource efficiency.",
+                "difficulty": "Intermediate",
+                "category": "Cloud & AI"
+            },
+            {
+                "id": "q-cld-09",
+                "question": "In microservices architectures, what role does a Service Mesh (such as Istio or Linkerd) play across distributed container clusters?",
+                "options": ["Manages service-to-service communication via sidecar proxies, providing transparent mTLS encryption, traffic routing, and telemetry", "Compiles source code into Docker images", "Replaces physical switches in the data center", "Stores SQL database tables in memory"],
+                "correctIndex": 0,
+                "explanation": "A Service Mesh injects lightweight sidecar proxies (like Envoy) alongside application containers to transparently handle service discovery, mutual TLS encryption, canary routing, and distributed tracing.",
+                "difficulty": "Advanced",
+                "category": "Cloud & AI"
+            },
+            {
+                "id": "q-cld-10",
+                "question": "In AIOps architectures, what is the function of event correlation and anomaly detection engines?",
+                "options": ["Ingesting high-volume metrics, logs, and traces to filter noise, detect unexpected statistical deviations, and cluster related alerts into actionable incidents", "Automatically writing marketing emails", "Replacing human managers", "Deleting log files when disk space is full"],
+                "correctIndex": 0,
+                "explanation": "AIOps utilizes machine learning to process massive telemetry streams, eliminating alarm fatigue by correlating related alerts into a single incident and surfacing root causes via anomaly detection.",
+                "difficulty": "Advanced",
+                "category": "Cloud & AI"
+            }
+        ]
+    }
+]
+
+all_quizzes = existing_quizzes + new_quizzes
+print(f"Total quizzes: {len(all_quizzes)}")
+for q in all_quizzes:
+    diff_counts = {"Beginner": 0, "Intermediate": 0, "Advanced": 0}
+    for item in q["questions"]:
+        diff = item.get("difficulty", "Beginner")
+        diff_counts[diff] = diff_counts.get(diff, 0) + 1
+    print(f"  - {q['id']} ({q['category']}): {len(q['questions'])} questions {diff_counts}")
+
+with open("data/quizzes.json", "w", encoding="utf-8") as f:
+    json.dump(all_quizzes, f, indent=4, ensure_ascii=False)
+print("Saved data/quizzes.json successfully.")

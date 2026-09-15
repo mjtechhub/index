@@ -43,18 +43,24 @@
             <div class="about-section-header" style="text-align: left; margin-bottom: 2rem;">
                 <h2>Available Now</h2>
             </div>
-            <div class="about-grid about-grid-4">
+            <div class="about-grid about-grid-3">
                 <div class="about-card" style="display: flex; flex-direction: column; height: 100%;">
                     <i class="fa-solid fa-terminal" style="font-size: 2rem; color: var(--brand-primary); margin-bottom: 1.25rem;" aria-hidden="true"></i>
                     <h3 style="margin-bottom: 0.75rem; font-size: 1.15rem;">Command Library</h3>
-                    <p style="flex-grow: 1; font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1.75rem;">Quick references for useful Windows, Linux and networking commands.</p>
+                    <p style="flex-grow: 1; font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1.75rem;">Quick references for useful Windows, Linux, Server, Cloud, and Networking commands.</p>
                     <a href="commands.html" class="btn btn-secondary" style="width: 100%; text-align: center;">Browse Commands</a>
                 </div>
                 <div class="about-card" style="display: flex; flex-direction: column; height: 100%;">
-                    <i class="fa-solid fa-network-wired" style="font-size: 2rem; color: var(--brand-primary); margin-bottom: 1.25rem;" aria-hidden="true"></i>
-                    <h3 style="margin-bottom: 0.75rem; font-size: 1.15rem;">Networking Tutorials</h3>
-                    <p style="flex-grow: 1; font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1.75rem;">Learn IP addressing, DNS, DHCP, VLANs, routing, switching and troubleshooting.</p>
-                    <a href="networking.html" class="btn btn-secondary" style="width: 100%; text-align: center;">Explore Networking</a>
+                    <i class="fa-solid fa-calculator" style="font-size: 2rem; color: var(--brand-primary); margin-bottom: 1.25rem;" aria-hidden="true"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.15rem;">Interactive IT Tools</h3>
+                    <p style="flex-grow: 1; font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1.75rem;">Browser-based IPv4 Subnet Calculator, VLSM Planner, Diagnostic Workbench, and Port Reference.</p>
+                    <a href="tools.html" class="btn btn-secondary" style="width: 100%; text-align: center;">Open Tools</a>
+                </div>
+                <div class="about-card" style="display: flex; flex-direction: column; height: 100%;">
+                    <i class="fa-solid fa-flask-vial" style="font-size: 2rem; color: var(--brand-primary); margin-bottom: 1.25rem;" aria-hidden="true"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.15rem;">Troubleshooting Labs</h3>
+                    <p style="flex-grow: 1; font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1.75rem;">Hands-on guided incident diagnosis simulations across all 6 core IT domains.</p>
+                    <a href="labs.html" class="btn btn-secondary" style="width: 100%; text-align: center;">Launch Labs</a>
                 </div>
                 <div class="about-card" style="display: flex; flex-direction: column; height: 100%;">
                     <i class="fa-solid fa-book-open" style="font-size: 2rem; color: var(--brand-primary); margin-bottom: 1.25rem;" aria-hidden="true"></i>
@@ -63,24 +69,65 @@
                     <a href="topics.html" class="btn btn-secondary" style="width: 100%; text-align: center;">Browse Topics</a>
                 </div>
                 <div class="about-card" style="display: flex; flex-direction: column; height: 100%;">
+                    <i class="fa-solid fa-network-wired" style="font-size: 2rem; color: var(--brand-primary); margin-bottom: 1.25rem;" aria-hidden="true"></i>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.15rem;">Networking Tutorials</h3>
+                    <p style="flex-grow: 1; font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1.75rem;">Learn IP addressing, DNS, DHCP, VLANs, routing, switching and troubleshooting.</p>
+                    <a href="networking.html" class="btn btn-secondary" style="width: 100%; text-align: center;">Explore Networking</a>
+                </div>
+                <div class="about-card" style="display: flex; flex-direction: column; height: 100%;">
                     <i class="fa-solid fa-clipboard-question" style="font-size: 2rem; color: var(--brand-primary); margin-bottom: 1.25rem;" aria-hidden="true"></i>
-                    <h3 style="margin-bottom: 0.75rem; font-size: 1.15rem;">Practice Quiz</h3>
-                    <p style="flex-grow: 1; font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1.75rem;">Test your IT knowledge with practical questions.</p>
+                    <h3 style="margin-bottom: 0.75rem; font-size: 1.15rem;">Practice Quizzes</h3>
+                    <p style="flex-grow: 1; font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1.75rem;">Test your IT knowledge with practical domain-aligned assessments.</p>
                     <a href="quiz.html" class="btn btn-secondary" style="width: 100%; text-align: center;">Start Quiz</a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Curated Technical References & Standards -->
+    <section class="about-section" id="curated-references">
+        <div class="container">
+            <div class="about-section-header" style="text-align: left; margin-bottom: 2rem;">
+                <div class="section-badge">|| OFFICIAL DOCUMENTATION & STANDARDS</div>
+                <h2 style="margin-bottom: 0.5rem;">Curated Technical References</h2>
+                <p style="color: var(--text-secondary); font-size: 1.05rem;">Authoritative documentation, RFC specifications, and security frameworks verified for enterprise IT administrators.</p>
+            </div>
+
+            <!-- Controls: Category Filters & Search -->
+            <div class="commands-toolbar" style="margin-bottom: 2rem;" aria-label="Curated Resource Filter and Search Controls">
+                <div class="commands-filter-tabs" id="resource-category-filters" role="tablist" aria-label="Filter resources by category">
+                    <!-- Dynamically populated from resources.json -->
+                </div>
+
+                <div class="commands-search-box">
+                    <i class="fa-solid fa-search commands-search-icon" aria-hidden="true"></i>
+                    <input type="search" id="resources-search-input" class="commands-search-input" placeholder="Search resources, providers, or standards..." aria-label="Search resources">
+                </div>
+
+                <div id="resources-counter" class="commands-counter" aria-live="polite">
+                    Showing 18 verified external resources
+                </div>
+            </div>
+
+            <!-- Dynamic Card Mount -->
+            <div id="curated-resources-container" class="about-grid about-grid-3" aria-label="Curated External Resources Grid">
+                <div style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: var(--text-muted);">
+                    <i class="fa-solid fa-circle-notch fa-spin" style="font-size: 1.5rem; margin-bottom: 0.5rem; display: block;"></i>
+                    <p>Loading curated resources...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Downloadable Resources Section -->
-    <section class="about-section about-section-alt">
+    <section class="about-section about-section-alt" id="cheat-sheets">
         <div class="container">
             <div class="about-section-header" style="text-align: left; margin-bottom: 2rem;">
                 <h2 style="margin-bottom: 0.5rem;">Downloadable Resources</h2>
                 <p style="color: var(--text-secondary); font-size: 1.05rem;">Practical cheat sheets and quick-reference guides are being prepared for release.</p>
             </div>
             <div class="about-grid about-grid-3">
-                <div class="about-card" style="display: flex; flex-direction: column; opacity: 0.85; height: 100%;">
+                <div id="networking-cheat-sheet" class="about-card" style="display: flex; flex-direction: column; opacity: 0.85; height: 100%;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
                         <i class="fa-regular fa-file-pdf" style="font-size: 1.75rem; color: var(--brand-primary);" aria-hidden="true"></i>
                         <span class="status-badge" style="background: var(--bg-tertiary); color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700; border: 1px solid var(--border-color);">COMING SOON</span>
@@ -89,7 +136,7 @@
                     <p style="flex-grow: 1; font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 0;">Subnetting, common ports, standard protocols, and CLI diagnostics.</p>
                 </div>
                 
-                <div class="about-card" style="display: flex; flex-direction: column; opacity: 0.85; height: 100%;">
+                <div id="windows-command-reference" class="about-card" style="display: flex; flex-direction: column; opacity: 0.85; height: 100%;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
                         <i class="fa-regular fa-file-pdf" style="font-size: 1.75rem; color: var(--brand-primary);" aria-hidden="true"></i>
                         <span class="status-badge" style="background: var(--bg-tertiary); color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700; border: 1px solid var(--border-color);">COMING SOON</span>
@@ -98,7 +145,7 @@
                     <p style="flex-grow: 1; font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 0;">CMD, PowerShell, and Sysinternals quick commands.</p>
                 </div>
                 
-                <div class="about-card" style="display: flex; flex-direction: column; opacity: 0.85; height: 100%;">
+                <div id="linux-command-reference" class="about-card" style="display: flex; flex-direction: column; opacity: 0.85; height: 100%;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
                         <i class="fa-regular fa-file-pdf" style="font-size: 1.75rem; color: var(--brand-primary);" aria-hidden="true"></i>
                         <span class="status-badge" style="background: var(--bg-tertiary); color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700; border: 1px solid var(--border-color);">COMING SOON</span>
@@ -107,7 +154,7 @@
                     <p style="flex-grow: 1; font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 0;">Core utilities, file management, permissions, and network tooling.</p>
                 </div>
                 
-                <div class="about-card" style="display: flex; flex-direction: column; opacity: 0.85; height: 100%;">
+                <div id="troubleshooting-checklists" class="about-card" style="display: flex; flex-direction: column; opacity: 0.85; height: 100%;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
                         <i class="fa-regular fa-file-pdf" style="font-size: 1.75rem; color: var(--brand-primary);" aria-hidden="true"></i>
                         <span class="status-badge" style="background: var(--bg-tertiary); color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700; border: 1px solid var(--border-color);">COMING SOON</span>
@@ -116,7 +163,7 @@
                     <p style="flex-grow: 1; font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 0;">Step-by-step methodologies for isolating network and system faults.</p>
                 </div>
                 
-                <div class="about-card" style="display: flex; flex-direction: column; opacity: 0.85; height: 100%;">
+                <div id="proxmox-virtualization" class="about-card" style="display: flex; flex-direction: column; opacity: 0.85; height: 100%;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
                         <i class="fa-regular fa-file-pdf" style="font-size: 1.75rem; color: var(--brand-primary);" aria-hidden="true"></i>
                         <span class="status-badge" style="background: var(--bg-tertiary); color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700; border: 1px solid var(--border-color);">COMING SOON</span>
@@ -125,7 +172,7 @@
                     <p style="flex-grow: 1; font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 0;">Practical notes covering VM creation, storage, snapshots, migrations, backups and common virtualization troubleshooting.</p>
                 </div>
                 
-                <div class="about-card" style="display: flex; flex-direction: column; opacity: 0.85; height: 100%;">
+                <div id="server-administration-notes" class="about-card" style="display: flex; flex-direction: column; opacity: 0.85; height: 100%;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
                         <i class="fa-regular fa-file-pdf" style="font-size: 1.75rem; color: var(--brand-primary);" aria-hidden="true"></i>
                         <span class="status-badge" style="background: var(--bg-tertiary); color: var(--text-muted); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700; border: 1px solid var(--border-color);">COMING SOON</span>
@@ -170,6 +217,7 @@
 
     <div id="site-footer"></div>
     <script src="js/components.js"></script>
+    <script src="js/resources.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/theme.js"></script>
 </body>

@@ -8,6 +8,7 @@
     "properties": {
       "id": { "type": "string" },
       "title": { "type": "string" },
+      "provider": { "type": "string" },
       "description": { "type": "string" },
       "category": { "type": "string" },
       "type": { "type": "string" },

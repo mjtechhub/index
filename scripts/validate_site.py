@@ -127,6 +127,85 @@ class SiteValidator:
                             if rf not in res:
                                 self.error("JSON Schema", jf, f"Resource #{idx} missing required field '{rf}'")
 
+            elif jf.name == "quizzes.json":
+                if not isinstance(data, list):
+                    self.error("JSON Schema", jf, "quizzes.json must be an array")
+                else:
+                    required_quiz_fields = ["id", "title", "description", "category", "questions"]
+                    required_question_fields = ["id", "question", "options", "correctIndex", "explanation"]
+                    for idx, q in enumerate(data):
+                        for rf in required_quiz_fields:
+                            if rf not in q:
+                                self.error("JSON Schema", jf, f"Quiz #{idx} missing required field '{rf}'")
+                        if "questions" in q and isinstance(q["questions"], list):
+                            for qidx, item in enumerate(q["questions"]):
+                                for qf in required_question_fields:
+                                    if qf not in item:
+                                        self.error("JSON Schema", jf, f"Quiz #{idx} question #{qidx} missing required field '{qf}'")
+
+            elif jf.name == "ports.json":
+                if not isinstance(data, list):
+                    self.error("JSON Schema", jf, "ports.json must be an array")
+                else:
+                    required_port_fields = ["id", "service", "port", "transport", "description", "category", "securityNotes", "keywords"]
+                    valid_transports = {"TCP", "UDP", "TCP/UDP", "IP Protocol"}
+                    port_ids = set()
+                    for idx, p in enumerate(data):
+                        for rf in required_port_fields:
+                            if rf not in p:
+                                self.error("JSON Schema", jf, f"Port entry #{idx} missing required field '{rf}'")
+                        pid = p.get("id")
+                        if pid in port_ids:
+                            self.error("Duplicate Port ID", jf, f"Duplicate port id '{pid}'")
+                        port_ids.add(pid)
+                        if p.get("transport") not in valid_transports:
+                            self.error("JSON Schema", jf, f"Port entry #{idx} has invalid transport '{p.get('transport')}'")
+
+            elif jf.name == "troubleshooting-labs.json":
+                if not isinstance(data, list):
+                    self.error("JSON Schema", jf, "troubleshooting-labs.json must be an array")
+                else:
+                    required_lab_fields = ["id", "category", "title", "level", "estimatedTime", "symptoms", "environment", "scenarioDescription", "initialStepId", "decisionPoints", "finalDiagnosis"]
+                    required_step_fields = ["id", "stepNumber", "title", "description", "evidenceType", "evidence", "options"]
+                    required_opt_fields = ["id", "text", "type", "feedback", "nextStepId"]
+                    required_diag_fields = ["title", "rootCause", "evidenceSummary", "recommendedRemediation", "verificationSteps", "preventionMeasures", "relatedCommands", "relatedTutorials", "relatedResources"]
+                    lab_ids = set()
+                    for idx, lab in enumerate(data):
+                        for rf in required_lab_fields:
+                            if rf not in lab:
+                                self.error("JSON Schema", jf, f"Lab #{idx} missing required field '{rf}'")
+                        lid = lab.get("id")
+                        if lid in lab_ids:
+                            self.error("Duplicate Lab ID", jf, f"Duplicate lab id '{lid}'")
+                        lab_ids.add(lid)
+
+                        step_ids = set()
+                        for sidx, step in enumerate(lab.get("decisionPoints", [])):
+                            for srf in required_step_fields:
+                                if srf not in step:
+                                    self.error("JSON Schema", jf, f"Lab '{lid}' step #{sidx} missing field '{srf}'")
+                            sid = step.get("id")
+                            step_ids.add(sid)
+
+                        init_step = lab.get("initialStepId")
+                        if init_step not in step_ids:
+                            self.error("Broken Reference", jf, f"Lab '{lid}' initialStepId '{init_step}' not in decisionPoints")
+
+                        # Validate options and nextStepId targets
+                        for sidx, step in enumerate(lab.get("decisionPoints", [])):
+                            for oidx, opt in enumerate(step.get("options", [])):
+                                for orf in required_opt_fields:
+                                    if orf not in opt:
+                                        self.error("JSON Schema", jf, f"Lab '{lid}' step '{step.get('id')}' option #{oidx} missing field '{orf}'")
+                                target = opt.get("nextStepId")
+                                if target != "diagnosis" and target not in step_ids:
+                                    self.error("Broken Reference", jf, f"Lab '{lid}' step '{step.get('id')}' option target '{target}' does not exist")
+
+                        diag = lab.get("finalDiagnosis", {})
+                        for drf in required_diag_fields:
+                            if drf not in diag:
+                                self.error("JSON Schema", jf, f"Lab '{lid}' finalDiagnosis missing field '{drf}'")
+
     def validate_html_files(self):
         """Validate HTML files for syntax, duplicate IDs, broken links, and artifacts"""
         html_files = [f for f in self.root.rglob("*.html") if "backup" not in f.parts and "public" not in f.parts]
