@@ -14,6 +14,11 @@
     <meta property="og:site_name" content="MJ Tech Hub">
     <meta property="og:type" content="website">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="VLSM / Subnet Planner | MJ Tech Hub">
+    <meta name="twitter:description" content="Calculate non-overlapping subnets using largest-first hierarchical IP address allocation.">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -68,8 +73,10 @@
                         <span style="font-size: var(--text-xs); text-transform: uppercase; font-weight: 700; color: var(--text-muted);">Allocation Breakdown</span>
                         <h2 style="font-size: var(--text-xl); font-weight: 800; color: var(--text-primary); margin: 0;">Calculated VLSM Subnets</h2>
                     </div>
-                    <div id="vlsm-stats-summary" class="badge badge-secondary" style="font-size: var(--text-xs); padding: 0.5rem 0.75rem;"></div>
+                    <div id="vlsm-stats-summary" class="badge badge-secondary" style="font-size: var(--text-xs); padding: 0.5rem 0.75rem; white-space: normal; word-break: break-word; max-width: 100%; display: inline-block; line-height: 1.4;"></div>
                 </div>
+
+                <div id="vlsm-normalization-notice" class="callout callout-info" style="display: none; margin-bottom: 1.25rem; padding: 0.85rem 1rem; background: var(--bg-primary); border-left: 4px solid var(--brand-secondary); border-radius: var(--radius-sm); font-size: var(--text-xs); color: var(--text-secondary);" role="status"></div>
 
                 <div class="vlsm-table-container">
                     <table class="vlsm-table">

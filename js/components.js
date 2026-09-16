@@ -34,10 +34,21 @@ function initComponents() {
             if (target === 'index.html') {
                 const isHome = currentPath.endsWith('/') || currentPath.endsWith('/index.html') || currentPath.endsWith('/index') || currentPath === '';
                 isActive = isHome;
-            } else if (targetSlug === 'topics') {
-                isActive = categoryKeywords.some(cat => currentPath.includes(cat));
+            } else if (targetSlug === 'tools') {
+                isActive = currentPath.includes('tools') || currentPath.includes('subnet-calculator') || currentPath.includes('vlsm-planner') || currentPath.includes('network-diagnostic') || currentPath.includes('port-reference');
+            } else if (targetSlug === 'labs') {
+                isActive = currentPath.includes('labs');
             } else if (targetSlug === 'resources') {
-                isActive = currentPath.includes('resources') || currentPath.includes('tools') || currentPath.includes('labs');
+                isActive = currentPath.includes('resources') && !currentPath.includes('tools') && !currentPath.includes('labs');
+            } else if (targetSlug === 'quiz' || targetSlug === 'quizzes') {
+                isActive = currentPath.includes('quiz');
+            } else if (targetSlug === 'commands') {
+                isActive = currentPath.includes('commands');
+            } else if (targetSlug === 'about') {
+                isActive = currentPath.includes('about');
+            } else if (targetSlug === 'topics') {
+                const isToolOrLabOrRes = currentPath.includes('tools') || currentPath.includes('labs') || currentPath.includes('resources') || currentPath.includes('quiz') || currentPath.includes('commands') || currentPath.includes('about');
+                isActive = !isToolOrLabOrRes && categoryKeywords.some(cat => currentPath.includes(cat));
             } else if (targetSlug) {
                 isActive = currentPath.includes(targetSlug);
             }
@@ -75,6 +86,11 @@ function initComponents() {
                     if (!mainEl.hasAttribute('tabindex')) {
                         mainEl.setAttribute('tabindex', '-1');
                     }
+                }
+            } else if (componentName === 'footer') {
+                const yearEl = container.querySelector('#current-year');
+                if (yearEl) {
+                    yearEl.textContent = new Date().getFullYear();
                 }
             }
         } catch (error) {

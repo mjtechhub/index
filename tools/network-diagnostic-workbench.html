@@ -14,6 +14,11 @@
     <meta property="og:site_name" content="MJ Tech Hub">
     <meta property="og:type" content="website">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Network Diagnostic Workbench | MJ Tech Hub">
+    <meta name="twitter:description" content="Methodically isolate network and DNS issues across Layer 1 through Layer 7 with systematic troubleshooting logic.">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -40,7 +45,7 @@
                     <div>
                         <strong style="color: var(--text-primary); font-size: var(--text-sm); display: block; margin-bottom: 0.25rem;">Browser Execution &amp; Privacy Architecture</strong>
                         <p style="color: var(--text-secondary); font-size: var(--text-xs); margin: 0; line-height: 1.6;">
-                            This workbench runs 100% locally in your browser. As a static security boundary, it does not send raw ICMP packets or execute terminal commands on your computer. Enter the results of diagnostic tests you perform locally, and the engine models the TCP/IP stack to deduce likely fault domains and recommend authoritative next steps.
+                            This browser-based tool does not run commands, scan hosts, or test your network. It analyzes the observations you provide. All logic executes locally in your client sandbox to formulate fault domain hypotheses and recommended next steps.
                         </p>
                     </div>
                 </div>
@@ -172,7 +177,14 @@
                     <span id="diag-confidence" class="badge badge-primary">Likely Fault Domain</span>
                 </div>
 
-                <div style="margin-bottom: 1.75rem;">
+                <div style="margin-bottom: 1.25rem;">
+                    <h3 style="font-size: var(--text-base); font-weight: 700; color: var(--text-primary); margin-bottom: 0.35rem;">
+                        <i class="fa-solid fa-clipboard-check" style="color: var(--brand-primary);" aria-hidden="true"></i> Supplied Evidence:
+                    </h3>
+                    <p id="diag-evidence-summary" style="font-size: var(--text-xs); color: var(--text-secondary); background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.75rem 1rem; line-height: 1.5; margin: 0;"></p>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
                     <h3 style="font-size: var(--text-base); font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Diagnostic Reasoning:</h3>
                     <p id="diag-explanation" style="font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.6; margin: 0;"></p>
                 </div>
@@ -190,6 +202,22 @@
                             <i class="fa-solid fa-terminal" style="color: var(--cat-linux);" aria-hidden="true"></i> Suggested Terminal Commands
                         </h3>
                         <div id="diag-commands-list"></div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="font-size: var(--text-base); font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">
+                        <i class="fa-solid fa-scale-balanced" style="color: var(--cat-cybersecurity);" aria-hidden="true"></i> Expected Observations to Confirm or Refute Hypothesis:
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+                        <div style="background: var(--bg-primary); border-left: 3px solid var(--cat-linux); border-radius: var(--radius-sm); padding: 0.85rem 1rem;">
+                            <strong style="font-size: var(--text-xs); text-transform: uppercase; color: var(--cat-linux); display: block; margin-bottom: 0.25rem;">Confirming Observation</strong>
+                            <p id="diag-confirming-obs" style="font-size: var(--text-xs); color: var(--text-secondary); margin: 0; line-height: 1.5;"></p>
+                        </div>
+                        <div style="background: var(--bg-primary); border-left: 3px solid var(--cat-cybersecurity); border-radius: var(--radius-sm); padding: 0.85rem 1rem;">
+                            <strong style="font-size: var(--text-xs); text-transform: uppercase; color: var(--cat-cybersecurity); display: block; margin-bottom: 0.25rem;">Refuting Observation</strong>
+                            <p id="diag-refuting-obs" style="font-size: var(--text-xs); color: var(--text-secondary); margin: 0; line-height: 1.5;"></p>
+                        </div>
                     </div>
                 </div>
 

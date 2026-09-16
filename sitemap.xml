@@ -1,7 +1,10 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://themjtechhub.site/</loc>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/about.html</loc>
   </url>
   <url>
     <loc>https://themjtechhub.site/topics.html</loc>
@@ -16,16 +19,16 @@
     <loc>https://themjtechhub.site/resources.html</loc>
   </url>
   <url>
-    <loc>https://themjtechhub.site/about.html</loc>
+    <loc>https://themjtechhub.site/tools.html</loc>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/labs.html</loc>
   </url>
   <url>
     <loc>https://themjtechhub.site/networking.html</loc>
   </url>
   <url>
-    <loc>https://themjtechhub.site/cloud.html</loc>
-  </url>
-  <url>
-    <loc>https://themjtechhub.site/cybersecurity.html</loc>
+    <loc>https://themjtechhub.site/windows.html</loc>
   </url>
   <url>
     <loc>https://themjtechhub.site/linux.html</loc>
@@ -34,10 +37,22 @@
     <loc>https://themjtechhub.site/servers.html</loc>
   </url>
   <url>
-    <loc>https://themjtechhub.site/windows.html</loc>
+    <loc>https://themjtechhub.site/cybersecurity.html</loc>
   </url>
   <url>
-    <loc>https://themjtechhub.site/legal/disclaimer.html</loc>
+    <loc>https://themjtechhub.site/cloud.html</loc>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tools/subnet-calculator.html</loc>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tools/vlsm-planner.html</loc>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tools/network-diagnostic-workbench.html</loc>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tools/port-reference.html</loc>
   </url>
   <url>
     <loc>https://themjtechhub.site/legal/privacy.html</loc>
@@ -46,186 +61,598 @@
     <loc>https://themjtechhub.site/legal/terms.html</loc>
   </url>
   <url>
+    <loc>https://themjtechhub.site/legal/disclaimer.html</loc>
+  </url>
+  <url>
     <loc>https://themjtechhub.site/tutorials/networking/tcp-vs-udp.html</loc>
+    <lastmod>2026-08-24</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/what-is-dns.html</loc>
+    <lastmod>2026-08-22</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/what-is-vlan.html</loc>
+    <lastmod>2026-05-16</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/what-is-a-mac-address.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/what-is-arp.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/what-is-a-subnet-mask.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/subnetting-basics.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/osi-model-explained.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/tcp-ip-model-explained.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/common-network-ports.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/what-is-nat.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/router-vs-switch.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/hub-vs-switch.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/lan-vs-wan.html</loc>
+    <lastmod>UNKNOWN</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/ping-explained.html</loc>
+    <lastmod>UNKNOWN</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/public-vs-private-ip-address.html</loc>
+    <lastmod>UNKNOWN</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/traceroute-explained.html</loc>
+    <lastmod>UNKNOWN</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/what-is-a-computer-network.html</loc>
+    <lastmod>UNKNOWN</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/what-is-a-default-gateway.html</loc>
+    <lastmod>UNKNOWN</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/what-is-an-ip-address.html</loc>
+    <lastmod>UNKNOWN</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/what-is-dhcp.html</loc>
+    <lastmod>UNKNOWN</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/what-is-routing.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/routing-table-explained.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/static-vs-dynamic-routing.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/icmp-explained.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/access-port-vs-trunk-port.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/spanning-tree-protocol-explained.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/dns-troubleshooting-guide.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/dhcp-troubleshooting-guide.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/wi-fi-2-4-ghz-vs-5-ghz-vs-6-ghz.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/network-troubleshooting-workflow.html</loc>
+    <lastmod>2026-08-25</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/ospf-basics.html</loc>
+    <lastmod>2026-08-25T07:20:17Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/bgp-basics.html</loc>
+    <lastmod>2026-08-25T07:20:17Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/access-control-lists-explained.html</loc>
+    <lastmod>2026-08-25T07:20:17Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/stateful-firewall-explained.html</loc>
+    <lastmod>2026-08-25T07:20:17Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/port-forwarding-and-dnat-explained.html</loc>
+    <lastmod>2026-08-25T07:20:17Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/site-to-site-vpn-explained.html</loc>
+    <lastmod>2026-08-25T07:20:17Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/remote-access-vpn-explained.html</loc>
+    <lastmod>2026-08-25T07:20:17Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/dhcp-relay-ip-helper-explained.html</loc>
+    <lastmod>2026-08-25T07:20:17Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/dns-record-types-explained.html</loc>
+    <lastmod>2026-08-25T07:20:17Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/ipv6-fundamentals.html</loc>
+    <lastmod>2026-08-25T07:20:17Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/snmp-explained.html</loc>
+    <lastmod>2026-08-25T08:04:35Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/network-monitoring-fundamentals.html</loc>
+    <lastmod>2026-08-25T08:04:35Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/wireshark-basics.html</loc>
+    <lastmod>2026-08-25T08:04:35Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/packet-loss-troubleshooting.html</loc>
+    <lastmod>2026-08-25T08:04:35Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/network-latency-troubleshooting.html</loc>
+    <lastmod>2026-08-25T08:04:35Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/mtu-and-mss-explained.html</loc>
+    <lastmod>2026-08-25T08:04:35Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/qos-explained.html</loc>
+    <lastmod>2026-08-25T08:04:35Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/lacp-link-aggregation-explained.html</loc>
+    <lastmod>2026-08-25T08:04:35Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/vrrp-hsrp-gateway-redundancy.html</loc>
+    <lastmod>2026-08-25T08:04:35Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/advanced-vlan-troubleshooting.html</loc>
+    <lastmod>2026-08-25T08:04:35Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/bandwidth-vs-throughput-explained.html</loc>
+    <lastmod>2026-08-25T08:30:43Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/jitter-explained.html</loc>
+    <lastmod>2026-08-25T08:30:43Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/duplex-mismatch-and-speed-negotiation.html</loc>
+    <lastmod>2026-08-25T08:30:43Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/unicast-vs-broadcast-vs-multicast.html</loc>
+    <lastmod>2026-08-25T08:30:43Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/network-baseline-and-capacity-planning.html</loc>
+    <lastmod>2026-08-25T08:30:43Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/syslog-explained.html</loc>
+    <lastmod>2026-08-25T08:30:43Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/netflow-ipfix-explained.html</loc>
+    <lastmod>2026-08-25T08:30:43Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/advanced-dns-troubleshooting.html</loc>
+    <lastmod>2026-08-25T08:30:43Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/vpn-troubleshooting-workflow.html</loc>
+    <lastmod>2026-08-25T08:30:43Z</lastmod>
   </url>
   <url>
     <loc>https://themjtechhub.site/tutorials/networking/enterprise-network-troubleshooting-case-studies.html</loc>
+    <lastmod>2026-08-25T08:30:43Z</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/networking/rf-channel-planning-and-interference-mitigation.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/networking/rapid-spanning-tree-rstp-802-1w.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/networking/next-generation-firewall-ngfw-deep-packet-inspection.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/networking/wireless-access-points-and-controllers-wlc.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/networking/ipv6-addressing-and-slaac.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/networking/snmp-v2c-vs-v3-security-and-usm.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/networking/dhcp-dora-process-and-options-architecture.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/networking/wireless-roaming-802-11r-k-v-standards.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/networking/chassis-stacking-and-switch-virtualization.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/networking/tcp-three-way-handshake-and-teardown.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/networking/dns-resolution-iterative-vs-recursive-queries.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/networking/wi-fi-security-wpa2-enterprise-vs-wpa3.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/windows-operating-system-fundamentals.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/windows-command-prompt-basics.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/powershell-fundamentals-for-administrators.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/windows-ntfs-permissions-vs-share-permissions.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/windows-event-viewer-architecture-and-standard-logs.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/powershell-pipeline-object-manipulation-and-filtering.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/windows-services-architecture-and-sc-utility.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/windows-bitlocker-drive-encryption-and-tpm-architecture.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/windows-group-policy-processing-order-lsdou.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/windows-remote-desktop-protocol-rdp-configuration.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/windows-defender-firewall-with-advanced-security.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/windows-update-for-business-wufb-deployment-rings.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/windows-registry-architecture-and-root-hives.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/windows-robocopy-advanced-file-replication-guide.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/windows/windows-active-directory-domain-join-prerequisites-workflow.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/linux-operating-system-fundamentals.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/linux-filesystem-hierarchy-explained.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/essential-linux-terminal-commands.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/linux-standard-file-permissions-chmod-chown.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/linux-systemd-service-units-creation-and-control.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/linux-memory-management-buffers-caches-oom-killer.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/linux-openssh-server-configuration-and-hardening.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/linux-debian-ubuntu-package-management-apt-dpkg.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/linux-firewalld-zones-and-services-management.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/linux-lvm-architecture-physical-volumes-volume-groups.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/linux-process-signaling-and-termination-kill-pkill.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/linux-systemd-journalctl-log-analysis-and-filtering.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/linux-troubleshooting-boot-failures-grub-emergency-mode.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/linux-standard-streams-redirection-and-pipes.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/linux/linux-sudo-configuration-and-visudo-administration.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/what-is-a-server.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/windows-server-fundamentals.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/linux-server-fundamentals.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/active-directory-domain-controller-promotion-and-demotion.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/enterprise-dns-server-architecture-and-zone-types.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/server-raid-levels-explained-0-1-5-6-10.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/hypervisor-architecture-type-1-bare-metal-vs-type-2-hosted.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/enterprise-storage-architectures-das-vs-nas-vs-san.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/the-3-2-1-backup-rule-and-modern-ransomware-protection.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/windows-server-core-headless-deployment-and-remote-management.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/enterprise-dhcp-failover-load-balancing-and-hot-standby.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/windows-server-failover-clustering-wsfc-architecture.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/server-hardware-health-monitoring-ipmi-snmp-traps.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/windows-server-security-baselines-and-cis-benchmark-hardening.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/servers/systematic-root-cause-analysis-rca-methodology-for-server-outages.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/cybersecurity-fundamentals.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/authentication-vs-authorization.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/multi-factor-authentication-explained.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/modern-password-policies-and-nist-800-63-guidelines.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/next-generation-antivirus-ngav-vs-traditional-signatures.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/network-microsegmentation-and-software-defined-perimeters.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/email-authentication-frameworks-spf-dkim-and-dmarc-deep-dive.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/cve-and-cvss-scoring-metrics-base-temporal-environmental.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/zero-trust-architecture-tenets-nist-sp-800-207-principles.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/single-sign-on-sso-architecture-saml-2-0-and-oidc.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/security-information-and-event-management-siem-architecture.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/nist-sp-800-61-computer-security-incident-handling-guide.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/defense-in-depth-strategy-and-layered-controls.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/privileged-access-management-pam-vaulting-and-session-recording.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cybersecurity/endpoint-detection-and-response-edr-architecture-and-telemetry.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/cloud-computing-fundamentals.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/iaas-vs-paas-vs-saas.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/aws-vs-azure-cloud-fundamentals.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/aws-ec2-instance-families-and-purchasing-models.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/aws-vpc-architecture-subnets-route-tables-and-internet-gateways.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/cloud-iam-policy-syntax-json-statements-and-least-privilege.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/azure-resource-manager-arm-hierarchy-management-groups-to-resources.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/cloud-storage-types-object-vs-block-vs-managed-file-shares.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/infrastructure-as-code-iac-declarative-vs-imperative-principles.html</loc>
+    <lastmod>2026-09-09</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/serverless-computing-architecture-and-event-driven-design.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/azure-virtual-networks-vnet-subnets-and-peering-architecture.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/finops-fundamentals-cloud-financial-management-and-cost-allocation.html</loc>
+    <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/cloud-container-services-overview-ecs-aci-and-managed-k8s.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/cloud-security-groups-vs-network-access-control-lists.html</loc>
+    <lastmod>2026-09-11</lastmod>
+  </url>
+  <url>
+    <loc>https://themjtechhub.site/tutorials/cloud/aiops-architecture-applying-machine-learning-to-it-operations.html</loc>
+    <lastmod>2026-09-11</lastmod>
   </url>
 </urlset>

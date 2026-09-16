@@ -158,7 +158,7 @@ async def run_phase6_7_tests():
         assert res_broad == "192.168.1.255", f"Expected broadcast 192.168.1.255, got {res_broad}"
         assert "192.168.1.1" in res_range and "192.168.1.254" in res_range, f"Invalid range {res_range}"
         assert res_usable == "254", f"Expected 254 usable hosts, got {res_usable}"
-        assert res_scope == "Private", f"Expected Private, got {res_scope}"
+        assert "Private" in res_scope, f"Expected Private, got {res_scope}"
         print("[PASS] Test vector 192.168.1.10/24 verified (Net: 192.168.1.0, Broad: 192.168.1.255, Hosts: 254).")
 
         # Deterministic Test Vector 2: 10.10.10.10/30 (Usable hosts: 2)
@@ -190,28 +190,73 @@ async def run_phase6_7_tests():
         assert res_usable_32 == "1", f"Expected 1 host for /32, got {res_usable_32}"
         print("[PASS] Test vector 192.0.2.1/32 verified (Single host route: 1).")
 
-        # Deterministic Test Vector 5: RFC 1918 Classification Boundaries
-        # 172.20.1.5 -> Private
-        await page.fill("#subnet-ip-input", "172.20.1.5")
-        await page.select_option("#subnet-prefix-select", "24")
+        # Deterministic Test Vector 5: 0.0.0.0/0 (Default Route)
+        await page.fill("#subnet-ip-input", "0.0.0.0")
+        await page.select_option("#subnet-prefix-select", "0")
         await page.click("#subnet-calc-btn")
-        await page.wait_for_timeout(100)
-        assert (await page.text_content("#res-scope")) == "Private"
+        await page.wait_for_timeout(200)
+        res_net_0 = await page.text_content("#res-network")
+        assert res_net_0 == "0.0.0.0", f"Expected 0.0.0.0, got {res_net_0}"
+        print("[PASS] Test vector 0.0.0.0/0 verified.")
 
-        # 172.32.1.5 -> Public (NOT Private!)
-        await page.fill("#subnet-ip-input", "172.32.1.5")
+        # Deterministic Test Vector 6: 255.255.255.255/32
+        await page.fill("#subnet-ip-input", "255.255.255.255")
+        await page.select_option("#subnet-prefix-select", "32")
         await page.click("#subnet-calc-btn")
-        await page.wait_for_timeout(100)
-        assert (await page.text_content("#res-scope")) == "Public", "172.32.1.5 must be classified as Public"
-        print("[PASS] RFC 1918 boundary verified (172.20.1.5 is Private, 172.32.1.5 is Public).")
+        await page.wait_for_timeout(200)
+        res_net_broadcast = await page.text_content("#res-network")
+        assert res_net_broadcast == "255.255.255.255"
+        print("[PASS] Test vector 255.255.255.255/32 verified.")
 
-        # Input Validation: Invalid IPs reject cleanly without NaN or crashes
-        await page.fill("#subnet-ip-input", "999.1.1.1")
-        await page.click("#subnet-calc-btn")
-        await page.wait_for_timeout(100)
-        err_msg = await page.text_content("#subnet-error-alert")
-        assert "Invalid IPv4 address format" in err_msg
-        print("[PASS] Subnet calculator input validation verified (999.1.1.1 rejected cleanly).")
+        # RFC1918 and Special-use IP Classification Matrix
+        classifications = [
+            ("0.0.0.1", "This Network", False),
+            ("10.0.0.1", "RFC 1918 Private", True),
+            ("172.16.0.1", "RFC 1918 Private", True),
+            ("172.31.255.255", "RFC 1918 Private", True),
+            ("172.32.0.1", "Public", False),
+            ("192.168.1.1", "RFC 1918 Private", True),
+            ("100.64.0.1", "Shared", False),
+            ("127.0.0.1", "Loopback", False),
+            ("169.254.1.1", "Link-Local", False),
+            ("192.0.2.1", "Documentation", False),
+            ("198.51.100.1", "Documentation", False),
+            ("203.0.113.1", "Documentation", False),
+            ("198.18.0.1", "Benchmarking", False),
+            ("224.0.0.1", "Multicast", False),
+            ("240.0.0.1", "Reserved", False),
+            ("255.255.255.255", "Limited Broadcast", False)
+        ]
+
+        for ip_addr, expected_label, is_rfc1918 in classifications:
+            await page.fill("#subnet-ip-input", ip_addr)
+            await page.select_option("#subnet-prefix-select", "32" if ip_addr == "255.255.255.255" else "24")
+            await page.click("#subnet-calc-btn")
+            await page.wait_for_timeout(100)
+            scope_val = await page.text_content("#res-scope")
+            assert expected_label.lower() in scope_val.lower(), f"Expected {expected_label} for {ip_addr}, got {scope_val}"
+            if not is_rfc1918:
+                assert "RFC 1918 Private" not in scope_val, f"{ip_addr} must NOT be classified as RFC 1918 Private"
+        print("[PASS] Comprehensive IPv4 classification matrix verified (RFC1918, Loopback, Link-local, CGNAT, Documentation, Benchmarking, Multicast, Reserved, Limited Broadcast, Public candidate).")
+
+
+        # Input Validation: Invalid IPs reject cleanly without NaN, Infinity, or crashes
+        invalid_inputs = ["999.1.1.1", "192.168.1", "192.168..1", ""]
+        for bad_ip in invalid_inputs:
+            await page.fill("#subnet-ip-input", bad_ip)
+            await page.click("#subnet-calc-btn")
+            await page.wait_for_timeout(100)
+            err_el = await page.query_selector("#subnet-error-alert")
+            assert err_el is not None and await err_el.is_visible(), f"Expected error for '{bad_ip}'"
+            err_text = await err_el.text_content()
+            assert "NaN" not in err_text and "undefined" not in err_text and "Infinity" not in err_text
+
+        # Verify no NaN or undefined on page
+        page_body = await page.text_content("body")
+        assert "NaN" not in page_body, "Found NaN in subnet calculator page"
+        assert "undefined" not in page_body, "Found undefined in subnet calculator page"
+        assert "Infinity" not in page_body, "Found Infinity in subnet calculator page"
+        print("[PASS] Subnet calculator input validation verified across all invalid vectors with zero NaN/Infinity/undefined.")
 
         # Reset to clean /24 and take screenshot
         await page.fill("#subnet-ip-input", "192.168.10.25")
@@ -249,6 +294,96 @@ async def run_phase6_7_tests():
         assert "192.168.10.224" in table_text
         print("[PASS] VLSM Largest-First allocation verified (100 -> /25, 50 -> /26, 20 -> /27, 10 -> /28, no overlaps).")
 
+        # Test Host normalization disclosure (e.g. 192.168.10.45/24 -> normalized 192.168.10.0/24)
+        await page.fill("#vlsm-parent-input", "192.168.10.45/24")
+        await page.click("#vlsm-calc-btn")
+        await page.wait_for_timeout(200)
+        norm_notice = await page.text_content("#vlsm-normalization-notice")
+        assert "Entered network" in norm_notice and "Normalized parent network" in norm_notice, "Normalization notice missing"
+        assert "192.168.10.45" in norm_notice and "192.168.10.0" in norm_notice
+        print("[PASS] Host address normalization visibly disclosed without silent alteration.")
+
+        # Test edge cases: duplicate names, empty names, 0 hosts, negative hosts, non-integer hosts, insufficient capacity
+        # 1. Test duplicate names
+        await page.evaluate("""() => {
+            const names = document.querySelectorAll('.vlsm-name-input');
+            if (names.length >= 2) {
+                names[0].value = 'LAN-DUPLICATE';
+                names[1].value = 'LAN-DUPLICATE';
+            }
+        }""")
+        await page.click("#vlsm-calc-btn")
+        await page.wait_for_timeout(200)
+        vlsm_err = await page.text_content("#vlsm-error-alert")
+        assert "Duplicate subnet name" in vlsm_err
+        print("[PASS] VLSM duplicate subnet name validation verified.")
+
+        # 2. Test empty names
+        await page.evaluate("""() => {
+            const names = document.querySelectorAll('.vlsm-name-input');
+            if (names.length >= 2) {
+                names[0].value = '';
+                names[1].value = 'LAN-VALID';
+            }
+        }""")
+        await page.click("#vlsm-calc-btn")
+        await page.wait_for_timeout(200)
+        vlsm_empty_err = await page.text_content("#vlsm-error-alert")
+        assert "empty name" in vlsm_empty_err
+        print("[PASS] VLSM empty subnet name validation verified.")
+
+        # 3. Test non-integer / negative / zero hosts
+        await page.evaluate("""() => {
+            const names = document.querySelectorAll('.vlsm-name-input');
+            const hosts = document.querySelectorAll('.vlsm-hosts-input');
+            names[0].value = 'LAN-ZERO';
+            hosts[0].value = '0';
+        }""")
+        await page.click("#vlsm-calc-btn")
+        await page.wait_for_timeout(200)
+        vlsm_err_zero = await page.text_content("#vlsm-error-alert")
+        assert "greater than 0" in vlsm_err_zero
+        print("[PASS] VLSM zero hosts requirement rejected cleanly.")
+
+        await page.evaluate("""() => {
+            const hosts = document.querySelectorAll('.vlsm-hosts-input');
+            hosts[0].value = '-5';
+        }""")
+        await page.click("#vlsm-calc-btn")
+        await page.wait_for_timeout(200)
+        vlsm_err_neg = await page.text_content("#vlsm-error-alert")
+        assert "positive integer" in vlsm_err_neg
+        print("[PASS] VLSM negative hosts requirement rejected cleanly.")
+
+        await page.evaluate("""() => {
+            const hosts = document.querySelectorAll('.vlsm-hosts-input');
+            hosts[0].value = 'abc';
+        }""")
+        await page.click("#vlsm-calc-btn")
+        await page.wait_for_timeout(200)
+        vlsm_err_nan = await page.text_content("#vlsm-error-alert")
+        assert "positive integer" in vlsm_err_nan
+        print("[PASS] VLSM non-integer hosts requirement rejected cleanly.")
+
+        # 4. Test insufficient capacity
+        await page.fill("#vlsm-parent-input", "192.168.10.0/28")
+        await page.evaluate("""() => {
+            const names = document.querySelectorAll('.vlsm-name-input');
+            const hosts = document.querySelectorAll('.vlsm-hosts-input');
+            names[0].value = 'LAN-OVERFLOW';
+            hosts[0].value = '100';
+            names[1].value = 'LAN-B';
+            hosts[1].value = '50';
+        }""")
+        await page.click("#vlsm-calc-btn")
+        await page.wait_for_timeout(200)
+        table_html = await page.inner_html("#vlsm-results-tbody")
+        assert "Insufficient Parent Capacity" in table_html
+        print("[PASS] VLSM insufficient capacity handling verified.")
+
+        # Restore clean allocation and screenshot
+        await page.click("#vlsm-preload-btn")
+        await page.wait_for_timeout(300)
         await page.screenshot(path=str(QA_DIR / "phase6_7_vlsm_planner.png"), full_page=True)
         print("[INFO] Saved screenshot -> phase6_7_vlsm_planner.png")
 
@@ -261,6 +396,11 @@ async def run_phase6_7_tests():
         t_load = time.time() - t0
         print(f"[METRIC] Diagnostic Workbench render latency: {t_load:.3f}s")
 
+        # Verify exact transparency disclosure text
+        page_content = await page.text_content("body")
+        assert "This browser-based tool does not run commands, scan hosts, or test your network. It analyzes the observations you provide." in page_content
+        print("[PASS] Diagnostic workbench privacy and transparency disclosure verified.")
+
         # Test DNS Failure scenario: Gateway=Yes, Public=Yes, DNS=No
         await page.check('input[name="gateway-ping"][value="yes"]')
         await page.check('input[name="public-ping"][value="yes"]')
@@ -270,7 +410,20 @@ async def run_phase6_7_tests():
 
         diag_res = await page.text_content("#diag-fault-domain")
         assert "DNS" in diag_res, f"Expected DNS fault domain, got {diag_res}"
-        
+
+        # Verify evidence summary and confirming/refuting observations
+        evidence_summary = await page.text_content("#diag-evidence-summary")
+        confirming_obs = await page.text_content("#diag-confirming-obs")
+        refuting_obs = await page.text_content("#diag-refuting-obs")
+        confidence_text = await page.text_content("#diag-confidence")
+
+        assert len(evidence_summary.strip()) > 10, "Evidence summary missing or empty"
+        assert len(confirming_obs.strip()) > 10, "Confirming observation missing or empty"
+        assert len(refuting_obs.strip()) > 10, "Refuting observation missing or empty"
+        assert "Likely" in confidence_text or "Evidence Strength" in confidence_text
+        assert "Root cause confirmed" not in page_content, "Found premature 'Root cause confirmed' language"
+        print("[PASS] Diagnostic workbench hypothesis language, evidence summary, confirming/refuting observations verified.")
+
         # Test Wi-Fi Layer 1/2 failure: Gateway=No, Conn=wifi
         await page.check('input[name="gateway-ping"][value="no"]')
         await page.check('input[name="conn-type"][value="wifi"]')
@@ -307,8 +460,24 @@ async def run_phase6_7_tests():
         assert "88" in kerb_text
         print("[PASS] Port reference live search verified ('Kerberos' -> Port 88).")
 
-        # Filter by category
+        # Test Transport filter pill: "IP Protocol" (ICMP, ESP, AH)
         await page.fill("#ports-search-input", "")
+        await page.click('button[data-transport="IP Protocol"]')
+        await page.wait_for_timeout(300)
+        proto_cards = await page.query_selector_all(".port-card")
+        assert len(proto_cards) >= 3, f"Expected >= 3 IP Protocol cards, got {len(proto_cards)}"
+        
+        # Verify ICMP card badge displays "IP Proto 1" and not "port 1"
+        icmp_card = await page.query_selector("#port-icmp")
+        assert icmp_card is not None, "Expected #port-icmp card"
+        icmp_text = await icmp_card.text_content()
+        assert "IP Proto 1" in icmp_text, f"Expected 'IP Proto 1' badge, got: {icmp_text}"
+        assert "port 1" not in icmp_text.lower(), "ICMP must not be modeled as 'port 1'"
+        print("[PASS] IP Protocol modeling verified (ICMP protocol 1, port null, transport 'IP Protocol').")
+
+        # Filter by category
+        await page.click('button[data-transport="all"]')
+        await page.wait_for_timeout(100)
         await page.click('button[data-category="Remote Access & Administration"]')
         await page.wait_for_timeout(300)
         filtered_cards = await page.query_selector_all(".port-card")

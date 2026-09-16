@@ -302,32 +302,35 @@
   {
     "id": "port-ipsec-esp",
     "service": "IPsec ESP (Encapsulating Security Payload)",
-    "port": "IP Protocol 50",
+    "port": null,
+    "protocolNumber": 50,
     "transport": "IP Protocol",
-    "description": "Network-layer protocol providing confidentiality, data-origin authentication, connectionless integrity, and anti-replay services for IPsec tunnels. Note: Operates as IP Protocol 50 directly on the IP header, NOT a TCP or UDP port number.",
+    "description": "Network-layer protocol providing confidentiality, data-origin authentication, connectionless integrity, and anti-replay services for IPsec tunnels. Operates as IP Protocol 50 directly on the IP header, NOT a TCP or UDP port number.",
     "category": "Network & Routing",
-    "securityNotes": "Because ESP has no Layer 4 port numbers, native ESP cannot traverse port-restricted NAT gateways without UDP encapsulation on port 4500 (NAT-T). Ensure firewalls permit IP protocol 50.",
-    "keywords": ["esp", "ip protocol 50", "ipsec encryption", "tunnel mode", "transport mode", "no tcp port"]
+    "securityNotes": "Because native ESP has no port numbers, stateful NAT firewalls cannot translate connections without NAT-Traversal (NAT-T), which encapsulates ESP packets inside UDP port 4500. Ensure protocol 50 is explicitly permitted through non-NAT border firewalls.",
+    "keywords": ["ipsec", "esp", "vpn", "protocol 50", "ip protocol", "encapsulating security payload", "nat-t", "tunnel"]
   },
   {
     "id": "port-ipsec-ah",
     "service": "IPsec AH (Authentication Header)",
-    "port": "IP Protocol 51",
+    "port": null,
+    "protocolNumber": 51,
     "transport": "IP Protocol",
-    "description": "Network-layer protocol providing connectionless integrity and data authentication for IP packets without data encryption. Note: Operates as IP Protocol 51, NOT a TCP or UDP port number.",
+    "description": "Network-layer protocol providing connectionless integrity and data authentication for IP packets without data encryption. Operates as IP Protocol 51 directly on the IP header, NOT a TCP or UDP port number.",
     "category": "Network & Routing",
-    "securityNotes": "AH hashes parts of the IP header (including source and destination IPs). Consequently, any NAT device modifying IP headers will invalidate AH hashes, breaking connectivity.",
-    "keywords": ["ah", "ip protocol 51", "authentication header", "ipsec integrity", "not a port"]
+    "securityNotes": "AH hashes immutable portions of the outer IP header (including source and destination IPs). Consequently, AH is fundamentally incompatible with Network Address Translation (NAT), which alters IP addresses and causes verification to fail.",
+    "keywords": ["ipsec", "ah", "authentication header", "protocol 51", "ip protocol", "vpn", "integrity", "icv"]
   },
   {
     "id": "port-icmp",
     "service": "ICMP (Internet Control Message Protocol)",
-    "port": "IP Protocol 1",
+    "port": null,
+    "protocolNumber": 1,
     "transport": "IP Protocol",
-    "description": "Essential network-layer diagnostic and control protocol used by routers and hosts to generate error notifications (Destination Unreachable, Time Exceeded) and diagnostic probes (Echo Request/Reply for ping). Operates as IP Protocol 1, NOT a TCP/UDP port.",
+    "description": "Essential network-layer diagnostic and control protocol used by routers and hosts to generate error notifications (Destination Unreachable, Time Exceeded) and diagnostic probes (Echo Request/Reply for ping). Operates as IP Protocol 1, NOT a TCP or UDP port number.",
     "category": "Core Infrastructure",
     "securityNotes": "Do not block all ICMP unconditionally! Blocking ICMP Type 3 Code 4 (Fragmentation Needed) breaks Path MTU Discovery (PMTUD), causing subtle packet-dropping black holes for large TCP sessions.",
-    "keywords": ["icmp", "ping", "traceroute", "echo request", "ip protocol 1", "pmtud", "error reporting"]
+    "keywords": ["icmp", "ping", "traceroute", "echo request", "echo reply", "protocol 1", "ip protocol", "ttl expired", "unreachable"]
   },
   {
     "id": "port-telnet",

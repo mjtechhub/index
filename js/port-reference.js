@@ -56,11 +56,12 @@
             if (searchQuery) {
                 const q = searchQuery.toLowerCase();
                 const matchService = item.service.toLowerCase().includes(q);
-                const matchPort = item.port.toLowerCase().includes(q);
+                const matchPort = item.port ? item.port.toLowerCase().includes(q) : false;
+                const matchProtoNum = item.protocolNumber ? String(item.protocolNumber).includes(q) : false;
                 const matchDesc = item.description.toLowerCase().includes(q);
                 const matchNotes = item.securityNotes.toLowerCase().includes(q);
                 const matchKeywords = Array.isArray(item.keywords) && item.keywords.some(k => k.toLowerCase().includes(q));
-                if (!matchService && !matchPort && !matchDesc && !matchNotes && !matchKeywords) {
+                if (!matchService && !matchPort && !matchProtoNum && !matchDesc && !matchNotes && !matchKeywords) {
                     return false;
                 }
             }
@@ -107,7 +108,7 @@
 
             const portBadge = document.createElement('span');
             portBadge.className = 'port-number-badge';
-            portBadge.textContent = item.port;
+            portBadge.textContent = item.port !== null ? item.port : `IP Proto ${item.protocolNumber}`;
 
             const serviceTitle = document.createElement('h3');
             serviceTitle.className = 'port-service-title';
@@ -161,13 +162,15 @@
             const copyBtn = document.createElement('button');
             copyBtn.type = 'button';
             copyBtn.className = 'btn btn-secondary btn-sm port-copy-btn';
-            copyBtn.innerHTML = `<i class="fa-solid fa-copy" aria-hidden="true"></i> Copy Port`;
-            copyBtn.setAttribute('aria-label', `Copy ${item.service} port ${item.port}`);
+            const copyText = item.port !== null ? item.port : `IP Protocol ${item.protocolNumber}`;
+            const copyLabel = item.port !== null ? `Copy ${item.service} port ${item.port}` : `Copy ${item.service} IP protocol ${item.protocolNumber}`;
+            copyBtn.innerHTML = `<i class="fa-solid fa-copy" aria-hidden="true"></i> ${item.port !== null ? 'Copy Port' : 'Copy Proto #'}`;
+            copyBtn.setAttribute('aria-label', copyLabel);
             copyBtn.addEventListener('click', function() {
-                navigator.clipboard.writeText(item.port).then(() => {
+                navigator.clipboard.writeText(copyText).then(() => {
                     copyBtn.innerHTML = `<i class="fa-solid fa-check" aria-hidden="true"></i> Copied!`;
                     setTimeout(() => {
-                        copyBtn.innerHTML = `<i class="fa-solid fa-copy" aria-hidden="true"></i> Copy Port`;
+                        copyBtn.innerHTML = `<i class="fa-solid fa-copy" aria-hidden="true"></i> ${item.port !== null ? 'Copy Port' : 'Copy Proto #'}`;
                     }, 1800);
                 });
             });

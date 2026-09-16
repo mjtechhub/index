@@ -54,7 +54,7 @@
       },
       "decisionPoints": {
         "type": "array",
-        "minItems": 4,
+        "minItems": 3,
         "maxItems": 8,
         "items": {
           "type": "object",

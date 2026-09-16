@@ -57,12 +57,13 @@
         fetchPromise = (async () => {
             let data = [];
             try {
-            const [topicsRes, tutsRes, cmdsRes, resRes, labsRes] = await Promise.all([
+            const [topicsRes, tutsRes, cmdsRes, resRes, labsRes, quizRes] = await Promise.all([
                 fetch(`${basePath}/data/topics.json`).catch(()=>null),
                 fetch(`${basePath}/data/tutorials.json`).catch(()=>null),
                 fetch(`${basePath}/data/commands.json`).catch(()=>null),
                 fetch(`${basePath}/data/resources.json`).catch(()=>null),
-                fetch(`${basePath}/data/troubleshooting-labs.json`).catch(()=>null)
+                fetch(`${basePath}/data/troubleshooting-labs.json`).catch(()=>null),
+                fetch(`${basePath}/data/quizzes.json`).catch(()=>null)
             ]);
             
             if (topicsRes && topicsRes.ok) {
@@ -195,6 +196,23 @@
                     });
                 }
             }
+
+            // Index 8 Practice Quiz Modules (Individual quiz assessment targets)
+            if (quizRes && quizRes.ok) {
+                const quizzes = await quizRes.json();
+                if (Array.isArray(quizzes)) {
+                    quizzes.forEach(q => {
+                        const qCount = Array.isArray(q.questions) ? q.questions.length : 8;
+                        data.push({
+                            type: 'Quiz',
+                            title: `Quiz: ${q.title}`,
+                            desc: `${q.description || ''} (${qCount} Questions, ${q.category || 'General'})`,
+                            tags: `quiz practice test assessment exam questions ${(q.category || '').toLowerCase()} ${(q.id || '').toLowerCase()}`,
+                            url: `quiz.html?quiz=${encodeURIComponent(q.id)}`
+                        });
+                    });
+                }
+            }
             
             searchDataCache = data;
             return searchDataCache;
@@ -304,7 +322,8 @@
                              res.type === 'Topic' ? 'fas fa-layer-group' : 
                              res.type === 'Resource' ? 'fas fa-folder-open' :
                              res.type === 'Tool' ? 'fas fa-calculator' :
-                             res.type === 'Lab' ? 'fas fa-flask-vial' : 'fas fa-book-open';
+                             res.type === 'Lab' ? 'fas fa-flask-vial' :
+                             res.type === 'Quiz' ? 'fas fa-brain' : 'fas fa-book-open';
             icon.setAttribute('aria-hidden', 'true');
             metaEl.appendChild(icon);
             metaEl.appendChild(document.createTextNode(' ' + res.type));

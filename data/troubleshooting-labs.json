@@ -135,7 +135,7 @@
       "recommendedRemediation": "1. On the branch router: Remove 192.168.10.250 from the DHCP pool and set primary DNS to 192.168.10.10 with an active backup (e.g. 192.168.20.10).\n2. Save router configuration with 'write memory'.\n3. Instruct client workstations to run 'ipconfig /renew' to pull corrected DNS server attributes.",
       "verificationSteps": "1. Run 'ipconfig /all' on the client and verify DNS server shows 192.168.10.10.\n2. Run 'nslookup intranet.corp.local' and verify immediate answer without timeouts.\n3. Test browsing to corporate intranet portals and external web sites.",
       "preventionMeasures": "Implement change management checks during infrastructure decommissioning to audit and update all DHCP scopes, static server configurations, and IPAM reservations prior to decommissioning legacy IP endpoints.",
-      "relatedCommands": ["cmd-ipconfig", "cmd-ping", "cmd-tracert", "cmd-nslookup"],
+      "relatedCommands": ["cmd-ipconfig-all", "cmd-ping", "cmd-tracert", "cmd-nslookup"],
       "relatedTutorials": ["tutorials/networking/dns-resolution-iterative-vs-recursive-queries.html", "tutorials/networking/dhcp-dora-process-and-ip-assignment.html"],
       "relatedResources": ["res-iana-registries", "res-rfc-editor"]
     }
@@ -238,7 +238,7 @@
       "recommendedRemediation": "1. Resynchronize client clock against the domain hierarchy: Run 'w32tm /resync /force'.\n2. If Windows Time service is stopped or misconfigured, re-register and start it: 'net stop w32time', 'w32tm /unregister', 'w32tm /register', 'net start w32time', 'w32tm /resync'.\n3. Verify VM time synchronization integration service is enabled in Hyper-V VM settings.",
       "verificationSteps": "1. Run 'w32tm /query /status' to confirm source is DC01.corp.local and stratum is aligned.\n2. Run 'klist purge' followed by 'klist' or attempt domain interactive logon.\n3. Verify user signs in successfully and receives valid Ticket Granting Ticket (TGT).",
       "preventionMeasures": "Configure Group Policy for Windows Time Service to ensure all domain members query the authoritative PDC Emulator, and configure Hyper-V host time synchronization integration components properly.",
-      "relatedCommands": ["cmd-ipconfig", "cmd-netsh-advfirewall", "cmd-ping"],
+      "relatedCommands": ["cmd-get-netipconfiguration", "cmd-test-netconnection", "cmd-get-winevent", "cmd-ping"],
       "relatedTutorials": ["tutorials/windows/active-directory-domain-join-prerequisites-and-troubleshooting.html", "tutorials/networking/tcp-three-way-handshake-and-teardown.html"],
       "relatedResources": ["res-ms-learn", "res-rfc-editor"]
     }
@@ -341,7 +341,7 @@
       "recommendedRemediation": "1. Edit /etc/fstab with sudo and correct the UUID to 'UUID=e51240c8-7f91-49b0-a332-6bb20145c110'.\n2. Add 'nofail' mount option if this volume is non-critical for OS boot: 'defaults,nofail'.\n3. Run 'sudo mount -a' to mount all filesystems in fstab.\n4. Run 'sudo systemctl start api-service.service' and verify status is active (running).",
       "verificationSteps": "1. Run 'findmnt /mnt/storage' and verify it shows ext4 on /dev/sdb1.\n2. Run 'sudo findmnt --verify' and ensure 0 errors reported.\n3. Run 'sudo systemctl status api-service' and confirm Active: active (running).\n4. Send HTTP GET to API health endpoint: 'curl -I http://localhost:3000/health' (HTTP 200 OK).",
       "preventionMeasures": "Mandate the use of 'sudo findmnt --verify' and 'sudo mount -a' before rebooting any server after modifying /etc/fstab, and utilize configuration management (Ansible) with UUID templating.",
-      "relatedCommands": ["cmd-findmnt-verify", "cmd-systemctl-status", "cmd-journalctl-xe", "cmd-ss-tulpn"],
+      "relatedCommands": ["cmd-findmnt-verify", "cmd-systemctl-status", "cmd-journalctl", "cmd-lsblk-f"],
       "relatedTutorials": ["tutorials/linux/linux-troubleshooting-boot-failures-grub-emergency-mode.html", "tutorials/linux/linux-systemd-service-management-and-troubleshooting.html"],
       "relatedResources": ["res-kernel-org", "res-rfc-editor"]
     }
@@ -437,7 +437,7 @@
       "recommendedRemediation": "1. Edit /etc/analytics/application.properties and configure 'server.address=0.0.0.0'.\n2. Restart the application daemon: 'sudo systemctl restart analytics-backend'.\n3. Verify socket listener with 'ss -tulpn | grep 8080'.",
       "verificationSteps": "1. From the local server, run 'curl -I http://10.20.4.50:8080/health'.\n2. From a remote client on the subnet, test TCP reachability: 'curl -I http://10.20.4.50:8080/health' (HTTP 200 OK).\n3. Confirm load balancer backend health checks return healthy.",
       "preventionMeasures": "Implement configuration linting in CI/CD deployment pipelines to detect and reject localhost or 127.0.0.1 bindings on production environment profiles.",
-      "relatedCommands": ["cmd-ss-tulpn", "cmd-systemctl-status", "cmd-journalctl-xe", "cmd-ping"],
+      "relatedCommands": ["cmd-ss-tulpn", "cmd-systemctl-status", "cmd-journalctl", "cmd-ping"],
       "relatedTutorials": ["tutorials/servers/server-hardware-health-monitoring-ipmi-snmp-traps.html", "tutorials/networking/tcp-three-way-handshake-and-teardown.html"],
       "relatedResources": ["res-rfc-editor", "res-dmtf-redfish"]
     }
@@ -533,7 +533,7 @@
       "recommendedRemediation": "1. Revoke all active session tokens and refresh tokens immediately using identity provider PowerShell cmdlets.\n2. Temporarily disable the account, conduct an audit of recent directory actions, and reset user password with a high-entropy secret.\n3. Re-enable account only after user enrollment in phishing-resistant MFA.",
       "verificationSteps": "1. Verify user cannot sign in with old password or previous session cookies.\n2. Review unified audit logs across the tenant during the 5-minute session window to confirm no OAuth apps were consented or mail forwarding rules added.\n3. Verify successful re-authentication only occurs after new MFA enrollment.",
       "preventionMeasures": "Mandate MFA Number Matching in Microsoft Authenticator or transition to FIDO2 / WebAuthn hardware security keys, which are mathematically immune to push fatigue and adversary-in-the-middle phishing attacks.",
-      "relatedCommands": ["cmd-sec-auditpol", "cmd-netsh-advfirewall", "cmd-ipconfig"],
+      "relatedCommands": ["cmd-get-winevent", "cmd-get-aduser", "cmd-netsh-advfirewall-state", "cmd-get-mpcomputerstatus"],
       "relatedTutorials": ["tutorials/cybersecurity/privileged-access-management-pam-vaulting-and-session-recording.html", "tutorials/cybersecurity/endpoint-detection-and-response-edr-architecture-and-investigation.html"],
       "relatedResources": ["res-nist-csrc", "res-cisa-known-exploited", "res-mitre-attack"]
     }
@@ -541,34 +541,34 @@
   {
     "id": "lab-cld-01",
     "category": "Cloud",
-    "title": "Cloud Virtual Machine Has Internet Outbound but Web Ingress Is Blocked",
+    "title": "AWS VPC Web Tier Unreachable Due to Network ACL Return-Traffic Rules",
     "level": "Intermediate",
     "estimatedTime": "15-20 min",
-    "symptoms": "A new cloud virtual machine hosting a web service can download packages and curl external websites cleanly, but users on the Internet receive connection timeouts when trying to access https://<Public_IP>.",
-    "environment": "AWS VPC (or Azure VNet), Cloud VM Instance (Amazon Linux 2023 / Ubuntu), Internet Gateway attached, Public IPv4 address assigned.",
-    "scenarioDescription": "A DevOps engineer launched a new web server in a public subnet. Outbound updates work fine, the web daemon is confirmed listening, but external browsers cannot load the site over HTTPS (port 443). You need to methodically check cloud security boundaries: instance listeners, guest firewalls, and cloud Security Groups.",
+    "symptoms": "EC2 instances hosting an HTTPS web application inside a public AWS VPC subnet can perform outbound HTTP/HTTPS curl commands normally, but external Internet users experience connection timeouts when attempting to connect to https://<Public_IP>, despite the instance Security Group permitting inbound TCP port 443.",
+    "environment": "Amazon Web Services (AWS) VPC with an attached Internet Gateway (IGW); Public Subnet (10.0.1.0/24) associated with a custom Network ACL (acl-01a2b3c4d5e6f7g8); EC2 Web Server instance running Amazon Linux 2023 with Elastic IP assigned. Architectural Context: Unlike Azure Network Security Groups (NSGs) or AWS Security Groups which operate as stateful firewalls, AWS Network ACLs operate strictly at subnet boundaries as stateless packet filters.",
+    "scenarioDescription": "A DevOps team deployed a production web service on Amazon EC2 in an AWS VPC public subnet. Security Groups were configured to allow inbound HTTPS (port 443) and all outbound egress. Outbound patch downloads and external API queries succeed from inside the instance, and nginx is confirmed listening on port 443. Yet, all inbound web requests from external clients time out. You must methodically trace the AWS VPC network boundary filters, recognize the stateless nature of AWS Network ACLs, and restore client return traffic.",
     "initialStepId": "step-cld-01",
     "decisionPoints": [
       {
         "id": "step-cld-01",
         "stepNumber": 1,
-        "title": "Verify In-Guest Web Service and Outbound Internet",
-        "description": "Log into the VM via SSH or Cloud Serial Console to confirm nginx is active and outbound traffic flows.",
+        "title": "Verify In-Guest Listener and Security Group Ingress Rules",
+        "description": "Log into the EC2 instance via AWS Systems Manager (SSM) Session Manager to verify nginx service health, local socket listeners, and instance Security Group ingress rules.",
         "evidenceType": "terminal",
-        "evidence": "Lab Evidence - In-Guest Web Server & Network Probe:\n$ sudo systemctl status nginx\n\u25cf nginx.service - The nginx HTTP and reverse proxy server\n   Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled)\n   Active: active (running) since Mon 2026-09-15 10:00:12 UTC; 25min ago\n Main PID: 3410 (nginx)\n\n$ curl -I http://localhost\nHTTP/1.1 200 OK\nServer: nginx/1.24.0\n\n$ curl -I https://www.google.com\nHTTP/2 200\ndate: Mon, 15 Sep 2026 10:25:30 GMT",
+        "evidence": "Lab Evidence - In-Guest Web Service & AWS Security Group Inspection:\n$ sudo systemctl status nginx\n● nginx.service - The nginx HTTP and reverse proxy server\n   Active: active (running) since Mon 2026-09-15 10:00:12 UTC; 30min ago\n\n$ sudo ss -tulpn | grep 443\ntcp   LISTEN 0 511 0.0.0.0:443  0.0.0.0:*  users:((\"nginx\",pid=3410,fd=7))\n\n$ aws ec2 describe-security-groups --group-ids sg-0a1b2c3d4e5f6g7h8\nSecurity Group: web-tier-sg (sg-0a1b2c3d4e5f6g7h8)\n[Inbound Rules]\n- Protocol: TCP | Port: 443 | Source: 0.0.0.0/0 (HTTPS Ingress Allowed)\n- Protocol: TCP | Port: 22  | Source: 203.0.113.50/32 (Admin SSH Allowed)\n[Outbound Rules]\n- Protocol: ALL | Ports: ALL | Destination: 0.0.0.0/0 (All Outbound Egress Allowed)",
         "options": [
           {
             "id": "opt-cld-1a",
-            "text": "Terminate and recreate the cloud virtual machine instance from scratch.",
+            "text": "Reboot the EC2 instance to force an Elastic Network Interface (ENI) reset.",
             "type": "inefficient",
-            "feedback": "The VM is running normally, nginx is active, and outbound routing works. Recreating the VM without understanding security rules will reproduce the exact same symptom.",
+            "feedback": "Rebooting the EC2 instance will not solve packet drops caused by network filtering rules. The in-guest socket listener is already healthy and listening on 0.0.0.0:443.",
             "nextStepId": "step-cld-02"
           },
           {
             "id": "opt-cld-1b",
-            "text": "Verify socket listeners and in-guest firewall (iptables / ufw / firewalld) before inspecting cloud network rules.",
+            "text": "Confirm that the stateful Security Group is permitting inbound 443, and advance to inspect the subnet-level boundary filter (AWS Network ACL).",
             "type": "optimal",
-            "feedback": "Optimal: Verifying that nginx is listening on all interfaces (0.0.0.0:80 and 0.0.0.0:443) and local OS firewall isn't filtering packets isolates the issue to cloud fabric security groups.",
+            "feedback": "Optimal: Because AWS Security Groups are stateful firewalls operating at the virtual network interface layer and clearly permit inbound 443, the connection drop must be occurring at the subnet boundary controlled by AWS Network ACLs.",
             "nextStepId": "step-cld-02"
           }
         ]
@@ -576,23 +576,23 @@
       {
         "id": "step-cld-02",
         "stepNumber": 2,
-        "title": "Check In-Guest Socket Listeners and Host Firewall",
-        "description": "Inspect listening TCP ports with ss and check host firewall status.",
+        "title": "Audit AWS VPC Subnet Association and Network ACL Inbound Rules",
+        "description": "Inspect the subnet association and query the custom Network ACL (NACL) rules applied to the web tier subnet.",
         "evidenceType": "terminal",
-        "evidence": "Lab Evidence - Socket Listeners & Guest Firewall:\n$ sudo ss -tulpn | grep nginx\ntcp   LISTEN 0 511 0.0.0.0:80   0.0.0.0:*  users:((\"nginx\",pid=3410,fd=6))\ntcp   LISTEN 0 511 0.0.0.0:443  0.0.0.0:*  users:((\"nginx\",pid=3410,fd=7))\n\n$ sudo iptables -L -n -v\nChain INPUT (policy ACCEPT 412 packets, 38K bytes)\nChain FORWARD (policy ACCEPT 0 packets, 0 bytes)\nChain OUTPUT (policy ACCEPT 398 packets, 42K bytes)",
+        "evidence": "Lab Evidence - AWS Network ACL Rule Table (aws ec2 describe-network-acls):\nNACL ID: acl-01a2b3c4d5e6f7g8 (Associated Subnet: subnet-0123456789abcdef0 [10.0.1.0/24])\n\n[Inbound (Ingress) Entries]\nRule #   Protocol   Port Range   CIDR Block    Action\n-----------------------------------------------------\n100      TCP        443          0.0.0.0/0     ALLOW\n110      TCP        80           0.0.0.0/0     ALLOW\n*        ALL        ALL          0.0.0.0/0     DENY (Default)\n\n[Outbound (Egress) Entries]\nRule #   Protocol   Port Range   CIDR Block    Action\n-----------------------------------------------------\n100      TCP        443          0.0.0.0/0     ALLOW\n110      TCP        80           0.0.0.0/0     ALLOW\n*        ALL        ALL          0.0.0.0/0     DENY (Default)",
         "options": [
           {
             "id": "opt-cld-2a",
-            "text": "Examine the Cloud Security Group inbound and outbound rules attached to the virtual machine's network interface (ENI).",
-            "type": "optimal",
-            "feedback": "Optimal: Since nginx is listening on 0.0.0.0:80 and 0.0.0.0:443 and the guest OS firewall policy is ACCEPT, the block is occurring outside the guest OS at the cloud hypervisor Security Group / NSG boundary.",
+            "text": "Conclude that because Inbound Rule 100 permits TCP port 443, the Network ACL is correctly configured for external web traffic.",
+            "type": "suboptimal",
+            "feedback": "Incorrect assumption: Unlike stateful firewalls (such as AWS Security Groups or Azure NSGs), AWS Network ACLs are completely stateless. An inbound allow rule permits the client SYN packet to enter the subnet, but return packets (SYN-ACK) cannot exit without an explicit outbound rule matching the client's destination port.",
             "nextStepId": "step-cld-03"
           },
           {
             "id": "opt-cld-2b",
-            "text": "Disable SELinux on the instance.",
-            "type": "unsafe",
-            "feedback": "SELinux controls mandatory access control within the Linux kernel; it does not block incoming network packets that never reach the socket.",
+            "text": "Recognize that AWS Network ACLs are stateless, meaning response traffic requires outbound rules matching the client's ephemeral port range.",
+            "type": "optimal",
+            "feedback": "Optimal: When a client initiates an HTTPS request to port 443, the client operating system allocates a temporary high-order ephemeral port (typically 1024-65535 or 32768-60999). The server's return packets have destination ports in that ephemeral range, not port 443.",
             "nextStepId": "step-cld-03"
           }
         ]
@@ -600,37 +600,37 @@
       {
         "id": "step-cld-03",
         "stepNumber": 3,
-        "title": "Audit Cloud Security Group Configuration",
-        "description": "Inspect the virtual machine's cloud Security Group rules via AWS CLI / Cloud Console.",
+        "title": "Analyze Ephemeral Port Return Flow and Determine Remediating Rule",
+        "description": "Correlate client-server TCP session mechanics with the stateless outbound NACL rule table to formulate the precise egress permission.",
         "evidenceType": "terminal",
-        "evidence": "Lab Evidence - Cloud Security Group Rules (aws ec2 describe-security-groups):\n{\n  \"SecurityGroups\": [\n    {\n      \"GroupName\": \"web-server-sg\",\n      \"GroupId\": \"sg-0a1b2c3d4e5f6g7h8\",\n      \"IpPermissions\": [\n        {\n          \"IpProtocol\": \"tcp\",\n          \"FromPort\": 22,\n          \"ToPort\": 22,\n          \"IpRanges\": [ { \"CidrIp\": \"203.0.113.50/32\", \"Description\": \"Admin SSH\" } ]\n        }\n      ],\n      \"IpPermissionsEgress\": [\n        {\n          \"IpProtocol\": \"-1\",\n          \"IpRanges\": [ { \"CidrIp\": \"0.0.0.0/0\" } ]\n        }\n      ]\n    }\n  ]\n}",
+        "evidence": "Lab Evidence - VPC Flow Logs Telemetry & Packet Tracing:\n2 123456789012 eni-01234567 198.51.100.25 10.0.1.50 51432 443 6 1 60 1726398012 1726398072 ACCEPT OK (Inbound SYN allowed by NACL Rule 100)\n2 123456789012 eni-01234567 10.0.1.50 198.51.100.25 443 51432 6 1 60 1726398012 1726398072 REJECT OK (Outbound SYN-ACK dropped by NACL default rule *)\n\nAnalysis: Inbound client session source port is 51432 (ephemeral port). The server's return packet has source port 443 and destination port 51432. Outbound NACL rule table only allows destination ports 80 and 443; packets destined for port 51432 hit the default DENY rule (*). (Note: In Microsoft Azure, Network Security Groups are stateful and track return traffic automatically; this stateless drop is specific to AWS VPC Network ACLs).",
         "options": [
           {
             "id": "opt-cld-3a",
-            "text": "Identify that the Security Group only permits inbound port 22 SSH from an admin IP; add inbound allow rules for TCP port 443 (HTTPS) and port 80 (HTTP) from 0.0.0.0/0.",
+            "text": "Add a stateless outbound Network ACL rule allowing TCP ports 1024-65535 to destination 0.0.0.0/0 to permit return traffic to client ephemeral ports.",
             "type": "optimal",
-            "feedback": "Optimal: Security Groups are stateful firewalls at the cloud hypervisor layer that drop all unpermitted inbound traffic by default. Egress was permitted to 0.0.0.0/0 (explaining why outbound curl worked), but inbound 443/80 was absent.",
+            "feedback": "Optimal: Adding an outbound rule for TCP 1024-65535 allows the web server to send response packets back to any external client's allocated ephemeral port, satisfying the stateless requirement of AWS Network ACLs.",
             "nextStepId": "diagnosis"
           },
           {
             "id": "opt-cld-3b",
-            "text": "Attach a new Network ACL to the subnet with an inbound permit all rule.",
-            "type": "suboptimal",
-            "feedback": "Default cloud NACLs already allow all inbound and outbound traffic. The block is specifically located in the Security Group.",
+            "text": "Reconfigure the web server nginx daemon to send return packets exclusively on source and destination port 443.",
+            "type": "unsafe",
+            "feedback": "TCP sockets cannot override the client's allocated ephemeral source port. In standard TCP/IP networking, the server MUST send return packets to the client's chosen ephemeral port.",
             "nextStepId": "diagnosis"
           }
         ]
       }
     ],
     "finalDiagnosis": {
-      "title": "Missing Inbound HTTPS (TCP 443) Rule in Cloud Security Group",
-      "rootCause": "The cloud virtual machine's network interface was attached to 'web-server-sg', which only contained an inbound rule for TCP port 22 (SSH) from a single administrator IP. Cloud Security Groups operate as default-deny stateful firewalls for inbound traffic. Because the default egress rule allowed all outbound traffic ('0.0.0.0/0'), the VM could freely update packages and curl external web services, but all inbound connection attempts on ports 80 and 443 were silently dropped by the cloud hypervisor.",
-      "evidenceSummary": "1. In-guest nginx service was active and healthy.\n2. Local socket listener was bound to 0.0.0.0:80 and 0.0.0.0:443.\n3. In-guest iptables had default ACCEPT policy with zero drop counters.\n4. Outbound internet curl to google.com succeeded.\n5. 'describe-security-groups' confirmed inbound rules only permitted port 22; ports 80 and 443 were completely missing.",
-      "recommendedRemediation": "1. Authorize inbound HTTPS rule: 'aws ec2 authorize-security-group-ingress --group-id sg-0a1b2c3d4e5f6g7h8 --protocol tcp --port 443 --cidr 0.0.0.0/0'.\n2. Authorize inbound HTTP rule for redirection: 'aws ec2 authorize-security-group-ingress --group-id sg-0a1b2c3d4e5f6g7h8 --protocol tcp --port 80 --cidr 0.0.0.0/0'.\n3. Ensure production deployments utilize AWS Application Load Balancers (ALB) or Cloudflare in front of origin servers where appropriate.",
-      "verificationSteps": "1. Run 'curl -I https://<Public_IP>' from an external client.\n2. Verify HTTP response code 200 OK or 301 redirect.\n3. Confirm SSL certificate handshake completes successfully.",
-      "preventionMeasures": "Utilize Terraform or Infrastructure as Code (IaC) templates with standardized Security Group modules that explicitly declare required application ingress rules alongside instance deployments.",
-      "relatedCommands": ["cmd-cld-aws-s3-sync", "cmd-cld-az-vm-list", "cmd-ss-tulpn"],
-      "relatedTutorials": ["tutorials/cloud/cloud-security-groups-vs-network-access-control-lists.html", "tutorials/cloud/aws-vpc-fundamentals-subnets-route-tables-gateways.html"],
+      "title": "AWS VPC Web Tier Unreachable Due to Network ACL Return-Traffic Rules",
+      "rootCause": "AWS VPC Network ACLs operate at subnet boundaries and are strictly stateless packet filters. Although the custom inbound Network ACL allowed TCP port 443 and the instance Security Group was open, the custom outbound Network ACL only allowed destination ports 80 and 443. External web clients initiate connections using client-side ephemeral ports (e.g. 1024-65535). Because AWS Network ACLs do not track connection state (unlike stateful AWS Security Groups or Azure Network Security Groups), the server's return response packets (SYN-ACK / TLS ServerHello) destined for client ephemeral ports were dropped by the subnet outbound default DENY rule (*).",
+      "evidenceSummary": "1. In-guest nginx service was running and listening on 0.0.0.0:443.\n2. EC2 Security Group permitted inbound TCP 443 and all outbound traffic (-1).\n3. Inbound Network ACL Rule 100 allowed TCP 443 from 0.0.0.0/0.\n4. Outbound Network ACL rule table lacked an allow rule for ephemeral ports, permitting only destination ports 80 and 443.\n5. VPC Flow Logs proved inbound SYN packets were ACCEPTED, but corresponding outbound return packets to client port 51432 were REJECTED by the subnet NACL boundary.",
+      "recommendedRemediation": "1. Add an outbound allow rule to the custom Network ACL: 'aws ec2 create-network-acl-entry --network-acl-id acl-01a2b3c4d5e6f7g8 --rule-number 120 --protocol tcp --port-range From=1024,To=65535 --egress --cidr-block 0.0.0.0/0 --rule-action allow'.\n2. For public web subnets in AWS VPCs, standard architecture requires permitting outbound ephemeral ports (TCP 1024-65535) to 0.0.0.0/0 to support diverse client operating systems (Windows uses 49152-65535, Linux uses 32768-60999, others use 1024-65535).\n3. In scenarios where stateless packet filtering at the subnet layer is not explicitly required for compliance or IP-range blacklisting, associate the subnet with the default AWS VPC Network ACL (which allows all inbound/outbound) and rely on stateful Security Groups for granular micro-segmentation.",
+      "verificationSteps": "1. Execute 'curl -Iv https://<Public_IP>' from an external client and verify full TCP three-way handshake and TLS session establishment.\n2. Query VPC Flow Logs to verify outbound return packets transitioning from REJECT to ACCEPT.\n3. Verify external browsers load the web application with HTTP 200 OK.",
+      "preventionMeasures": "Clearly document cloud security boundary models in team architecture baselines: AWS Security Groups are stateful and enforce rules at the virtual interface layer, whereas AWS Network ACLs are stateless and enforce rules at the subnet boundary. Distinguish AWS stateless NACLs from Azure NSGs, which are stateful by default. Whenever authoring custom AWS NACLs, always configure reciprocal ephemeral port return rules.",
+      "relatedCommands": ["cmd-aws-ec2-describe-instances", "cmd-ss-tulpn", "cmd-aws-sts-caller-identity"],
+      "relatedTutorials": ["tutorials/cloud/cloud-security-groups-vs-network-access-control-lists.html", "tutorials/cloud/aws-vpc-architecture-subnets-route-tables-and-internet-gateways.html"],
       "relatedResources": ["res-aws-arch-center", "res-cncf"]
     }
   }

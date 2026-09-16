@@ -24,8 +24,12 @@
         "minLength": 2
       },
       "port": {
-        "type": "string",
-        "description": "Port number, range, or protocol identifier (e.g. '53', '67/68', 'IP Protocol 50')"
+        "type": ["string", "null"],
+        "description": "Port number or range (e.g. '53', '67/68'), or null for non-transport IP protocols"
+      },
+      "protocolNumber": {
+        "type": ["integer", "null"],
+        "description": "IANA IPv4/IPv6 Protocol Number for transport='IP Protocol' (e.g. 1 for ICMP, 50 for ESP, 51 for AH)"
       },
       "transport": {
         "type": "string",

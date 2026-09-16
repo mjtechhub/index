@@ -14,6 +14,11 @@
     <meta property="og:site_name" content="MJ Tech Hub">
     <meta property="og:type" content="website">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Guided Troubleshooting Labs | MJ Tech Hub">
+    <meta name="twitter:description" content="Practice hands-on, scenario-driven IT troubleshooting across Networking, Windows, Linux, Servers, Cybersecurity, and Cloud in a browser-based simulation platform.">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -28,7 +33,13 @@
     <main id="main-content">
         <div class="container" style="padding-top: 1rem;">
             <!-- Interactive Labs Container managed dynamically by js/labs.js -->
-            <div id="labs-content-container"></div>
+            <div id="labs-content-container">
+                <div class="labs-selector-header">
+                    <span class="about-eyebrow">HANDS-ON SIMULATION</span>
+                    <h1 class="page-title">Guided Troubleshooting Labs</h1>
+                    <p class="page-subtitle">Practice systematic incident diagnosis across 6 core enterprise IT domains without introducing live system risk.</p>
+                </div>
+            </div>
             <!-- Screen Reader Live Announcer -->
             <div id="labs-live-announcer" class="sr-only" aria-live="polite"></div>
         </div>

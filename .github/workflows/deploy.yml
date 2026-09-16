@@ -36,8 +36,9 @@ jobs:
       - name: Prepare Public Directory
         run: |
           mkdir public
-          cp -r *.html assets components css data js legal tutorials public/
-          cp CNAME sitemap.xml robots.txt public/ || true
+          cp -r *.html assets components css data js legal tools tutorials public/
+          cp CNAME sitemap.xml robots.txt favicon.ico public/ || true
+
 
       
       - name: Setup Pages

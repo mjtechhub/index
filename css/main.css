@@ -890,27 +890,28 @@ img {
 .site-footer {
     background-color: var(--surface);
     border-top: 1px solid var(--border-color);
-    padding: var(--space-7) 0 var(--space-5);
-    margin-top: var(--space-8);
+    padding: var(--space-5) 0 var(--space-4);
+    margin-top: var(--space-6);
     color: var(--text-secondary);
 }
 
 .footer-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: var(--space-6);
-    margin-bottom: var(--space-6);
+    grid-template-columns: 1.8fr 1fr 1fr 1fr;
+    gap: var(--space-5);
+    margin-bottom: var(--space-4);
 }
 
 .footer-brand .brand-logo {
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-2);
+    display: inline-block;
 }
 
 .footer-desc {
     color: var(--text-secondary);
     font-size: var(--text-sm);
-    line-height: 1.6;
-    margin-bottom: var(--space-4);
+    line-height: 1.55;
+    margin-bottom: var(--space-3);
     max-width: 320px;
 }
 
@@ -933,6 +934,7 @@ img {
     border: 1px solid var(--border-subtle);
     background: var(--surface-elevated);
     transition: all 0.2s ease;
+    min-height: 38px;
 }
 
 .social-links a:hover {
@@ -948,17 +950,17 @@ img {
 .footer-title {
     color: var(--text-primary);
     font-weight: 700;
-    font-size: var(--text-sm);
+    font-size: 0.8125rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: var(--space-4);
+    letter-spacing: 0.06em;
+    margin-bottom: var(--space-3);
 }
 
 .footer-links {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: 0.45rem;
     padding: 0;
     margin: 0;
 }
@@ -969,6 +971,7 @@ img {
     text-decoration: none;
     transition: color 0.2s ease, transform 0.2s ease;
     display: inline-block;
+    padding: 0.15rem 0;
 }
 
 .footer-links a:hover {
@@ -977,7 +980,7 @@ img {
 }
 
 .footer-bottom {
-    padding-top: var(--space-5);
+    padding-top: var(--space-4);
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
@@ -986,28 +989,42 @@ img {
     gap: var(--space-3);
 }
 
-.footer-copyright {
+.footer-copyright,
+.footer-tagline,
+.footer-credit {
     color: var(--text-muted);
     font-size: var(--text-xs);
     margin: 0;
 }
 
+.footer-tagline {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
 .footer-creator {
-    color: var(--brand-primary);
+    color: var(--text-secondary);
     font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.footer-creator:hover {
+    color: var(--brand-primary);
 }
 
 /* ==========================================================================
    7. RESPONSIVE SYSTEM (HEADER, NAVIGATION & FOOTER)
    ========================================================================== */
 @media (max-width: 1024px) {
-    .header-container { gap: var(--space-3); }
-    .search-box { width: 200px; }
-    .nav-links a { padding: 0.5rem 0.65rem; font-size: 0.85rem; }
+    .header-container { gap: var(--space-2); }
+    .search-box { width: 160px; }
+    .search-box .shortcut { display: none; }
+    .nav-links { gap: 2px; }
+    .nav-links a { padding: 0.45rem 0.55rem; font-size: 0.84rem; }
     .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: var(--space-4); }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 960px) {
     .mobile-menu-toggle { display: flex; }
     
     .nav-links {
@@ -1070,12 +1087,13 @@ img {
     .header-container { padding: 0 var(--space-3); }
     .site-logo { height: 42px; }
     .brand-text { display: none; }
-    .footer-grid { grid-template-columns: 1fr; gap: var(--space-5); }
+    .footer-grid { grid-template-columns: 1fr; gap: var(--space-4); }
     .footer-desc { max-width: 100%; }
     .footer-bottom {
         flex-direction: column;
         text-align: center;
         justify-content: center;
+        gap: var(--space-2);
     }
 }
 
@@ -4778,6 +4796,9 @@ img {
     border-radius: var(--radius-lg);
     padding: 2rem;
     box-shadow: var(--shadow-sm);
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .calc-results-header {
@@ -4866,6 +4887,8 @@ img {
     margin-top: 1.5rem;
     border-radius: var(--radius-md);
     border: 1px solid var(--border-color);
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .vlsm-table {
@@ -4998,6 +5021,13 @@ img {
     gap: 0.5rem;
     flex-wrap: wrap;
 }
+.ports-grid,
+#ports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 1.25rem;
+    max-width: 100%;
+}
 
 .port-card {
     background: var(--surface);
@@ -5009,6 +5039,10 @@ img {
     gap: 1rem;
     box-shadow: var(--shadow-sm);
     transition: border-color 0.2s ease, transform 0.2s ease;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .port-card:hover {
@@ -5021,14 +5055,19 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 1rem;
+    gap: 0.75rem;
     flex-wrap: wrap;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .port-title-wrap {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    flex-wrap: wrap;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .port-number-badge {
@@ -5041,6 +5080,7 @@ img {
     border-radius: var(--radius-md);
     min-width: 48px;
     text-align: center;
+    flex-shrink: 0;
 }
 
 .port-service-title {
@@ -5048,6 +5088,9 @@ img {
     font-weight: 700;
     color: var(--text-primary);
     margin: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    min-width: 0;
 }
 
 .port-badges-wrap {
@@ -5498,8 +5541,26 @@ img {
 }
 
 @media (max-width: 480px) {
+    .header-container {
+        padding: 0 0.5rem !important;
+        gap: 0.5rem !important;
+    }
+    .site-logo {
+        height: 36px !important;
+    }
+    .header-actions {
+        gap: 0.35rem !important;
+    }
+    .header-actions .search-box,
+    .header-actions .theme-toggle,
+    .header-actions .mobile-menu-toggle {
+        width: 36px !important;
+        height: 36px !important;
+    }
     .tools-grid,
-    .labs-grid {
+    .labs-grid,
+    .ports-grid,
+    #ports-grid {
         grid-template-columns: 1fr !important;
     }
     .tools-hero {
@@ -5533,6 +5594,33 @@ img {
     }
     .diag-options-row {
         gap: 0.75rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .header-container {
+        padding: 0 0.35rem !important;
+        gap: 0.25rem !important;
+    }
+    .site-logo {
+        height: 30px !important;
+    }
+    .header-actions {
+        gap: 0.25rem !important;
+    }
+    .header-actions .search-box,
+    .header-actions .theme-toggle,
+    .header-actions .mobile-menu-toggle {
+        width: 34px !important;
+        height: 34px !important;
+    }
+    .container {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+    .tool-card,
+    .lab-card {
+        padding: 1.25rem 0.85rem !important;
     }
 }
 

@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             allQuizzes = Array.isArray(data) ? data : [];
             renderQuizList();
+            
+            const params = new URLSearchParams(window.location.search);
+            const quizParam = params.get('quiz');
+            if (quizParam && allQuizzes.some(q => q.id === quizParam)) {
+                startQuiz(quizParam);
+            }
         })
         .catch(err => {
             console.error('Error loading quizzes:', err);

@@ -32,6 +32,10 @@
 
     // Core VLSM Allocation Engine
     function calculateVlsm(parentCidrStr, requirementsList) {
+        if (!parentCidrStr || typeof parentCidrStr !== 'string') {
+            return { error: 'Invalid parent network. Please provide a CIDR network (e.g. 192.168.10.0/24).' };
+        }
+
         const cidrParts = parentCidrStr.trim().split('/');
         if (cidrParts.length !== 2) {
             return { error: 'Invalid parent network format. Expected format: 192.168.10.0/24' };
@@ -40,8 +44,8 @@
         const parentIpInt = ipToInt(cidrParts[0]);
         const parentPrefix = parseInt(cidrParts[1], 10);
 
-        if (parentIpInt === null || isNaN(parentPrefix) || parentPrefix < 0 || parentPrefix > 30) {
-            return { error: 'Invalid parent network IP or prefix. Parent prefix must be between /0 and /30.' };
+        if (parentIpInt === null || isNaN(parentPrefix) || parentPrefix < 0 || parentPrefix > 30 || String(parentPrefix) !== cidrParts[1].trim()) {
+            return { error: 'Invalid parent network IP or prefix. Parent prefix must be an integer between /0 and /30.' };
         }
 
         const parentMaskInt = parentPrefix === 0 ? 0 : (~0 << (32 - parentPrefix)) >>> 0;
@@ -50,23 +54,50 @@
         const parentBroadcastInt = (parentNetworkInt | parentWildcardInt) >>> 0;
         const parentTotalAddresses = Math.pow(2, 32 - parentPrefix);
 
+        const wasNormalized = (parentIpInt !== parentNetworkInt);
+        const enteredParent = parentCidrStr.trim();
+        const normalizedParent = `${intToIp(parentNetworkInt)}/${parentPrefix}`;
+
         if (!Array.isArray(requirementsList) || requirementsList.length === 0) {
             return { error: 'Please specify at least one subnet requirement.' };
         }
 
-        // Validate and filter requirements (cap to 20 for browser safety)
-        const cleanRequirements = [];
-        for (let i = 0; i < Math.min(requirementsList.length, 20); i++) {
-            const req = requirementsList[i];
-            const name = (req.name || '').trim() || `Subnet ${i + 1}`;
-            const hosts = parseInt(req.hosts, 10);
+        if (requirementsList.length > 20) {
+            return { error: 'Maximum 20 subnet requirement rows supported.' };
+        }
 
-            if (isNaN(hosts) || hosts <= 0) {
+        // Validate and filter requirements (strict integer and positive check)
+        const cleanRequirements = [];
+        const seenNames = new Set();
+        let hasDuplicateNames = false;
+
+        for (let i = 0; i < requirementsList.length; i++) {
+            const req = requirementsList[i];
+            const name = (req.name !== undefined && req.name !== null ? String(req.name) : '').trim();
+            if (!name) {
+                return { error: `Subnet requirement #${i + 1} has an empty name. Please provide a unique name for each subnet.` };
+            }
+
+            const rawHosts = String(req.hosts !== undefined && req.hosts !== null ? req.hosts : '').trim();
+
+            if (!/^\d+$/.test(rawHosts)) {
+                return { error: `Invalid host requirement for '${name}'. Host count must be a valid positive integer.` };
+            }
+
+            const hosts = parseInt(rawHosts, 10);
+            if (hosts <= 0) {
                 return { error: `Invalid host requirement for '${name}'. Must be a positive integer greater than 0.` };
             }
             if (hosts > 16777214) {
                 return { error: `Host requirement for '${name}' exceeds maximum practical IPv4 subnet capacity.` };
             }
+
+            const lowerName = name.toLowerCase();
+            if (seenNames.has(lowerName)) {
+                return { error: `Duplicate subnet name detected: '${name}'. Each subnet requirement must have a unique name.` };
+            }
+            seenNames.add(lowerName);
+
             cleanRequirements.push({ id: req.id || `req-${i}`, name: name, hosts: hosts, originalIndex: i });
         }
 
@@ -143,6 +174,10 @@
 
         return {
             error: null,
+            wasNormalized: wasNormalized,
+            enteredParent: enteredParent,
+            normalizedParent: normalizedParent,
+            hasDuplicateNames: hasDuplicateNames,
             parentNetwork: intToIp(parentNetworkInt),
             parentPrefix: parentPrefix,
             parentBroadcast: intToIp(parentBroadcastInt),
@@ -237,9 +272,9 @@
             const reqs = [];
 
             rowEls.forEach((r, idx) => {
-                const name = r.querySelector('.vlsm-name-input').value.trim() || `Subnet ${idx + 1}`;
-                const hosts = parseInt(r.querySelector('.vlsm-hosts-input').value.trim(), 10);
-                reqs.push({ name: name, hosts: hosts, id: `req-${idx}` });
+                const name = r.querySelector('.vlsm-name-input').value.trim();
+                const rawHosts = r.querySelector('.vlsm-hosts-input').value.trim();
+                reqs.push({ name: name, hosts: rawHosts, id: `req-${idx}` });
             });
 
             const result = calculateVlsm(parentVal, reqs);
@@ -253,6 +288,17 @@
 
             errorAlert.style.display = 'none';
             resultsCard.style.display = 'block';
+
+            // Visible disclosure if parent network was normalized
+            const noticeEl = document.getElementById('vlsm-normalization-notice');
+            if (noticeEl) {
+                if (result.wasNormalized) {
+                    noticeEl.textContent = `Parent Network Normalization Disclosure: Entered network: '${result.enteredParent}' contained host bits. Normalized parent network: '${result.normalizedParent}'.`;
+                    noticeEl.style.display = 'block';
+                } else {
+                    noticeEl.style.display = 'none';
+                }
+            }
 
             // Render stats summary
             statsEl.textContent = `Parent: ${result.parentNetwork}/${result.parentPrefix} (${result.parentTotalAddresses} Total IPs) | Allocated: ${result.totalAllocatedAddresses} IPs (${result.efficiencyPercent}% Utilization)`;
