@@ -1,0 +1,30 @@
+{
+  "auditDate": "2026-09-16",
+  "auditPhase": "7.0",
+  "platform": "https://themjtechhub.site",
+  "canonicalSitemapUrls": 169,
+  "publishedTutorials": 148,
+  "curriculumTopicsTotal": 471,
+  "publishedCurriculumCount": 148,
+  "plannedCurriculumCount": 323,
+  "commandsCount": 42,
+  "quizzesCount": 8,
+  "quizQuestionsCount": 64,
+  "resourcesCount": 26,
+  "portsDatasetCount": 42,
+  "interactiveToolsCount": 4,
+  "troubleshootingLabsCount": 6,
+  "searchConsoleConnected": false,
+  "bingWebmasterConnected": false,
+  "authoritativeIndexedCount": "NOT AVAILABLE — SEARCH CONSOLE OWNER VERIFICATION REQUIRED",
+  "publicSearchObservation": "0 results returned for site:themjtechhub.site at audit time (non-authoritative)",
+  "observedSearchImpressions": "INSUFFICIENT SEARCH HISTORY",
+  "observedSearchClicks": "INSUFFICIENT SEARCH HISTORY",
+  "observedAverageCTR": "INSUFFICIENT SEARCH HISTORY",
+  "observedAveragePosition": "INSUFFICIENT SEARCH HISTORY",
+  "indexNowRecommendation": "RECOMMENDED FOR FUTURE",
+  "dnsStatus": {
+    "apex": "RESOLVED_TLS_VALID",
+    "www": "CNAME_DELEGATION_PENDING"
+  }
+}

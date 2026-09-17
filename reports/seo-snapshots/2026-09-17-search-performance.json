@@ -1,0 +1,26 @@
+{
+  "snapshotDate": "2026-09-17",
+  "phase": "7.1",
+  "domain": "themjtechhub.site",
+  "dataStatus": "BLOCKED — SEARCH PERFORMANCE DATA NOT AVAILABLE",
+  "googleSearchConsole": {
+    "status": "OWNER ACTION REQUIRED",
+    "propertyType": "Domain Property",
+    "verified": false,
+    "dnsVerification": "PENDING_TXT_RECORD"
+  },
+  "bingWebmasterTools": {
+    "status": "OWNER ACTION REQUIRED",
+    "verified": false
+  },
+  "metrics": {
+    "totalClicks": "NOT AVAILABLE",
+    "totalImpressions": "NOT AVAILABLE",
+    "averageCTR": "NOT AVAILABLE",
+    "averagePosition": "NOT AVAILABLE"
+  },
+  "canonicalSitemapCount": 169,
+  "publishedTutorialsCount": 148,
+  "modificationsDeployed": 0,
+  "modificationsRejected": 4
+}
